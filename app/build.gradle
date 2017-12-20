@@ -47,6 +47,15 @@ dependencies {
     implementation "com.google.dagger:dagger-android:${rootProject.ext.dagger2Version}"
     implementation "com.google.dagger:dagger-android-support:${rootProject.ext.dagger2Version}"
 
+    // Preferences
+    implementation ('com.github.markusressel:TypedPreferences:dev-SNAPSHOT') {
+    //compile('com.github.markusressel:TypedPreferences:v1.1.0') {
+        exclude module: 'app'
+        transitive = true
+        changing = true
+    }
+    implementation "com.google.code.gson:gson:2.8.2"
+
     // Logging
     implementation 'com.github.ajalt:timberkt:1.3.0'
 
@@ -55,8 +64,6 @@ dependencies {
         transitive = true
     }
 
-
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
@@ -64,4 +71,5 @@ dependencies {
 
 configurations.all {
     resolutionStrategy.force "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }

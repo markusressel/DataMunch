@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DataMunch</string>
+
+    <string name="menu_item_settings">Settings</string>
 </resources>

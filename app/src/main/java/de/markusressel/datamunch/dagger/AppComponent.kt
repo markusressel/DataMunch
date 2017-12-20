@@ -5,11 +5,12 @@ import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import de.markusressel.datamunch.application.App
+import de.markusressel.datamunch.dagger.module.PreferencesBindingsModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [(AppModule::class),
-    //(PreferencesModule::class),
+    (PreferencesBindingsModule::class),
     (AndroidInjectionModule::class),
     (AndroidSupportInjectionModule::class)])
 interface AppComponent : AndroidInjector<App> {
