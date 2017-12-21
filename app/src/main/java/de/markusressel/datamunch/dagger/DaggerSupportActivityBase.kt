@@ -30,6 +30,7 @@ import dagger.android.HasFragmentInjector
 import dagger.android.support.HasSupportFragmentInjector
 import de.markusressel.datamunch.application.ThemeHelper
 import de.markusressel.datamunch.preferences.PreferenceHandler
+import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
 import javax.inject.Inject
 
@@ -55,6 +56,11 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
     @get:Style
     protected abstract val style: Int
 
+    /**
+     * The layout ressource for this Activity
+     */
+    protected abstract val layoutRes: Int
+
     override fun supportFragmentInjector(): AndroidInjector<Fragment>? {
         return supportFragmentInjector
     }
@@ -77,6 +83,10 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
             themeHelper.applyTheme(this)
 
         super.onCreate(savedInstanceState)
+
+        setContentView(layoutRes)
+
+        setSupportActionBar(toolbar)
     }
 
     fun applyLocale() {

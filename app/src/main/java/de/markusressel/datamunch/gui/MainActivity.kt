@@ -8,7 +8,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.dagger.DaggerSupportActivityBase
 import de.markusressel.datamunch.gui.preferences.PreferenceOverviewActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class MainActivity : DaggerSupportActivityBase() {
@@ -16,11 +16,11 @@ class MainActivity : DaggerSupportActivityBase() {
     override val style: Int
         get() = DEFAULT
 
+    override val layoutRes: Int
+        get() = R.layout.activity_main
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        setSupportActionBar(toolbar)
 
         DrawerBuilder().withActivity(this)
                 .addDrawerItems(
