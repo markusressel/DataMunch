@@ -19,6 +19,7 @@ class PreferenceOverviewActivity : DaggerSupportActivityBase() {
         super.onCreate(savedInstanceState)
 
         supportActionBar?.setTitle(R.string.menu_item_settings)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val preferencesFragment = PreferencesFragment()
 

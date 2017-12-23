@@ -19,7 +19,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".gui.preferences.PreferenceOverviewActivity" />
+        <activity
+            android:name=".gui.preferences.PreferenceOverviewActivity"
+            android:parentActivityName=".gui.MainActivity" />
+
+        <activity android:name=".gui.fileuploader.FileUploaderActivity" />
+
+        <service android:name=".service.FileUploadService" />
     </application>
 
 </manifest>

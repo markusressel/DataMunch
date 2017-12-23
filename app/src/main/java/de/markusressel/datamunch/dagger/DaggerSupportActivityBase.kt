@@ -28,7 +28,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasFragmentInjector
 import dagger.android.support.HasSupportFragmentInjector
-import de.markusressel.datamunch.application.ThemeHelper
+import de.markusressel.datamunch.gui.ThemeHelper
 import de.markusressel.datamunch.preferences.PreferenceHandler
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*

@@ -15,6 +15,9 @@ buildscript {
 
         supportLibVersion = "27.0.2"
         dagger2Version = "2.11"
+        aboutlibrariesVersion = "6.0.1"
+        materialdrawerVersion = "6.0.2"
+        iconicsVersion = "3.0.0"
     }
 
     repositories {

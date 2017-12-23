@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="colorAccent">@color/md_amber_A200</color>
+
+    <color name="primaryColor_dark">@color/color_gray_950</color>
+    <color name="primaryColor_darkInverse">@color/md_blue_grey_800</color>
+
+    <color name="primaryColor">@color/color_gray_900</color>
+    <color name="primaryColorInverse">@color/color_gray_200</color>
+
+    <color name="primaryColor_light">@color/color_gray_800</color>
+    <color name="primaryColor_lightInverse">@color/color_gray_100</color>
+
+    <color name="textColorPrimary">@android:color/white</color>
+    <color name="textColorSecondary">#B2FFFFFF</color>
+    <!-- inverse text color: 87% black -->
+    <color name="textColorPrimaryInverse">#DE000000</color>
+    <color name="textColorSecondaryInverse">#8A000000</color>
+    <color name="textColorInactive">#FFFFFFFF</color>
+
+
+    <color name="windowBackgroundColor">#FF313031</color>
+    <color name="windowBackgroundColorInverse">#FFCECFCE</color>
+
+    <color name="cardview_background">@color/color_gray_800</color>
+    <color name="cardview_backgroundInverse">@color/color_gray_100</color>
+
+    <!--<color name="navigationBarColor">@color/color_gray_950</color>-->
+    <!--<color name="navigationBarColorInverse">@color/color_light_blue_a700</color>-->
+
 </resources>
