@@ -1,4 +1,4 @@
-package de.markusressel.datamunch;
+package de.markusressel.datamunch.data;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
