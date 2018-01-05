@@ -11,7 +11,7 @@ android {
         applicationId "de.markusressel.datamunch"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -26,6 +26,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    compile project(':domain')
+    compile project(':data')
 
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.android.support:design:${rootProject.ext.supportLibVersion}"
@@ -47,6 +50,9 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:${rootProject.ext.dagger2Version}"
     implementation "com.google.dagger:dagger-android:${rootProject.ext.dagger2Version}"
     implementation "com.google.dagger:dagger-android-support:${rootProject.ext.dagger2Version}"
+
+    // RxJava
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
 
     // Preferences
     implementation('com.github.markusressel:TypedPreferences:dev-SNAPSHOT') {

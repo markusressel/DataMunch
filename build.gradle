@@ -8,6 +8,7 @@ buildscript {
 
         minSdkVersion = 23
         versionName = "0.0.1"
+        versionCode = 1
 
         compileSdkVersion = 26
         targetSdkVersion = 26
@@ -18,6 +19,35 @@ buildscript {
         aboutlibrariesVersion = "6.0.1"
         materialdrawerVersion = "6.0.2"
         iconicsVersion = "3.0.0"
+
+        rxKotlinVersion = "2.2.0"
+
+        presentationDependencies = [
+                daggerCompiler: "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
+                dagger        : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
+                recyclerView  : "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}",
+                rxKotlin      : 'io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}'
+                //javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}"
+        ]
+
+        presentationTestDependencies = [
+        ]
+
+        domainDependencies = [
+        ]
+
+        domainTestDependencies = [
+        ]
+
+        dataDependencies = [
+        ]
+
+        dataTestDependencies = [
+        ]
+
+        developmentDependencies = [
+        ]
+
     }
 
     repositories {
