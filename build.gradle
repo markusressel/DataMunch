@@ -15,19 +15,36 @@ buildscript {
         buildToolsVersion = "27.0.0"
 
         supportLibVersion = "27.0.2"
+        constraintLayoutVersion = "1.0.2"
         dagger2Version = "2.11"
         aboutlibrariesVersion = "6.0.1"
         materialdrawerVersion = "6.0.2"
         iconicsVersion = "3.0.0"
 
         rxKotlinVersion = "2.2.0"
+        javaxAnnotationVersion = "10.0-b28"
 
         presentationDependencies = [
-                daggerCompiler: "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
-                dagger        : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
-                recyclerView  : "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}",
-                rxKotlin      : 'io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}'
-                //javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}"
+                daggerCompiler : "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
+                dagger         : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
+                daggerAndroidProcessor : "com.google.dagger:dagger-android-processor:${rootProject.ext.dagger2Version}",
+                daggerAndroid: "com.google.dagger:dagger-android:${rootProject.ext.dagger2Version}",
+                daggerAndroidSupport : "com.google.dagger:dagger-android-support:${rootProject.ext.dagger2Version}",
+
+                rxKotlin       : "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
+//                javaxAnnotation: "javax.annotation:jsr250-api:"
+                javaxAnnotation: "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}",
+
+                appCompatV7: "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}",
+                designLibrary: "com.android.support:design:${rootProject.ext.supportLibVersion}",
+                preferenceV14: "com.android.support:preference-v14:${rootProject.ext.supportLibVersion}",
+                recyclerView   : "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}",
+                supportV13: "com.android.support:support-v13:${rootProject.ext.supportLibVersion}",
+                supportAnnotation: "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}",
+                constraintLayout: "com.android.support.constraint:constraint-layout:${rootProject.ext.constraintLayoutVersion}",
+                cardviewV7: "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}",
+
+                gson: "com.google.code.gson:gson:2.8.2"
         ]
 
         presentationTestDependencies = [

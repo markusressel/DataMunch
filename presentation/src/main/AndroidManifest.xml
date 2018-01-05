@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".gui.MainActivity">
+        <activity android:name=".presenatation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +21,7 @@
 
         <activity
             android:name=".gui.preferences.PreferenceOverviewActivity"
-            android:parentActivityName=".gui.MainActivity" />
+            android:parentActivityName=".presenatation.MainActivity" />
 
         <activity android:name=".gui.fileuploader.FileUploaderActivity" />
 

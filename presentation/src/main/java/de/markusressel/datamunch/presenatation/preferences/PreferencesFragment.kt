@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.dagger.DaggerPreferenceFragment
-import de.markusressel.datamunch.gui.MainActivity
+import de.markusressel.datamunch.presenatation.MainActivity
 import de.markusressel.datamunch.preferences.PreferenceHandler
 import de.markusressel.typedpreferences.PreferenceItem
 

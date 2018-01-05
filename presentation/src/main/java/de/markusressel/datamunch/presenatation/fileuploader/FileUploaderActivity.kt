@@ -3,7 +3,7 @@ package de.markusressel.datamunch.gui.fileuploader
 import android.os.Bundle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.dagger.DaggerSupportActivityBase
-import de.markusressel.datamunch.gui.IconicsHelper
+import de.markusressel.datamunch.presenatation.IconicsHelper
 import javax.inject.Inject
 
 
