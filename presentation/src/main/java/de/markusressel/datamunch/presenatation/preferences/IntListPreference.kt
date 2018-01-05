@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.markusressel.datamunch.preferences
+package de.markusressel.datamunch.presenatation.preferences
 
 import android.content.Context
 import android.support.v7.preference.ListPreference

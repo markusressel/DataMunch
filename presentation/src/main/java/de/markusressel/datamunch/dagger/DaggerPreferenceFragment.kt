@@ -9,7 +9,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasFragmentInjector
 import dagger.android.support.AndroidSupportInjection
-import de.markusressel.datamunch.preferences.PreferenceHandler
+import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import javax.inject.Inject
 
 /**

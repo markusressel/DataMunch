@@ -9,8 +9,8 @@ import android.support.annotation.StyleRes
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.preferences.PreferenceHandler
-import de.markusressel.datamunch.preferences.PreferenceHandler.Companion.THEME
+import de.markusressel.datamunch.data.preferences.PreferenceHandler
+import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.THEME
 import javax.inject.Inject
 import javax.inject.Singleton
 

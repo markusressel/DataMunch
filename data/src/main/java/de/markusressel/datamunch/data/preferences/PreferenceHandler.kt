@@ -1,7 +1,7 @@
-package de.markusressel.datamunch.preferences
+package de.markusressel.datamunch.data.preferences
 
 import android.content.Context
-import de.markusressel.datamunch.R
+import de.markusressel.datamunch.data.R
 import de.markusressel.typedpreferences.PreferenceItem
 import de.markusressel.typedpreferences.PreferencesHandlerBase
 import java.util.*

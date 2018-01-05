@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -36,12 +39,30 @@ dependencies {
     def testDependencies = rootProject.ext.dataTestDependencies
 
     compile project(':domain')
-    provided dataDependencies.javaxAnnotation
-    compile dataDependencies.javaxInject
-    compile dataDependencies.okHttp
+
+    // Dagger 2
+    implementation presentationDependencies.dagger
+    kapt presentationDependencies.daggerCompiler
+    kapt "com.android.databinding:compiler:$gradle_plugin_version"
+
+    // if you use the support libraries
+    kapt presentationDependencies.daggerAndroidProcessor
+    implementation presentationDependencies.daggerAndroid
+    implementation presentationDependencies.daggerAndroidSupport
+
+//    compile dataDependencies.javaxInject
+//    compile dataDependencies.okHttp
     compile dataDependencies.gson
     compile dataDependencies.rxKotlin
-    compile dataDependencies.androidAnnotations
+//    compile dataDependencies.androidAnnotations
+
+    // Preferences
+    api('com.github.markusressel:TypedPreferences:dev-SNAPSHOT') {
+        //compile('com.github.markusressel:TypedPreferences:v1.1.0') {
+        exclude module: 'app'
+        transitive = true
+        changing = true
+    }
 
 
 

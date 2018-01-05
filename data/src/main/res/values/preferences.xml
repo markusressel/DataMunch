@@ -1,0 +1,29 @@
+<resources>
+
+    <string name="category_general">General</string>
+
+    <!-- Theme -->
+    <string name="theme_title">Theme</string>
+    <string name="theme_key">theme</string>
+
+    <string name="theme_light_value">0</string>
+    <string name="theme_dark_value">1</string>
+    <string-array name="theme_values">
+        <item>@string/theme_light_value</item>
+        <item>@string/theme_dark_value</item>
+    </string-array>
+
+    <string name="theme_light_value_name">Light</string>
+    <string name="theme_dark_value_name">Dark</string>
+    <string-array name="theme_names">
+        <item>@string/theme_light_value_name</item>
+        <item>@string/theme_dark_value_name</item>
+    </string-array>
+
+    <!-- Force locale -->
+    <string name="force_locale_key">force_locale</string>
+
+    <!-- Locale -->
+    <string name="locale_key">locale</string>
+
+</resources>
