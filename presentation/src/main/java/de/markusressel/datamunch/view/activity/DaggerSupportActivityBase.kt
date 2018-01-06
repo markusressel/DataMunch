@@ -89,6 +89,8 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
         setContentView(layoutRes)
 
         setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     fun initLocale() {

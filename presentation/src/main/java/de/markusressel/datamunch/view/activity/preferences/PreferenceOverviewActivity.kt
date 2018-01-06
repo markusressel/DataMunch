@@ -1,7 +1,8 @@
-package de.markusressel.datamunch.view.activity
+package de.markusressel.datamunch.view.activity.preferences
 
 import android.os.Bundle
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.view.activity.DaggerSupportActivityBase
 import de.markusressel.datamunch.view.fragment.PreferencesFragment
 
 /**
@@ -10,7 +11,7 @@ import de.markusressel.datamunch.view.fragment.PreferencesFragment
 class PreferenceOverviewActivity : DaggerSupportActivityBase() {
 
     override val style: Int
-        get() = DIALOG
+        get() = DEFAULT
 
     override val layoutRes: Int
         get() = R.layout.activity_preferences
@@ -19,7 +20,7 @@ class PreferenceOverviewActivity : DaggerSupportActivityBase() {
         super.onCreate(savedInstanceState)
 
         supportActionBar?.setTitle(R.string.menu_item_settings)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         val preferencesFragment = PreferencesFragment()
 

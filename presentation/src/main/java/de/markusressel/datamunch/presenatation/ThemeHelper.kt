@@ -15,6 +15,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
+ * Helper class for easy applying of themes
+ *
  * Created by Markus on 20.12.2017.
  */
 @Singleton
@@ -25,6 +27,14 @@ class ThemeHelper @Inject constructor() {
 
     @Inject
     lateinit var preferenceHandler: PreferenceHandler
+
+    fun applyPreferencesTheme(target: Activity) {
+        val theme = preferenceHandler.getValue(THEME)
+        when (theme) {
+            context.getString(R.string.theme_light_value).toInt() -> setTheme(target, R.style.PreferenceActivity_Light)
+            context.getString(R.string.theme_dark_value).toInt() -> setTheme(target, R.style.PreferenceActivity)
+        }
+    }
 
     /**
      * Apply a Theme to an Activity

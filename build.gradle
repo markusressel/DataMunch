@@ -1,7 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-
     ext {
         kotlin_version = '1.2.10'
         gradle_plugin_version = '3.0.1'
@@ -29,31 +28,31 @@ buildscript {
         gsonVersion = "2.8.2"
 
         presentationDependencies = [
-                daggerCompiler : "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
-                dagger         : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
-                daggerAndroidProcessor : "com.google.dagger:dagger-android-processor:${rootProject.ext.dagger2Version}",
-                daggerAndroid: "com.google.dagger:dagger-android:${rootProject.ext.dagger2Version}",
-                daggerAndroidSupport : "com.google.dagger:dagger-android-support:${rootProject.ext.dagger2Version}",
+                daggerCompiler        : "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
+                dagger                : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
+                daggerAndroidProcessor: "com.google.dagger:dagger-android-processor:${rootProject.ext.dagger2Version}",
+                daggerAndroid         : "com.google.dagger:dagger-android:${rootProject.ext.dagger2Version}",
+                daggerAndroidSupport  : "com.google.dagger:dagger-android-support:${rootProject.ext.dagger2Version}",
 
-                rxKotlin       : "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
+                rxKotlin              : "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
 //                javaxAnnotation: "javax.annotation:jsr250-api:"
-                javaxAnnotation: "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}",
+                javaxAnnotation       : "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}",
 
-                appCompatV7: "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}",
-                designLibrary: "com.android.support:design:${rootProject.ext.supportLibVersion}",
-                preferenceV14: "com.android.support:preference-v14:${rootProject.ext.supportLibVersion}",
-                recyclerView   : "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}",
-                supportV13: "com.android.support:support-v13:${rootProject.ext.supportLibVersion}",
-                supportAnnotation: "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}",
-                constraintLayout: "com.android.support.constraint:constraint-layout:${rootProject.ext.constraintLayoutVersion}",
-                cardviewV7: "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}",
+                appCompatV7           : "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}",
+                designLibrary         : "com.android.support:design:${rootProject.ext.supportLibVersion}",
+                preferenceV14         : "com.android.support:preference-v14:${rootProject.ext.supportLibVersion}",
+                recyclerView          : "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}",
+                supportV13            : "com.android.support:support-v13:${rootProject.ext.supportLibVersion}",
+                supportAnnotation     : "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}",
+                constraintLayout      : "com.android.support.constraint:constraint-layout:${rootProject.ext.constraintLayoutVersion}",
+                cardviewV7            : "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}",
 
                 // Logging
-                timberkt: "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}",
+                timberkt              : "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}",
 
                 // Iconics
-                iconicsCore: "com.mikepenz:iconics-core:${rootProject.ext.iconicsVersion}@aar",
-                iconicsViews: "com.mikepenz:iconics-views:${rootProject.ext.iconicsVersion}@aar"
+                iconicsCore           : "com.mikepenz:iconics-core:${rootProject.ext.iconicsVersion}@aar",
+                iconicsViews          : "com.mikepenz:iconics-views:${rootProject.ext.iconicsVersion}@aar"
 
         ]
 
@@ -61,26 +60,27 @@ buildscript {
         ]
 
         domainDependencies = [
+                rxKotlin: "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
         ]
 
         domainTestDependencies = [
         ]
 
         dataDependencies = [
-                daggerCompiler : "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
-                dagger         : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
-                daggerAndroidProcessor : "com.google.dagger:dagger-android-processor:${rootProject.ext.dagger2Version}",
-                daggerAndroid: "com.google.dagger:dagger-android:${rootProject.ext.dagger2Version}",
-                daggerAndroidSupport : "com.google.dagger:dagger-android-support:${rootProject.ext.dagger2Version}",
+                daggerCompiler        : "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
+                dagger                : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
+                daggerAndroidProcessor: "com.google.dagger:dagger-android-processor:${rootProject.ext.dagger2Version}",
+                daggerAndroid         : "com.google.dagger:dagger-android:${rootProject.ext.dagger2Version}",
+                daggerAndroidSupport  : "com.google.dagger:dagger-android-support:${rootProject.ext.dagger2Version}",
 
-                rxKotlin       : "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
+                rxKotlin              : "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
 
-                supportAnnotation: "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}",
+                supportAnnotation     : "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}",
 
-                gson: "com.google.code.gson:gson:${rootProject.ext.gsonVersion}",
+                gson                  : "com.google.code.gson:gson:${rootProject.ext.gsonVersion}",
 
                 // Logging
-                timberkt: "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}",
+                timberkt              : "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}",
         ]
 
         dataTestDependencies = [
@@ -103,6 +103,7 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+apply plugin: 'kotlin'
 
 allprojects {
     repositories {
@@ -112,6 +113,20 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }

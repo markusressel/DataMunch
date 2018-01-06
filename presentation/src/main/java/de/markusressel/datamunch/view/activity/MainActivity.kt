@@ -22,6 +22,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.presenatation.IconicsHelper
+import de.markusressel.datamunch.view.activity.preferences.PreferenceOverviewActivity2
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
 import javax.inject.Inject
@@ -74,12 +75,14 @@ class MainActivity : DaggerSupportActivityBase() {
                 ProfileDrawerItem()
                         .withName("Markus Ressel")
                         .withEmail("")
+                        .withIcon(R.drawable.leak_canary_icon)
         )
 
         profiles.add(
                 ProfileDrawerItem()
                         .withName("Iris Haderer")
                         .withEmail("")
+                        .withIcon(R.mipmap.ic_launcher)
         )
 
         return profiles
@@ -110,7 +113,7 @@ class MainActivity : DaggerSupportActivityBase() {
                         .withIdentifier(DrawerMenuItem.Settings.identifier)
                         .withIcon(iconicsHelper.getMenuIcon(DrawerMenuItem.Settings.icon))
                         .withOnDrawerItemClickListener { view, i, iDrawerItem ->
-                            val intent = Intent(this, PreferenceOverviewActivity::class.java)
+                            val intent = Intent(this, PreferenceOverviewActivity2::class.java)
                             startActivity(intent)
                             false
                         }

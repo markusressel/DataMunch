@@ -8,7 +8,7 @@ import javax.inject.Inject
 class FileUploaderActivity : DaggerSupportActivityBase() {
 
     override val style: Int
-        get() = DIALOG
+        get() = DEFAULT
 
     override val layoutRes: Int
         get() = R.layout.activity_fileuploader

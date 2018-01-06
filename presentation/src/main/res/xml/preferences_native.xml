@@ -20,13 +20,6 @@
         android:key="category_general"
         android:title="@string/category_general">
 
-        <de.mrapp.android.preference.activity.NavigationPreference
-            android:breadCrumbTitle="FileUploader"
-            android:fragment="de.markusressel.datamunch.view.activity.FileUploaderPreferences"
-            android:icon="@drawable/leak_canary_icon"
-            android:summary="Settings related to uploading files"
-            android:title="FileUploader" />
-
         <de.markusressel.datamunch.view.preferences.IntListPreference
             android:entries="@array/theme_names"
             android:entryValues="@array/theme_values"

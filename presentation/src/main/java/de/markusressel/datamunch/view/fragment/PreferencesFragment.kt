@@ -18,7 +18,7 @@ class PreferencesFragment : DaggerPreferenceFragment() {
         preferenceManager.sharedPreferencesName = preferenceHandler.sharedPreferencesName
 
         // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.preferences)
+        addPreferencesFromResource(R.xml.preferences_native)
 
         initializePreferenceItems()
         setListeners()
