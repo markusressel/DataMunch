@@ -26,4 +26,6 @@
     <!-- Locale -->
     <string name="locale_key">locale</string>
 
+    <string name="category_fileUploader">File Uploader</string>
+
 </resources>

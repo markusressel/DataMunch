@@ -28,9 +28,11 @@
             android:title="FileUploader" />
 
         <de.markusressel.datamunch.view.preferences.IntListPreference
+            android:breadCrumbTitle="@string/theme_title"
             android:entries="@array/theme_names"
             android:entryValues="@array/theme_values"
             android:key="@string/theme_key"
+            android:summary="Application Theme"
             android:title="@string/theme_title" />
 
     </PreferenceCategory>

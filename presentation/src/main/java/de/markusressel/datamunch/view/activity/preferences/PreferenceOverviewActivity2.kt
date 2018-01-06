@@ -36,16 +36,13 @@ class PreferenceOverviewActivity2 : de.mrapp.android.preference.activity.Prefere
 
         initTheme()
 
-        themeHelper.applyPreferencesTheme(this)
-
         super.onCreate(savedInstanceState)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun initTheme() {
-
-
+        themeHelper.applyPreferencesTheme(this)
     }
 
     override fun onCreateNavigation(fragment: PreferenceFragment) {

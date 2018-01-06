@@ -21,7 +21,6 @@ class PreferenceOverviewActivity : DaggerSupportActivityBase() {
 
         supportActionBar?.setTitle(R.string.menu_item_settings)
 
-
         val preferencesFragment = PreferencesFragment()
 
         supportFragmentManager.beginTransaction()
