@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="cardview_corner_radius">8dp</dimen>
+    <dimen name="cardview_padding">0dp</dimen>
+    <dimen name="cardview_elevation">4dp</dimen>
+    <dimen name="cardview_elevation_while_moving">8dp</dimen>
+    <dimen name="cardview_default_height">64dp</dimen>
+
+</resources>

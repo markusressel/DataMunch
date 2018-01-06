@@ -1,10 +1,9 @@
-package de.markusressel.datamunch.gui.preferences
+package de.markusressel.datamunch.view.fragment
 
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.view.fragment.DaggerPreferenceFragment
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.view.activity.MainActivity
 import de.markusressel.typedpreferences.PreferenceItem

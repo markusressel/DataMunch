@@ -2,8 +2,8 @@ package de.markusressel.datamunch.dagger.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import de.markusressel.datamunch.gui.preferences.PreferenceOverviewActivity
-import de.markusressel.datamunch.gui.preferences.PreferencesFragment
+import de.markusressel.datamunch.view.activity.PreferenceOverviewActivity
+import de.markusressel.datamunch.view.fragment.PreferencesFragment
 
 /**
  * Created by Markus on 20.12.2017.

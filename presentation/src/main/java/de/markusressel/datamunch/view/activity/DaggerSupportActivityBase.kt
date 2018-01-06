@@ -23,6 +23,7 @@ import android.support.annotation.CallSuper
 import android.support.annotation.IntDef
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.view.Window
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -74,22 +75,23 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
         AndroidInjection.inject(this)
 
         // apply forced locale (if set in developer options)
-        applyLocale()
+        initLocale()
 
         // set Theme before anything else in onCreate();
-        if (style == DIALOG)
-            themeHelper.applyDialogTheme(this)
-        else
-            themeHelper.applyTheme(this)
+        initTheme()
 
         super.onCreate(savedInstanceState)
+
+        if (style == DIALOG) {
+            supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
+        }
 
         setContentView(layoutRes)
 
         setSupportActionBar(toolbar)
     }
 
-    fun applyLocale() {
+    fun initLocale() {
         val forceLanguage = preferenceHandler.getValue(PreferenceHandler.FORCE_LOCALE)
         if (forceLanguage) {
             val localeString = preferenceHandler.getValue(PreferenceHandler.LOCALE)
@@ -101,6 +103,14 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
             val conf = res.configuration
             conf.locale = locale
             res.updateConfiguration(conf, dm)
+        }
+    }
+
+    fun initTheme() {
+        if (style == DIALOG) {
+            themeHelper.applyDialogTheme(this)//set up notitle
+        } else {
+            themeHelper.applyTheme(this)
         }
     }
 

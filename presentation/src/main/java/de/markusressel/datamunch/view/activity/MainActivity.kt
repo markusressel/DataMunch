@@ -3,9 +3,11 @@ package de.markusressel.datamunch.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.StringRes
+import android.support.v4.content.ContextCompat
 import com.github.ajalt.timberkt.Timber
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
+import com.mikepenz.aboutlibraries.util.Colors
 import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.mikepenz.materialdrawer.AccountHeader
@@ -19,8 +21,6 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IProfile
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
-import de.markusressel.datamunch.gui.fileuploader.FileUploaderActivity
-import de.markusressel.datamunch.gui.preferences.PreferenceOverviewActivity
 import de.markusressel.datamunch.presenatation.IconicsHelper
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
@@ -138,6 +138,10 @@ class MainActivity : DaggerSupportActivityBase() {
 
                             LibsBuilder()
                                     .withActivityStyle(aboutLibTheme)
+                                    .withActivityColor(Colors(
+                                            ContextCompat.getColor(this, R.color.primaryColor),
+                                            ContextCompat.getColor(this, R.color.primaryColor_dark)))
+                                    .withActivityTitle(getString(R.string.menu_item_about))
                                     .start(this)
 
                             false

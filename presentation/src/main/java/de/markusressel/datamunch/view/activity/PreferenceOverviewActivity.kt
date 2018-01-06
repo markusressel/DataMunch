@@ -1,8 +1,8 @@
-package de.markusressel.datamunch.gui.preferences
+package de.markusressel.datamunch.view.activity
 
 import android.os.Bundle
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.view.activity.DaggerSupportActivityBase
+import de.markusressel.datamunch.view.fragment.PreferencesFragment
 
 /**
  * Created by Markus on 20.12.2017.
@@ -10,7 +10,7 @@ import de.markusressel.datamunch.view.activity.DaggerSupportActivityBase
 class PreferenceOverviewActivity : DaggerSupportActivityBase() {
 
     override val style: Int
-        get() = DEFAULT
+        get() = DIALOG
 
     override val layoutRes: Int
         get() = R.layout.activity_preferences

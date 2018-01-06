@@ -38,7 +38,7 @@ dependencies {
     def dataDependencies = rootProject.ext.dataDependencies
     def testDependencies = rootProject.ext.dataTestDependencies
 
-    compile project(':domain')
+    implementation project(':domain')
 
     // Dagger 2
     implementation presentationDependencies.dagger
@@ -50,11 +50,9 @@ dependencies {
     implementation presentationDependencies.daggerAndroid
     implementation presentationDependencies.daggerAndroidSupport
 
-//    compile dataDependencies.javaxInject
-//    compile dataDependencies.okHttp
-    compile dataDependencies.gson
-    compile dataDependencies.rxKotlin
-//    compile dataDependencies.androidAnnotations
+    implementation dataDependencies.gson
+    implementation dataDependencies.rxKotlin
+    implementation dataDependencies.supportAnnotation
 
     // Preferences
     api('com.github.markusressel:TypedPreferences:dev-SNAPSHOT') {
@@ -70,4 +68,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
+
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }

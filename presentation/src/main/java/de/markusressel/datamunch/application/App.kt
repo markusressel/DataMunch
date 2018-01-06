@@ -1,5 +1,6 @@
 package de.markusressel.datamunch.application
 
+import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dagger.android.HasActivityInjector
@@ -21,6 +22,16 @@ class App : DaggerApplication(), HasActivityInjector {
         super.onCreate()
 
         plantTimberTrees()
+        initMemoryLeakDetection()
+    }
+
+    private fun initMemoryLeakDetection() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return
+        }
+        LeakCanary.install(this)
     }
 
     private fun plantTimberTrees() {

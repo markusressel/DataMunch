@@ -48,8 +48,6 @@ buildscript {
                 constraintLayout: "com.android.support.constraint:constraint-layout:${rootProject.ext.constraintLayoutVersion}",
                 cardviewV7: "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}",
 
-                gson: "com.google.code.gson:gson:${rootProject.ext.gsonVersion}",
-
                 // Logging
                 timberkt: "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}",
 
@@ -76,6 +74,8 @@ buildscript {
                 daggerAndroidSupport : "com.google.dagger:dagger-android-support:${rootProject.ext.dagger2Version}",
 
                 rxKotlin       : "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
+
+                supportAnnotation: "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}",
 
                 gson: "com.google.code.gson:gson:${rootProject.ext.gsonVersion}",
 

@@ -20,10 +20,12 @@
         </activity>
 
         <activity
-            android:name=".gui.preferences.PreferenceOverviewActivity"
+            android:name=".view.activity.PreferenceOverviewActivity"
             android:parentActivityName=".view.activity.MainActivity" />
 
-        <activity android:name=".gui.fileuploader.FileUploaderActivity" />
+        <activity
+            android:name=".view.activity.FileUploaderActivity"
+            android:parentActivityName=".view.activity.MainActivity" />
 
         <service android:name=".service.FileUploadService" />
     </application>
