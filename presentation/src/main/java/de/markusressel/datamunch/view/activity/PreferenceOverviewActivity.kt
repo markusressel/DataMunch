@@ -2,7 +2,7 @@ package de.markusressel.datamunch.gui.preferences
 
 import android.os.Bundle
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.dagger.DaggerSupportActivityBase
+import de.markusressel.datamunch.view.activity.DaggerSupportActivityBase
 
 /**
  * Created by Markus on 20.12.2017.

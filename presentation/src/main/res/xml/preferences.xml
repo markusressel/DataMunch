@@ -20,7 +20,7 @@
         android:key="category_general"
         android:title="@string/category_general">
 
-        <de.markusressel.datamunch.presenatation.preferences.IntListPreference
+        <de.markusressel.datamunch.view.preferences.IntListPreference
             android:entries="@array/theme_names"
             android:entryValues="@array/theme_values"
             android:key="@string/theme_key"

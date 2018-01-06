@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import de.markusressel.datamunch.application.App
-import de.markusressel.datamunch.presenatation.MainActivity
+import de.markusressel.datamunch.view.activity.MainActivity
 import javax.inject.Singleton
 
 /**

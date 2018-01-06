@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.presenatation
+package de.markusressel.datamunch.view.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -18,10 +18,10 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IProfile
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.dagger.DaggerSupportActivityBase
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.gui.fileuploader.FileUploaderActivity
 import de.markusressel.datamunch.gui.preferences.PreferenceOverviewActivity
+import de.markusressel.datamunch.presenatation.IconicsHelper
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
 import javax.inject.Inject

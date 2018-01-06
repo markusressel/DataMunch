@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.dagger
+package de.markusressel.datamunch.view.fragment
 
 import android.app.Fragment
 import android.content.Context
