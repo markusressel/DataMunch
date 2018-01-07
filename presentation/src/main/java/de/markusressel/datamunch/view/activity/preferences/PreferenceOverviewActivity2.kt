@@ -10,7 +10,7 @@ import dagger.android.HasFragmentInjector
 import dagger.android.support.HasSupportFragmentInjector
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
-import de.markusressel.datamunch.presenatation.ThemeHelper
+import de.markusressel.datamunch.view.ThemeHelper
 import javax.inject.Inject
 
 /**

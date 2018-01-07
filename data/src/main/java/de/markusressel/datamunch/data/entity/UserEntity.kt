@@ -8,7 +8,7 @@ import android.support.annotation.DrawableRes
  * Created by Markus on 06.01.2018.
  */
 data class UserEntity(
-        val id: String,
+        val id: Int,
         var username: String,
         var fullName: String,
         var eMail: String,

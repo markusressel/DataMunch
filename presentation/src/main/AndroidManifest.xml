@@ -27,7 +27,7 @@
             android:parentActivityName=".view.activity.MainActivity" />
 
         <activity
-            android:name=".view.activity.FileUploaderActivity"
+            android:name=".view.activity.fileuploader.FileUploaderActivity"
             android:parentActivityName=".view.activity.MainActivity" />
 
 

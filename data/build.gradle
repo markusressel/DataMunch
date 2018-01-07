@@ -41,14 +41,14 @@ dependencies {
     implementation project(':domain')
 
     // Dagger 2
-    implementation presentationDependencies.dagger
-    kapt presentationDependencies.daggerCompiler
+    implementation dataDependencies.dagger
+    kapt dataDependencies.daggerCompiler
     kapt "com.android.databinding:compiler:$gradle_plugin_version"
 
     // if you use the support libraries
-    kapt presentationDependencies.daggerAndroidProcessor
-    implementation presentationDependencies.daggerAndroid
-    implementation presentationDependencies.daggerAndroidSupport
+    kapt dataDependencies.daggerAndroidProcessor
+    implementation dataDependencies.daggerAndroid
+    implementation dataDependencies.daggerAndroidSupport
 
     implementation dataDependencies.gson
     implementation dataDependencies.rxKotlin

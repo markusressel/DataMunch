@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.presenatation
+package de.markusressel.datamunch.view
 
 import android.content.Context
 import android.graphics.Color

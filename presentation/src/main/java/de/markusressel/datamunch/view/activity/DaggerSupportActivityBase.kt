@@ -21,6 +21,7 @@ package de.markusressel.datamunch.view.activity
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.IntDef
+import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.Window
@@ -30,7 +31,9 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasFragmentInjector
 import dagger.android.support.HasSupportFragmentInjector
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
-import de.markusressel.datamunch.presenatation.ThemeHelper
+import de.markusressel.datamunch.navigation.Navigator
+import de.markusressel.datamunch.view.IconicsHelper
+import de.markusressel.datamunch.view.ThemeHelper
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
 import javax.inject.Inject
@@ -46,10 +49,16 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
     internal lateinit var frameworkFragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
 
     @Inject
+    protected lateinit var navigator: Navigator
+
+    @Inject
     protected lateinit var preferenceHandler: PreferenceHandler
 
     @Inject
-    internal lateinit var themeHelper: ThemeHelper
+    protected lateinit var themeHelper: ThemeHelper
+
+    @Inject
+    protected lateinit var iconicsHelper: IconicsHelper
 
     /**
      * @return true if this activity should use a dialog theme instead of a normal activity theme
@@ -60,6 +69,7 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
     /**
      * The layout ressource for this Activity
      */
+    @get:LayoutRes
     protected abstract val layoutRes: Int
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment>? {
@@ -82,6 +92,7 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
 
         super.onCreate(savedInstanceState)
 
+        // Hide title on dialogs to use toolbar instead
         if (style == DIALOG) {
             supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         }

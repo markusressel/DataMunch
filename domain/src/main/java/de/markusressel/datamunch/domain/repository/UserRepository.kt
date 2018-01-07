@@ -13,7 +13,7 @@ interface UserRepository {
     /**
      * Get an {@link Observable} which will emit a List of {@link User}.
      */
-    fun users(): Observable<List<User>>
+    fun allUsers(): Observable<List<User>>
 
     /**
      * Get an {@link Observable} which will emit a {@link User}.

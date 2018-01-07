@@ -18,15 +18,13 @@ class UserEntityDataMapper {
      * @return {@link User} if valid {@link UserEntity} otherwise null.
      */
     fun transform(userEntity: UserEntity): User {
-        val user: User = User(
+        return User(
                 userEntity.id,
                 userEntity.username,
                 userEntity.fullName,
                 userEntity.eMail,
                 userEntity.icon
         )
-
-        return user
     }
 
     /**
@@ -37,7 +35,7 @@ class UserEntityDataMapper {
      */
     fun transform(userEntityCollection: Collection<UserEntity>): List<User> {
         val userList = ArrayList<User>(20)
-        userEntityCollection.mapNotNullTo(userList) { transform(it) }
+        userEntityCollection.mapTo(userList) { transform(it) }
         return userList
     }
 

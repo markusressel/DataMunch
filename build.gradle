@@ -60,7 +60,9 @@ buildscript {
         ]
 
         domainDependencies = [
-                rxKotlin: "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
+                rxKotlin      : "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
+                daggerCompiler: "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
+                dagger        : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
         ]
 
         domainTestDependencies = [

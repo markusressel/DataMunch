@@ -14,7 +14,7 @@ import javax.inject.Singleton
 class DiskUserDataStore : UserDataStore {
 
     override fun userEntityList(): Observable<List<UserEntity>> {
-        //TODO: implement simple cache for storing/retrieving collections of users.
+        //TODO: implement simple cache for storing/retrieving collections of allUsers.
         throw UnsupportedOperationException("Operation is not available!!!")
     }
 

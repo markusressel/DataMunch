@@ -19,17 +19,9 @@ import io.reactivex.schedulers.Schedulers
  *
  * Created by Markus on 06.01.2018.
  */
-abstract class UseCase<T, Params> {
+abstract class UseCase<T, Params>(private val threadExecutor: ThreadExecutor, private val postExecutionThread: PostExecutionThread) {
 
-    private val threadExecutor: ThreadExecutor
-    private val postExecutionThread: PostExecutionThread
-    private val disposables: CompositeDisposable
-
-    constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread) {
-        this.threadExecutor = threadExecutor
-        this.postExecutionThread = postExecutionThread
-        this.disposables = CompositeDisposable()
-    }
+    private val disposables: CompositeDisposable = CompositeDisposable()
 
     /**
      * Builds an [Observable] which will be used when executing the current [UseCase].

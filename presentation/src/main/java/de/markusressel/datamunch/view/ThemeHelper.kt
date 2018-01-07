@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.presenatation
+package de.markusressel.datamunch.view
 
 import android.app.Activity
 import android.app.DialogFragment

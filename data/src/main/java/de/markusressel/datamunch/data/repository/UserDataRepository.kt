@@ -23,8 +23,8 @@ class UserDataRepository : UserRepository {
     @Inject
     lateinit var userEntityDataMapper: UserEntityDataMapper
 
-    override fun users(): Observable<List<User>> {
-        //we always get all users from the cloud
+    override fun allUsers(): Observable<List<User>> {
+        //we always get all allUsers from the cloud
         val userDataStore: UserDataStore = userDataStoreFactory.create()
         return userDataStore.userEntityList().map(this.userEntityDataMapper::transform)
     }
