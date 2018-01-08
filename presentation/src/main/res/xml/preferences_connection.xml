@@ -17,14 +17,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:key="category_general"
-        android:title="@string/category_general">
+        android:key="category_connection"
+        android:title="@string/category_connection">
 
-        <de.markusressel.datamunch.view.preferences.IntListPreference
-            android:entries="@array/theme_names"
-            android:entryValues="@array/theme_values"
-            android:key="@string/theme_key"
-            android:title="@string/theme_title" />
+        <!--<CheckBoxPreference-->
+        <!--android:defaultValue="@string/override_navigation_icon_preference_default_value"-->
+        <!--android:key="@string/override_navigation_icon_preference_key"-->
+        <!--android:summary="@string/override_navigation_icon_preference_summary"-->
+        <!--android:title="@string/override_navigation_icon_preference_title" />-->
 
     </PreferenceCategory>
 

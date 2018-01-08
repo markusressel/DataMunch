@@ -4,7 +4,6 @@ import android.content.Context
 import de.markusressel.datamunch.data.R
 import de.markusressel.typedpreferences.PreferenceItem
 import de.markusressel.typedpreferences.PreferencesHandlerBase
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,14 +19,12 @@ constructor(context: Context) : PreferencesHandlerBase(context) {
 
     override val allPreferenceItems: Set<PreferenceItem<*>> = hashSetOf(
             THEME,
-            FORCE_LOCALE,
             LOCALE
     )
 
     companion object {
         val THEME = PreferenceItem(R.string.theme_key, 0)
-        val FORCE_LOCALE = PreferenceItem(R.string.force_locale_key, false)
-        val LOCALE = PreferenceItem(R.string.locale_key, Locale.getDefault().toLanguageTag())
+        val LOCALE = PreferenceItem(R.string.locale_key, 0)
     }
 
 }

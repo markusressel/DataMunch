@@ -21,7 +21,13 @@
         android:title="@string/category_general">
 
         <de.mrapp.android.preference.activity.NavigationPreference
-            android:breadCrumbTitle="FileUploader"
+            android:breadCrumbTitle="Connection"
+            android:fragment="de.markusressel.datamunch.view.fragment.preferences.ConnectionPreferences"
+            android:summary="Server connection configuration"
+            android:title="Connection" />
+
+        <de.mrapp.android.preference.activity.NavigationPreference
+            android:breadCrumbTitle="File Uploader"
             android:fragment="de.markusressel.datamunch.view.fragment.preferences.FileUploaderPreferences"
             android:icon="@drawable/leak_canary_icon"
             android:summary="Settings related to uploading files"
@@ -34,6 +40,14 @@
             android:key="@string/theme_key"
             android:summary="Application Theme"
             android:title="@string/theme_title" />
+
+        <de.markusressel.datamunch.view.preferences.IntListPreference
+            android:breadCrumbTitle="@string/locale_title"
+            android:entries="@array/locale_names"
+            android:entryValues="@array/locale_values"
+            android:key="@string/locale_key"
+            android:summary="Application Language"
+            android:title="@string/locale_title" />
 
     </PreferenceCategory>
 

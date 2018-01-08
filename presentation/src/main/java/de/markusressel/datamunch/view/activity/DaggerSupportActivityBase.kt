@@ -30,6 +30,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasFragmentInjector
 import dagger.android.support.HasSupportFragmentInjector
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.view.IconicsHelper
@@ -105,18 +106,22 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
     }
 
     fun initLocale() {
-        val forceLanguage = preferenceHandler.getValue(PreferenceHandler.FORCE_LOCALE)
-        if (forceLanguage) {
-            val localeString = preferenceHandler.getValue(PreferenceHandler.LOCALE)
-            val locale = Locale(localeString)
+        val localeValue = preferenceHandler.getValue(PreferenceHandler.LOCALE)
 
-            val res = resources
-            // Change locale settings in the app.
-            val dm = res.displayMetrics
-            val conf = res.configuration
-            conf.locale = locale
-            res.updateConfiguration(conf, dm)
+        when (localeValue) {
+            getString(R.string.locale_EN_value).toInt() -> setLocale(Locale.ENGLISH)
+            getString(R.string.locale_DE_value).toInt() -> setLocale(Locale.GERMAN)
         }
+
+    }
+
+    private fun setLocale(locale: Locale) {
+        val res = resources
+        // Change locale settings in the app.
+        val dm = res.displayMetrics
+        val conf = res.configuration
+        conf.locale = locale
+        res.updateConfiguration(conf, dm)
     }
 
     fun initTheme() {
