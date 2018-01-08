@@ -40,7 +40,7 @@
         </item>
 
         <!-- Preferences -->
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <!--<item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>-->
     </style>
 
     <!-- Base application theme. -->
@@ -84,7 +84,7 @@
         </item>
 
         <!-- Preferences -->
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <!--<item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>-->
     </style>
 
     <style name="AppDialogTheme" parent="Theme.AppCompat.Light.Dialog">

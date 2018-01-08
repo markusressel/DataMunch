@@ -23,8 +23,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     packagingOptions {
@@ -60,7 +60,6 @@ dependencies {
 
     implementation presentationDependencies.appCompatV7
     implementation presentationDependencies.designLibrary
-    implementation presentationDependencies.preferenceV14
     implementation presentationDependencies.supportV13
     implementation presentationDependencies.supportAnnotation
     implementation presentationDependencies.constraintLayout
@@ -84,8 +83,6 @@ dependencies {
     //Development
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     // Logging
     implementation presentationDependencies.timberkt

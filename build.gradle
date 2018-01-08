@@ -27,6 +27,35 @@ buildscript {
 
         gsonVersion = "2.8.2"
 
+        dataDependencies = [
+                daggerCompiler        : "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
+                dagger                : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
+                daggerAndroidProcessor: "com.google.dagger:dagger-android-processor:${rootProject.ext.dagger2Version}",
+                daggerAndroid         : "com.google.dagger:dagger-android:${rootProject.ext.dagger2Version}",
+                daggerAndroidSupport  : "com.google.dagger:dagger-android-support:${rootProject.ext.dagger2Version}",
+
+                rxKotlin              : "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
+
+                supportAnnotation     : "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}",
+
+                gson                  : "com.google.code.gson:gson:${rootProject.ext.gsonVersion}",
+
+                // Logging
+                timberkt              : "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}",
+        ]
+
+        dataTestDependencies = [
+        ]
+
+        domainDependencies = [
+                rxKotlin      : "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
+                daggerCompiler: "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
+                dagger        : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
+        ]
+
+        domainTestDependencies = [
+        ]
+
         presentationDependencies = [
                 daggerCompiler        : "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
                 dagger                : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
@@ -57,35 +86,6 @@ buildscript {
         ]
 
         presentationTestDependencies = [
-        ]
-
-        domainDependencies = [
-                rxKotlin      : "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
-                daggerCompiler: "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
-                dagger        : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
-        ]
-
-        domainTestDependencies = [
-        ]
-
-        dataDependencies = [
-                daggerCompiler        : "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}",
-                dagger                : "com.google.dagger:dagger:${rootProject.ext.dagger2Version}",
-                daggerAndroidProcessor: "com.google.dagger:dagger-android-processor:${rootProject.ext.dagger2Version}",
-                daggerAndroid         : "com.google.dagger:dagger-android:${rootProject.ext.dagger2Version}",
-                daggerAndroidSupport  : "com.google.dagger:dagger-android-support:${rootProject.ext.dagger2Version}",
-
-                rxKotlin              : "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}",
-
-                supportAnnotation     : "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}",
-
-                gson                  : "com.google.code.gson:gson:${rootProject.ext.gsonVersion}",
-
-                // Logging
-                timberkt              : "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}",
-        ]
-
-        dataTestDependencies = [
         ]
 
         developmentDependencies = [
@@ -122,6 +122,7 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
+
 compileKotlin {
     kotlinOptions {
         jvmTarget = "1.8"

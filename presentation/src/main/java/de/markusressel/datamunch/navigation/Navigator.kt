@@ -12,7 +12,7 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.view.activity.fileuploader.FileUploaderActivity
-import de.markusressel.datamunch.view.activity.preferences.PreferenceOverviewActivity2
+import de.markusressel.datamunch.view.activity.preferences.PreferenceOverviewActivity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,7 +34,7 @@ class Navigator @Inject constructor() {
     }
 
     fun navigateToPreferences() {
-        val intent = Intent(context, PreferenceOverviewActivity2::class.java)
+        val intent = Intent(context, PreferenceOverviewActivity::class.java)
         context.startActivity(intent)
     }
 

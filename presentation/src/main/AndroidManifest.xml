@@ -22,9 +22,6 @@
         <activity
             android:name=".view.activity.preferences.PreferenceOverviewActivity"
             android:parentActivityName=".view.activity.MainActivity" />
-        <activity
-            android:name=".view.activity.preferences.PreferenceOverviewActivity2"
-            android:parentActivityName=".view.activity.MainActivity" />
 
         <activity
             android:name=".view.activity.fileuploader.FileUploaderActivity"

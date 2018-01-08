@@ -16,8 +16,7 @@ class PreferenceHandler @Inject
 constructor(context: Context) : PreferencesHandlerBase(context) {
 
     // be sure to override the get() method
-    override val sharedPreferencesName: String
-        get() = "preferences"
+    override var sharedPreferencesName: String? = null
 
     override val allPreferenceItems: Set<PreferenceItem<*>> = hashSetOf(
             THEME,
