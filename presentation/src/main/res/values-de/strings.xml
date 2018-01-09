@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DataMunch</string>
+
+    <string name="menu_item_status">Status</string>
+    <string name="menu_item_file_uploader">File Uploader</string>
+    <string name="menu_item_settings">Einstellungen</string>
+    <string name="menu_item_about">Über</string>
+
+    <string name="server_status_title">Status</string>
+
+</resources>

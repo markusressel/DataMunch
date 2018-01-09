@@ -39,7 +39,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         navigationDrawer = DrawerBuilder().withActivity(this)
                 .withAccountHeader(accountHeader)
                 .withDrawerItems(menuItemList)
-                .withCloseOnClick(true)
+                .withCloseOnClick(false)
                 .withToolbar(toolbar)
                 .withSelectedItem(getInitialNavigationDrawerSelection())
                 .build()
@@ -57,6 +57,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         return AccountHeaderBuilder()
                 .withActivity(this)
                 .withProfiles(profiles)
+                .withCloseDrawerOnProfileListClick(false)
                 .withCurrentProfileHiddenInList(true)
                 .withDividerBelowHeader(true)
                 .withOnAccountHeaderListener { view, profile, current ->

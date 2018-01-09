@@ -1,19 +1,24 @@
 package de.markusressel.datamunch.view.fragment.preferences
 
-import android.os.Bundle
 import android.preference.Preference
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.view.fragment.DaggerPreferenceFragment
 import de.mrapp.android.preference.activity.PreferenceFragment
 import de.mrapp.android.preference.activity.RestoreDefaultsListener
 
 /**
  * Created by Markus on 06.01.2018.
  */
-class FileUploaderPreferences : PreferenceFragment(), RestoreDefaultsListener {
+class FileUploaderPreferences : DaggerPreferenceFragment(), RestoreDefaultsListener {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.preferences_file_uploader)
+    override fun getPreferencesResource(): Int {
+        return R.xml.preferences_file_uploader
+    }
+
+    override fun findPreferences() {
+    }
+
+    override fun updateSummaries() {
     }
 
     override fun onRestoredDefaultValue(fragment: PreferenceFragment, preference: Preference, oldValue: Any?, newValue: Any?) {

@@ -1,7 +1,9 @@
 package de.markusressel.datamunch.view.activity.preferences
 
 import android.content.Intent
+import android.preference.Preference
 import android.preference.PreferenceFragment
+import android.support.v4.util.SparseArrayCompat
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.navigation.Navigator
@@ -14,10 +16,16 @@ import javax.inject.Inject
 class PreferenceOverviewActivity : PreferenceActivityBase() {
 
     @Inject
-    lateinit var navigator: Navigator
+    internal lateinit var navigator: Navigator
 
-    var themeListener: ((PreferenceItem<Int>, Int, Int) -> Unit)? = null
-    var localeListener: ((PreferenceItem<Int>, Int, Int) -> Unit)? = null
+    private lateinit var themeMap: SparseArrayCompat<String>
+    private lateinit var themePreference: Preference
+
+    private lateinit var localeMap: SparseArrayCompat<String>
+    private lateinit var localePreference: Preference
+
+    private var themeListener: ((PreferenceItem<Int>, Int, Int) -> Unit)? = null
+    private var localeListener: ((PreferenceItem<Int>, Int, Int) -> Unit)? = null
 
     override fun onStart() {
         super.onStart()
@@ -25,9 +33,21 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
         setListeners()
     }
 
-    override fun onCreateNavigation(fragment: PreferenceFragment) {
-        super.onCreateNavigation(fragment)
-        fragment.addPreferencesFromResource(R.xml.preferences)
+    override fun getPreferencesResource(): Int {
+        return R.xml.preferences
+    }
+
+    override fun findPreferences(fragment: PreferenceFragment) {
+        themeMap = getListPreferenceEntryValueMap(R.array.theme_values, R.array.theme_names)
+        themePreference = fragment.findPreference(getString(R.string.theme_key))
+
+        localeMap = getListPreferenceEntryValueMap(R.array.locale_values, R.array.locale_names)
+        localePreference = fragment.findPreference(getString(R.string.locale_key))
+    }
+
+    override fun updateSummaries(fragment: PreferenceFragment) {
+        themePreference.summary = themeMap[preferenceHandler.getValue(PreferenceHandler.THEME)]
+        localePreference.summary = localeMap[preferenceHandler.getValue(PreferenceHandler.LOCALE)]
     }
 
     private fun setListeners() {

@@ -19,12 +19,14 @@ constructor(context: Context) : PreferencesHandlerBase(context) {
 
     override val allPreferenceItems: Set<PreferenceItem<*>> = hashSetOf(
             THEME,
-            LOCALE
+            LOCALE,
+            CONNECTION_HOST
     )
 
     companion object {
         val THEME = PreferenceItem(R.string.theme_key, 0)
         val LOCALE = PreferenceItem(R.string.locale_key, 0)
+        val CONNECTION_HOST = PreferenceItem(R.string.connection_host_key, "frittenbude.markusressel.de")
     }
 
 }

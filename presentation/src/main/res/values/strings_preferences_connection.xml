@@ -3,4 +3,7 @@
 
     <string name="category_connection">Connection</string>
 
+    <string name="connection_host_title">Host</string>
+    <string name="connection_host_summary">Host address of the server</string>
+
 </resources>

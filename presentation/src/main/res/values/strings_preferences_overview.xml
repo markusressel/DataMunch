@@ -3,16 +3,15 @@
 
     <string name="category_general">General</string>
 
+    <string name="connection_title">Connection</string>
+    <string name="connection_summary">Server connection configuration</string>
+
+    <string name="fileUploader_title">>File Uploader</string>
+    <string name="fileUploader_summary">Settings related to uploading files</string>
+
     <!-- Theme -->
     <string name="theme_title">Theme</string>
-    <string name="theme_key">theme</string>
-
-    <string name="theme_light_value">0</string>
-    <string name="theme_dark_value">1</string>
-    <string-array name="theme_values">
-        <item>@string/theme_light_value</item>
-        <item>@string/theme_dark_value</item>
-    </string-array>
+    <string name="theme_summary">Application theme</string>
 
     <string name="theme_light_value_name">Light</string>
     <string name="theme_dark_value_name">Dark</string>
@@ -22,17 +21,8 @@
     </string-array>
 
     <!-- Locale -->
-    <string name="locale_title">Locale</string>
-    <string name="locale_key">locale</string>
-
-    <string name="locale_SYSTEM_value">0</string>
-    <string name="locale_EN_value">1</string>
-    <string name="locale_DE_value">2</string>
-    <string-array name="locale_values">
-        <item>@string/locale_SYSTEM_value</item>
-        <item>@string/locale_EN_value</item>
-        <item>@string/locale_DE_value</item>
-    </string-array>
+    <string name="locale_title">Language</string>
+    <string name="locale_summary">Application language</string>
 
     <string name="locale_SYSTEM_value_name">System</string>
     <string name="locale_EN_value_name">English</string>

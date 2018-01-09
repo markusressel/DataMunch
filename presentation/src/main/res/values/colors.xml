@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <color name="colorAccent">@color/md_amber_A200</color>
 
     <color name="primaryColor_dark">@color/color_gray_950</color>

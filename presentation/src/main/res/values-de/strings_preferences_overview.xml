@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="category_general">Allgemein</string>
+
+    <string name="connection_title">Verbindung</string>
+    <string name="connection_summary">Server Verbindungskonfiguration</string>
+
+    <string name="fileUploader_title">Datei Uploader</string>
+    <string name="fileUploader_summary">Einstellungen bezüglich Datei Uploads</string>
+
+    <!-- Theme -->
+    <string name="theme_title">Theme</string>
+    <string name="theme_summary">Design der App</string>
+
+    <string name="theme_light_value_name">Hell</string>
+    <string name="theme_dark_value_name">Dunkel</string>
+
+    <!-- Locale -->
+    <string name="locale_title">Sprache</string>
+    <string name="locale_summary">Sprache innerhalb der App</string>
+
+    <string name="locale_SYSTEM_value_name">System</string>
+    <string name="locale_EN_value_name">Englisch</string>
+    <string name="locale_DE_value_name">Deutsch</string>
+
+</resources>

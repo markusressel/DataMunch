@@ -1,9 +1,6 @@
 <resources>
 
-    <string name="category_general">General</string>
-
     <!-- Theme -->
-    <string name="theme_title">Theme</string>
     <string name="theme_key">theme</string>
 
     <string name="theme_light_value">0</string>
@@ -13,17 +10,19 @@
         <item>@string/theme_dark_value</item>
     </string-array>
 
-    <string name="theme_light_value_name">Light</string>
-    <string name="theme_dark_value_name">Dark</string>
-    <string-array name="theme_names">
-        <item>@string/theme_light_value_name</item>
-        <item>@string/theme_dark_value_name</item>
-    </string-array>
-
     <!-- Force locale -->
     <string name="force_locale_key">force_locale</string>
 
     <!-- Locale -->
     <string name="locale_key">locale</string>
+
+    <string name="locale_SYSTEM_value">0</string>
+    <string name="locale_EN_value">1</string>
+    <string name="locale_DE_value">2</string>
+    <string-array name="locale_values">
+        <item>@string/locale_SYSTEM_value</item>
+        <item>@string/locale_EN_value</item>
+        <item>@string/locale_DE_value</item>
+    </string-array>
 
 </resources>

@@ -21,23 +21,23 @@
         android:title="@string/category_general">
 
         <de.mrapp.android.preference.activity.NavigationPreference
-            android:breadCrumbTitle="Connection"
+            android:breadCrumbTitle="@string/connection_title"
             android:fragment="de.markusressel.datamunch.view.fragment.preferences.ConnectionPreferences"
-            android:summary="Server connection configuration"
-            android:title="Connection" />
+            android:summary="@string/connection_summary"
+            android:title="@string/connection_title" />
 
         <de.mrapp.android.preference.activity.NavigationPreference
-            android:breadCrumbTitle="File Uploader"
+            android:breadCrumbTitle="@string/fileUploader_title"
             android:fragment="de.markusressel.datamunch.view.fragment.preferences.FileUploaderPreferences"
-            android:summary="Settings related to uploading files"
-            android:title="FileUploader" />
+            android:summary="@string/fileUploader_summary"
+            android:title="@string/fileUploader_title" />
 
         <de.markusressel.datamunch.view.preferences.IntListPreference
             android:breadCrumbTitle="@string/theme_title"
             android:entries="@array/theme_names"
             android:entryValues="@array/theme_values"
             android:key="@string/theme_key"
-            android:summary="Application Theme"
+            android:summary="@string/theme_summary"
             android:title="@string/theme_title" />
 
         <de.markusressel.datamunch.view.preferences.IntListPreference
@@ -45,7 +45,7 @@
             android:entries="@array/locale_names"
             android:entryValues="@array/locale_values"
             android:key="@string/locale_key"
-            android:summary="Application Language"
+            android:summary="@string/locale_summary"
             android:title="@string/locale_title" />
 
     </PreferenceCategory>
