@@ -2,6 +2,7 @@ package de.markusressel.datamunch.view.activity
 
 import android.os.Bundle
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.navigation.DrawerItemHolder
 import de.markusressel.datamunch.view.fragment.ServerStatusFragment
 
 
@@ -12,6 +13,10 @@ class MainActivity : NavigationDrawerActivity() {
 
     override val layoutRes: Int
         get() = R.layout.activity_main
+
+    override fun getInitialNavigationDrawerSelection(): Long {
+        return DrawerItemHolder.Status.identifier
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

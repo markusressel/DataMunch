@@ -10,4 +10,5 @@ data class DrawerMenuItem(
         val identifier: Long,
         @StringRes
         val title: Int,
-        val icon: IIcon)
+        val icon: IIcon,
+        val selectable: Boolean)
