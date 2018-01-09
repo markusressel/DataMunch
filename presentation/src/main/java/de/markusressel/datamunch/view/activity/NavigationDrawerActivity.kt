@@ -32,6 +32,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         DrawerBuilder().withActivity(this)
                 .withAccountHeader(accountHeader)
                 .withDrawerItems(menuItemList)
+                .withCloseOnClick(true)
                 .withToolbar(toolbar)
                 .build()
     }
@@ -59,7 +60,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                 ProfileDrawerItem()
                         .withName("Markus Ressel")
                         .withEmail("")
-                        .withIcon(R.drawable.leak_canary_icon)
+                        .withIcon(R.mipmap.ic_launcher)
         )
 
         profiles.add(
@@ -77,11 +78,11 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
         menuItemList.add(
                 PrimaryDrawerItem()
-                        .withName(Navigator.Companion.DrawerMenuItem.FileUploader.name)
-                        .withIdentifier(Navigator.Companion.DrawerMenuItem.FileUploader.identifier)
-                        .withIcon(iconicsHelper.getMenuIcon(Navigator.Companion.DrawerMenuItem.FileUploader.icon))
+                        .withName(Navigator.DrawerItems.FileUploader.title)
+                        .withIdentifier(Navigator.DrawerItems.FileUploader.identifier)
+                        .withIcon(iconicsHelper.getMenuIcon(Navigator.DrawerItems.FileUploader.icon))
                         .withOnDrawerItemClickListener { view, i, iDrawerItem ->
-                            navigator.navigateToFileUploader()
+                            navigator.navigateTo(this, Navigator.NavigationPages.FileUploaderPage)
                             false
                         }
         )
@@ -92,11 +93,11 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
         menuItemList.add(
                 PrimaryDrawerItem()
-                        .withName(Navigator.Companion.DrawerMenuItem.Settings.name)
-                        .withIdentifier(Navigator.Companion.DrawerMenuItem.Settings.identifier)
-                        .withIcon(iconicsHelper.getMenuIcon(Navigator.Companion.DrawerMenuItem.Settings.icon))
+                        .withName(Navigator.DrawerItems.Settings.title)
+                        .withIdentifier(Navigator.DrawerItems.Settings.identifier)
+                        .withIcon(iconicsHelper.getMenuIcon(Navigator.DrawerItems.Settings.icon))
                         .withOnDrawerItemClickListener { view, i, iDrawerItem ->
-                            navigator.navigateToPreferences()
+                            navigator.navigateTo(this, Navigator.NavigationPages.PreferencesOverviewPage)
                             false
                         }
         )
@@ -107,11 +108,11 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
         menuItemList.add(
                 SecondaryDrawerItem()
-                        .withName(Navigator.Companion.DrawerMenuItem.About.title)
-                        .withIdentifier(Navigator.Companion.DrawerMenuItem.About.identifier)
-                        .withIcon(iconicsHelper.getMenuIcon(Navigator.Companion.DrawerMenuItem.About.icon))
+                        .withName(Navigator.DrawerItems.About.title)
+                        .withIdentifier(Navigator.DrawerItems.About.identifier)
+                        .withIcon(iconicsHelper.getMenuIcon(Navigator.DrawerItems.About.icon))
                         .withOnDrawerItemClickListener { view, i, iDrawerItem ->
-                            navigator.navigateToAbout()
+                            navigator.navigateTo(this, Navigator.NavigationPages.AboutPage)
                             false
                         }
         )

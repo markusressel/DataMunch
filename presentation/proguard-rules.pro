@@ -19,3 +19,13 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+# AboutLibraries
+-keep class .R
+-keep class **.R$* {
+    <fields>;
+}
+
+# Dagger 2
+-dontwarn com.google.errorprone.annotations.*

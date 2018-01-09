@@ -31,8 +31,8 @@ class ThemeHelper @Inject constructor() {
     fun applyPreferencesTheme(target: Activity) {
         val theme = preferenceHandler.getValue(THEME)
         when (theme) {
-            context.getString(R.string.theme_light_value).toInt() -> setTheme(target, R.style.PreferenceActivity_Light)
-            context.getString(R.string.theme_dark_value).toInt() -> setTheme(target, R.style.PreferenceActivity)
+            context.getString(R.string.theme_light_value).toInt() -> setTheme(target, R.style.PreferenceActivityThemeLight)
+            context.getString(R.string.theme_dark_value).toInt() -> setTheme(target, R.style.PreferenceActivityThemeDark)
         }
     }
 
@@ -44,7 +44,7 @@ class ThemeHelper @Inject constructor() {
     fun applyTheme(activity: Activity) {
         val theme = preferenceHandler.getValue(THEME)
         when (theme) {
-            context.getString(R.string.theme_light_value).toInt() -> setTheme(activity, R.style.AppTheme)
+            context.getString(R.string.theme_light_value).toInt() -> setTheme(activity, R.style.AppThemeLight)
             context.getString(R.string.theme_dark_value).toInt() -> setTheme(activity, R.style.AppThemeDark)
             else -> setTheme(activity, R.style.AppThemeDark)
         }
@@ -58,7 +58,7 @@ class ThemeHelper @Inject constructor() {
     fun applyDialogTheme(activity: Activity) {
         val theme = preferenceHandler.getValue(THEME)
         when (theme) {
-            context.getString(R.string.theme_light_value).toInt() -> setTheme(activity, R.style.AppDialogTheme)
+            context.getString(R.string.theme_light_value).toInt() -> setTheme(activity, R.style.AppDialogThemeLight)
             context.getString(R.string.theme_dark_value).toInt() -> setTheme(activity, R.style.AppDialogThemeDark)
             else -> setTheme(activity, R.style.AppDialogThemeDark)
         }
@@ -73,7 +73,7 @@ class ThemeHelper @Inject constructor() {
     fun applyDialogTheme(dialogFragment: DialogFragment) {
         val theme = preferenceHandler.getValue(THEME)
         when (theme) {
-            context.getString(R.string.theme_light_value).toInt() -> dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppDialogTheme)
+            context.getString(R.string.theme_light_value).toInt() -> dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppDialogThemeLight)
             context.getString(R.string.theme_dark_value).toInt() -> dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppDialogThemeDark)
             else -> dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppDialogThemeDark)
         }

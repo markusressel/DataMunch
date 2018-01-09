@@ -4,14 +4,17 @@ import android.content.Intent
 import android.preference.PreferenceFragment
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
-import de.markusressel.datamunch.view.activity.MainActivity
+import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.typedpreferences.PreferenceItem
+import javax.inject.Inject
 
 /**
  * Created by Markus on 15.07.2017.
  */
-
 class PreferenceOverviewActivity : PreferenceActivityBase() {
+
+    @Inject
+    lateinit var navigator: Navigator
 
     override fun onCreateNavigation(fragment: PreferenceFragment) {
         super.onCreateNavigation(fragment)
@@ -32,13 +35,13 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
 
     private fun restartActivity() {
         finish()
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
 
-        val intentPreferences = Intent(this, PreferenceOverviewActivity::class.java)
-        startActivity(intentPreferences)
+        navigator.navigateTo(this,
+                Navigator.NavigationPages.MainPage,
+                Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        navigator.navigateTo(this,
+                Navigator.NavigationPages.PreferencesOverviewPage)
     }
 
 }

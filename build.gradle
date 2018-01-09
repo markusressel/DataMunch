@@ -5,7 +5,7 @@ buildscript {
         kotlin_version = '1.2.10'
         gradle_plugin_version = '3.0.1'
 
-        minSdkVersion = 23
+        minSdkVersion = 22
         versionName = "0.0.1"
         versionCode = 1
 
@@ -120,6 +120,8 @@ repositories {
 }
 
 dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 
