@@ -167,8 +167,8 @@
 
         <item name="windowActionBar">false</item>
 
-        <item name="android:windowBackground">@color/windowBackgroundColor</item>
-        <item name="android:colorBackground">@color/windowBackgroundColor</item>
+        <item name="android:windowBackground">@color/windowBackgroundColorInverse</item>
+        <item name="android:colorBackground">@color/windowBackgroundColorInverse</item>
     </style>
 
     <style name="PreferenceActivityThemeDark" parent="@style/PreferenceActivity">

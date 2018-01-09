@@ -21,8 +21,10 @@
     <color name="textColorInactive">#FFFFFFFF</color>
 
 
-    <color name="windowBackgroundColor">#FF313031</color>
-    <color name="windowBackgroundColorInverse">#FFCECFCE</color>
+    <!--<color name="windowBackgroundColor">#FF313031</color>-->
+    <color name="windowBackgroundColor">#303030</color>
+    <!--<color name="windowBackgroundColorInverse">#FFCECFCE</color>-->
+    <color name="windowBackgroundColorInverse">#FAFAFA</color>
 
     <color name="cardview_background">@color/color_gray_800</color>
     <color name="cardview_backgroundInverse">@color/color_gray_100</color>
