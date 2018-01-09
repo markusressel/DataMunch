@@ -6,7 +6,7 @@
     <string name="connection_title">Connection</string>
     <string name="connection_summary">Server connection configuration</string>
 
-    <string name="fileUploader_title">>File Uploader</string>
+    <string name="fileUploader_title">File Uploader</string>
     <string name="fileUploader_summary">Settings related to uploading files</string>
 
     <!-- Theme -->

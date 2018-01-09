@@ -45,7 +45,7 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
         localePreference = fragment.findPreference(getString(R.string.locale_key))
     }
 
-    override fun updateSummaries(fragment: PreferenceFragment) {
+    override fun updateSummaries() {
         themePreference.summary = themeMap[preferenceHandler.getValue(PreferenceHandler.THEME)]
         localePreference.summary = localeMap[preferenceHandler.getValue(PreferenceHandler.LOCALE)]
     }

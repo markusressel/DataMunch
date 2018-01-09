@@ -44,8 +44,6 @@ abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.Pre
     @Inject
     internal lateinit var themeHelper: ThemeHelper
 
-    protected lateinit var childFragment: PreferenceFragment
-
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -61,14 +59,24 @@ abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.Pre
 
     override fun onCreateNavigation(fragment: PreferenceFragment) {
         super.onCreateNavigation(fragment)
-        childFragment = fragment
+        fragment.addPreferencesFromResource(getPreferencesResource())
+    }
 
-        childFragment.addPreferencesFromResource(getPreferencesResource())
+    override fun onStart() {
+        super.onStart()
 
-        childFragment.preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        navigationFragment?.let {
+            findPreferences(it)
+            it.preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        }
+    }
 
-        findPreferences(fragment)
-        updateSummaries(fragment)
+    override fun onResume() {
+        super.onResume()
+
+        navigationFragment?.let {
+            updateSummaries()
+        }
     }
 
     /**
@@ -80,7 +88,7 @@ abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.Pre
      * Use this method to update the summary of preferences that need to change
      * depending on it's current value
      */
-    abstract protected fun updateSummaries(fragment: PreferenceFragment)
+    abstract protected fun updateSummaries()
 
     /**
      * Return the xml resource for this preference screen
@@ -89,7 +97,7 @@ abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.Pre
     abstract protected fun getPreferencesResource(): Int
 
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
-        updateSummaries(childFragment)
+        updateSummaries()
     }
 
     private fun initTheme() {
@@ -120,7 +128,9 @@ abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.Pre
     override fun onStop() {
         super.onStop()
 
-        childFragment.preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        navigationFragment?.let {
+            it.preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        }
     }
 
 }

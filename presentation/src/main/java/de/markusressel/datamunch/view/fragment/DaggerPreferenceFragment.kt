@@ -39,9 +39,19 @@ abstract class DaggerPreferenceFragment : PreferenceFragment(), HasFragmentInjec
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(getPreferencesResource())
 
-        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-
         findPreferences()
+        updateSummaries()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         updateSummaries()
     }
 
