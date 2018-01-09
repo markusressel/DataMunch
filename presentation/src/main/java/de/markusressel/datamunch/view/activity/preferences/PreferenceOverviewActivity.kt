@@ -16,6 +16,9 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
     @Inject
     lateinit var navigator: Navigator
 
+    var themeListener: ((PreferenceItem<Int>, Int, Int) -> Unit)? = null
+    var localeListener: ((PreferenceItem<Int>, Int, Int) -> Unit)? = null
+
     override fun onCreateNavigation(fragment: PreferenceFragment) {
         super.onCreateNavigation(fragment)
         fragment.addPreferencesFromResource(R.xml.preferences)
@@ -24,11 +27,11 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
     }
 
     private fun setListeners() {
-        preferenceHandler.addOnPreferenceChangedListener(PreferenceHandler.THEME) { preferenceItem: PreferenceItem<Int>, old: Int, new: Int ->
+        themeListener = preferenceHandler.addOnPreferenceChangedListener(PreferenceHandler.THEME) { preferenceItem: PreferenceItem<Int>, old: Int, new: Int ->
             restartActivity()
         }
 
-        preferenceHandler.addOnPreferenceChangedListener(PreferenceHandler.LOCALE) { preferenceItem: PreferenceItem<Int>, old: Int, new: Int ->
+        localeListener = preferenceHandler.addOnPreferenceChangedListener(PreferenceHandler.LOCALE) { preferenceItem: PreferenceItem<Int>, old: Int, new: Int ->
             restartActivity()
         }
     }
@@ -42,6 +45,18 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
 
         navigator.navigateTo(this,
                 Navigator.NavigationPages.PreferencesOverviewPage)
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        themeListener?.let {
+            preferenceHandler.removeOnPreferenceChangedListener(it)
+        }
+
+        localeListener?.let {
+            preferenceHandler.removeOnPreferenceChangedListener(it)
+        }
     }
 
 }
