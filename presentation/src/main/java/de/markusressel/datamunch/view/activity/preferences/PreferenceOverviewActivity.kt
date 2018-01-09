@@ -19,11 +19,15 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
     var themeListener: ((PreferenceItem<Int>, Int, Int) -> Unit)? = null
     var localeListener: ((PreferenceItem<Int>, Int, Int) -> Unit)? = null
 
+    override fun onStart() {
+        super.onStart()
+
+        setListeners()
+    }
+
     override fun onCreateNavigation(fragment: PreferenceFragment) {
         super.onCreateNavigation(fragment)
         fragment.addPreferencesFromResource(R.xml.preferences)
-
-        setListeners()
     }
 
     private fun setListeners() {
