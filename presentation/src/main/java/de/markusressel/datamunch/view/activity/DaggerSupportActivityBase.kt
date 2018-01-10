@@ -112,7 +112,6 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
             getString(R.string.locale_EN_value).toInt() -> setLocale(Locale.ENGLISH)
             getString(R.string.locale_DE_value).toInt() -> setLocale(Locale.GERMAN)
         }
-
     }
 
     private fun setLocale(locale: Locale) {
@@ -120,11 +119,15 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
         // Change locale settings in the app.
         val dm = res.displayMetrics
         val conf = res.configuration
+
         conf.locale = locale
+        conf.setLocale(locale)
         res.updateConfiguration(conf, dm)
+
+        onConfigurationChanged(conf)
     }
 
-    fun initTheme() {
+    private fun initTheme() {
         if (style == DIALOG) {
             themeHelper.applyDialogTheme(this)//set up notitle
         } else {

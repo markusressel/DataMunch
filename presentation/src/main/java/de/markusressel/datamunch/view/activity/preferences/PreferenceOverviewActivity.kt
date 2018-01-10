@@ -57,6 +57,7 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
 
         localeListener = preferenceHandler.addOnPreferenceChangedListener(PreferenceHandler.LOCALE) { preferenceItem: PreferenceItem<Int>, old: Int, new: Int ->
             restartActivity()
+            recreate()
         }
     }
 
