@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import de.markusressel.datamunch.view.activity.preferences.PreferenceActivityBase
 import de.markusressel.datamunch.view.activity.preferences.PreferenceOverviewActivity
-import de.markusressel.datamunch.view.fragment.DaggerPreferenceFragment
 import de.markusressel.datamunch.view.fragment.preferences.ConnectionPreferences
+import de.markusressel.datamunch.view.fragment.preferences.DaggerPreferenceFragment
 import de.markusressel.datamunch.view.fragment.preferences.FileUploaderPreferences
 
 /**

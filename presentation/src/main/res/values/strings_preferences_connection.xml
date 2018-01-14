@@ -3,7 +3,15 @@
 
     <string name="category_connection">Connection</string>
 
+    <string name="category_connection_ssh" translatable="false">SSH</string>
+
     <string name="connection_host_title">Host</string>
     <string name="connection_host_summary">Host address of the server</string>
+
+    <string name="connection_ssh_user_summary">User</string>
+    <string name="connection_ssh_user_title">User</string>
+
+    <string name="connection_ssh_password_summary">Password</string>
+    <string name="connection_ssh_password_title">Password</string>
 
 </resources>

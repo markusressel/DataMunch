@@ -54,13 +54,20 @@ dependencies {
     implementation dataDependencies.rxKotlin
     implementation dataDependencies.supportAnnotation
 
+    // Logging
+    api dataDependencies.timberkt
+
     // Preferences
     api('com.github.markusressel:TypedPreferences:dev-SNAPSHOT') {
         //compile('com.github.markusressel:TypedPreferences:v1.1.0') {
         exclude module: 'app'
         transitive = true
-        changing = true
+//        changing = true
     }
+
+    // JSch (SSH client)
+    compile "com.jcraft:jsch:0.1.52"
+
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

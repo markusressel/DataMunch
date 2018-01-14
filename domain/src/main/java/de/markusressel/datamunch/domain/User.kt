@@ -5,8 +5,8 @@ package de.markusressel.datamunch.domain
  *
  * Created by Markus on 06.01.2018.
  */
-class User(val id: Int,
-           var username: String,
-           var fullName: String,
-           var eMail: String,
-           var icon: Int)
+data class User(val id: Int,
+                var username: String,
+                var fullName: String,
+                var eMail: String,
+                var icon: Int)

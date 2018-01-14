@@ -10,6 +10,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
+        <item name="cardview_backgroundColor">@color/cardview_backgroundInverse</item>
+
+
         <!-- About Libraries -->
         <!--<item name="about_libraries_window_background">@color/windowBackgroundColorInverse</item>-->
         <!--<item name="about_libraries_card">@color/cardview_backgroundInverse</item>-->
@@ -25,6 +28,7 @@
         <!--<item name="about_libraries_dividerLight_openSource">-->
         <!--@color/about_libraries_dividerLight_openSource-->
         <!--</item>-->
+
 
         <!-- MaterialDrawer specific valueDescriptions -->
         <item name="material_drawer_background">@color/material_drawer_background</item>
@@ -50,6 +54,8 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="cardview_backgroundColor">@color/cardview_background</item>
 
         <!-- About Libraries -->
         <!--<item name="about_libraries_window_background">@color/windowBackgroundColor</item>-->

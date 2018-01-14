@@ -76,9 +76,6 @@ buildscript {
                 constraintLayout      : "com.android.support.constraint:constraint-layout:${rootProject.ext.constraintLayoutVersion}",
                 cardviewV7            : "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}",
 
-                // Logging
-                timberkt              : "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}",
-
                 // Iconics
                 iconicsCore           : "com.mikepenz:iconics-core:${rootProject.ext.iconicsVersion}@aar",
                 iconicsViews          : "com.mikepenz:iconics-views:${rootProject.ext.iconicsVersion}@aar"

@@ -6,4 +6,10 @@
     <string name="connection_host_title">Host</string>
     <string name="connection_host_summary">Host Adresse des Servers</string>
 
+    <string name="connection_ssh_user_summary">Nutzer</string>
+    <string name="connection_ssh_user_title">Nutzer</string>
+
+    <string name="connection_ssh_password_summary">Passwort</string>
+    <string name="connection_ssh_password_title">Passwort</string>
+
 </resources>

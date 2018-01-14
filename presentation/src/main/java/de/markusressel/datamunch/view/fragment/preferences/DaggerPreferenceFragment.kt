@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment
+package de.markusressel.datamunch.view.fragment.preferences
 
 import android.app.Fragment
 import android.content.Context
@@ -16,7 +16,6 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.07.2017.
  */
-
 abstract class DaggerPreferenceFragment : PreferenceFragment(), HasFragmentInjector, SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject

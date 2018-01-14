@@ -3,7 +3,6 @@ package de.markusressel.datamunch.view.fragment.preferences
 import android.preference.Preference
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
-import de.markusressel.datamunch.view.fragment.DaggerPreferenceFragment
 import de.mrapp.android.preference.activity.PreferenceFragment
 import de.mrapp.android.preference.activity.RestoreDefaultsListener
 

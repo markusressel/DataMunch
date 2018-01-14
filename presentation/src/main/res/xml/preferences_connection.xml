@@ -16,21 +16,27 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <EditTextPreference
+        android:inputType="textUri"
+        android:key="@string/connection_host_key"
+        android:summary="@string/connection_host_summary"
+        android:title="@string/connection_host_title" />
+
     <PreferenceCategory
         android:key="category_connection"
-        android:title="@string/category_connection">
+        android:title="@string/category_connection_ssh">
 
         <EditTextPreference
-            android:inputType="textUri"
-            android:key="@string/connection_host_key"
-            android:summary="@string/connection_host_summary"
-            android:title="@string/connection_host_title" />
+            android:inputType="text"
+            android:key="@string/connection_ssh_user_key"
+            android:summary="@string/connection_ssh_user_summary"
+            android:title="@string/connection_ssh_user_title" />
 
-        <!--<CheckBoxPreference-->
-        <!--android:defaultValue="@string/override_navigation_icon_preference_default_value"-->
-        <!--android:key="@string/override_navigation_icon_preference_key"-->
-        <!--android:summary="@string/override_navigation_icon_preference_summary"-->
-        <!--android:title="@string/override_navigation_icon_preference_title" />-->
+        <EditTextPreference
+            android:inputType="textPassword"
+            android:key="@string/connection_ssh_password_key"
+            android:summary="@string/connection_ssh_password_summary"
+            android:title="@string/connection_ssh_password_title" />
 
     </PreferenceCategory>
 

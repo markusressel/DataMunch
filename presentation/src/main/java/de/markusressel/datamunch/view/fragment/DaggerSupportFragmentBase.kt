@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
+import de.markusressel.datamunch.data.preferences.PreferenceHandler
+import javax.inject.Inject
 
 /**
  * Base class for implementing a fragment
@@ -15,6 +17,9 @@ import dagger.android.support.DaggerFragment
 abstract class DaggerSupportFragmentBase : DaggerFragment() {
 
     lateinit protected var rootView: View
+
+    @Inject
+    protected lateinit var preferenceHandler: PreferenceHandler
 
     /**
      * The layout resource for this Activity

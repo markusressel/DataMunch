@@ -20,13 +20,19 @@ constructor(context: Context) : PreferencesHandlerBase(context) {
     override val allPreferenceItems: Set<PreferenceItem<*>> = hashSetOf(
             THEME,
             LOCALE,
-            CONNECTION_HOST
+            CONNECTION_HOST,
+            SSH_USER,
+            SSH_PASS
     )
 
     companion object {
         val THEME = PreferenceItem(R.string.theme_key, 0)
         val LOCALE = PreferenceItem(R.string.locale_key, 0)
+
         val CONNECTION_HOST = PreferenceItem(R.string.connection_host_key, "frittenbude.markusressel.de")
+
+        val SSH_USER = PreferenceItem(R.string.connection_ssh_user_key, "root")
+        val SSH_PASS = PreferenceItem(R.string.connection_ssh_password_key, "")
     }
 
 }
