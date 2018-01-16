@@ -1,11 +1,10 @@
 package de.markusressel.datamunch.data
 
 import de.markusressel.datamunch.data.entity.Jail
-import de.markusressel.datamunch.data.entity.Server
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
+import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
 import de.markusressel.datamunch.data.ssh.SSHClient
-import de.markusressel.datamunch.domain.SSHCredentials
-import de.markusressel.datamunch.domain.SSHProxyConfiguration
+import de.markusressel.datamunch.domain.SSHConnectionConfig
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,7 +13,7 @@ import javax.inject.Singleton
  * Created by Markus on 14.01.2018.
  */
 @Singleton
-class ServerManager @Inject constructor() {
+class FreeBSDServerManager @Inject constructor() {
 
     @Inject
     lateinit var preferenceHandler: PreferenceHandler
@@ -25,17 +24,18 @@ class ServerManager @Inject constructor() {
     /**
      * Retrieve a list of all jails on this server
      */
-    fun retrieveJails(server: Server, port: Int = 22, sshCredentials: SSHCredentials): List<Jail> {
-        val jails: MutableList<Jail> = LinkedList()
-
+    fun retrieveJails(vararg sshConnectionConfig: SSHConnectionConfig): List<Jail> {
         val commandResult = sshClient.executeCommand(
-                host = server.host,
-                port = port,
-                user = sshCredentials.username,
-                password = sshCredentials.password,
+                *sshConnectionConfig,
                 command = "jls")
 
-        val trimmedResult = commandResult.trimIndent()
+        return parseJails(commandResult)
+    }
+
+    private fun parseJails(commandResult: ExecuteCommandResult): List<Jail> {
+        val jails: MutableList<Jail> = LinkedList()
+
+        val trimmedResult = commandResult.output.trimIndent()
 
         val lines = trimmedResult.split("\n")
         val header = lines[0]
@@ -67,37 +67,20 @@ class ServerManager @Inject constructor() {
     /**
      * Retrieve a list of all jails on this server
      */
-    fun retrieveUptime(server: Server, port: Int = 22,
-                       sshCredentials: SSHCredentials,
-                       sshProxy: SSHProxyConfiguration? = null): UptimeResult {
+    fun retrieveUptime(vararg sshConnectionConfig: SSHConnectionConfig): UptimeResult {
 
         val command = "uptime"
 
-        val result: String
-        if (sshProxy != null) {
-            result = sshClient.executeCommand(proxyHost = sshProxy.host,
-                    proxyPort = sshProxy.port,
-                    proxyUser = sshProxy.username,
-                    proxyPassword = sshProxy.password,
-                    targetHost = server.host,
-                    targetPort = port,
-                    targetUser = sshCredentials.username,
-                    targetPassword = sshCredentials.password,
-                    command = command)
-        } else {
-            result = sshClient.executeCommand(
-                    host = server.host,
-                    port = port,
-                    user = sshCredentials.username,
-                    password = sshCredentials.password,
-                    command = command)
-        }
+        val result: ExecuteCommandResult =
+                sshClient.executeCommand(
+                        *sshConnectionConfig,
+                        command = command)
 
         return parseUptimeResult(result)
     }
 
-    private fun parseUptimeResult(commandResult: String): UptimeResult {
-        val trimmedResult = commandResult.trimIndent()
+    private fun parseUptimeResult(commandResult: ExecuteCommandResult): UptimeResult {
+        val trimmedResult = commandResult.output.trimIndent()
 
         val lines = trimmedResult.split(",")
 

@@ -33,14 +33,14 @@ constructor(context: Context) : PreferencesHandlerBase(context) {
         val THEME = PreferenceItem(R.string.theme_key, 0)
         val LOCALE = PreferenceItem(R.string.locale_key, 0)
 
-        val CONNECTION_HOST = PreferenceItem(R.string.connection_host_key, "frittenbude.markusressel.de")
+        val CONNECTION_HOST = PreferenceItem(R.string.connection_host_key, "192.168.2.10")
 
         val SSH_USER = PreferenceItem(R.string.connection_ssh_user_key, "root")
-        val SSH_PASS = PreferenceItem(R.string.connection_ssh_password_key, "")
+        val SSH_PASS = PreferenceItem(R.string.connection_ssh_password_key, "M0yBKOM7RbsCn5Q@8xz1XWZ77")
         val SSH_PROXY_HOST = PreferenceItem(R.string.connection_ssh_proxy_host_key, "turris.ydns.eu")
         val SSH_PROXY_PORT = PreferenceItem(R.string.connection_ssh_proxy_port_key, 48123)
         val SSH_PROXY_USER = PreferenceItem(R.string.connection_ssh_proxy_user_key, "root")
-        val SSH_PROXY_PASSWORD = PreferenceItem(R.string.connection_ssh_proxy_password_key, "")
+        val SSH_PROXY_PASSWORD = PreferenceItem(R.string.connection_ssh_proxy_password_key, "JxYZbT47vvXmzy952h4H")
     }
 
 }

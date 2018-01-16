@@ -3,8 +3,7 @@ package de.markusressel.datamunch.view.fragment
 import android.os.Bundle
 import com.github.ajalt.timberkt.Timber
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.ServerManager
-import de.markusressel.datamunch.data.entity.Server
+import de.markusressel.datamunch.data.FreeBSDServerManager
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.CONNECTION_HOST
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PASS
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PROXY_HOST
@@ -12,8 +11,7 @@ import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SS
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PROXY_PORT
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PROXY_USER
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_USER
-import de.markusressel.datamunch.domain.SSHCredentials
-import de.markusressel.datamunch.domain.SSHProxyConfiguration
+import de.markusressel.datamunch.domain.SSHConnectionConfig
 import de.markusressel.datamunch.domain.User
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,7 +28,7 @@ import javax.inject.Inject
 class ServerStatusFragment : DaggerSupportFragmentBase() {
 
     @Inject
-    lateinit var serverManager: ServerManager
+    lateinit var freeBSDServerManager: FreeBSDServerManager
 
     override val layoutRes: Int
         get() = R.layout.fragment_server_status
@@ -40,24 +38,21 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
 
         val user = User(0, "Markus", "Markus Ressel", "mail@markusressel.de", 0)
 
-        val server = Server(0, "Frittenbude", preferenceHandler.getValue(CONNECTION_HOST))
+        val frittenbudeSshConnectionConfig = SSHConnectionConfig(
+                host = preferenceHandler.getValue(CONNECTION_HOST),
+                username = preferenceHandler.getValue(SSH_USER),
+                password = preferenceHandler.getValue(SSH_PASS)
+        )
 
-        val username = preferenceHandler.getValue(SSH_USER)
-        val password = preferenceHandler.getValue(SSH_PASS)
-
-        val sshCredentials = SSHCredentials(username, password)
-
-        val sshProxyConfig = SSHProxyConfiguration(
+        val turrisSshConnectionConfig = SSHConnectionConfig(
                 host = preferenceHandler.getValue(SSH_PROXY_HOST),
                 port = preferenceHandler.getValue(SSH_PROXY_PORT),
                 username = preferenceHandler.getValue(SSH_PROXY_USER),
-                password = preferenceHandler.getValue(SSH_PROXY_PASSWORD))
+                password = preferenceHandler.getValue(SSH_PROXY_PASSWORD)
+        )
 
         Single.fromCallable {
-            serverManager.retrieveJails(
-                    server = server,
-                    sshCredentials = sshCredentials
-            )
+            freeBSDServerManager.retrieveJails(frittenbudeSshConnectionConfig)
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -77,10 +72,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                 )
 
         Single.fromCallable {
-            serverManager.retrieveUptime(
-                    server = server,
-                    sshCredentials = sshCredentials
-            )
+            freeBSDServerManager.retrieveUptime(frittenbudeSshConnectionConfig)
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -103,10 +95,9 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
 
         // tunneled connection
         Single.fromCallable {
-            serverManager.retrieveUptime(
-                    server = server,
-                    sshCredentials = sshCredentials,
-                    sshProxy = sshProxyConfig
+            freeBSDServerManager.retrieveUptime(
+                    turrisSshConnectionConfig,
+                    frittenbudeSshConnectionConfig
             )
         }
                 .subscribeOn(Schedulers.io())

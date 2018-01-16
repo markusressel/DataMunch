@@ -5,6 +5,7 @@ import com.jcraft.jsch.ChannelExec
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
 import com.jcraft.jsch.UserInfo
+import de.markusressel.datamunch.domain.SSHConnectionConfig
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,75 +19,15 @@ class SSHClient @Inject constructor() {
     private val sshClient: JSch = JSch()
 
     /**
-     * Execute a SSH command
+     * Execute a SSH command and retrieve it's output
      *
-     * @param host host address
-     * @param port host port
-     * @param user user name
-     * @param password user password
-     */
-    fun executeCommand(proxyHost: String, proxyPort: Int = 22, proxyUser: String, proxyPassword: String,
-                       targetHost: String, targetPort: Int = 22, targetUser: String, targetPassword: String,
-                       command: String): String {
-        val result: String = runOnTunneledSession(
-                proxyHost = proxyHost,
-                proxyPort = proxyPort,
-                proxyUser = proxyUser,
-                proxyPassword = proxyPassword,
-                targetHost = targetHost,
-                targetPort = targetPort,
-                targetUser = targetUser,
-                targetPassword = targetPassword) { proxySession: Session, targetSession: Session ->
-            // connect the channel
-            val channel = createExecChannel(targetSession, command)
-            channel.connect()
-
-            val inputStream = channel.inputStream
-
-            var result = ""
-            val tmp = ByteArray(1024)
-            while (true) {
-
-                while (inputStream.available() > 0) {
-                    val i: Int = inputStream.read(tmp, 0, tmp.size)
-                    if (i < 0) break
-
-                    result += String(tmp, 0, i)
-                }
-
-                if (channel.isClosed) {
-                    if (inputStream.available() > 0) continue
-
-                    Timber.d { "Exit-Status: ${channel.exitStatus} Result: $result" }
-                    break
-                }
-                try {
-                    Thread.sleep(1000)
-                } catch (ee: Exception) {
-                }
-            }
-
-            channel.disconnect()
-
-            result
-        }
-
-        return result
-    }
-
-    /**
-     * Execute a SSH command
+     * @param connectionConfig the connection configuration
+     * @param command the command to execute
      *
-     * @param host host address
-     * @param port host port
-     * @param user user name
-     * @param password user password
+     * @return the command output
      */
-    fun executeCommand(host: String, port: Int = 22,
-                       user: String, password: String,
-                       command: String): String {
-
-        val result = runOnSession(host, port, user, password) { session: Session ->
+    fun executeCommand(vararg connectionConfig: SSHConnectionConfig, command: String): ExecuteCommandResult {
+        val result: ExecuteCommandResult = runOnSession(*connectionConfig) { session: Session ->
 
             // connect the channel
             val channel = createExecChannel(session, command)
@@ -119,90 +60,53 @@ class SSHClient @Inject constructor() {
 
             channel.disconnect()
 
-            result
+            ExecuteCommandResult(channel.exitStatus, result)
         }
-
 
         return result
     }
 
-    /**
-     * Get a standard ssh session
-     */
-    private fun runOnSession(host: String, port: Int,
-                             user: String, password: String,
-                             run: (session: Session) -> String): String {
-        val session = sshClient.getSession(user, host, port)
-
-        session.userInfo = object : UserInfo {
-            override fun promptPassphrase(message: String?): Boolean {
-                return true
-            }
-
-            override fun getPassphrase(): String {
-                return ""
-            }
-
-            override fun getPassword(): String {
-                return password
-            }
-
-            override fun promptYesNo(message: String?): Boolean {
-                return true
-            }
-
-            override fun showMessage(message: String?) {
-            }
-
-            override fun promptPassword(message: String?): Boolean {
-                return true
-            }
-
+    private fun runOnSession(vararg sshConnectionConfig: SSHConnectionConfig, run: (targetSession: Session) -> ExecuteCommandResult): ExecuteCommandResult {
+        if (sshConnectionConfig.isEmpty()) {
+            throw IllegalArgumentException("There must be at least one ssh conection configuration!")
         }
 
-        // connect to session
-        session.connect()
+        val sessions: MutableList<Session> = ArrayList()
 
-        val result = run.invoke(session)
+        val firstHop = sshConnectionConfig[0]
 
-        session.disconnect()
-
-        return result
-    }
-
-    /**
-     * Run command on a tunneled ssh session
-     */
-    private fun runOnTunneledSession(proxyHost: String, proxyPort: Int, proxyUser: String, proxyPassword: String,
-                                     targetHost: String, targetPort: Int, targetUser: String, targetPassword: String,
-                                     run: (proxySession: Session, targetSession: Session) -> String): String {
-
-        val proxyUserInformation = createUserInfo(proxyPassword)
-
-        val proxySession = sshClient.getSession(proxyUser, proxyHost, proxyPort)
-        proxySession.userInfo = proxyUserInformation
-        proxySession.hostKeyAlias = proxyHost
+        val proxySession = sshClient.getSession(firstHop.username, firstHop.host, firstHop.port)
+        proxySession.userInfo = createUserInfo(firstHop.password)
+        proxySession.hostKeyAlias = firstHop.host
         proxySession.setConfig("StrictHostKeyChecking", "no")
-        // create port from assignedPort on local system to port targetPort on targetHost
-        val assignedPort: Int = proxySession.setPortForwardingL(0, targetHost, targetPort)
-
         proxySession.connect()
 
-        val targetUserInformation = createUserInfo(targetPassword)
+        // remember sessions
+        sessions.add(proxySession)
 
-        // create a session connected to port assignedPort on the local host.
-        val targetSession = sshClient.getSession(targetUser, "localhost", assignedPort)
-        targetSession.userInfo = targetUserInformation
-        targetSession.hostKeyAlias = targetHost
-        targetSession.setConfig("StrictHostKeyChecking", "no")
+        var currentSession: Session = proxySession
+        for (config in sshConnectionConfig.drop(1)) {
 
-        targetSession.connect() // now we're connected to the secondary system
+            // create port from assignedPort on local system to port targetPort on targetHost
+            val assignedPort: Int = currentSession.setPortForwardingL(0, config.host, config.port)
 
-        // invoke the passed in lambda
-        val result = run.invoke(proxySession, targetSession)
+            currentSession = sshClient.getSession(config.username, "localhost", assignedPort)
 
-        targetSession.disconnect()
-        proxySession.disconnect()
+            currentSession.userInfo = createUserInfo(config.password)
+            currentSession.hostKeyAlias = config.host
+            currentSession.setConfig("StrictHostKeyChecking", "no")
+
+            currentSession.connect()
+
+            // remember sessions
+            sessions.add(currentSession)
+        }
+
+        val result = run.invoke(currentSession)
+
+        for (session in sessions.reversed()) {
+            session.disconnect()
+        }
 
         return result
     }
@@ -251,3 +155,8 @@ class SSHClient @Inject constructor() {
     }
 
 }
+
+data class ExecuteCommandResult(
+        val returnCode: Int,
+        val output: String
+)
