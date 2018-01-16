@@ -5,6 +5,7 @@ import de.markusressel.datamunch.data.entity.Server
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.data.ssh.SSHClient
 import de.markusressel.datamunch.domain.SSHCredentials
+import de.markusressel.datamunch.domain.SSHProxyConfiguration
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -66,15 +67,36 @@ class ServerManager @Inject constructor() {
     /**
      * Retrieve a list of all jails on this server
      */
-    fun retrieveUptime(server: Server, port: Int = 22, sshCredentials: SSHCredentials): UptimeResult {
+    fun retrieveUptime(server: Server, port: Int = 22,
+                       sshCredentials: SSHCredentials,
+                       sshProxy: SSHProxyConfiguration? = null): UptimeResult {
 
-        val commandResult = sshClient.executeCommand(
-                host = server.host,
-                port = port,
-                user = sshCredentials.username,
-                password = sshCredentials.password,
-                command = "uptime")
+        val command = "uptime"
 
+        val result: String
+        if (sshProxy != null) {
+            result = sshClient.executeCommand(proxyHost = sshProxy.host,
+                    proxyPort = sshProxy.port,
+                    proxyUser = sshProxy.username,
+                    proxyPassword = sshProxy.password,
+                    targetHost = server.host,
+                    targetPort = port,
+                    targetUser = sshCredentials.username,
+                    targetPassword = sshCredentials.password,
+                    command = command)
+        } else {
+            result = sshClient.executeCommand(
+                    host = server.host,
+                    port = port,
+                    user = sshCredentials.username,
+                    password = sshCredentials.password,
+                    command = command)
+        }
+
+        return parseUptimeResult(result)
+    }
+
+    private fun parseUptimeResult(commandResult: String): UptimeResult {
         val trimmedResult = commandResult.trimIndent()
 
         val lines = trimmedResult.split(",")

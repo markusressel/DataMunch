@@ -7,8 +7,13 @@ import de.markusressel.datamunch.data.ServerManager
 import de.markusressel.datamunch.data.entity.Server
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.CONNECTION_HOST
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PASS
+import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PROXY_HOST
+import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PROXY_PASSWORD
+import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PROXY_PORT
+import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PROXY_USER
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_USER
 import de.markusressel.datamunch.domain.SSHCredentials
+import de.markusressel.datamunch.domain.SSHProxyConfiguration
 import de.markusressel.datamunch.domain.User
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -41,6 +46,12 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
         val password = preferenceHandler.getValue(SSH_PASS)
 
         val sshCredentials = SSHCredentials(username, password)
+
+        val sshProxyConfig = SSHProxyConfiguration(
+                host = preferenceHandler.getValue(SSH_PROXY_HOST),
+                port = preferenceHandler.getValue(SSH_PROXY_PORT),
+                username = preferenceHandler.getValue(SSH_PROXY_USER),
+                password = preferenceHandler.getValue(SSH_PROXY_PASSWORD))
 
         Single.fromCallable {
             serverManager.retrieveJails(
@@ -90,7 +101,33 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                         }
                 )
 
-    }
+        // tunneled connection
+        Single.fromCallable {
+            serverManager.retrieveUptime(
+                    server = server,
+                    sshCredentials = sshCredentials,
+                    sshProxy = sshProxyConfig
+            )
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            val text = "Uptime: ${it.uptime}\n" +
+                                    "Clock: ${it.clock}\n" +
+                                    "Users: ${it.users}\n" +
+                                    "Load 1m: ${it.loadAverage1}\n" +
+                                    "Load 5m: ${it.loadAverage5}\n" +
+                                    "Load 15m: ${it.loadAverage15}\n"
 
+                            serverStatus.text = serverStatus.text.toString() + "\n\n" + text
+                        },
+                        onError = {
+                            serverStatus.text = serverStatus.text.toString() + "\n\n" + it.message
+                            Timber.e(it)
+                        }
+                )
+
+    }
 
 }

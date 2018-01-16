@@ -11,18 +11,28 @@ import de.mrapp.android.preference.activity.RestoreDefaultsListener
  */
 class ConnectionPreferences : DaggerPreferenceFragment(), RestoreDefaultsListener {
 
-    private lateinit var hostPreference: Preference
+    private lateinit var sshPassword: Preference
+    private lateinit var sshProxyPassword: Preference
 
     override fun getPreferencesResource(): Int {
         return R.xml.preferences_connection
     }
 
     override fun findPreferences() {
-        hostPreference = findPreference(getString(R.string.connection_host_key))
+        sshPassword = findPreference(getString(R.string.connection_ssh_password_key))
+        sshProxyPassword = findPreference(getString(R.string.connection_ssh_proxy_password_key))
     }
 
     override fun updateSummaries() {
-        hostPreference.summary = preferenceHandler.getValue(PreferenceHandler.CONNECTION_HOST, false)
+        val pass = preferenceHandler.getValue(PreferenceHandler.SSH_PASS, false)
+        if (pass.isNotEmpty()) {
+            sshPassword.summary = "*".repeat(pass.length)
+        }
+
+        val proxyPass = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_PASSWORD, false)
+        if (proxyPass.isNotEmpty()) {
+            sshProxyPassword.summary = "*".repeat(proxyPass.length)
+        }
     }
 
     override fun onRestoredDefaultValue(fragment: PreferenceFragment, preference: Preference, oldValue: Any?, newValue: Any?) {

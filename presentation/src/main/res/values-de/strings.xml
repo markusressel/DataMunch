@@ -8,4 +8,6 @@
 
     <string name="server_status_title">Status</string>
 
+    <string name="server_status_services_title">Dienste</string>
+
 </resources>

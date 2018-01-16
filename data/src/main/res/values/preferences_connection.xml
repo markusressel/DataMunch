@@ -5,4 +5,9 @@
     <string name="connection_ssh_user_key">connection_ssh_user</string>
     <string name="connection_ssh_password_key">connection_ssh_password_key</string>
 
+    <string name="connection_ssh_proxy_host_key">connection_ssh_proxy_host_key</string>
+    <string name="connection_ssh_proxy_port_key">connection_ssh_proxy_port_key</string>
+    <string name="connection_ssh_proxy_user_key">connection_ssh_proxy_user_key</string>
+    <string name="connection_ssh_proxy_password_key">connection_ssh_proxy_password_key</string>
+
 </resources>

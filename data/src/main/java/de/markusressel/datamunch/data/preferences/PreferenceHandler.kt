@@ -22,7 +22,11 @@ constructor(context: Context) : PreferencesHandlerBase(context) {
             LOCALE,
             CONNECTION_HOST,
             SSH_USER,
-            SSH_PASS
+            SSH_PASS,
+            SSH_PROXY_HOST,
+            SSH_PROXY_PORT,
+            SSH_PROXY_USER,
+            SSH_PROXY_PASSWORD
     )
 
     companion object {
@@ -33,6 +37,10 @@ constructor(context: Context) : PreferencesHandlerBase(context) {
 
         val SSH_USER = PreferenceItem(R.string.connection_ssh_user_key, "root")
         val SSH_PASS = PreferenceItem(R.string.connection_ssh_password_key, "")
+        val SSH_PROXY_HOST = PreferenceItem(R.string.connection_ssh_proxy_host_key, "turris.ydns.eu")
+        val SSH_PROXY_PORT = PreferenceItem(R.string.connection_ssh_proxy_port_key, 22)
+        val SSH_PROXY_USER = PreferenceItem(R.string.connection_ssh_proxy_user_key, "root")
+        val SSH_PROXY_PASSWORD = PreferenceItem(R.string.connection_ssh_proxy_password_key, "")
     }
 
 }
