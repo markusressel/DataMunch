@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -13,49 +12,48 @@
         android:layout_marginTop="8dp"
         android:text="Frittenbude"
         android:textAlignment="center"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/serverName">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/serverStatusTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/server_status_title" />
-
-        <TextView
-            android:id="@+id/serverStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test"
-            app:layout_constraintTop_toBottomOf="@+id/serverStatusTitle" />
-
-
-        <android.support.v7.widget.CardView
-            style="@style/card_view"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <TextView
-                android:id="@+id/serverStatusServicesTitle"
+                android:id="@+id/serverStatusTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/server_status_services_title" />
+                android:text="@string/server_status_title" />
+
+            <TextView
+                android:id="@+id/serverStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="test" />
 
 
-        </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                style="@style/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/serverStatusServicesTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/server_status_services_title" />
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

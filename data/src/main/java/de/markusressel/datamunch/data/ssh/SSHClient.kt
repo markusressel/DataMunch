@@ -1,11 +1,9 @@
 package de.markusressel.datamunch.data.ssh
 
 import com.github.ajalt.timberkt.Timber
-import com.jcraft.jsch.ChannelExec
-import com.jcraft.jsch.JSch
-import com.jcraft.jsch.Session
-import com.jcraft.jsch.UserInfo
+import com.jcraft.jsch.*
 import de.markusressel.datamunch.domain.SSHConnectionConfig
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -66,7 +64,7 @@ class SSHClient @Inject constructor() {
         return result
     }
 
-    private fun runOnSession(vararg sshConnectionConfig: SSHConnectionConfig, run: (targetSession: Session) -> ExecuteCommandResult): ExecuteCommandResult {
+    private fun <T> runOnSession(vararg sshConnectionConfig: SSHConnectionConfig, run: (session: Session) -> T): T {
         if (sshConnectionConfig.isEmpty()) {
             throw IllegalArgumentException("There must be at least one ssh conection configuration!")
         }
@@ -150,8 +148,54 @@ class SSHClient @Inject constructor() {
         return channel
     }
 
+    private fun createSFTPChannel(session: Session): ChannelSftp {
+        // open channel to work with
+        val channel = session.openChannel(TYPE_SFTP) as ChannelSftp
+        return channel
+    }
+
     companion object {
         val TYPE_EXEC = "exec"
+        val TYPE_SFTP = "sftp"
+    }
+
+    /**
+     * Upload a file to the specified ssh server
+     */
+    fun uploadFile(vararg sshConnectionConfig: SSHConnectionConfig, file: File, destinationPath: String) {
+        runOnSession(*sshConnectionConfig) { session: Session ->
+            val channel = createSFTPChannel(session)
+            channel.connect()
+
+            val mode = ChannelSftp.OVERWRITE
+//            val mode = ChannelSftp.RESUME
+//            val mode = ChannelSftp.APPEND
+
+            val monitor = object : SftpProgressMonitor {
+                var count: Long = 0
+                var max: Long = 0
+
+                override fun init(op: Int, src: String?, dest: String?, max: Long) {
+                    Timber.d { "Upload init" }
+                    this.max = max
+                    count = 0
+                }
+
+                override fun count(count: Long): Boolean {
+                    this.count = count
+                    Timber.d { "Upload count: $count/$max" }
+                    return true
+                }
+
+                override fun end() {
+                    Timber.d { "Upload finished" }
+                }
+            }
+
+//            channel.mkdir(destinationPath)
+
+            channel.put(file.inputStream(), destinationPath, monitor, mode)
+        }
     }
 
 }
