@@ -70,7 +70,7 @@ dependencies {
     implementation presentationDependencies.cardviewV7
 
     implementation 'com.github.michael-rapp:android-preference-activity:5.0.5'
-    compile 'com.github.michael-rapp:android-material-preferences:3.1.2'
+    implementation 'com.github.michael-rapp:android-material-preferences:3.1.2'
 
     // RxJava (RxKotlin actually)
     compile "io.reactivex.rxjava2:rxjava:2.1.8"
