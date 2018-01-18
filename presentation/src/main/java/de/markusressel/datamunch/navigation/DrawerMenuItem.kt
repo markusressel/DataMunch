@@ -1,5 +1,6 @@
 package de.markusressel.datamunch.navigation
 
+import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
@@ -29,7 +30,11 @@ data class DrawerMenuItem(
         }
 
         drawableRes?.let {
-            return iconicsHelper.context.getDrawable(drawableRes)
+            val drawable = iconicsHelper.context.getDrawable(drawableRes)
+            val color = iconicsHelper.themeHelper.getThemeAttrColor(iconicsHelper.context, android.R.attr.textColorPrimary)
+            drawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+
+            return drawable
         }
 
         return IconicsDrawable(iconicsHelper.context)
