@@ -13,6 +13,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasFragmentInjector
 import dagger.android.support.HasSupportFragmentInjector
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.view.ThemeHelper
 import javax.inject.Inject
@@ -55,6 +56,8 @@ abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.Pre
         initTheme()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        setTitle(R.string.menu_item_settings)
     }
 
     override fun onCreateNavigation(fragment: PreferenceFragment) {

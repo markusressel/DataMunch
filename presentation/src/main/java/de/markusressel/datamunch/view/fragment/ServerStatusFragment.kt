@@ -57,6 +57,24 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
         )
 
         Single.fromCallable {
+            freeBSDServerManager.retrieveHostname(
+                    turrisSshConnectionConfig,
+                    frittenbudeSshConnectionConfig
+            )
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            serverName.text = it
+                        },
+                        onError = {
+                            serverName.text = it.message
+                            Timber.e(it)
+                        }
+                )
+
+        Single.fromCallable {
             freeBSDServerManager.retrieveUptime(
                     turrisSshConnectionConfig,
                     frittenbudeSshConnectionConfig

@@ -21,6 +21,8 @@ class MainActivity : NavigationDrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setTitle(R.string.menu_item_status)
+
         val serverStatusFragment = ServerStatusFragment()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.contentLayout, serverStatusFragment)

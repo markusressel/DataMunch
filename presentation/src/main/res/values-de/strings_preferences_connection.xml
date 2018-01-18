@@ -12,4 +12,17 @@
     <string name="connection_ssh_password_summary">Passwort</string>
     <string name="connection_ssh_password_title">Passwort</string>
 
+
+    <string name="connection_ssh_proxy_host_summary">SSH Proxy Host Adresse</string>
+    <string name="connection_ssh_proxy_host_title">Host</string>
+
+    <string name="connection_ssh_proxy_port_summary">SSH Proxy Port</string>
+    <string name="connection_ssh_proxy_port_title">Port</string>
+
+    <string name="connection_ssh_proxy_user_summary">SSH Proxy Nutzer</string>
+    <string name="connection_ssh_proxy_user_title">Nutzer</string>
+
+    <string name="connection_ssh_proxy_password_summary">SSH Proxy Passwort</string>
+    <string name="connection_ssh_proxy_password_title">Passwort</string>
+
 </resources>

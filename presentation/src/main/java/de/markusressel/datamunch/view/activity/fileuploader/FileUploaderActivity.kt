@@ -25,6 +25,8 @@ class FileUploaderActivity : NavigationDrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setTitle(R.string.menu_item_file_uploader)
+
         //        val rxPermissions = RxPermissions(activity!!)
 //
 //        // Must be done during an initialization phase like onCreate

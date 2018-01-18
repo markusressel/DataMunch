@@ -13,6 +13,36 @@ import javax.inject.Singleton
 @Singleton
 class FreeBSDServerManager @Inject constructor() : ServerManager() {
 
+    fun retrieveReleaseVersion(vararg sshConnectionConfig: SSHConnectionConfig): String {
+        val commandResult = sshClient.executeCommand(
+                *sshConnectionConfig,
+                command = "uname -r")
+
+        return commandResult.output
+    }
+
+    /**
+     * Retrieve the Hardware Type/Platform
+     */
+    fun retrievePlatform(vararg sshConnectionConfig: SSHConnectionConfig): String {
+        val commandResult = sshClient.executeCommand(
+                *sshConnectionConfig,
+                command = "uname -m")
+
+        return commandResult.output
+    }
+
+    /**
+     * Retrieve the hostname of the specified server
+     */
+    fun retrieveHostname(vararg sshConnectionConfig: SSHConnectionConfig): String {
+        val commandResult = sshClient.executeCommand(
+                *sshConnectionConfig,
+                command = "/bin/hostname -s")
+
+        return commandResult.output
+    }
+
     /**
      * Retrieve a list of all jails on this server
      */

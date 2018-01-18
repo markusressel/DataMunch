@@ -21,6 +21,8 @@ class JailsActivity : NavigationDrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setTitle(R.string.menu_item_jails)
+
         val serverStatusFragment = JailsFragment()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.contentLayout, serverStatusFragment)
