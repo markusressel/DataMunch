@@ -15,6 +15,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.navigation.DrawerItemHolder.About
 import de.markusressel.datamunch.navigation.DrawerItemHolder.FileUploader
+import de.markusressel.datamunch.navigation.DrawerItemHolder.Jails
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Settings
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Status
 import de.markusressel.datamunch.navigation.Navigator
@@ -106,6 +107,12 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                     true
                 }
 
+                Jails.identifier -> {
+                    navigator.navigateTo(this, Navigator.NavigationPages.JailsPage)
+                    navigationDrawer.closeDrawer()
+                    true
+                }
+
                 FileUploader.identifier -> {
                     navigator.navigateTo(this, Navigator.NavigationPages.FileUploaderPage)
                     navigationDrawer.closeDrawer()
@@ -132,21 +139,28 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
         }
 
-        menuItemList.add(
-                PrimaryDrawerItem()
-                        .withName(Status.title)
-                        .withIdentifier(Status.identifier)
-                        .withIcon(iconicsHelper.getMenuIcon(Status.icon))
-                        .withSelectable(Status.selectable)
-                        .withOnDrawerItemClickListener(clickListener)
-        )
+        for (menuItem in listOf(Status, Jails, FileUploader)) {
+            menuItemList.add(
+                    PrimaryDrawerItem()
+                            .withName(menuItem.title)
+                            .withIdentifier(menuItem.identifier)
+                            .withIcon(menuItem.getIcon(iconicsHelper))
+                            .withSelectable(menuItem.selectable)
+                            .withOnDrawerItemClickListener(clickListener)
+            )
+        }
 
         menuItemList.add(
+                DividerDrawerItem()
+        )
+
+        var menuItem = Settings
+        menuItemList.add(
                 PrimaryDrawerItem()
-                        .withName(FileUploader.title)
-                        .withIdentifier(FileUploader.identifier)
-                        .withIcon(iconicsHelper.getMenuIcon(FileUploader.icon))
-                        .withSelectable(FileUploader.selectable)
+                        .withName(menuItem.title)
+                        .withIdentifier(menuItem.identifier)
+                        .withIcon(menuItem.getIcon(iconicsHelper))
+                        .withSelectable(menuItem.selectable)
                         .withOnDrawerItemClickListener(clickListener)
         )
 
@@ -154,25 +168,13 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                 DividerDrawerItem()
         )
 
-        menuItemList.add(
-                PrimaryDrawerItem()
-                        .withName(Settings.title)
-                        .withIdentifier(Settings.identifier)
-                        .withIcon(iconicsHelper.getMenuIcon(Settings.icon))
-                        .withSelectable(Settings.selectable)
-                        .withOnDrawerItemClickListener(clickListener)
-        )
-
-        menuItemList.add(
-                DividerDrawerItem()
-        )
-
+        menuItem = About
         menuItemList.add(
                 SecondaryDrawerItem()
-                        .withName(About.title)
-                        .withIdentifier(About.identifier)
-                        .withIcon(iconicsHelper.getMenuIcon(About.icon))
-                        .withSelectable(About.selectable)
+                        .withName(menuItem.title)
+                        .withIdentifier(menuItem.identifier)
+                        .withIcon(menuItem.getIcon(iconicsHelper))
+                        .withSelectable(menuItem.selectable)
                         .withOnDrawerItemClickListener(clickListener)
         )
 

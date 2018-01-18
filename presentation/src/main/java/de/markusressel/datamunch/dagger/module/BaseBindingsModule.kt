@@ -3,6 +3,7 @@ package de.markusressel.datamunch.dagger.module
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import de.markusressel.datamunch.view.activity.NavigationDrawerActivity
+import de.markusressel.datamunch.view.fragment.JailsFragment
 import de.markusressel.datamunch.view.fragment.ServerStatusFragment
 
 /**
@@ -16,5 +17,8 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun ServerStatusFragment(): ServerStatusFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun JailsFragment(): JailsFragment
 
 }

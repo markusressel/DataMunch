@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import de.markusressel.datamunch.application.App
+import de.markusressel.datamunch.view.activity.JailsActivity
 import de.markusressel.datamunch.view.activity.MainActivity
 import javax.inject.Singleton
 
@@ -21,6 +22,9 @@ abstract class AppModule {
 
     @ContributesAndroidInjector
     internal abstract fun mainActivity(): MainActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun JailsActivity(): JailsActivity
 
     @Module
     companion object {

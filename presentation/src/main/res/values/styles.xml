@@ -8,4 +8,10 @@
         <item name="cardUseCompatPadding">true</item>
     </style>
 
+    <style name="sub_header">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+    </style>
+
 </resources>

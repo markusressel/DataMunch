@@ -26,31 +26,9 @@
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/serverStatusTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/server_status_title" />
-
-            <TextView
                 android:id="@+id/serverStatus"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="test" />
-
-
-            <android.support.v7.widget.CardView
-                style="@style/card_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/serverStatusServicesTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/server_status_services_title" />
-
-
-            </android.support.v7.widget.CardView>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

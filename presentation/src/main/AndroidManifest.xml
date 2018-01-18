@@ -23,6 +23,10 @@
         </activity>
 
         <activity
+            android:name=".view.activity.JailsActivity"
+            android:parentActivityName=".view.activity.MainActivity" />
+
+        <activity
             android:name=".view.activity.preferences.PreferenceOverviewActivity"
             android:parentActivityName=".view.activity.MainActivity" />
 
