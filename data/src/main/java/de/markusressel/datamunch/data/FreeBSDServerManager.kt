@@ -13,6 +13,9 @@ import javax.inject.Singleton
 @Singleton
 class FreeBSDServerManager @Inject constructor() : ServerManager() {
 
+    /**
+     * Retrieve OS version
+     */
     fun retrieveReleaseVersion(vararg sshConnectionConfig: SSHConnectionConfig): String {
         val commandResult = sshClient.executeCommand(
                 *sshConnectionConfig,
