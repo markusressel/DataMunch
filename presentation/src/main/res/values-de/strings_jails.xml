@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="id" translatable="false">ID</string>
     <string name="name">Name</string>
     <string name="path">Pfad</string>
 

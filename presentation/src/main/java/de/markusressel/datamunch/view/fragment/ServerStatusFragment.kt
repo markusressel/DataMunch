@@ -1,6 +1,7 @@
 package de.markusressel.datamunch.view.fragment
 
 import android.os.Bundle
+import android.view.View
 import com.github.ajalt.timberkt.Timber
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
@@ -37,8 +38,8 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
     override val layoutRes: Int
         get() = R.layout.fragment_server_status
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val user = User(0, "Markus", "Markus Ressel", "mail@markusressel.de", 0)
 
@@ -70,10 +71,14 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
                 .subscribeBy(
                         onSuccess = {
                             serverName.text = it
+
+                            showContent()
                         },
                         onError = {
                             serverName.text = it.message
                             Timber.e(it)
+
+                            showError(it)
                         }
                 )
 
@@ -92,13 +97,16 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
                                     "Load 15m: ${it.load15m}\n"
 
                             serverStatus.text = text
+
+                            showContent()
                         },
                         onError = {
                             serverStatus.text = it.message
                             Timber.e(it)
+
+                            showError(it)
                         }
                 )
-
     }
 
 }

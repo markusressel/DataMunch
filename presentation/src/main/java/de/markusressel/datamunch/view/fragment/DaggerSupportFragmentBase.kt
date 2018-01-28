@@ -16,7 +16,7 @@ import javax.inject.Inject
  */
 abstract class DaggerSupportFragmentBase : DaggerFragment() {
 
-    lateinit protected var rootView: View
+    protected lateinit var rootView: View
 
     @Inject
     protected lateinit var preferenceHandler: PreferenceHandler

@@ -63,8 +63,6 @@ class JailsFragment : LoadingSupportFragmentBase() {
                 frittenbudeSshConnectionConfig
         )
 
-        // TODO: Show loading animation
-
         Single.fromCallable {
             frittenbudeServerManager.retrieveJails()
         }
@@ -75,10 +73,14 @@ class JailsFragment : LoadingSupportFragmentBase() {
                             currentJails.clear()
                             currentJails.addAll(it)
                             jailRecyclerViewAdapter.notifyDataSetChanged()
+
+                            showContent()
                         },
                         onError = {
                             // TODO: Show error message
                             Timber.e(it)
+
+                            showError(it)
                         }
                 )
     }
