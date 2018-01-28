@@ -45,17 +45,17 @@ abstract class ServerManager {
         _sshConnectionConfigList = sshConnectionConfig
     }
 
+    protected fun executeCommand(command: String): ExecuteCommandResult {
+        return sshClient.executeCommand(
+                *sshConnectionConfigList,
+                command = command)
+    }
+
     /**
      * Retrieve a list of all jails on this server
      */
     fun retrieveUptime(): UptimeResult {
-        val command = "uptime"
-
-        val result: ExecuteCommandResult =
-                sshClient.executeCommand(
-                        *sshConnectionConfigList,
-                        command = command)
-
+        val result: ExecuteCommandResult = executeCommand("uptime")
         return parseUptimeResult(result)
     }
 

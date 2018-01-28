@@ -18,10 +18,7 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      * Retrieve OS version
      */
     fun retrieveReleaseVersion(): String {
-        val commandResult = sshClient.executeCommand(
-                *sshConnectionConfigList,
-                command = "uname -r")
-
+        val commandResult = executeCommand("uname -r")
         return commandResult.output
     }
 
@@ -29,10 +26,7 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      * Retrieve the Hardware Type/Platform
      */
     fun retrievePlatform(): String {
-        val commandResult = sshClient.executeCommand(
-                *sshConnectionConfigList,
-                command = "uname -m")
-
+        val commandResult = executeCommand("uname -m")
         return commandResult.output
     }
 
@@ -40,10 +34,7 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      * Retrieve the hostname of the specified server
      */
     fun retrieveHostname(): String {
-        val commandResult = sshClient.executeCommand(
-                *sshConnectionConfigList,
-                command = "/bin/hostname -s")
-
+        val commandResult = executeCommand("/bin/hostname -s")
         return commandResult.output
     }
 
@@ -51,10 +42,7 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      * Retrieve a list of all jails on this server
      */
     fun retrieveJails(): List<Jail> {
-        val commandResult = sshClient.executeCommand(
-                *sshConnectionConfigList,
-                command = "jls")
-
+        val commandResult = executeCommand("jls")
         return parseJails(commandResult)
     }
 
@@ -86,6 +74,41 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
         }
 
         return jails
+    }
+
+    /**
+     * Start a jail
+     *
+     * @param jail the jail to start
+     */
+    fun startJail(jail: Jail): ExecuteCommandResult {
+        val targetSystem = sshConnectionConfigList.last()
+        val command = "curl -v -u ${targetSystem.username}:${targetSystem.password} -X POST http://localhost/api/v1.0/jails/jails/${jail.id}/start/"
+        return executeCommand(command)
+    }
+
+    /**
+     * Stop a jail
+     *
+     * @param jail the jail to stop
+     */
+    fun stopJail(jail: Jail): ExecuteCommandResult {
+        val targetSystem = sshConnectionConfigList.last()
+        val command = "curl -v -u ${targetSystem.username}:${targetSystem.password} -X POST http://localhost/api/v1.0/jails/jails/${jail.id}/stop/"
+        return executeCommand(command)
+    }
+
+    /**
+     * Restart a jail
+     *
+     * This will stop and start the jail.
+     * It will not raise an error if the jail was already stopped.
+     *
+     * @param jail the jail to restart
+     */
+    fun restartJail(jail: Jail) {
+        stopJail(jail)
+        startJail(jail)
     }
 
     override fun parseUptimeResult(commandResult: ExecuteCommandResult): UptimeResult {

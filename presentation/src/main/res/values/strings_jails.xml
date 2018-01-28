@@ -5,4 +5,8 @@
     <string name="name">Name</string>
     <string name="path">Path</string>
 
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="restart">Restart</string>
+
 </resources>

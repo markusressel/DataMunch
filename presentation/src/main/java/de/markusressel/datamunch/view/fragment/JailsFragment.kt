@@ -3,6 +3,7 @@ package de.markusressel.datamunch.view.fragment
 import android.os.Bundle
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
+import android.widget.Toast
 import com.github.ajalt.timberkt.Timber
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
@@ -10,6 +11,7 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.freebsd.data.Jail
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
+import de.markusressel.datamunch.databinding.ListItemJailBinding
 import de.markusressel.datamunch.domain.SSHConnectionConfig
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -37,8 +39,11 @@ class JailsFragment : LoadingSupportFragmentBase() {
         super.onViewCreated(view, savedInstanceState)
 
         val currentJails: MutableList<Jail> = ArrayList()
+
         val jailRecyclerViewAdapter = LastAdapter(currentJails, BR.item)
-                .map<Jail>(R.layout.list_item_jail_lastadapter)
+                .map<Jail, ListItemJailBinding>(R.layout.list_item_jail) {
+                    onCreate { it.binding.presenter = this@JailsFragment }
+                }
                 .into(recyclerviewJails)
 
         recyclerviewJails.adapter = jailRecyclerViewAdapter
@@ -80,6 +85,60 @@ class JailsFragment : LoadingSupportFragmentBase() {
                             // TODO: Show error message
                             Timber.e(it)
 
+                            showError(it)
+                        }
+                )
+    }
+
+    fun startJail(jail: Jail) {
+        Single.fromCallable {
+            frittenbudeServerManager.startJail(jail)
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
+                        },
+                        onError = {
+                            Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
+                            Timber.e(it)
+                            showError(it)
+                        }
+                )
+    }
+
+    fun stopJail(jail: Jail) {
+        Single.fromCallable {
+            frittenbudeServerManager.stopJail(jail)
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
+                        },
+                        onError = {
+                            Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
+                            Timber.e(it)
+                            showError(it)
+                        }
+                )
+    }
+
+    fun restartJail(jail: Jail) {
+        Single.fromCallable {
+            frittenbudeServerManager.restartJail(jail)
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
+                        },
+                        onError = {
+                            Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
+                            Timber.e(it)
                             showError(it)
                         }
                 )
