@@ -40,7 +40,7 @@ class FileUploaderActivity : NavigationDrawerActivity() {
 //                        val destinationPath = "/mnt/vol1/Media/Fotos/Markus/DataMunch/IMG_20180116_164959.jpg"
 //
 //                        Single.fromCallable {
-//                            freeBSDServerManager.uploadFile(
+//                            frittenbudeServerManager.uploadFile(
 //                                    turrisSshConnectionConfig,
 //                                    frittenbudeSshConnectionConfig,
 //                                    file = file,

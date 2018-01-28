@@ -1,8 +1,9 @@
-package de.markusressel.datamunch.data
+package de.markusressel.datamunch.data.freebsd
 
-import de.markusressel.datamunch.data.entity.Jail
+import de.markusressel.datamunch.data.ServerManager
+import de.markusressel.datamunch.data.VirtualMachine
+import de.markusressel.datamunch.data.freebsd.data.Jail
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
-import de.markusressel.datamunch.domain.SSHConnectionConfig
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,9 +17,9 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
     /**
      * Retrieve OS version
      */
-    fun retrieveReleaseVersion(vararg sshConnectionConfig: SSHConnectionConfig): String {
+    fun retrieveReleaseVersion(): String {
         val commandResult = sshClient.executeCommand(
-                *sshConnectionConfig,
+                *sshConnectionConfigList,
                 command = "uname -r")
 
         return commandResult.output
@@ -27,9 +28,9 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
     /**
      * Retrieve the Hardware Type/Platform
      */
-    fun retrievePlatform(vararg sshConnectionConfig: SSHConnectionConfig): String {
+    fun retrievePlatform(): String {
         val commandResult = sshClient.executeCommand(
-                *sshConnectionConfig,
+                *sshConnectionConfigList,
                 command = "uname -m")
 
         return commandResult.output
@@ -38,9 +39,9 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
     /**
      * Retrieve the hostname of the specified server
      */
-    fun retrieveHostname(vararg sshConnectionConfig: SSHConnectionConfig): String {
+    fun retrieveHostname(): String {
         val commandResult = sshClient.executeCommand(
-                *sshConnectionConfig,
+                *sshConnectionConfigList,
                 command = "/bin/hostname -s")
 
         return commandResult.output
@@ -49,9 +50,9 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
     /**
      * Retrieve a list of all jails on this server
      */
-    fun retrieveJails(vararg sshConnectionConfig: SSHConnectionConfig): List<Jail> {
+    fun retrieveJails(): List<Jail> {
         val commandResult = sshClient.executeCommand(
-                *sshConnectionConfig,
+                *sshConnectionConfigList,
                 command = "jls")
 
         return parseJails(commandResult)
@@ -80,9 +81,7 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
             val path = snippet.trim()
 
             jails.add(
-                    Jail(id,
-                            name,
-                            path)
+                    Jail(id, name, path)
             )
         }
 
@@ -116,6 +115,10 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
 
 
         return UptimeResult(uptime, clock, users, loadAverage1, loadAverage5, loadAverage15)
+    }
+
+    override fun getVirtualMachines(): List<VirtualMachine> {
+        return emptyList()
     }
 
 }

@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.data.entity
+package de.markusressel.datamunch.data.freebsd.data
 
 /**
  * Jail entity class

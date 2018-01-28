@@ -11,4 +11,6 @@
 
     <string name="server_status_services_title">Dienste</string>
 
+    <string name="unknown_error">Unbekannter Fehler</string>
+
 </resources>

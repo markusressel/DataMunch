@@ -1,5 +1,7 @@
-package de.markusressel.datamunch.data
+package de.markusressel.datamunch.data.openwrt
 
+import de.markusressel.datamunch.data.ServerManager
+import de.markusressel.datamunch.data.VirtualMachine
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,6 +33,10 @@ class OpenWRTServerManager @Inject constructor() : ServerManager() {
                 .toFloat()
 
         return UptimeResult(uptime, clock, -1, loadAverage1, loadAverage5, loadAverage15)
+    }
+
+    override fun getVirtualMachines(): List<VirtualMachine> {
+        return emptyList()
     }
 
 }

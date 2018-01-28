@@ -3,8 +3,7 @@ package de.markusressel.datamunch.view.fragment
 import android.os.Bundle
 import com.github.ajalt.timberkt.Timber
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.FreeBSDServerManager
-import de.markusressel.datamunch.data.OpenWRTServerManager
+import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.CONNECTION_HOST
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PASS
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PROXY_HOST
@@ -27,13 +26,13 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class ServerStatusFragment : DaggerSupportFragmentBase() {
+class ServerStatusFragment : LoadingSupportFragmentBase() {
 
     @Inject
     lateinit var freeBSDServerManager: FreeBSDServerManager
 
     @Inject
-    lateinit var openWrtServerManager: OpenWRTServerManager
+    lateinit var openWrtServerManager: de.markusressel.datamunch.data.openwrt.OpenWRTServerManager
 
     override val layoutRes: Int
         get() = R.layout.fragment_server_status
@@ -56,11 +55,15 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                 password = preferenceHandler.getValue(SSH_PROXY_PASSWORD)
         )
 
+        freeBSDServerManager.setSSHConnectionConfig(
+                turrisSshConnectionConfig,
+                frittenbudeSshConnectionConfig
+        )
+
+        openWrtServerManager.setSSHConnectionConfig(turrisSshConnectionConfig)
+
         Single.fromCallable {
-            freeBSDServerManager.retrieveHostname(
-                    turrisSshConnectionConfig,
-                    frittenbudeSshConnectionConfig
-            )
+            freeBSDServerManager.retrieveHostname()
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -75,10 +78,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                 )
 
         Single.fromCallable {
-            freeBSDServerManager.retrieveUptime(
-                    turrisSshConnectionConfig,
-                    frittenbudeSshConnectionConfig
-            )
+            freeBSDServerManager.retrieveUptime()
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

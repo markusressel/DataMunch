@@ -14,16 +14,46 @@ abstract class ServerManager {
     @Inject
     lateinit var sshClient: SSHClient
 
+    // backing property to allow getter override
+    private var _sshConnectionConfigList: Array<out SSHConnectionConfig> = emptyArray()
+    /**
+     * Connection config
+     */
+    var sshConnectionConfigList: Array<out SSHConnectionConfig>
+        get() {
+            if (_sshConnectionConfigList.isEmpty()) {
+                throw IllegalStateException("SSH Connection Config must not be empty!")
+            } else {
+                return _sshConnectionConfigList
+            }
+        }
+        set(value) {
+            if (value.isEmpty()) {
+                throw IllegalArgumentException("SSH Connection Config must not be empty!")
+            }
+            _sshConnectionConfigList = value
+        }
+
+    /**
+     * Set a ssh connection config for this manager
+     */
+    fun setSSHConnectionConfig(vararg sshConnectionConfig: SSHConnectionConfig) {
+        if (sshConnectionConfig.isEmpty()) {
+            throw IllegalArgumentException("SSH Connection Config must not be empty!")
+        }
+
+        _sshConnectionConfigList = sshConnectionConfig
+    }
+
     /**
      * Retrieve a list of all jails on this server
      */
-    fun retrieveUptime(vararg sshConnectionConfig: SSHConnectionConfig): UptimeResult {
-
+    fun retrieveUptime(): UptimeResult {
         val command = "uptime"
 
         val result: ExecuteCommandResult =
                 sshClient.executeCommand(
-                        *sshConnectionConfig,
+                        *sshConnectionConfigList,
                         command = command)
 
         return parseUptimeResult(result)
@@ -38,8 +68,16 @@ abstract class ServerManager {
                             val load5m: Float,
                             val load15m: Float)
 
-    fun uploadFile(vararg sshConnectionConfig: SSHConnectionConfig, file: File, destinationPath: String) {
-        sshClient.uploadFile(*sshConnectionConfig, file = file, destinationPath = destinationPath)
+    /**
+     * Get a list of all virtual machines on a server
+     */
+    protected abstract fun getVirtualMachines(): List<VirtualMachine>
+
+    /**
+     * Upload a file to a server
+     */
+    fun uploadFile(file: File, destinationPath: String) {
+        sshClient.uploadFile(*sshConnectionConfigList, file = file, destinationPath = destinationPath)
     }
 
 }

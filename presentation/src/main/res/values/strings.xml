@@ -13,4 +13,6 @@
 
     <string name="jails" translatable="false">Jails</string>
 
+    <string name="unknown_error">Unknown Error</string>
+
 </resources>

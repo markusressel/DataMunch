@@ -1,16 +1,16 @@
 package de.markusressel.datamunch.view.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.github.ajalt.timberkt.Timber
+import com.github.nitrico.lastadapter.LastAdapter
+import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.FreeBSDServerManager
-import de.markusressel.datamunch.data.entity.Jail
+import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
+import de.markusressel.datamunch.data.freebsd.data.Jail
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.domain.SSHConnectionConfig
-import de.markusressel.datamunch.view.adapter.JailRecyclerViewAdapter
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -25,13 +25,10 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class JailsFragment : DaggerSupportFragmentBase() {
+class JailsFragment : LoadingSupportFragmentBase() {
 
     @Inject
-    lateinit var applicationContext: Context
-
-    @Inject
-    lateinit var freeBSDServerManager: FreeBSDServerManager
+    lateinit var frittenbudeServerManager: FreeBSDServerManager
 
     override val layoutRes: Int
         get() = R.layout.fragment_jails
@@ -40,7 +37,9 @@ class JailsFragment : DaggerSupportFragmentBase() {
         super.onViewCreated(view, savedInstanceState)
 
         val currentJails: MutableList<Jail> = ArrayList()
-        val jailRecyclerViewAdapter = JailRecyclerViewAdapter(applicationContext, currentJails)
+        val jailRecyclerViewAdapter = LastAdapter(currentJails, BR.item)
+                .map<Jail>(R.layout.list_item_jail_lastadapter)
+                .into(recyclerviewJails)
 
         recyclerviewJails.adapter = jailRecyclerViewAdapter
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
@@ -59,12 +58,15 @@ class JailsFragment : DaggerSupportFragmentBase() {
                 password = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_PASSWORD)
         )
 
+        frittenbudeServerManager.setSSHConnectionConfig(
+                turrisSshConnectionConfig,
+                frittenbudeSshConnectionConfig
+        )
+
         // TODO: Show loading animation
 
         Single.fromCallable {
-            freeBSDServerManager.retrieveJails(
-                    turrisSshConnectionConfig,
-                    frittenbudeSshConnectionConfig)
+            frittenbudeServerManager.retrieveJails()
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
