@@ -25,17 +25,23 @@ class ServicesFragment : ListFragmentBase<ServiceJSON>() {
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
-    override val itemLayoutRes: Int
-        get() = R.layout.list_item_service
-
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<ServiceJSON, ListItemServiceBinding>(itemLayoutRes) {
+                .map<ServiceJSON, ListItemServiceBinding>(R.layout.list_item_service) {
                     onCreate {
                         it.binding.setVariable(BR.presenter, this@ServicesFragment)
                     }
+                    onClick {
+
+                    }
                 }
                 .into(recyclerview)
+    }
+
+    override fun loadListData(): List<ServiceJSON> {
+        return frittenbudeServerManager.retrieveServices().sortedBy {
+            it.srv_service
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,12 +66,6 @@ class ServicesFragment : ListFragmentBase<ServiceJSON>() {
         )
 
         updateListData()
-    }
-
-    override fun loadListData(): List<ServiceJSON> {
-        return frittenbudeServerManager.retrieveServices().sortedBy {
-            it.srv_service
-        }
     }
 
 }

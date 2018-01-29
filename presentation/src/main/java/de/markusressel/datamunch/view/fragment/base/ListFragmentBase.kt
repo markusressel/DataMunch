@@ -1,7 +1,6 @@
 package de.markusressel.datamunch.view.fragment.base
 
 import android.os.Bundle
-import android.support.annotation.LayoutRes
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
@@ -19,12 +18,6 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
 
     override val layoutRes: Int
         get() = R.layout.fragment_recyclerview
-
-    /**
-     * The layout resource for an item in the list
-     */
-    @get:LayoutRes
-    protected abstract val itemLayoutRes: Int
 
     protected val listValues: MutableList<T> = ArrayList()
     private lateinit var recyclerViewAdapter: LastAdapter
