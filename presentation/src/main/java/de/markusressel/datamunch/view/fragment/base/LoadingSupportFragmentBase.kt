@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment
+package de.markusressel.datamunch.view.fragment.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,7 +24,7 @@ abstract class LoadingSupportFragmentBase : DaggerSupportFragmentBase() {
         rootView = createWrapperLayout()
 
         errorLayout.setOnClickListener {
-            // TODO: Show sophisticated error screen
+            // TODO: Show sophisticated layout_error screen
         }
 
         return rootView
@@ -34,10 +34,10 @@ abstract class LoadingSupportFragmentBase : DaggerSupportFragmentBase() {
         val baseLayout = LinearLayout(activity)
         baseLayout.orientation = LinearLayout.VERTICAL
 
-        // inflate "loading" and "error" layouts and attach it to a newly created layout
+        // inflate "layout_loading" and "layout_error" layouts and attach it to a newly created layout
         val layoutInflater = LayoutInflater.from(context)
-        loadingLayout = layoutInflater.inflate(R.layout.loading, baseLayout, true) as ViewGroup
-        errorLayout = layoutInflater.inflate(R.layout.error, baseLayout, true) as ViewGroup
+        loadingLayout = layoutInflater.inflate(R.layout.layout_loading, baseLayout, true) as ViewGroup
+        errorLayout = layoutInflater.inflate(R.layout.layout_error, baseLayout, true) as ViewGroup
 
         // attach the original content view
         baseLayout.addView(contentView)
@@ -52,7 +52,7 @@ abstract class LoadingSupportFragmentBase : DaggerSupportFragmentBase() {
     }
 
     /**
-     * Show loading animation
+     * Show layout_loading animation
      */
     protected fun showLoading() {
         loadingLayout.visibility = View.VISIBLE
@@ -70,7 +70,7 @@ abstract class LoadingSupportFragmentBase : DaggerSupportFragmentBase() {
     }
 
     /**
-     * Show an error screen
+     * Show an layout_error screen
      *
      * @param message the message to show
      */
@@ -79,7 +79,7 @@ abstract class LoadingSupportFragmentBase : DaggerSupportFragmentBase() {
     }
 
     /**
-     * Show an error screen
+     * Show an layout_error screen
      *
      * @param throwable the exception that was raised
      */

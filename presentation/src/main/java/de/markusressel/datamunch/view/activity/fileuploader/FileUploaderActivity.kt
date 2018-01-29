@@ -4,7 +4,7 @@ import android.os.Bundle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.FileUploadManager
 import de.markusressel.datamunch.navigation.DrawerItemHolder
-import de.markusressel.datamunch.view.activity.NavigationDrawerActivity
+import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import javax.inject.Inject
 
 class FileUploaderActivity : NavigationDrawerActivity() {

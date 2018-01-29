@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.activity
+package de.markusressel.datamunch.view.activity.base
 
 import android.os.Bundle
 import android.support.annotation.CallSuper
@@ -35,7 +35,7 @@ import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.view.IconicsHelper
 import de.markusressel.datamunch.view.ThemeHelper
-import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
 import javax.inject.Inject
 
@@ -93,7 +93,7 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
 
         super.onCreate(savedInstanceState)
 
-        // Hide title on dialogs to use toolbar instead
+        // Hide title on dialogs to use view_toolbar instead
         if (style == DIALOG) {
             supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         }

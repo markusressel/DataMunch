@@ -6,6 +6,6 @@
     android:fitsSystemWindows="true"
     tools:context="de.markusressel.datamunch.view.activity.fileuploader.FileUploaderActivity">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/view_toolbar" />
 
 </android.support.constraint.ConstraintLayout>

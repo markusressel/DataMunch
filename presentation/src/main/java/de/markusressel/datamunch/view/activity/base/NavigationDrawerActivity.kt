@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.activity
+package de.markusressel.datamunch.view.activity.base
 
 import android.os.Bundle
 import com.github.ajalt.timberkt.Timber
@@ -21,7 +21,7 @@ import de.markusressel.datamunch.navigation.DrawerItemHolder.Services
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Settings
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Status
 import de.markusressel.datamunch.navigation.Navigator
-import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
 
 /**

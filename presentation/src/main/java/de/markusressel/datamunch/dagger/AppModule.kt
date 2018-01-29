@@ -11,6 +11,8 @@ import de.markusressel.datamunch.view.activity.JailsActivity
 import de.markusressel.datamunch.view.activity.MainActivity
 import de.markusressel.datamunch.view.activity.PluginsActivity
 import de.markusressel.datamunch.view.activity.ServicesActivity
+import de.markusressel.datamunch.view.activity.base.DaggerSupportActivityBase
+import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import javax.inject.Singleton
 
 /**
@@ -23,7 +25,13 @@ abstract class AppModule {
     internal abstract fun application(application: App): Application
 
     @ContributesAndroidInjector
-    internal abstract fun mainActivity(): MainActivity
+    internal abstract fun DaggerSupportActivityBase(): DaggerSupportActivityBase
+
+    @ContributesAndroidInjector
+    internal abstract fun NavigationDrawerActivity(): NavigationDrawerActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun MainActivity(): MainActivity
 
     @ContributesAndroidInjector
     internal abstract fun ServicesActivity(): ServicesActivity

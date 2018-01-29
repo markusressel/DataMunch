@@ -14,6 +14,7 @@ import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SS
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_USER
 import de.markusressel.datamunch.domain.SSHConnectionConfig
 import de.markusressel.datamunch.domain.User
+import de.markusressel.datamunch.view.fragment.base.LoadingSupportFragmentBase
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy

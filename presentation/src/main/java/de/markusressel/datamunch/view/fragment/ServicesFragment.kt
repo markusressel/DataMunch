@@ -12,6 +12,7 @@ import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.ServiceJSON
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.databinding.ListItemServiceBinding
 import de.markusressel.datamunch.domain.SSHConnectionConfig
+import de.markusressel.datamunch.view.fragment.base.LoadingSupportFragmentBase
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -90,7 +91,7 @@ class ServicesFragment : LoadingSupportFragmentBase() {
                             showContent()
                         },
                         onError = {
-                            // TODO: Show error message
+                            // TODO: Show layout_error message
                             Timber.e(it)
 
                             showError(it)

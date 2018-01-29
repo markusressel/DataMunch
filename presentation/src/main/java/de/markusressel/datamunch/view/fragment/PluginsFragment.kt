@@ -12,6 +12,7 @@ import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.PluginJSON
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.databinding.ListItemPluginBinding
 import de.markusressel.datamunch.domain.SSHConnectionConfig
+import de.markusressel.datamunch.view.fragment.base.LoadingSupportFragmentBase
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy

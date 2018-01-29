@@ -3,6 +3,7 @@ package de.markusressel.datamunch.view.activity
 import android.os.Bundle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.navigation.DrawerItemHolder
+import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import de.markusressel.datamunch.view.fragment.ServicesFragment
 
 

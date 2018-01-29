@@ -13,6 +13,7 @@ import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.JailJSON
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.databinding.ListItemJailBinding
 import de.markusressel.datamunch.domain.SSHConnectionConfig
+import de.markusressel.datamunch.view.fragment.base.LoadingSupportFragmentBase
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -44,6 +45,7 @@ class JailsFragment : LoadingSupportFragmentBase() {
         recyclerViewAdapter = LastAdapter(currentJails, BR.item)
                 .map<JailJSON, ListItemJailBinding>(R.layout.list_item_jail) {
                     onCreate { it.binding.presenter = this@JailsFragment }
+                    onClick { openJailDetailView(currentJails[it.adapterPosition]) }
                 }
                 .into(recyclerview)
 
@@ -91,7 +93,7 @@ class JailsFragment : LoadingSupportFragmentBase() {
                             showContent()
                         },
                         onError = {
-                            // TODO: Show error message
+                            // TODO: Show layout_error message
                             Timber.e(it)
 
                             showError(it)
@@ -154,6 +156,10 @@ class JailsFragment : LoadingSupportFragmentBase() {
                             showError(it)
                         }
                 )
+    }
+
+    private fun openJailDetailView(jail: JailJSON) {
+
     }
 
 }
