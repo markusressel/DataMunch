@@ -9,6 +9,7 @@ import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
+import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.JailJSON
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.databinding.ListItemJailBinding
 import de.markusressel.datamunch.domain.SSHConnectionConfig
@@ -31,7 +32,7 @@ class JailsFragment : LoadingSupportFragmentBase() {
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
-    private val currentJails: MutableList<Jail> = ArrayList()
+    private val currentJails: MutableList<JailJSON> = ArrayList()
     private lateinit var jailRecyclerViewAdapter: LastAdapter
 
     override val layoutRes: Int
@@ -41,7 +42,7 @@ class JailsFragment : LoadingSupportFragmentBase() {
         super.onViewCreated(view, savedInstanceState)
 
         jailRecyclerViewAdapter = LastAdapter(currentJails, BR.item)
-                .map<Jail, ListItemJailBinding>(R.layout.list_item_jail) {
+                .map<JailJSON, ListItemJailBinding>(R.layout.list_item_jail) {
                     onCreate { it.binding.presenter = this@JailsFragment }
                 }
                 .into(recyclerviewJails)
@@ -82,7 +83,9 @@ class JailsFragment : LoadingSupportFragmentBase() {
                 .subscribeBy(
                         onSuccess = {
                             currentJails.clear()
-                            currentJails.addAll(it)
+                            currentJails.addAll(it.sortedBy {
+                                it.id
+                            })
                             jailRecyclerViewAdapter.notifyDataSetChanged()
 
                             showContent()
@@ -96,7 +99,7 @@ class JailsFragment : LoadingSupportFragmentBase() {
                 )
     }
 
-    fun startJail(jail: Jail) {
+    fun startJail(jail: JailJSON) {
         Single.fromCallable {
             frittenbudeServerManager.startJail(jail)
         }
@@ -115,7 +118,7 @@ class JailsFragment : LoadingSupportFragmentBase() {
                 )
     }
 
-    fun stopJail(jail: Jail) {
+    fun stopJail(jail: JailJSON) {
         Single.fromCallable {
             frittenbudeServerManager.stopJail(jail)
         }
@@ -134,7 +137,7 @@ class JailsFragment : LoadingSupportFragmentBase() {
                 )
     }
 
-    fun restartJail(jail: Jail) {
+    fun restartJail(jail: JailJSON) {
         Single.fromCallable {
             frittenbudeServerManager.restartJail(jail)
         }

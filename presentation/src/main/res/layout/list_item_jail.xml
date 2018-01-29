@@ -22,7 +22,7 @@
 
         <variable
             name="item"
-            type="de.markusressel.datamunch.data.freebsd.data.Jail" />
+            type="de.markusressel.datamunch.data.freebsd.freenas.webapi.data.JailJSON" />
 
         <variable
             name="presenter"
@@ -67,26 +67,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@{item.hostname}"
+                    android:text="@{item.jail_host}"
                     android:textColor="?android:textColorPrimary"
                     android:textSize="18sp" />
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/path" />
+                    android:text="@string/status" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="@{item.path}"
+                    android:text="@{item.jail_status}"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/mac" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="@{item.jail_mac}"
                     android:textColor="?android:textColorPrimary"
                     android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:paddingTop="8dp">
 
                     <Button
                         android:layout_width="wrap_content"
