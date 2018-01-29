@@ -3,6 +3,7 @@
 
     <string name="name">Name</string>
     <string name="path">Pfad</string>
+    <string name="status">Status</string>
 
     <string name="start">Starten</string>
     <string name="stop">Stoppen</string>
