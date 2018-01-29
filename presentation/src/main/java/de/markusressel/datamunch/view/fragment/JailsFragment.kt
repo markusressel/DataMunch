@@ -33,7 +33,7 @@ class JailsFragment : LoadingSupportFragmentBase() {
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
     private val currentJails: MutableList<JailJSON> = ArrayList()
-    private lateinit var jailRecyclerViewAdapter: LastAdapter
+    private lateinit var recyclerViewAdapter: LastAdapter
 
     override val layoutRes: Int
         get() = R.layout.fragment_jails
@@ -41,15 +41,15 @@ class JailsFragment : LoadingSupportFragmentBase() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        jailRecyclerViewAdapter = LastAdapter(currentJails, BR.item)
+        recyclerViewAdapter = LastAdapter(currentJails, BR.item)
                 .map<JailJSON, ListItemJailBinding>(R.layout.list_item_jail) {
                     onCreate { it.binding.presenter = this@JailsFragment }
                 }
-                .into(recyclerviewJails)
+                .into(recyclerview)
 
-        recyclerviewJails.adapter = jailRecyclerViewAdapter
+        recyclerview.adapter = recyclerViewAdapter
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        recyclerviewJails.layoutManager = layoutManager
+        recyclerview.layoutManager = layoutManager
 
         val frittenbudeSshConnectionConfig = SSHConnectionConfig(
                 host = preferenceHandler.getValue(PreferenceHandler.CONNECTION_HOST),
@@ -86,7 +86,7 @@ class JailsFragment : LoadingSupportFragmentBase() {
                             currentJails.addAll(it.sortedBy {
                                 it.id
                             })
-                            jailRecyclerViewAdapter.notifyDataSetChanged()
+                            recyclerViewAdapter.notifyDataSetChanged()
 
                             showContent()
                         },

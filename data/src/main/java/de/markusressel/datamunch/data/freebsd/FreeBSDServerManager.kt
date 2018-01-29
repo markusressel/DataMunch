@@ -4,6 +4,8 @@ import de.markusressel.datamunch.data.ServerManager
 import de.markusressel.datamunch.data.VirtualMachine
 import de.markusressel.datamunch.data.freebsd.freenas.webapi.FreeNasWebApiManager
 import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.JailJSON
+import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.PluginJSON
+import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.ServiceJSON
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
 import de.markusressel.datamunch.domain.SSHConnectionConfig
 import javax.inject.Inject
@@ -45,6 +47,13 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
     fun retrieveHostname(): String {
         val commandResult = executeSSHCommand("/bin/hostname -s")
         return commandResult.output
+    }
+
+    /**
+     * Retrieve a list of all services
+     */
+    fun retrieveServices(): List<ServiceJSON> {
+        return webApiManager.retrieveServices()
     }
 
     /**
@@ -116,6 +125,10 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
 
     override fun getVirtualMachines(): List<VirtualMachine> {
         return emptyList()
+    }
+
+    fun retrievePlugins(): List<PluginJSON> {
+        return webApiManager.retrievePlugins()
     }
 
 }

@@ -3,6 +3,8 @@ package de.markusressel.datamunch.data.freebsd.freenas.webapi
 import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
 import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.JailJSON
+import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.PluginJSON
+import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.ServiceJSON
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
 import de.markusressel.datamunch.data.ssh.SSHClient
 import de.markusressel.datamunch.domain.SSHConnectionConfig
@@ -85,6 +87,14 @@ class FreeNasWebApiManager @Inject constructor() {
     }
 
     /**
+     * Retrieve a list of all configured services
+     */
+    fun retrieveServices(): List<ServiceJSON> {
+        val result = executeWebRequest(HttpRequestType.GET, "/services/services/")
+        return gson.fromJson(result.output)
+    }
+
+    /**
      * Retrieve a list of all configured jails
      */
     fun retrieveJails(): List<JailJSON> {
@@ -104,6 +114,14 @@ class FreeNasWebApiManager @Inject constructor() {
      */
     fun stopJail(jail: JailJSON): ExecuteCommandResult {
         return executeWebRequest(HttpRequestType.POST, "/jails/jails/${jail.id}/stop/")
+    }
+
+    /**
+     * Retrieve a list of all configured plugins
+     */
+    fun retrievePlugins(): List<PluginJSON> {
+        val result = executeWebRequest(HttpRequestType.GET, "/plugins/plugins/")
+        return gson.fromJson(result.output)
     }
 
 }

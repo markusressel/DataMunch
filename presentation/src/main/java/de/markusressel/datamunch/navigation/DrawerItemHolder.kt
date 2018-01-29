@@ -14,26 +14,38 @@ object DrawerItemHolder {
             icon = MaterialDesignIconic.Icon.gmi_home,
             selectable = true)
 
-    val Jails = DrawerMenuItem(
+    val Services = DrawerMenuItem(
             identifier = 20,
+            title = R.string.menu_item_services,
+            drawableRes = R.drawable.cube_outline,
+            selectable = true)
+
+    val Jails = DrawerMenuItem(
+            identifier = 30,
             title = R.string.menu_item_jails,
             drawableRes = R.drawable.cube_outline,
             selectable = true)
 
+    val Plugins = DrawerMenuItem(
+            identifier = 40,
+            title = R.string.menu_item_plugins,
+            icon = MaterialDesignIconic.Icon.gmi_puzzle_piece,
+            selectable = true)
+
     val FileUploader = DrawerMenuItem(
-            identifier = 30,
+            identifier = 50,
             title = R.string.menu_item_file_uploader,
             icon = MaterialDesignIconic.Icon.gmi_file,
             selectable = true)
 
     val Settings = DrawerMenuItem(
-            identifier = 40,
+            identifier = 500,
             title = R.string.menu_item_settings,
             icon = MaterialDesignIconic.Icon.gmi_settings,
             selectable = true)
 
     val About = DrawerMenuItem(
-            identifier = 50,
+            identifier = 1000,
             title = R.string.menu_item_about,
             icon = MaterialDesignIconic.Icon.gmi_info,
             selectable = false)

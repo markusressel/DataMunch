@@ -21,25 +21,28 @@ abstract class LoadingSupportFragmentBase : DaggerSupportFragmentBase() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         contentView = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
 
-        val baseLayout: LinearLayout = LinearLayout(activity)
-        baseLayout.orientation = LinearLayout.VERTICAL
-
-        val layoutInflater = LayoutInflater.from(context)
-        loadingLayout = layoutInflater.inflate(R.layout.loading, baseLayout, true) as ViewGroup
-        errorLayout = layoutInflater.inflate(R.layout.error, baseLayout, true) as ViewGroup
+        rootView = createWrapperLayout()
 
         errorLayout.setOnClickListener {
             // TODO: Show sophisticated error screen
         }
 
+        return rootView
+    }
+
+    private fun createWrapperLayout(): LinearLayout {
+        val baseLayout = LinearLayout(activity)
+        baseLayout.orientation = LinearLayout.VERTICAL
+
+        // inflate "loading" and "error" layouts and attach it to a newly created layout
+        val layoutInflater = LayoutInflater.from(context)
+        loadingLayout = layoutInflater.inflate(R.layout.loading, baseLayout, true) as ViewGroup
+        errorLayout = layoutInflater.inflate(R.layout.error, baseLayout, true) as ViewGroup
+
         // attach the original content view
         baseLayout.addView(contentView)
 
-        rootView = baseLayout
-        this.loadingLayout = rootView.findViewById(R.id.layoutLoading)
-        this.errorLayout = rootView.findViewById(R.id.layoutError)
-
-        return rootView
+        return baseLayout
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -16,6 +16,8 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.navigation.DrawerItemHolder.About
 import de.markusressel.datamunch.navigation.DrawerItemHolder.FileUploader
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Jails
+import de.markusressel.datamunch.navigation.DrawerItemHolder.Plugins
+import de.markusressel.datamunch.navigation.DrawerItemHolder.Services
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Settings
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Status
 import de.markusressel.datamunch.navigation.Navigator
@@ -107,8 +109,20 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                     true
                 }
 
+                Services.identifier -> {
+                    navigator.navigateTo(this, Navigator.NavigationPages.ServicesPage)
+                    navigationDrawer.closeDrawer()
+                    true
+                }
+
                 Jails.identifier -> {
                     navigator.navigateTo(this, Navigator.NavigationPages.JailsPage)
+                    navigationDrawer.closeDrawer()
+                    true
+                }
+
+                Plugins.identifier -> {
+                    navigator.navigateTo(this, Navigator.NavigationPages.PluginsPage)
                     navigationDrawer.closeDrawer()
                     true
                 }
@@ -139,7 +153,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
         }
 
-        for (menuItem in listOf(Status, Jails, FileUploader)) {
+        for (menuItem in listOf(Status, Services, Jails, Plugins, FileUploader)) {
             menuItemList.add(
                     PrimaryDrawerItem()
                             .withName(menuItem.title)

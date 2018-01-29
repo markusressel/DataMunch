@@ -3,27 +3,27 @@ package de.markusressel.datamunch.view.activity
 import android.os.Bundle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.navigation.DrawerItemHolder
-import de.markusressel.datamunch.view.fragment.JailsFragment
+import de.markusressel.datamunch.view.fragment.ServicesFragment
 
 
-class JailsActivity : NavigationDrawerActivity() {
+class ServicesActivity : NavigationDrawerActivity() {
 
     override val style: Int
         get() = DEFAULT
 
     override val layoutRes: Int
-        get() = R.layout.activity_jails
+        get() = R.layout.activity_services
 
     override fun getInitialNavigationDrawerSelection(): Long {
-        return DrawerItemHolder.Jails.identifier
+        return DrawerItemHolder.Services.identifier
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setTitle(R.string.menu_item_jails)
+        setTitle(R.string.menu_item_services)
 
-        val contentFragment = JailsFragment()
+        val contentFragment = ServicesFragment()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.contentLayout, contentFragment)
 //                .addToBackStack(preferencesFragment.tag)

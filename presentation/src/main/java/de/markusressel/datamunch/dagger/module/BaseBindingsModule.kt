@@ -3,10 +3,7 @@ package de.markusressel.datamunch.dagger.module
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import de.markusressel.datamunch.view.activity.NavigationDrawerActivity
-import de.markusressel.datamunch.view.fragment.DaggerSupportFragmentBase
-import de.markusressel.datamunch.view.fragment.JailsFragment
-import de.markusressel.datamunch.view.fragment.LoadingSupportFragmentBase
-import de.markusressel.datamunch.view.fragment.ServerStatusFragment
+import de.markusressel.datamunch.view.fragment.*
 
 /**
  * Created by Markus on 07.01.2018.
@@ -27,6 +24,12 @@ abstract class BaseBindingsModule {
     internal abstract fun ServerStatusFragment(): ServerStatusFragment
 
     @ContributesAndroidInjector
+    internal abstract fun ServicesFragment(): ServicesFragment
+
+    @ContributesAndroidInjector
     internal abstract fun JailsFragment(): JailsFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun PluginsFragment(): PluginsFragment
 
 }

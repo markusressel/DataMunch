@@ -33,6 +33,8 @@
         <activity
             android:name=".view.activity.fileuploader.FileUploaderActivity"
             android:parentActivityName=".view.activity.MainActivity" />
+        <activity android:name=".view.activity.ServicesActivity" />
+        <activity android:name=".view.activity.PluginsActivity" />
 
 
         <service android:name=".service.FileUploadService" />
