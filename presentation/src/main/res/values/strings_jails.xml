@@ -3,6 +3,7 @@
 
     <string name="id" translatable="false">ID</string>
     <string name="name">Name</string>
+    <string name="ipv4">IPv4</string>
     <string name="status">Status</string>
     <string name="mac">MAC</string>
     <string name="path">Path</string>
