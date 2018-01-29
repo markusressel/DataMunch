@@ -22,6 +22,8 @@ abstract class LoadingSupportFragmentBase : DaggerSupportFragmentBase() {
         contentView = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
 
         rootView = createWrapperLayout()
+        loadingLayout = rootView.findViewById(R.id.layoutLoading)
+        errorLayout = rootView.findViewById(R.id.layoutError)
 
         errorLayout.setOnClickListener {
             // TODO: Show sophisticated layout_error screen
@@ -36,8 +38,8 @@ abstract class LoadingSupportFragmentBase : DaggerSupportFragmentBase() {
 
         // inflate "layout_loading" and "layout_error" layouts and attach it to a newly created layout
         val layoutInflater = LayoutInflater.from(context)
-        loadingLayout = layoutInflater.inflate(R.layout.layout_loading, baseLayout, true) as ViewGroup
-        errorLayout = layoutInflater.inflate(R.layout.layout_error, baseLayout, true) as ViewGroup
+        layoutInflater.inflate(R.layout.layout_loading, baseLayout, true) as ViewGroup
+        layoutInflater.inflate(R.layout.layout_error, baseLayout, true) as ViewGroup
 
         // attach the original content view
         baseLayout.addView(contentView)
