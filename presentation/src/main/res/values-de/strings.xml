@@ -2,7 +2,9 @@
     <string name="app_name">DataMunch</string>
 
     <string name="menu_item_status">Status</string>
+    <string name="menu_item_services">Services</string>
     <string name="menu_item_jails">Jails</string>
+    <string name="menu_item_plugins">Plugins</string>
     <string name="menu_item_file_uploader">File Uploader</string>
     <string name="menu_item_settings">Einstellungen</string>
     <string name="menu_item_about">Über</string>
