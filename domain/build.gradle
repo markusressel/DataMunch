@@ -5,11 +5,11 @@ apply plugin: 'kotlin-kapt'
 dependencies {
 
     // RxJava (RxKotlin actually)
-    implementation domainDependencies.rxKotlin
+    implementation "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}"
 
     // Dagger 2
-    implementation domainDependencies.dagger
-    kapt domainDependencies.daggerCompiler
+    implementation "com.google.dagger:dagger:${rootProject.ext.dagger2Version}"
+    kapt "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}"
     kapt "com.android.databinding:compiler:$gradle_plugin_version"
 
 }

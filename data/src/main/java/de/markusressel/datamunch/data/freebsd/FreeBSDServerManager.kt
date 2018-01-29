@@ -2,9 +2,10 @@ package de.markusressel.datamunch.data.freebsd
 
 import de.markusressel.datamunch.data.ServerManager
 import de.markusressel.datamunch.data.VirtualMachine
-import de.markusressel.datamunch.data.freebsd.data.Jail
+import de.markusressel.datamunch.data.freebsd.freenas.webapi.FreeNasWebApiManager
+import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.JailJSON
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
-import java.util.*
+import de.markusressel.datamunch.domain.SSHConnectionConfig
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,11 +15,19 @@ import javax.inject.Singleton
 @Singleton
 class FreeBSDServerManager @Inject constructor() : ServerManager() {
 
+    @Inject
+    lateinit var webApiManager: FreeNasWebApiManager
+
+    override fun setSSHConnectionConfig(vararg sshConnectionConfig: SSHConnectionConfig) {
+        super.setSSHConnectionConfig(*sshConnectionConfig)
+        webApiManager.setSSHConnectionConfig(*sshConnectionConfig)
+    }
+
     /**
      * Retrieve OS version
      */
     fun retrieveReleaseVersion(): String {
-        val commandResult = executeCommand("uname -r")
+        val commandResult = executeSSHCommand("uname -r")
         return commandResult.output
     }
 
@@ -26,7 +35,7 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      * Retrieve the Hardware Type/Platform
      */
     fun retrievePlatform(): String {
-        val commandResult = executeCommand("uname -m")
+        val commandResult = executeSSHCommand("uname -m")
         return commandResult.output
     }
 
@@ -34,46 +43,15 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      * Retrieve the hostname of the specified server
      */
     fun retrieveHostname(): String {
-        val commandResult = executeCommand("/bin/hostname -s")
+        val commandResult = executeSSHCommand("/bin/hostname -s")
         return commandResult.output
     }
 
     /**
      * Retrieve a list of all jails on this server
      */
-    fun retrieveJails(): List<Jail> {
-        val commandResult = executeCommand("jls")
-        return parseJails(commandResult)
-    }
-
-    private fun parseJails(commandResult: ExecuteCommandResult): List<Jail> {
-        val jails: MutableList<Jail> = LinkedList()
-
-        val trimmedResult = commandResult.output.trimIndent()
-
-        val lines = trimmedResult.split("\n")
-        val header = lines[0]
-        val linesWithoutHeader = lines.subList(1, lines.size)
-
-        linesWithoutHeader.forEach {
-            var snippet = it.trim()
-
-            var i = snippet.indexOfFirst { it == ' ' }
-            val id = snippet.substring(0, i).toInt()
-            snippet = snippet.substring(i, snippet.length).trim()
-
-            i = snippet.indexOfFirst { it == ' ' }
-            val name = snippet.substring(0, i)
-            snippet = snippet.substring(i, snippet.length).trim()
-
-            val path = snippet.trim()
-
-            jails.add(
-                    Jail(id, name, path)
-            )
-        }
-
-        return jails
+    fun retrieveJails(): List<JailJSON> {
+        return webApiManager.retrieveJails()
     }
 
     /**
@@ -81,10 +59,8 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      *
      * @param jail the jail to start
      */
-    fun startJail(jail: Jail): ExecuteCommandResult {
-        val targetSystem = sshConnectionConfigList.last()
-        val command = "curl -v -u ${targetSystem.username}:${targetSystem.password} -X POST http://localhost/api/v1.0/jails/jails/${jail.id}/start/"
-        return executeCommand(command)
+    fun startJail(jail: JailJSON): ExecuteCommandResult {
+        return webApiManager.startJail(jail)
     }
 
     /**
@@ -92,10 +68,8 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      *
      * @param jail the jail to stop
      */
-    fun stopJail(jail: Jail): ExecuteCommandResult {
-        val targetSystem = sshConnectionConfigList.last()
-        val command = "curl -v -u ${targetSystem.username}:${targetSystem.password} -X POST http://localhost/api/v1.0/jails/jails/${jail.id}/stop/"
-        return executeCommand(command)
+    fun stopJail(jail: JailJSON): ExecuteCommandResult {
+        return webApiManager.stopJail(jail)
     }
 
     /**
@@ -106,7 +80,7 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      *
      * @param jail the jail to restart
      */
-    fun restartJail(jail: Jail) {
+    fun restartJail(jail: JailJSON) {
         stopJail(jail)
         startJail(jail)
     }

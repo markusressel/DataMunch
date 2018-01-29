@@ -37,7 +37,7 @@ abstract class ServerManager {
     /**
      * Set a ssh connection config for this manager
      */
-    fun setSSHConnectionConfig(vararg sshConnectionConfig: SSHConnectionConfig) {
+    open fun setSSHConnectionConfig(vararg sshConnectionConfig: SSHConnectionConfig) {
         if (sshConnectionConfig.isEmpty()) {
             throw IllegalArgumentException("SSH Connection Config must not be empty!")
         }
@@ -45,7 +45,7 @@ abstract class ServerManager {
         _sshConnectionConfigList = sshConnectionConfig
     }
 
-    protected fun executeCommand(command: String): ExecuteCommandResult {
+    protected fun executeSSHCommand(command: String): ExecuteCommandResult {
         return sshClient.executeCommand(
                 *sshConnectionConfigList,
                 command = command)
@@ -55,7 +55,7 @@ abstract class ServerManager {
      * Retrieve a list of all jails on this server
      */
     fun retrieveUptime(): UptimeResult {
-        val result: ExecuteCommandResult = executeCommand("uptime")
+        val result: ExecuteCommandResult = executeSSHCommand("uptime")
         return parseUptimeResult(result)
     }
 

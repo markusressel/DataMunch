@@ -9,7 +9,6 @@ import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
-import de.markusressel.datamunch.data.freebsd.data.Jail
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.databinding.ListItemJailBinding
 import de.markusressel.datamunch.domain.SSHConnectionConfig
@@ -32,15 +31,16 @@ class JailsFragment : LoadingSupportFragmentBase() {
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
+    private val currentJails: MutableList<Jail> = ArrayList()
+    private lateinit var jailRecyclerViewAdapter: LastAdapter
+
     override val layoutRes: Int
         get() = R.layout.fragment_jails
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val currentJails: MutableList<Jail> = ArrayList()
-
-        val jailRecyclerViewAdapter = LastAdapter(currentJails, BR.item)
+        jailRecyclerViewAdapter = LastAdapter(currentJails, BR.item)
                 .map<Jail, ListItemJailBinding>(R.layout.list_item_jail) {
                     onCreate { it.binding.presenter = this@JailsFragment }
                 }
@@ -67,6 +67,12 @@ class JailsFragment : LoadingSupportFragmentBase() {
                 turrisSshConnectionConfig,
                 frittenbudeSshConnectionConfig
         )
+
+        updateJailList()
+    }
+
+    private fun updateJailList() {
+        showLoading()
 
         Single.fromCallable {
             frittenbudeServerManager.retrieveJails()
@@ -99,6 +105,7 @@ class JailsFragment : LoadingSupportFragmentBase() {
                 .subscribeBy(
                         onSuccess = {
                             Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
+                            updateJailList()
                         },
                         onError = {
                             Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
@@ -117,6 +124,7 @@ class JailsFragment : LoadingSupportFragmentBase() {
                 .subscribeBy(
                         onSuccess = {
                             Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
+                            updateJailList()
                         },
                         onError = {
                             Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
@@ -135,6 +143,7 @@ class JailsFragment : LoadingSupportFragmentBase() {
                 .subscribeBy(
                         onSuccess = {
                             Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
+                            updateJailList()
                         },
                         onError = {
                             Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()

@@ -48,29 +48,25 @@ android {
 }
 
 dependencies {
-    def presentationDependencies = rootProject.ext.presentationDependencies
-    def presentationTestDependencies = rootProject.ext.presentationTestDependencies
-    def developmentDependencies = rootProject.ext.developmentDependencies
-
     implementation project(':domain')
     implementation project(':data')
 
     // Dagger 2
-    implementation presentationDependencies.dagger
-    kapt presentationDependencies.daggerCompiler
+    implementation "com.google.dagger:dagger:${rootProject.ext.dagger2Version}"
+    kapt "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}"
     kapt "com.android.databinding:compiler:$gradle_plugin_version"
 
     // if you use the support libraries
-    kapt presentationDependencies.daggerAndroidProcessor
-    implementation presentationDependencies.daggerAndroid
-    implementation presentationDependencies.daggerAndroidSupport
+    kapt "com.google.dagger:dagger-android-processor:${rootProject.ext.dagger2Version}"
+    implementation "com.google.dagger:dagger-android:${rootProject.ext.dagger2Version}"
+    implementation "com.google.dagger:dagger-android-support:${rootProject.ext.dagger2Version}"
 
-    implementation presentationDependencies.appCompatV7
-    implementation presentationDependencies.designLibrary
-    implementation presentationDependencies.supportV13
-    implementation presentationDependencies.supportAnnotation
-    implementation presentationDependencies.constraintLayout
-    implementation presentationDependencies.cardviewV7
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    implementation "com.android.support:design:${rootProject.ext.supportLibVersion}"
+    implementation "com.android.support:support-v13:${rootProject.ext.supportLibVersion}"
+    implementation "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
+    implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.constraintLayoutVersion}"
+    implementation "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}"
 
     implementation 'com.github.michael-rapp:android-preference-activity:5.0.5'
     implementation 'com.github.michael-rapp:android-material-preferences:3.1.2'
@@ -84,17 +80,17 @@ dependencies {
     // RxJava (RxKotlin actually)
     compile "io.reactivex.rxjava2:rxjava:2.1.8"
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation presentationDependencies.rxKotlin
+    implementation "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}"
 
-    implementation presentationDependencies.recyclerView
+    implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
 
-    provided presentationDependencies.javaxAnnotation
+    provided "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}"
 
-    androidTestImplementation presentationTestDependencies.mockito
-    androidTestImplementation presentationTestDependencies.dexmaker
-    androidTestImplementation presentationTestDependencies.dexmakerMockito
-    androidTestImplementation presentationTestDependencies.espresso
-    androidTestImplementation presentationTestDependencies.testingSupportLib
+//    androidTestImplementation presentationTestDependencies.mockito
+//    androidTestImplementation presentationTestDependencies.dexmaker
+//    androidTestImplementation presentationTestDependencies.dexmakerMockito
+//    androidTestImplementation presentationTestDependencies.espresso
+//    androidTestImplementation presentationTestDependencies.testingSupportLib
 
     //Development
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
@@ -106,8 +102,8 @@ dependencies {
     }
 
     // Iconics (use SVG resources)
-    implementation presentationDependencies.iconicsCore
-    implementation presentationDependencies.iconicsViews
+    implementation "com.mikepenz:iconics-core:${rootProject.ext.iconicsVersion}@aar"
+    implementation "com.mikepenz:iconics-views:${rootProject.ext.iconicsVersion}@aar"
     // Fonts
     implementation 'com.mikepenz:google-material-typeface:3.0.1.1.original@aar'
     implementation 'com.mikepenz:material-design-iconic-typeface:+@aar'

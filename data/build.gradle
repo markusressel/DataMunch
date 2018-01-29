@@ -35,27 +35,26 @@ android {
 }
 
 dependencies {
-    def dataDependencies = rootProject.ext.dataDependencies
-    def testDependencies = rootProject.ext.dataTestDependencies
-
     implementation project(':domain')
 
     // Dagger 2
-    implementation dataDependencies.dagger
-    kapt dataDependencies.daggerCompiler
+    implementation "com.google.dagger:dagger:${rootProject.ext.dagger2Version}"
+    kapt "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}"
     kapt "com.android.databinding:compiler:$gradle_plugin_version"
 
     // if you use the support libraries
-    kapt dataDependencies.daggerAndroidProcessor
-    implementation dataDependencies.daggerAndroid
-    implementation dataDependencies.daggerAndroidSupport
+    kapt "com.google.dagger:dagger-android-processor:${rootProject.ext.dagger2Version}"
+    implementation "com.google.dagger:dagger-android:${rootProject.ext.dagger2Version}"
+    implementation "com.google.dagger:dagger-android-support:${rootProject.ext.dagger2Version}"
 
-    implementation dataDependencies.gson
-    implementation dataDependencies.rxKotlin
-    implementation dataDependencies.supportAnnotation
+    implementation "com.google.code.gson:gson:${rootProject.ext.gsonVersion}"
+    // Kotlin bindings for GSON
+    compile "com.github.salomonbrys.kotson:kotson:${rootProject.ext.kotsonVersion}"
+    implementation "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}"
+    implementation "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
 
     // Logging
-    api dataDependencies.timberkt
+    api "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}"
 
     // Preferences
     api('com.github.markusressel:TypedPreferences:dev-SNAPSHOT') {
