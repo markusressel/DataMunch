@@ -3,7 +3,6 @@ package de.markusressel.datamunch.view.fragment
 import android.os.Bundle
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
-import com.github.ajalt.timberkt.Timber
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
@@ -84,14 +83,13 @@ class PluginsFragment : LoadingSupportFragmentBase() {
                         onSuccess = {
                             currentServices.clear()
                             currentServices.addAll(it.sortedBy {
-                                it.id
+                                it.plugin_name
                             })
                             recyclerViewAdapter.notifyDataSetChanged()
 
                             showContent()
                         },
                         onError = {
-                            Timber.e(it)
                             showError(it)
                         }
                 )

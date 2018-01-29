@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import android.widget.Toast
-import com.github.ajalt.timberkt.Timber
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
@@ -86,16 +85,13 @@ class JailsFragment : LoadingSupportFragmentBase() {
                         onSuccess = {
                             currentJails.clear()
                             currentJails.addAll(it.sortedBy {
-                                it.id
+                                it.jail_host
                             })
                             recyclerViewAdapter.notifyDataSetChanged()
 
                             showContent()
                         },
                         onError = {
-                            // TODO: Show layout_error message
-                            Timber.e(it)
-
                             showError(it)
                         }
                 )
@@ -114,7 +110,6 @@ class JailsFragment : LoadingSupportFragmentBase() {
                         },
                         onError = {
                             Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
-                            Timber.e(it)
                             showError(it)
                         }
                 )
@@ -133,7 +128,6 @@ class JailsFragment : LoadingSupportFragmentBase() {
                         },
                         onError = {
                             Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
-                            Timber.e(it)
                             showError(it)
                         }
                 )
@@ -152,7 +146,6 @@ class JailsFragment : LoadingSupportFragmentBase() {
                         },
                         onError = {
                             Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
-                            Timber.e(it)
                             showError(it)
                         }
                 )

@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.github.ajalt.timberkt.Timber
 import de.markusressel.datamunch.R
+import kotlinx.android.synthetic.main.layout_error.*
 
 /**
  * Base class for implementing a fragment
@@ -89,7 +91,25 @@ abstract class LoadingSupportFragmentBase : DaggerSupportFragmentBase() {
         showError("Exception raised", throwable)
     }
 
+    private fun Throwable.prettyPrint(): String {
+        val message = "${this.message}:\n" +
+                "${this.stackTrace.joinToString(
+                        separator = "\n"
+                )}}"
+
+        return message
+    }
+
     private fun showError(message: String, t: Throwable? = null) {
+        var errorDescriptionText = message
+
+        t?.let {
+            Timber.e(t) { message }
+            errorDescriptionText += "\n" + t.prettyPrint()
+        }
+
+        errorDescription.text = errorDescriptionText
+
         loadingLayout.visibility = View.GONE
         errorLayout.visibility = View.VISIBLE
         contentView.visibility = View.GONE

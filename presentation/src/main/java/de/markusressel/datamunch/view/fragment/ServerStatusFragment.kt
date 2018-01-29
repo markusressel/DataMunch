@@ -2,7 +2,6 @@ package de.markusressel.datamunch.view.fragment
 
 import android.os.Bundle
 import android.view.View
-import com.github.ajalt.timberkt.Timber
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.CONNECTION_HOST
@@ -77,8 +76,6 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
                         },
                         onError = {
                             serverName.text = it.message
-                            Timber.e(it)
-
                             showError(it)
                         }
                 )
@@ -103,8 +100,6 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
                         },
                         onError = {
                             serverStatus.text = it.message
-                            Timber.e(it)
-
                             showError(it)
                         }
                 )

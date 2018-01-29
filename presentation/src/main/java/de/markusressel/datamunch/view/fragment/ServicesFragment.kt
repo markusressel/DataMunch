@@ -1,9 +1,7 @@
 package de.markusressel.datamunch.view.fragment
 
 import android.os.Bundle
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
-import com.github.ajalt.timberkt.Timber
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
@@ -12,13 +10,8 @@ import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.ServiceJSON
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.databinding.ListItemServiceBinding
 import de.markusressel.datamunch.domain.SSHConnectionConfig
-import de.markusressel.datamunch.view.fragment.base.LoadingSupportFragmentBase
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_services.*
-import java.util.*
+import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
 
@@ -27,29 +20,26 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class ServicesFragment : LoadingSupportFragmentBase() {
+class ServicesFragment : ListFragmentBase<ServiceJSON>() {
 
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
-    private val currentServices: MutableList<ServiceJSON> = ArrayList()
-    private lateinit var recyclerViewAdapter: LastAdapter
+    override val itemLayoutRes: Int
+        get() = R.layout.list_item_service
 
-    override val layoutRes: Int
-        get() = R.layout.fragment_services
+    override fun createAdapter(): LastAdapter {
+        return LastAdapter(listValues, BR.item)
+                .map<ServiceJSON, ListItemServiceBinding>(itemLayoutRes) {
+                    onCreate {
+                        it.binding.setVariable(BR.presenter, this@ServicesFragment)
+                    }
+                }
+                .into(recyclerview)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        recyclerViewAdapter = LastAdapter(currentServices, BR.item)
-                .map<ServiceJSON, ListItemServiceBinding>(R.layout.list_item_service) {
-                    onCreate { it.binding.presenter = this@ServicesFragment }
-                }
-                .into(recyclerview)
-
-        recyclerview.adapter = recyclerViewAdapter
-        val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        recyclerview.layoutManager = layoutManager
 
         val frittenbudeSshConnectionConfig = SSHConnectionConfig(
                 host = preferenceHandler.getValue(PreferenceHandler.CONNECTION_HOST),
@@ -69,34 +59,13 @@ class ServicesFragment : LoadingSupportFragmentBase() {
                 frittenbudeSshConnectionConfig
         )
 
-        updateServiceList()
+        updateListData()
     }
 
-    private fun updateServiceList() {
-        showLoading()
-
-        Single.fromCallable {
-            frittenbudeServerManager.retrieveServices()
+    override fun loadListData(): List<ServiceJSON> {
+        return frittenbudeServerManager.retrieveServices().sortedBy {
+            it.srv_service
         }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            currentServices.clear()
-                            currentServices.addAll(it.sortedBy {
-                                it.id
-                            })
-                            recyclerViewAdapter.notifyDataSetChanged()
-
-                            showContent()
-                        },
-                        onError = {
-                            // TODO: Show layout_error message
-                            Timber.e(it)
-
-                            showError(it)
-                        }
-                )
     }
 
 }
