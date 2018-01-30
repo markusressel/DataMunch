@@ -105,15 +105,15 @@ class FreeNasWebApiManager @Inject constructor() {
     /**
      * Start a jail
      */
-    fun startJail(jail: JailJSON): ExecuteCommandResult {
-        return executeWebRequest(HttpRequestType.POST, "/jails/jails/${jail.id}/start/")
+    fun startJail(jailId: Long): ExecuteCommandResult {
+        return executeWebRequest(HttpRequestType.POST, "/jails/jails/$jailId/start/")
     }
 
     /**
      * Stop a jail
      */
-    fun stopJail(jail: JailJSON): ExecuteCommandResult {
-        return executeWebRequest(HttpRequestType.POST, "/jails/jails/${jail.id}/stop/")
+    fun stopJail(jailId: Long): ExecuteCommandResult {
+        return executeWebRequest(HttpRequestType.POST, "/jails/jails/$jailId/stop/")
     }
 
     /**

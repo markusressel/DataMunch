@@ -7,7 +7,8 @@ import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
-import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.JailJSON
+import de.markusressel.datamunch.data.persistence.PersistenceManager
+import de.markusressel.datamunch.data.persistence.entity.JailEntity
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.databinding.ListItemJailBinding
 import de.markusressel.datamunch.domain.SSHConnectionConfig
@@ -25,14 +26,17 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class JailsFragment : ListFragmentBase<JailJSON>() {
+class JailsFragment : ListFragmentBase<JailEntity>() {
 
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
+    @Inject
+    lateinit var persistenceManager: PersistenceManager
+
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<JailJSON, ListItemJailBinding>(R.layout.list_item_jail) {
+                .map<JailEntity, ListItemJailBinding>(R.layout.list_item_jail) {
                     onCreate { it.binding.presenter = this@JailsFragment }
                     onClick {
                         openJailDetailView(listValues[it.adapterPosition])
@@ -41,8 +45,17 @@ class JailsFragment : ListFragmentBase<JailJSON>() {
                 .into(recyclerview)
     }
 
-    override fun loadListData(): List<JailJSON> {
-        return frittenbudeServerManager.retrieveJails().sortedBy {
+    override fun loadListData(): List<JailEntity> {
+        // retrieve Jails from server
+        val receivedItems = frittenbudeServerManager.retrieveJails()
+        // update persistence
+        persistenceManager.removeAllJails()
+        for (item in receivedItems) {
+            persistenceManager.put(item.newEntity())
+        }
+
+        // and use persistence
+        return persistenceManager.getAllJails().sortedBy {
             it.jail_host
         }
     }
@@ -71,7 +84,7 @@ class JailsFragment : ListFragmentBase<JailJSON>() {
         updateListData()
     }
 
-    fun startJail(jail: JailJSON) {
+    fun startJail(jail: JailEntity) {
         Single.fromCallable {
             frittenbudeServerManager.startJail(jail)
         }
@@ -89,7 +102,7 @@ class JailsFragment : ListFragmentBase<JailJSON>() {
                 )
     }
 
-    fun stopJail(jail: JailJSON) {
+    fun stopJail(jail: JailEntity) {
         Single.fromCallable {
             frittenbudeServerManager.stopJail(jail)
         }
@@ -107,7 +120,7 @@ class JailsFragment : ListFragmentBase<JailJSON>() {
                 )
     }
 
-    fun restartJail(jail: JailJSON) {
+    fun restartJail(jail: JailEntity) {
         Single.fromCallable {
             frittenbudeServerManager.restartJail(jail)
         }
@@ -125,7 +138,7 @@ class JailsFragment : ListFragmentBase<JailJSON>() {
                 )
     }
 
-    private fun openJailDetailView(jail: JailJSON) {
+    private fun openJailDetailView(jail: JailEntity) {
 
     }
 

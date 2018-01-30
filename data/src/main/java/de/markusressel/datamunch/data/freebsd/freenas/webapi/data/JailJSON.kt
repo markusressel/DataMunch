@@ -1,10 +1,12 @@
 package de.markusressel.datamunch.data.freebsd.freenas.webapi.data
 
+import de.markusressel.datamunch.data.persistence.entity.JailEntity
+
 /**
  * Created by Markus on 29.01.2018.
  */
 data class JailJSON(
-        val id: Int,
+        val id: Long,
         val jail_alias_bridge_ipv4: String?,
         val jail_alias_bridge_ipv6: String?,
         val jail_alias_ipv4: String?,
@@ -28,4 +30,37 @@ data class JailJSON(
         val jail_status: String?,
         val jail_type: String?,
         val jail_vnet: Boolean
-)
+) {
+    /**
+     * Get an newEntity for this class
+     */
+    fun newEntity(): JailEntity {
+        return JailEntity(
+                0,
+                this.id,
+                this.jail_alias_bridge_ipv4,
+                this.jail_alias_bridge_ipv6,
+                this.jail_alias_ipv4,
+                this.jail_alias_ipv6,
+                this.jail_autostart,
+                this.jail_bridge_ipv4,
+                this.jail_bridge_ipv4_netmask,
+                this.jail_bridge_ipv6,
+                this.jail_bridge_ipv6_prefix,
+                this.jail_defaultrouter_ipv4,
+                this.jail_defaultrouter_ipv6,
+                this.jail_flags,
+                this.jail_host,
+                this.jail_iface,
+                this.jail_ipv4,
+                this.jail_ipv4_netmask,
+                this.jail_ipv6,
+                this.jail_ipv6_prefix,
+                this.jail_mac,
+                this.jail_nat,
+                this.jail_status,
+                this.jail_type,
+                this.jail_vnet
+        )
+    }
+}

@@ -52,6 +52,7 @@ abstract class AppModule {
         internal fun provideContext(application: Application): Context {
             return application
         }
+
     }
 
 }

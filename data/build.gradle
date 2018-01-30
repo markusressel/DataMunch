@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'io.objectbox' // after applying Android plugin
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -66,6 +67,10 @@ dependencies {
 
     // JSch (SSH client)
     compile "com.jcraft:jsch:0.1.52"
+
+    // ObjectBox
+    api "io.objectbox:objectbox-android:$objectboxVersion"
+    api "io.objectbox:objectbox-kotlin:$objectboxVersion"
 
 
     testImplementation 'junit:junit:4.12'

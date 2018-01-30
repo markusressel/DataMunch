@@ -28,18 +28,19 @@ buildscript {
         gsonVersion = "2.8.2"
         kotsonVersion = "2.5.0"
 
+        objectboxVersion = "1.4.1"
+
     }
 
     repositories {
         google()
         jcenter()
+        maven { url "http://objectbox.net/beta-repo/" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradle_plugin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"
     }
 }
 apply plugin: 'kotlin'
@@ -52,6 +53,7 @@ allprojects {
         maven {
             url 'https://oss.sonatype.org/content/repositories/snapshots/'
         }
+        maven { url "http://objectbox.net/beta-repo/" }
     }
 }
 

@@ -6,6 +6,7 @@ import de.markusressel.datamunch.data.freebsd.freenas.webapi.FreeNasWebApiManage
 import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.JailJSON
 import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.PluginJSON
 import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.ServiceJSON
+import de.markusressel.datamunch.data.persistence.entity.JailEntity
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
 import de.markusressel.datamunch.domain.SSHConnectionConfig
 import javax.inject.Inject
@@ -68,8 +69,8 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      *
      * @param jail the jail to start
      */
-    fun startJail(jail: JailJSON): ExecuteCommandResult {
-        return webApiManager.startJail(jail)
+    fun startJail(jail: JailEntity): ExecuteCommandResult {
+        return webApiManager.startJail(jail.id)
     }
 
     /**
@@ -77,8 +78,8 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      *
      * @param jail the jail to stop
      */
-    fun stopJail(jail: JailJSON): ExecuteCommandResult {
-        return webApiManager.stopJail(jail)
+    fun stopJail(jail: JailEntity): ExecuteCommandResult {
+        return webApiManager.stopJail(jail.id)
     }
 
     /**
@@ -89,7 +90,7 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      *
      * @param jail the jail to restart
      */
-    fun restartJail(jail: JailJSON) {
+    fun restartJail(jail: JailEntity) {
         stopJail(jail)
         startJail(jail)
     }

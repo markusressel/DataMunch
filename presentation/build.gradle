@@ -110,7 +110,7 @@ dependencies {
     implementation 'com.mikepenz:community-material-typeface:+@aar'
 
     // AboutLibraries ("About" screen)
-    implementation("com.mikepenz:aboutlibraries:${rootProject.ext.aboutlibrariesVersion}@aar") {
+    implementation("com.mikepenz:aboutlibraries:$aboutlibrariesVersion@aar") {
         transitive = true
     }
 
