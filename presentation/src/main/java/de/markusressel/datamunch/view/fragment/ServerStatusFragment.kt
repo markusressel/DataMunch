@@ -1,6 +1,7 @@
 package de.markusressel.datamunch.view.fragment
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
@@ -38,6 +39,9 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
     override val layoutRes: Int
         get() = R.layout.fragment_server_status
 
+    override val optionsMenuRes: Int?
+        get() = R.menu.options_menu_server_status
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -63,6 +67,10 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
 
         openWrtServerManager.setSSHConnectionConfig(turrisSshConnectionConfig)
 
+        reload()
+    }
+
+    private fun reload() {
         Single.fromCallable {
             freeBSDServerManager.retrieveHostname()
         }
@@ -103,6 +111,16 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
                             showError(it)
                         }
                 )
+    }
+
+    override fun onOptionsMenuItemSelected(item: MenuItem): Boolean {
+        return when {
+            item.itemId == R.id.refresh -> {
+                reload()
+                true
+            }
+            else -> false
+        }
     }
 
 }

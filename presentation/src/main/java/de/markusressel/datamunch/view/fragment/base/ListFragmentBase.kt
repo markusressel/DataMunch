@@ -2,9 +2,11 @@ package de.markusressel.datamunch.view.fragment.base
 
 import android.os.Bundle
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.view.MenuItem
 import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -19,6 +21,9 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     override val layoutRes: Int
         get() = R.layout.fragment_recyclerview
 
+    override val optionsMenuRes: Int?
+        get() = R.menu.options_menu_list
+
     protected val listValues: MutableList<T> = ArrayList()
     private lateinit var recyclerViewAdapter: LastAdapter
 
@@ -30,29 +35,45 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
         recyclerview.adapter = recyclerViewAdapter
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         recyclerview.layoutManager = layoutManager
+
+        onListViewCreated(view, savedInstanceState)
+
+        fillListFromPersistence()
     }
 
+    /**
+     * Create the adapter used for the recyclerview
+     */
     abstract fun createAdapter(): LastAdapter
 
     /**
-     * Loads the data using {@link loadListData()}
+     * Called after the options_menu_list view layout has been inflated
      */
-    protected fun updateListData() {
+    abstract fun onListViewCreated(view: View, savedInstanceState: Bundle?)
+
+    /**
+     * Loads the data using {@link loadListDataFromPersistence()}
+     */
+    protected fun fillListFromPersistence() {
         showLoading()
 
         Single.fromCallable {
-            loadListData()
+            loadListDataFromPersistence()
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
                             listValues.clear()
-                            listValues.addAll(it)
+
+                            if (it.isEmpty()) {
+                                showEmpty()
+                            } else {
+                                listValues.addAll(it)
+                                showContent()
+                            }
 
                             recyclerViewAdapter.notifyDataSetChanged()
-
-                            showContent()
                         },
                         onError = {
                             showError(it)
@@ -61,8 +82,80 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     }
 
     /**
-     * Load the data to be displayed in the list
+     * Reload options_menu_list data from it's original source, persist it and display it to the user afterwards
      */
-    abstract fun loadListData(): List<T>
+    protected fun reloadDataFromSource() {
+        showLoading()
+
+        Single.fromCallable {
+            loadListDataFromSource()
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            persistListData(it)
+
+                            listValues.clear()
+
+                            if (it.isEmpty()) {
+                                showEmpty()
+                            } else {
+                                listValues.addAll(it)
+                                showContent()
+                            }
+
+                            recyclerViewAdapter.notifyDataSetChanged()
+                        },
+                        onError = {
+                            showError(it)
+                        }
+                )
+    }
+
+    /**
+     * Get the persistence handler for this options_menu_list
+     */
+    protected abstract fun getPersistenceHandler(): PersistenceManagerBase<T>
+
+    private fun persistListData(data: List<T>) {
+        val persistenceHandler = getPersistenceHandler()
+        persistenceHandler.removeAll()
+        for (item in data) {
+            persistenceHandler.put(item)
+        }
+    }
+
+    private fun showEmpty() {
+        showError(getString(R.string.no_items_found))
+    }
+
+    /**
+     * Load the data to be displayed in the options_menu_list from the persistence
+     */
+    open fun loadListDataFromPersistence(): List<T> {
+        val persistenceHandler = getPersistenceHandler()
+        return persistenceHandler.getAll()
+    }
+
+    /**
+     * Load the data to be displayed in the options_menu_list from it's original source
+     */
+    abstract fun loadListDataFromSource(): List<T>
+
+    override fun onOptionsMenuItemSelected(item: MenuItem): Boolean {
+        return when {
+            item.itemId == R.id.refresh -> {
+                reloadDataFromSource()
+                true
+            }
+            else -> false
+        }
+    }
+
+    override fun onErrorClicked() {
+        super.onErrorClicked()
+        reloadDataFromSource()
+    }
 
 }

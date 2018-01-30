@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.layout_error.*
  *
  * Created by Markus on 07.01.2018.
  */
-abstract class LoadingSupportFragmentBase : DaggerSupportFragmentBase() {
+abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
 
     protected lateinit var loadingLayout: ViewGroup
     protected lateinit var errorLayout: ViewGroup
@@ -28,10 +28,14 @@ abstract class LoadingSupportFragmentBase : DaggerSupportFragmentBase() {
         errorLayout = rootView.findViewById(R.id.layoutError)
 
         errorLayout.setOnClickListener {
-            // TODO: Show sophisticated layout_error screen
+            onErrorClicked()
         }
 
         return rootView
+    }
+
+    protected open fun onErrorClicked() {
+        // TODO: Show sophisticated layout_error screen
     }
 
     private fun createWrapperLayout(): LinearLayout {

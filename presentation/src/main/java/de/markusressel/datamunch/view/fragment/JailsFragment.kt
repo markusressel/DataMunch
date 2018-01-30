@@ -7,7 +7,8 @@ import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
-import de.markusressel.datamunch.data.persistence.PersistenceManager
+import de.markusressel.datamunch.data.persistence.JailPersistenceManager
+import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.JailEntity
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.databinding.ListItemJailBinding
@@ -32,7 +33,7 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
     @Inject
-    lateinit var persistenceManager: PersistenceManager
+    lateinit var jailPersistenceManager: JailPersistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -45,24 +46,7 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
                 .into(recyclerview)
     }
 
-    override fun loadListData(): List<JailEntity> {
-        // retrieve Jails from server
-        val receivedItems = frittenbudeServerManager.retrieveJails()
-        // update persistence
-        persistenceManager.removeAllJails()
-        for (item in receivedItems) {
-            persistenceManager.put(item.newEntity())
-        }
-
-        // and use persistence
-        return persistenceManager.getAllJails().sortedBy {
-            it.jail_host
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
         val frittenbudeSshConnectionConfig = SSHConnectionConfig(
                 host = preferenceHandler.getValue(PreferenceHandler.CONNECTION_HOST),
                 username = preferenceHandler.getValue(PreferenceHandler.SSH_USER),
@@ -80,8 +64,23 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
                 turrisSshConnectionConfig,
                 frittenbudeSshConnectionConfig
         )
+    }
 
-        updateListData()
+    override fun loadListDataFromSource(): List<JailEntity> {
+        // retrieve Jails from server
+        return frittenbudeServerManager.retrieveJails().map {
+            it.newEntity()
+        }
+    }
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<JailEntity> {
+        return jailPersistenceManager
+    }
+
+    override fun loadListDataFromPersistence(): List<JailEntity> {
+        return super.loadListDataFromPersistence().sortedBy {
+            it.jail_host
+        }
     }
 
     fun startJail(jail: JailEntity) {
@@ -93,7 +92,7 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
                 .subscribeBy(
                         onSuccess = {
                             Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
-                            updateListData()
+                            reloadDataFromSource()
                         },
                         onError = {
                             Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
@@ -111,7 +110,7 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
                 .subscribeBy(
                         onSuccess = {
                             Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
-                            updateListData()
+                            reloadDataFromSource()
                         },
                         onError = {
                             Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
@@ -129,7 +128,7 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
                 .subscribeBy(
                         onSuccess = {
                             Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
-                            updateListData()
+                            reloadDataFromSource()
                         },
                         onError = {
                             Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()

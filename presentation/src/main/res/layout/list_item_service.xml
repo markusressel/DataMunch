@@ -22,7 +22,7 @@
 
         <variable
             name="item"
-            type="de.markusressel.datamunch.data.freebsd.freenas.webapi.data.ServiceJSON" />
+            type="de.markusressel.datamunch.data.persistence.entity.ServiceEntity" />
 
         <variable
             name="presenter"
@@ -55,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="@{Integer.toString(item.id)}"
+                    android:text="@{Long.toString(item.id)}"
                     android:textColor="?android:textColorPrimary"
                     android:textSize="18sp" />
 

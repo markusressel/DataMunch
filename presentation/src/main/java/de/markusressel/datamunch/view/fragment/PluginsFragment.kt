@@ -6,7 +6,9 @@ import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
-import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.PluginJSON
+import de.markusressel.datamunch.data.persistence.PluginPersistenceManager
+import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.PluginEntity
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.databinding.ListItemPluginBinding
 import de.markusressel.datamunch.domain.SSHConnectionConfig
@@ -20,28 +22,37 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class PluginsFragment : ListFragmentBase<PluginJSON>() {
+class PluginsFragment : ListFragmentBase<PluginEntity>() {
 
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
+    @Inject
+    lateinit var pluginPersistenceManager: PluginPersistenceManager
+
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<PluginJSON, ListItemPluginBinding>(R.layout.list_item_plugin) {
+                .map<PluginEntity, ListItemPluginBinding>(R.layout.list_item_plugin) {
                     onCreate { it.binding.presenter = this@PluginsFragment }
                 }
                 .into(recyclerview)
     }
 
-    override fun loadListData(): List<PluginJSON> {
-        return frittenbudeServerManager.retrievePlugins().sortedBy {
+    override fun loadListDataFromSource(): List<PluginEntity> {
+        return frittenbudeServerManager.retrievePlugins().map { it.newEntity() }
+    }
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<PluginEntity> {
+        return pluginPersistenceManager
+    }
+
+    override fun loadListDataFromPersistence(): List<PluginEntity> {
+        return super.loadListDataFromPersistence().sortedBy {
             it.plugin_name
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
         val frittenbudeSshConnectionConfig = SSHConnectionConfig(
                 host = preferenceHandler.getValue(PreferenceHandler.CONNECTION_HOST),
                 username = preferenceHandler.getValue(PreferenceHandler.SSH_USER),
@@ -59,8 +70,6 @@ class PluginsFragment : ListFragmentBase<PluginJSON>() {
                 turrisSshConnectionConfig,
                 frittenbudeSshConnectionConfig
         )
-
-        updateListData()
     }
 
 }
