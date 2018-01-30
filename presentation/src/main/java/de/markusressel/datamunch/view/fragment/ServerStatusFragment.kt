@@ -71,6 +71,8 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
     }
 
     private fun reload() {
+        showLoading()
+
         Single.fromCallable {
             freeBSDServerManager.retrieveHostname()
         }
