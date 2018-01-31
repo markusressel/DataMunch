@@ -20,13 +20,11 @@ class HostPersistenceManager @Inject constructor() : PersistenceManagerBase<Host
      * Get the currently active host
      */
     fun getActive(): HostEntity? {
-        for (host in getAll()) {
-            when {
-                host.isActive -> return host
-            }
-        }
-
-        return null
+        return standardOperation()
+                .query()
+                .filter { it.isActive }
+                .build()
+                .findFirst()
     }
 
 }

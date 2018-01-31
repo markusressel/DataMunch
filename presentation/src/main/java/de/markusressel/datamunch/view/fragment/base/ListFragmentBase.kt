@@ -58,7 +58,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     abstract fun createAdapter(): LastAdapter
 
     /**
-     * Called after the options_menu_list view layout has been inflated
+     * Called after the list view layout has been inflated
      */
     abstract fun onListViewCreated(view: View, savedInstanceState: Bundle?)
 
@@ -93,7 +93,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     }
 
     /**
-     * Reload options_menu_list data from it's original source, persist it and display it to the user afterwards
+     * Reload list data from it's original source, persist it and display it to the user afterwards
      */
     protected fun reloadDataFromSource() {
         showLoading()
@@ -115,16 +115,14 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     }
 
     /**
-     * Get the persistence handler for this options_menu_list
+     * Get the persistence handler for this list
      */
     protected abstract fun getPersistenceHandler(): PersistenceManagerBase<T>
 
     private fun persistListData(data: List<T>) {
         val persistenceHandler = getPersistenceHandler()
-        persistenceHandler.removeAll()
-        for (item in data) {
-            persistenceHandler.put(item)
-        }
+        persistenceHandler.standardOperation().removeAll()
+        persistenceHandler.standardOperation().put(data)
     }
 
     private fun showEmpty() {
@@ -132,15 +130,15 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     }
 
     /**
-     * Load the data to be displayed in the options_menu_list from the persistence
+     * Load the data to be displayed in the list from the persistence
      */
     open fun loadListDataFromPersistence(): List<T> {
         val persistenceHandler = getPersistenceHandler()
-        return persistenceHandler.getAll()
+        return persistenceHandler.standardOperation().all
     }
 
     /**
-     * Load the data to be displayed in the options_menu_list from it's original source
+     * Load the data to be displayed in the list from it's original source
      */
     abstract fun loadListDataFromSource(): List<T>
 
