@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
+import de.markusressel.datamunch.data.ssh.ConnectionManager
 import javax.inject.Inject
 
 /**
@@ -17,6 +18,9 @@ import javax.inject.Inject
 abstract class DaggerSupportFragmentBase : DaggerFragment() {
 
     protected lateinit var rootView: View
+
+    @Inject
+    protected lateinit var connectionManager: ConnectionManager
 
     @Inject
     protected lateinit var preferenceHandler: PreferenceHandler

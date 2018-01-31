@@ -5,14 +5,6 @@ import android.view.MenuItem
 import android.view.View
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
-import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.CONNECTION_HOST
-import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PASS
-import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PROXY_HOST
-import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PROXY_PASSWORD
-import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PROXY_PORT
-import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_PROXY_USER
-import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.SSH_USER
-import de.markusressel.datamunch.domain.SSHConnectionConfig
 import de.markusressel.datamunch.domain.User
 import de.markusressel.datamunch.view.fragment.base.LoadingSupportFragmentBase
 import io.reactivex.Single
@@ -31,7 +23,7 @@ import javax.inject.Inject
 class ServerStatusFragment : LoadingSupportFragmentBase() {
 
     @Inject
-    lateinit var freeBSDServerManager: FreeBSDServerManager
+    lateinit var frittenbudeServerManager: FreeBSDServerManager
 
     @Inject
     lateinit var openWrtServerManager: de.markusressel.datamunch.data.openwrt.OpenWRTServerManager
@@ -47,25 +39,12 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
 
         val user = User(0, "Markus", "Markus Ressel", "mail@markusressel.de", 0)
 
-        val frittenbudeSshConnectionConfig = SSHConnectionConfig(
-                host = preferenceHandler.getValue(CONNECTION_HOST),
-                username = preferenceHandler.getValue(SSH_USER),
-                password = preferenceHandler.getValue(SSH_PASS)
+        frittenbudeServerManager.setSSHConnectionConfig(
+                connectionManager.getSSHProxy(),
+                connectionManager.getMainSSHConnection()
         )
 
-        val turrisSshConnectionConfig = SSHConnectionConfig(
-                host = preferenceHandler.getValue(SSH_PROXY_HOST),
-                port = preferenceHandler.getValue(SSH_PROXY_PORT),
-                username = preferenceHandler.getValue(SSH_PROXY_USER),
-                password = preferenceHandler.getValue(SSH_PROXY_PASSWORD)
-        )
-
-        freeBSDServerManager.setSSHConnectionConfig(
-                turrisSshConnectionConfig,
-                frittenbudeSshConnectionConfig
-        )
-
-        openWrtServerManager.setSSHConnectionConfig(turrisSshConnectionConfig)
+        openWrtServerManager.setSSHConnectionConfig(connectionManager.getSSHProxy())
 
         reload()
     }
@@ -74,7 +53,7 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
         showLoading()
 
         Single.fromCallable {
-            freeBSDServerManager.retrieveHostname()
+            frittenbudeServerManager.retrieveHostname()
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -91,7 +70,7 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
                 )
 
         Single.fromCallable {
-            freeBSDServerManager.retrieveUptime()
+            frittenbudeServerManager.retrieveUptime()
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

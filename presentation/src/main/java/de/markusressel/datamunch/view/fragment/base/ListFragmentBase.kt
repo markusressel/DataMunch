@@ -6,12 +6,14 @@ import android.view.MenuItem
 import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import javax.inject.Inject
 
 /**
  * Created by Markus on 29.01.2018.
@@ -27,6 +29,9 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     protected val listValues: MutableList<T> = ArrayList()
     private lateinit var recyclerViewAdapter: LastAdapter
 
+    @Inject
+    lateinit var frittenbudeServerManager: FreeBSDServerManager
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -35,6 +40,12 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
         recyclerview.adapter = recyclerViewAdapter
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         recyclerview.layoutManager = layoutManager
+
+
+        frittenbudeServerManager.setSSHConnectionConfig(
+                connectionManager.getSSHProxy(),
+                connectionManager.getMainSSHConnection()
+        )
 
         onListViewCreated(view, savedInstanceState)
 
@@ -54,7 +65,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     /**
      * Loads the data using {@link loadListDataFromPersistence()}
      */
-    protected fun fillListFromPersistence() {
+    private fun fillListFromPersistence() {
         showLoading()
 
         Single.fromCallable {
@@ -95,17 +106,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
                 .subscribeBy(
                         onSuccess = {
                             persistListData(it)
-
-                            listValues.clear()
-
-                            if (it.isEmpty()) {
-                                showEmpty()
-                            } else {
-                                listValues.addAll(it)
-                                showContent()
-                            }
-
-                            recyclerViewAdapter.notifyDataSetChanged()
+                            fillListFromPersistence()
                         },
                         onError = {
                             showError(it)

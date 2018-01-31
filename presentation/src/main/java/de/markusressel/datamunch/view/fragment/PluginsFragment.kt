@@ -5,13 +5,10 @@ import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.PluginPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.PluginEntity
-import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.databinding.ListItemPluginBinding
-import de.markusressel.datamunch.domain.SSHConnectionConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import kotlinx.android.synthetic.main.fragment_services.*
 import javax.inject.Inject
@@ -23,9 +20,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class PluginsFragment : ListFragmentBase<PluginEntity>() {
-
-    @Inject
-    lateinit var frittenbudeServerManager: FreeBSDServerManager
 
     @Inject
     lateinit var pluginPersistenceManager: PluginPersistenceManager
@@ -53,23 +47,6 @@ class PluginsFragment : ListFragmentBase<PluginEntity>() {
     }
 
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
-        val frittenbudeSshConnectionConfig = SSHConnectionConfig(
-                host = preferenceHandler.getValue(PreferenceHandler.CONNECTION_HOST),
-                username = preferenceHandler.getValue(PreferenceHandler.SSH_USER),
-                password = preferenceHandler.getValue(PreferenceHandler.SSH_PASS)
-        )
-
-        val turrisSshConnectionConfig = SSHConnectionConfig(
-                host = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_HOST),
-                port = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_PORT),
-                username = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_USER),
-                password = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_PASSWORD)
-        )
-
-        frittenbudeServerManager.setSSHConnectionConfig(
-                turrisSshConnectionConfig,
-                frittenbudeSshConnectionConfig
-        )
     }
 
 }
