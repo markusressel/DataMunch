@@ -1,10 +1,13 @@
 package de.markusressel.datamunch.view.fragment.base
 
 import android.os.Bundle
+import android.support.annotation.CallSuper
 import android.support.annotation.MenuRes
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.R
 
 /**
  * Base class for a fragment with an options menu
@@ -28,11 +31,19 @@ abstract class OptionsMenuFragmentBase : DaggerSupportFragmentBase() {
                 }
     }
 
+    @CallSuper
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         optionsMenuRes
                 ?.let {
                     inflater
                             ?.inflate(it, menu)
+
+                    // set refresh icon
+                    val refreshIcon = iconHandler
+                            .getOptionsMenuIcon(MaterialDesignIconic.Icon.gmi_refresh)
+                    menu
+                            ?.findItem(R.id.refresh)
+                            ?.icon = refreshIcon
                 }
     }
 

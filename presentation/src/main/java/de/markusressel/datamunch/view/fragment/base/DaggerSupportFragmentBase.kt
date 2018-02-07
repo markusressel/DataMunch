@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.data.ssh.ConnectionManager
+import de.markusressel.datamunch.view.IconHandler
 import javax.inject.Inject
 
 /**
@@ -24,6 +25,9 @@ abstract class DaggerSupportFragmentBase : DaggerFragment() {
 
     @Inject
     protected lateinit var preferenceHandler: PreferenceHandler
+
+    @Inject
+    protected lateinit var iconHandler: IconHandler
 
     /**
      * The layout resource for this Activity
