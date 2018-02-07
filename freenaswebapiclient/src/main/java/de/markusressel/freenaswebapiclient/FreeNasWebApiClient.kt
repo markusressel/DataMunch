@@ -80,8 +80,6 @@ class FreeNasWebApiClient(hostname: String = "localhost", apiResource: String = 
 
     /**
      * Update an existing user
-     *
-     * @param data user data
      */
     fun updateUser(data: UserModel): Single<UserModel> {
         return doJsonRequest("/account/users/${data.id}/".httpPut(), data,
@@ -89,9 +87,7 @@ class FreeNasWebApiClient(hostname: String = "localhost", apiResource: String = 
     }
 
     /**
-     * Delete a mountpoint
-     *
-     * @param user the user
+     * Delete a user
      */
     fun deleteUser(user: UserModel): Single<Pair<Response, Result<ByteArray, FuelError>>> {
         return doRequest("/account/users/${user.id}/".httpDelete())
@@ -108,17 +104,47 @@ class FreeNasWebApiClient(hostname: String = "localhost", apiResource: String = 
     /**
      * Get user auxiliary groups
      */
-    fun getGroups(userId: Long): Single<List<Long>> {
+    fun getGroups(userId: Long): Single<List<String>> {
         throw NotImplementedError()
         //        return doRequest("/account/users/${userId}/".httpGet())
     }
 
     /**
-     * Get a list of all users
+     * Get user auxiliary groups
+     */
+    fun setGroups(userId: Long, vararg group: String): Single<List<String>> {
+        throw NotImplementedError()
+        //        return doRequest("/account/users/${userId}/".httpGet())
+    }
+
+    /**
+     * Get a list of all groups
      */
     fun getGroups(limit: Int = DEFAULT_LIMIT,
                   offset: Int = DEFAULT_OFFSET): Single<List<GroupModel>> {
         return doRequest("/account/groups/".httpGet(), GroupModel.ListDeserializer())
+    }
+
+    /**
+     * Create a new group
+     */
+    fun createGroup(data: GroupModel): Single<GroupModel> {
+        return doJsonRequest("/account/groups/".httpPost(), data, GroupModel.SingleDeserializer())
+    }
+
+    /**
+     * Update an existing group
+     */
+    fun updateGroup(data: GroupModel): Single<GroupModel> {
+        return doJsonRequest("/account/groups/${data.id}/".httpPut(), data,
+                             GroupModel.SingleDeserializer())
+    }
+
+    /**
+     * Delete a group
+     */
+    fun deleteGroup(group: GroupModel): Single<Pair<Response, Result<ByteArray, FuelError>>> {
+        return doRequest("/account/groups/${group.id}/".httpDelete())
     }
 
     /**
