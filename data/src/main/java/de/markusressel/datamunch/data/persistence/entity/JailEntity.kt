@@ -1,5 +1,6 @@
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.freenaswebapiclient.model.JailModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -35,3 +36,33 @@ data class JailEntity(
         val jail_type: String?,
         val jail_vnet: Boolean
 )
+
+fun JailModel.asEntity(): JailEntity {
+    return JailEntity(
+            0,
+            this.id,
+            this.jail_alias_bridge_ipv4,
+            this.jail_alias_bridge_ipv6,
+            this.jail_alias_ipv4,
+            this.jail_alias_ipv6,
+            this.jail_autostart,
+            this.jail_bridge_ipv4,
+            this.jail_bridge_ipv4_netmask,
+            this.jail_bridge_ipv6,
+            this.jail_bridge_ipv6_prefix,
+            this.jail_defaultrouter_ipv4,
+            this.jail_defaultrouter_ipv6,
+            this.jail_flags,
+            this.jail_host,
+            this.jail_iface,
+            this.jail_ipv4,
+            this.jail_ipv4_netmask,
+            this.jail_ipv6,
+            this.jail_ipv6_prefix,
+            this.jail_mac,
+            this.jail_nat,
+            this.jail_status,
+            this.jail_type,
+            this.jail_vnet
+    )
+}

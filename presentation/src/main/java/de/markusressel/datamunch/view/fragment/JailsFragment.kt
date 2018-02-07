@@ -9,9 +9,9 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.JailPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.JailEntity
+import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemJailBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -44,9 +44,8 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
     }
 
     override fun loadListDataFromSource(): List<JailEntity> {
-        // retrieve Jails from server
-        return frittenbudeServerManager.retrieveJails().map {
-            it.newEntity()
+        return freeNasWebApiClient.getJails().blockingGet().map {
+            it.asEntity()
         }
     }
 
@@ -56,14 +55,12 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
 
     override fun loadListDataFromPersistence(): List<JailEntity> {
         return super.loadListDataFromPersistence().sortedBy {
-            it.jail_host
+            it.jail_host.toLowerCase()
         }
     }
 
     fun startJail(jail: JailEntity) {
-        Single.fromCallable {
-            frittenbudeServerManager.startJail(jail)
-        }
+        freeNasWebApiClient.startJail(jail.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -79,9 +76,7 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
     }
 
     fun stopJail(jail: JailEntity) {
-        Single.fromCallable {
-            frittenbudeServerManager.stopJail(jail)
-        }
+        freeNasWebApiClient.stopJail(jail.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -97,14 +92,14 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
     }
 
     fun restartJail(jail: JailEntity) {
-        Single.fromCallable {
-            frittenbudeServerManager.restartJail(jail)
-        }
+        freeNasWebApiClient.restartJail(jail.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onSuccess = {
-                            Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
+                        onNext = {
+                            // TODO: show progress
+                        },
+                        onComplete = {
                             reloadDataFromSource()
                         },
                         onError = {

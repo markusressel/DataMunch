@@ -8,6 +8,8 @@ import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.freenaswebapiclient.BasicAuthConfig
+import de.markusressel.freenaswebapiclient.FreeNasWebApiClient
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -32,6 +34,8 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
+    val freeNasWebApiClient = FreeNasWebApiClient()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -47,6 +51,14 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
                 connectionManager.getMainSSHConnection()
         )
 
+        freeNasWebApiClient.hostname = "frittenbude.markusressel.de"
+        freeNasWebApiClient.apiResource = "frittenbudeapi"
+        freeNasWebApiClient.basicAuthConfig = BasicAuthConfig(
+                username = connectionManager.getMainSSHConnection().username,
+                password = connectionManager.getMainSSHConnection().password
+        )
+
+        
         onListViewCreated(view, savedInstanceState)
 
         fillListFromPersistence()
@@ -93,7 +105,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     }
 
     /**
-     * Reload list data from it's original source, persist it and display it to the user afterwards
+     * Reload list data asEntity it's original source, persist it and display it to the user afterwards
      */
     protected fun reloadDataFromSource() {
         showLoading()
@@ -130,7 +142,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     }
 
     /**
-     * Load the data to be displayed in the list from the persistence
+     * Load the data to be displayed in the list asEntity the persistence
      */
     open fun loadListDataFromPersistence(): List<T> {
         val persistenceHandler = getPersistenceHandler()
@@ -138,7 +150,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     }
 
     /**
-     * Load the data to be displayed in the list from it's original source
+     * Load the data to be displayed in the list asEntity it's original source
      */
     abstract fun loadListDataFromSource(): List<T>
 

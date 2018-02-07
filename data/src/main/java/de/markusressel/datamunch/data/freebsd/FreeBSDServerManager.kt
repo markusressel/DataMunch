@@ -3,10 +3,8 @@ package de.markusressel.datamunch.data.freebsd
 import de.markusressel.datamunch.data.ServerManager
 import de.markusressel.datamunch.data.VirtualMachine
 import de.markusressel.datamunch.data.freebsd.freenas.webapi.FreeNasWebApiManager
-import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.JailJSON
 import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.PluginJSON
 import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.ServiceJSON
-import de.markusressel.datamunch.data.persistence.entity.JailEntity
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
 import de.markusressel.datamunch.domain.SSHConnectionConfig
 import javax.inject.Inject
@@ -55,44 +53,6 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      */
     fun retrieveServices(): List<ServiceJSON> {
         return webApiManager.retrieveServices()
-    }
-
-    /**
-     * Retrieve a list of all jails on this server
-     */
-    fun retrieveJails(): List<JailJSON> {
-        return webApiManager.retrieveJails()
-    }
-
-    /**
-     * Start a jail
-     *
-     * @param jail the jail to start
-     */
-    fun startJail(jail: JailEntity): ExecuteCommandResult {
-        return webApiManager.startJail(jail.id)
-    }
-
-    /**
-     * Stop a jail
-     *
-     * @param jail the jail to stop
-     */
-    fun stopJail(jail: JailEntity): ExecuteCommandResult {
-        return webApiManager.stopJail(jail.id)
-    }
-
-    /**
-     * Restart a jail
-     *
-     * This will stop and start the jail.
-     * It will not raise an error if the jail was already stopped.
-     *
-     * @param jail the jail to restart
-     */
-    fun restartJail(jail: JailEntity) {
-        stopJail(jail)
-        startJail(jail)
     }
 
     override fun parseUptimeResult(commandResult: ExecuteCommandResult): UptimeResult {

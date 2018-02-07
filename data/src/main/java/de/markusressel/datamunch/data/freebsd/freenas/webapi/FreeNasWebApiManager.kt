@@ -2,7 +2,6 @@ package de.markusressel.datamunch.data.freebsd.freenas.webapi
 
 import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
-import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.JailJSON
 import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.PluginJSON
 import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.ServiceJSON
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
@@ -92,28 +91,6 @@ class FreeNasWebApiManager @Inject constructor() {
     fun retrieveServices(): List<ServiceJSON> {
         val result = executeWebRequest(HttpRequestType.GET, "/services/services/")
         return gson.fromJson(result.output)
-    }
-
-    /**
-     * Retrieve a list of all configured jails
-     */
-    fun retrieveJails(): List<JailJSON> {
-        val result = executeWebRequest(HttpRequestType.GET, "/jails/jails/")
-        return gson.fromJson(result.output)
-    }
-
-    /**
-     * Start a jail
-     */
-    fun startJail(jailId: Long): ExecuteCommandResult {
-        return executeWebRequest(HttpRequestType.POST, "/jails/jails/$jailId/start/")
-    }
-
-    /**
-     * Stop a jail
-     */
-    fun stopJail(jailId: Long): ExecuteCommandResult {
-        return executeWebRequest(HttpRequestType.POST, "/jails/jails/$jailId/stop/")
     }
 
     /**

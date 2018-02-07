@@ -42,7 +42,7 @@ class PluginsFragment : ListFragmentBase<PluginEntity>() {
 
     override fun loadListDataFromPersistence(): List<PluginEntity> {
         return super.loadListDataFromPersistence().sortedBy {
-            it.plugin_name
+            it.plugin_name.toLowerCase()
         }
     }
 

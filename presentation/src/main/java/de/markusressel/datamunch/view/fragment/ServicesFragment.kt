@@ -47,7 +47,7 @@ class ServicesFragment : ListFragmentBase<ServiceEntity>() {
 
     override fun loadListDataFromPersistence(): List<ServiceEntity> {
         return super.loadListDataFromPersistence().sortedBy {
-            it.srv_service
+            it.srv_service.toLowerCase()
         }
     }
 

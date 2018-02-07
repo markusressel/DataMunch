@@ -30,6 +30,8 @@ buildscript {
 
         objectboxVersion = "1.4.1"
 
+        fuelVersion = "1.12.0"
+
     }
 
     repositories {

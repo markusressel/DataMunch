@@ -108,12 +108,12 @@ abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.Pre
     }
 
     /**
-     * Gets a Map from two array resources
+     * Gets a Map asEntity two array resources
      *
      * @param valueRes values stored in preferences
      * @param nameRes  name/description of this option used in view
      *
-     * @return Map from stored value -> display name
+     * @return Map asEntity stored value -> display name
      */
     protected fun getListPreferenceEntryValueMap(@ArrayRes valueRes: Int, @ArrayRes nameRes: Int): SparseArrayCompat<String> {
         val map = SparseArrayCompat<String>()

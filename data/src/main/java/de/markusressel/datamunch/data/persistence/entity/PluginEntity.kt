@@ -1,5 +1,6 @@
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.freenaswebapiclient.model.PluginModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -22,3 +23,20 @@ data class PluginEntity(
         val plugin_port: Int,
         val plugin_version: String
 )
+
+fun PluginModel.asEntity(): PluginEntity {
+    return PluginEntity(
+            0,
+            this.id,
+            this.plugin_api_version,
+            this.plugin_arch,
+            this.plugin_enabled,
+            this.plugin_ip,
+            this.plugin_jail,
+            this.plugin_name,
+            this.plugin_path,
+            this.plugin_pbiname,
+            this.plugin_port,
+            this.plugin_version
+    )
+}
