@@ -3,7 +3,6 @@ package de.markusressel.datamunch.data.ssh
 import de.markusressel.datamunch.data.persistence.entity.AuthenticationEntity
 import de.markusressel.datamunch.data.persistence.entity.HostEntity
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
-import de.markusressel.datamunch.domain.SSHConnectionConfig
 import javax.inject.Inject
 import javax.inject.Singleton
 

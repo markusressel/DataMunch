@@ -2,7 +2,6 @@ package de.markusressel.datamunch.data.ssh
 
 import com.github.ajalt.timberkt.Timber
 import com.jcraft.jsch.*
-import de.markusressel.datamunch.domain.SSHConnectionConfig
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton

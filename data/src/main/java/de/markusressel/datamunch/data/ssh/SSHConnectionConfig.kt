@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.domain
+package de.markusressel.datamunch.data.ssh
 
 /**
  * Class that represents a SSHConnectionConfig in the domain layer.

@@ -8,6 +8,7 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.PluginPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.PluginEntity
+import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemPluginBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import kotlinx.android.synthetic.main.fragment_services.*
@@ -33,7 +34,11 @@ class PluginsFragment : ListFragmentBase<PluginEntity>() {
     }
 
     override fun loadListDataFromSource(): List<PluginEntity> {
-        return frittenbudeServerManager.retrievePlugins().map { it.newEntity() }
+        return freeNasWebApiClient.getPlugins()
+                .blockingGet()
+                .map {
+                    it.asEntity()
+                }
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<PluginEntity> {

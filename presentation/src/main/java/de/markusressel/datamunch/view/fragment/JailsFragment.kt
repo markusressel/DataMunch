@@ -44,9 +44,11 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
     }
 
     override fun loadListDataFromSource(): List<JailEntity> {
-        return freeNasWebApiClient.getJails().blockingGet().map {
-            it.asEntity()
-        }
+        return freeNasWebApiClient.getJails()
+                .blockingGet()
+                .map {
+                    it.asEntity()
+                }
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<JailEntity> {

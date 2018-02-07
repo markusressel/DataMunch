@@ -2,7 +2,7 @@ package de.markusressel.datamunch.data
 
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
 import de.markusressel.datamunch.data.ssh.SSHClient
-import de.markusressel.datamunch.domain.SSHConnectionConfig
+import de.markusressel.datamunch.data.ssh.SSHConnectionConfig
 import java.io.File
 import javax.inject.Inject
 

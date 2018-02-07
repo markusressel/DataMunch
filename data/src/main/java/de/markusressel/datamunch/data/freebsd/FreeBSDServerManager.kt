@@ -2,11 +2,8 @@ package de.markusressel.datamunch.data.freebsd
 
 import de.markusressel.datamunch.data.ServerManager
 import de.markusressel.datamunch.data.VirtualMachine
-import de.markusressel.datamunch.data.freebsd.freenas.webapi.FreeNasWebApiManager
-import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.PluginJSON
-import de.markusressel.datamunch.data.freebsd.freenas.webapi.data.ServiceJSON
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
-import de.markusressel.datamunch.domain.SSHConnectionConfig
+import de.markusressel.datamunch.data.ssh.SSHConnectionConfig
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,12 +13,8 @@ import javax.inject.Singleton
 @Singleton
 class FreeBSDServerManager @Inject constructor() : ServerManager() {
 
-    @Inject
-    lateinit var webApiManager: FreeNasWebApiManager
-
     override fun setSSHConnectionConfig(vararg sshConnectionConfig: SSHConnectionConfig) {
         super.setSSHConnectionConfig(*sshConnectionConfig)
-        webApiManager.setSSHConnectionConfig(*sshConnectionConfig)
     }
 
     /**
@@ -46,13 +39,6 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
     fun retrieveHostname(): String {
         val commandResult = executeSSHCommand("/bin/hostname -s")
         return commandResult.output
-    }
-
-    /**
-     * Retrieve a list of all services
-     */
-    fun retrieveServices(): List<ServiceJSON> {
-        return webApiManager.retrieveServices()
     }
 
     override fun parseUptimeResult(commandResult: ExecuteCommandResult): UptimeResult {
@@ -86,10 +72,6 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
 
     override fun getVirtualMachines(): List<VirtualMachine> {
         return emptyList()
-    }
-
-    fun retrievePlugins(): List<PluginJSON> {
-        return webApiManager.retrievePlugins()
     }
 
 }

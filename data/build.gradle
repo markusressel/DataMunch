@@ -36,7 +36,6 @@ android {
 }
 
 dependencies {
-    implementation project(':domain')
     api project(':freenaswebapiclient')
 
     // Dagger 2

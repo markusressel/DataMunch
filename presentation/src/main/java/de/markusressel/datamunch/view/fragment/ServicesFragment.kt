@@ -8,6 +8,7 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.ServicePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.ServiceEntity
+import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemServiceBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -38,7 +39,11 @@ class ServicesFragment : ListFragmentBase<ServiceEntity>() {
     }
 
     override fun loadListDataFromSource(): List<ServiceEntity> {
-        return frittenbudeServerManager.retrieveServices().map { it.newEntity() }
+        return freeNasWebApiClient.getServices()
+                .blockingGet()
+                .map {
+                    it.asEntity()
+                }
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<ServiceEntity> {
