@@ -9,7 +9,7 @@ import io.objectbox.annotation.Id
 @Entity
 data class UserEntity(
         @Id
-        val id: Int,
+        var id: Long,
         var username: String,
         var fullName: String,
         var eMail: String,
