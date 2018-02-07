@@ -38,7 +38,7 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
                                 .presenter = this@JailsFragment
                     }
                     onClick {
-                        openJailDetailView(listValues[it.adapterPosition])
+                        openDetailView(listValues[it.adapterPosition])
                     }
                 }
                 .into(recyclerview)
@@ -122,7 +122,7 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
                 })
     }
 
-    private fun openJailDetailView(jail: JailEntity) {
+    private fun openDetailView(jail: JailEntity) {
 
     }
 

@@ -8,18 +8,29 @@ import de.markusressel.datamunch.R
  */
 object DrawerItemHolder {
 
-    val Status = DrawerMenuItem(identifier = 10, title = R.string.menu_item_status, icon = MaterialDesignIconic.Icon.gmi_home, selectable = true)
+    val Status = DrawerMenuItem(identifier = 10, title = R.string.menu_item_status,
+                                icon = MaterialDesignIconic.Icon.gmi_home, selectable = true)
 
-    val Services = DrawerMenuItem(identifier = 20, title = R.string.menu_item_services, drawableRes = R.drawable.cube_outline, selectable = true)
+    val Accounts = DrawerMenuItem(identifier = 15, title = R.string.menu_item_accounts,
+                                  icon = MaterialDesignIconic.Icon.gmi_account, selectable = true)
 
-    val Jails = DrawerMenuItem(identifier = 30, title = R.string.menu_item_jails, drawableRes = R.drawable.cube_outline, selectable = true)
+    val Services = DrawerMenuItem(identifier = 20, title = R.string.menu_item_services,
+                                  drawableRes = R.drawable.cube_outline, selectable = true)
 
-    val Plugins = DrawerMenuItem(identifier = 40, title = R.string.menu_item_plugins, icon = MaterialDesignIconic.Icon.gmi_puzzle_piece, selectable = true)
+    val Jails = DrawerMenuItem(identifier = 30, title = R.string.menu_item_jails,
+                               drawableRes = R.drawable.cube_outline, selectable = true)
 
-    val FileUploader = DrawerMenuItem(identifier = 50, title = R.string.menu_item_file_uploader, icon = MaterialDesignIconic.Icon.gmi_file, selectable = true)
+    val Plugins = DrawerMenuItem(identifier = 40, title = R.string.menu_item_plugins,
+                                 icon = MaterialDesignIconic.Icon.gmi_puzzle_piece,
+                                 selectable = true)
 
-    val Settings = DrawerMenuItem(identifier = 500, title = R.string.menu_item_settings, icon = MaterialDesignIconic.Icon.gmi_settings, selectable = true)
+    val FileUploader = DrawerMenuItem(identifier = 50, title = R.string.menu_item_file_uploader,
+                                      icon = MaterialDesignIconic.Icon.gmi_file, selectable = true)
 
-    val About = DrawerMenuItem(identifier = 1000, title = R.string.menu_item_about, icon = MaterialDesignIconic.Icon.gmi_info, selectable = false)
+    val Settings = DrawerMenuItem(identifier = 500, title = R.string.menu_item_settings,
+                                  icon = MaterialDesignIconic.Icon.gmi_settings, selectable = true)
+
+    val About = DrawerMenuItem(identifier = 1000, title = R.string.menu_item_about,
+                               icon = MaterialDesignIconic.Icon.gmi_info, selectable = false)
 
 }

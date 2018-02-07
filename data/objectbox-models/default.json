@@ -1,0 +1,428 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:5470813169125454148",
+      "lastPropertyId": "25:153488831035354458",
+      "name": "JailEntity",
+      "properties": [
+        {
+          "id": "1:2548180994528625033",
+          "name": "id"
+        },
+        {
+          "id": "2:8098078327917707758",
+          "name": "entityId"
+        },
+        {
+          "id": "3:6884924177835801387",
+          "name": "jail_alias_bridge_ipv4"
+        },
+        {
+          "id": "4:2237098261973886297",
+          "name": "jail_alias_bridge_ipv6"
+        },
+        {
+          "id": "5:6672469542515103881",
+          "name": "jail_alias_ipv4"
+        },
+        {
+          "id": "6:237588211989784970",
+          "name": "jail_alias_ipv6"
+        },
+        {
+          "id": "7:8341405150671455813",
+          "name": "jail_autostart"
+        },
+        {
+          "id": "8:5653421349742836319",
+          "name": "jail_bridge_ipv4"
+        },
+        {
+          "id": "9:1342731394270697508",
+          "name": "jail_bridge_ipv4_netmask"
+        },
+        {
+          "id": "10:5715144754688314009",
+          "name": "jail_bridge_ipv6"
+        },
+        {
+          "id": "11:6858736366841872738",
+          "name": "jail_bridge_ipv6_prefix"
+        },
+        {
+          "id": "12:7085425281747826703",
+          "name": "jail_defaultrouter_ipv4"
+        },
+        {
+          "id": "13:189118038219154521",
+          "name": "jail_defaultrouter_ipv6"
+        },
+        {
+          "id": "14:6019602514054755553",
+          "name": "jail_flags"
+        },
+        {
+          "id": "15:6645233102604893180",
+          "name": "jail_host"
+        },
+        {
+          "id": "16:681569169593372661",
+          "name": "jail_iface"
+        },
+        {
+          "id": "17:7301215857863449523",
+          "name": "jail_ipv4"
+        },
+        {
+          "id": "18:7337840013874386210",
+          "name": "jail_ipv4_netmask"
+        },
+        {
+          "id": "19:2830459727051393742",
+          "name": "jail_ipv6"
+        },
+        {
+          "id": "20:2936592416814028512",
+          "name": "jail_ipv6_prefix"
+        },
+        {
+          "id": "21:2218949296215047827",
+          "name": "jail_mac"
+        },
+        {
+          "id": "22:1662085738595002805",
+          "name": "jail_nat"
+        },
+        {
+          "id": "23:350012462339039008",
+          "name": "jail_status"
+        },
+        {
+          "id": "24:518407707776115554",
+          "name": "jail_type"
+        },
+        {
+          "id": "25:153488831035354458",
+          "name": "jail_vnet"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:2299729993386420991",
+      "lastPropertyId": "12:2942627598010392185",
+      "name": "PluginEntity",
+      "properties": [
+        {
+          "id": "1:3280266728529289959",
+          "name": "entityId"
+        },
+        {
+          "id": "2:7821264225021081528",
+          "name": "id"
+        },
+        {
+          "id": "3:4930647964312295674",
+          "name": "plugin_api_version"
+        },
+        {
+          "id": "4:7563979116084010084",
+          "name": "plugin_arch"
+        },
+        {
+          "id": "5:571828919070530177",
+          "name": "plugin_enabled"
+        },
+        {
+          "id": "6:906470915467872650",
+          "name": "plugin_ip"
+        },
+        {
+          "id": "7:5286567599615239335",
+          "name": "plugin_jail"
+        },
+        {
+          "id": "8:5161150219082676687",
+          "name": "plugin_name"
+        },
+        {
+          "id": "9:4798740175997742140",
+          "name": "plugin_path"
+        },
+        {
+          "id": "10:5023638153495262625",
+          "name": "plugin_pbiname"
+        },
+        {
+          "id": "11:2841645438619855954",
+          "name": "plugin_port"
+        },
+        {
+          "id": "12:2942627598010392185",
+          "name": "plugin_version"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:2697568894378033895",
+      "lastPropertyId": "4:8408363807898288441",
+      "name": "ServiceEntity",
+      "properties": [
+        {
+          "id": "1:7177085514349116403",
+          "name": "entityId"
+        },
+        {
+          "id": "2:8704931890104155513",
+          "name": "id"
+        },
+        {
+          "id": "3:8362384011014712730",
+          "name": "srv_service"
+        },
+        {
+          "id": "4:8408363807898288441",
+          "name": "srv_enabled"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:9169154201071012481",
+      "lastPropertyId": "3:1461272625734945559",
+      "name": "AuthenticationEntity",
+      "properties": [
+        {
+          "id": "1:5688995420283273747",
+          "name": "id"
+        },
+        {
+          "id": "2:677634876911338248",
+          "name": "username"
+        },
+        {
+          "id": "3:1461272625734945559",
+          "name": "password"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:2965842143595212076",
+      "lastPropertyId": "3:5836123545157706511",
+      "name": "HostEntity",
+      "properties": [
+        {
+          "id": "1:7487364965902402151",
+          "name": "id"
+        },
+        {
+          "id": "2:4444186878745557417",
+          "name": "hostname"
+        },
+        {
+          "id": "3:5836123545157706511",
+          "name": "isActive"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:8798044674084561080",
+      "lastPropertyId": "7:8676681698579592182",
+      "name": "MountpointEntity",
+      "properties": [
+        {
+          "id": "1:2667475612094597428",
+          "name": "entityId"
+        },
+        {
+          "id": "2:6080411177001283037",
+          "name": "id"
+        },
+        {
+          "id": "3:4565916330024253133",
+          "name": "destination"
+        },
+        {
+          "id": "4:2946128024063555287",
+          "name": "jail"
+        },
+        {
+          "id": "5:4646725713324631748",
+          "name": "mounted"
+        },
+        {
+          "id": "6:2922861894823952280",
+          "name": "readonly"
+        },
+        {
+          "id": "7:8676681698579592182",
+          "name": "source"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:4254330801215488349",
+      "lastPropertyId": "7:4718337307790385408",
+      "name": "TemplateEntity",
+      "properties": [
+        {
+          "id": "1:6838060609108071160",
+          "name": "entityId"
+        },
+        {
+          "id": "2:3040222608360552943",
+          "name": "id"
+        },
+        {
+          "id": "3:106638812005650796",
+          "name": "jt_arch"
+        },
+        {
+          "id": "4:39529925155010290",
+          "name": "jt_instances"
+        },
+        {
+          "id": "5:5029850689512056258",
+          "name": "jt_name"
+        },
+        {
+          "id": "6:2558204743114802959",
+          "name": "jt_os"
+        },
+        {
+          "id": "7:4718337307790385408",
+          "name": "jt_url"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "9:379390251467175432",
+      "lastPropertyId": "6:9013617423890874305",
+      "name": "GroupEntity",
+      "properties": [
+        {
+          "id": "1:7408161964580456059",
+          "name": "entityId"
+        },
+        {
+          "id": "2:4859708698515551649",
+          "name": "id"
+        },
+        {
+          "id": "3:6097008495477680135",
+          "name": "bsdgrp_builtin"
+        },
+        {
+          "id": "4:727080089667039",
+          "name": "bsdgrp_gid"
+        },
+        {
+          "id": "5:8409912922290449191",
+          "name": "bsdgrp_group"
+        },
+        {
+          "id": "6:9013617423890874305",
+          "name": "bsdgrp_sudo"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "10:5506420265755185061",
+      "lastPropertyId": "17:2250438076244798925",
+      "name": "UserEntity",
+      "properties": [
+        {
+          "id": "1:9034187527255163160",
+          "name": "entityId"
+        },
+        {
+          "id": "2:5844356304056234077",
+          "name": "id"
+        },
+        {
+          "id": "4:3379597141313405772",
+          "name": "bsdusr_builtin"
+        },
+        {
+          "id": "5:6507049894049878840",
+          "name": "bsdusr_email"
+        },
+        {
+          "id": "6:1950726522734478639",
+          "name": "bsdusr_full_name"
+        },
+        {
+          "id": "7:5309259548959912394",
+          "name": "bsdusr_group"
+        },
+        {
+          "id": "8:777250980420736673",
+          "name": "bsdusr_home"
+        },
+        {
+          "id": "9:3771134322810114428",
+          "name": "bsdusr_locked"
+        },
+        {
+          "id": "10:4906143856476136479",
+          "name": "bsdusr_password_disabled"
+        },
+        {
+          "id": "11:8755665430251271015",
+          "name": "bsdusr_shell"
+        },
+        {
+          "id": "12:1346615075199877981",
+          "name": "bsdusr_smbhash"
+        },
+        {
+          "id": "13:7774821953155624508",
+          "name": "bsdusr_uid"
+        },
+        {
+          "id": "14:6945802830503195332",
+          "name": "bsdusr_sshpubkey"
+        },
+        {
+          "id": "15:7296846903943574358",
+          "name": "bsdusr_unixhash"
+        },
+        {
+          "id": "16:8766195777479790839",
+          "name": "bsdusr_username"
+        },
+        {
+          "id": "17:2250438076244798925",
+          "name": "bsdusr_sudo"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "10:5506420265755185061",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    6771911600807927291,
+    2662148891925655969,
+    7090854256793727713,
+    3031861725477987451,
+    666565543471366437
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

@@ -14,6 +14,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IProfile
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.navigation.DrawerItemHolder.About
+import de.markusressel.datamunch.navigation.DrawerItemHolder.Accounts
 import de.markusressel.datamunch.navigation.DrawerItemHolder.FileUploader
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Jails
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Plugins
@@ -78,10 +79,12 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         val profiles: MutableList<IProfile<*>> = LinkedList()
 
         profiles
-                .add(ProfileDrawerItem().withName("Markus Ressel").withEmail("").withIcon(R.mipmap.ic_launcher))
+                .add(ProfileDrawerItem().withName("Markus Ressel").withEmail("").withIcon(
+                        R.mipmap.ic_launcher))
 
         profiles
-                .add(ProfileDrawerItem().withName("Iris Haderer").withEmail("").withIcon(R.mipmap.ic_launcher))
+                .add(ProfileDrawerItem().withName("Iris Haderer").withEmail("").withIcon(
+                        R.mipmap.ic_launcher))
 
         return profiles
     }
@@ -104,6 +107,14 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                         Status.identifier -> {
                             navigator
                                     .navigateTo(this, Navigator.NavigationPages.MainPage)
+                            navigationDrawer
+                                    .closeDrawer()
+                            true
+                        }
+
+                        Accounts.identifier -> {
+                            navigator
+                                    .navigateTo(this, Navigator.NavigationPages.AccountsPage)
                             navigationDrawer
                                     .closeDrawer()
                             true
@@ -143,7 +154,8 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
                         Settings.identifier -> {
                             navigator
-                                    .navigateTo(this, Navigator.NavigationPages.PreferencesOverviewPage)
+                                    .navigateTo(this,
+                                                Navigator.NavigationPages.PreferencesOverviewPage)
                             navigationDrawer
                                     .closeDrawer()
                             true
@@ -166,7 +178,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
                 }
 
-        for (menuItem in listOf(Status, Services, Jails, Plugins, FileUploader)) {
+        for (menuItem in listOf(Status, Accounts, Services, Jails, Plugins, FileUploader)) {
             menuItemList
                     .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(
                             menuItem.identifier).withIcon(

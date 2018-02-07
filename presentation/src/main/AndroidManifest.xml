@@ -35,6 +35,7 @@
             android:parentActivityName=".view.activity.MainActivity" />
         <activity android:name=".view.activity.ServicesActivity" />
         <activity android:name=".view.activity.PluginsActivity" />
+        <activity android:name=".view.activity.AccountsActivity" />
 
 
         <service android:name=".service.FileUploadService" />

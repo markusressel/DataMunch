@@ -5,7 +5,6 @@ import android.view.MenuItem
 import android.view.View
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
-import de.markusressel.datamunch.data.persistence.entity.UserEntity
 import de.markusressel.datamunch.view.fragment.base.LoadingSupportFragmentBase
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -38,10 +37,9 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
         super
                 .onViewCreated(view, savedInstanceState)
 
-        val user = UserEntity(0, "Markus", "Markus Ressel", "mail@markusressel.de", 0)
-
         frittenbudeServerManager
-                .setSSHConnectionConfig(connectionManager.getSSHProxy(), connectionManager.getMainSSHConnection())
+                .setSSHConnectionConfig(connectionManager.getSSHProxy(),
+                                        connectionManager.getMainSSHConnection())
 
         openWrtServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy())

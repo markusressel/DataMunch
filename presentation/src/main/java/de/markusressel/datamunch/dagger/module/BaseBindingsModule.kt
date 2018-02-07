@@ -22,6 +22,12 @@ abstract class BaseBindingsModule {
     internal abstract fun ServerStatusFragment(): ServerStatusFragment
 
     @ContributesAndroidInjector
+    internal abstract fun UsersFragment(): UsersFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun GroupsFragment(): GroupsFragment
+
+    @ContributesAndroidInjector
     internal abstract fun ServicesFragment(): ServicesFragment
 
     @ContributesAndroidInjector

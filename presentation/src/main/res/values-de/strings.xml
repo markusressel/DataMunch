@@ -2,6 +2,7 @@
     <string name="app_name">DataMunch</string>
 
     <string name="menu_item_status">Status</string>
+    <string name="menu_item_accounts">Accounts</string>
     <string name="menu_item_services">Services</string>
     <string name="menu_item_jails">Jails</string>
     <string name="menu_item_plugins">Plugins</string>

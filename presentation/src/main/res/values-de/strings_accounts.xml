@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="users">Benutzer</string>
+    <string name="groups">Gruppen</string>
+
+    <string name="username">Benutzername</string>
+
+</resources>
