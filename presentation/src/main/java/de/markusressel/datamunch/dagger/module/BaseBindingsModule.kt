@@ -31,6 +31,9 @@ abstract class BaseBindingsModule {
     internal abstract fun MountpointsFragment(): MountpointsFragment
 
     @ContributesAndroidInjector
+    internal abstract fun TemplatesFragment(): TemplatesFragment
+
+    @ContributesAndroidInjector
     internal abstract fun PluginsFragment(): PluginsFragment
 
 }

@@ -168,7 +168,10 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
         for (menuItem in listOf(Status, Services, Jails, Plugins, FileUploader)) {
             menuItemList
-                    .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(menuItem.identifier).withIcon(menuItem.getIcon(iconicsHelper)).withSelectable(menuItem.selectable).withOnDrawerItemClickListener(clickListener))
+                    .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(
+                            menuItem.identifier).withIcon(
+                            menuItem.getIcon(iconHandler)).withSelectable(
+                            menuItem.selectable).withOnDrawerItemClickListener(clickListener))
         }
 
         menuItemList
@@ -176,14 +179,18 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
         var menuItem = Settings
         menuItemList
-                .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(menuItem.identifier).withIcon(menuItem.getIcon(iconicsHelper)).withSelectable(menuItem.selectable).withOnDrawerItemClickListener(clickListener))
+                .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(
+                        menuItem.identifier).withIcon(menuItem.getIcon(iconHandler)).withSelectable(
+                        menuItem.selectable).withOnDrawerItemClickListener(clickListener))
 
         menuItemList
                 .add(DividerDrawerItem())
 
         menuItem = About
         menuItemList
-                .add(SecondaryDrawerItem().withName(menuItem.title).withIdentifier(menuItem.identifier).withIcon(menuItem.getIcon(iconicsHelper)).withSelectable(menuItem.selectable).withOnDrawerItemClickListener(clickListener))
+                .add(SecondaryDrawerItem().withName(menuItem.title).withIdentifier(
+                        menuItem.identifier).withIcon(menuItem.getIcon(iconHandler)).withSelectable(
+                        menuItem.selectable).withOnDrawerItemClickListener(clickListener))
 
         return menuItemList
     }

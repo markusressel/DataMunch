@@ -33,7 +33,7 @@ import dagger.android.support.HasSupportFragmentInjector
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.navigation.Navigator
-import de.markusressel.datamunch.view.IconicsHelper
+import de.markusressel.datamunch.view.IconHandler
 import de.markusressel.datamunch.view.ThemeHelper
 import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
@@ -60,7 +60,7 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
     protected lateinit var themeHelper: ThemeHelper
 
     @Inject
-    protected lateinit var iconicsHelper: IconicsHelper
+    protected lateinit var iconHandler: IconHandler
 
     /**
      * @return true if this activity should use a dialog theme instead of a normal activity theme

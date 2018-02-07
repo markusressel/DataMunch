@@ -16,7 +16,7 @@ import javax.inject.Singleton
  * Created by Markus on 13.12.2015.
  */
 @Singleton
-class IconicsHelper @Inject constructor() {
+class IconHandler @Inject constructor() {
 
     @Inject
     lateinit var context: Context
@@ -31,10 +31,23 @@ class IconicsHelper @Inject constructor() {
      *
      * @return the icon
      */
-    fun getMenuIcon(icon: IIcon): IconicsDrawable {
+    fun getNavigationIcon(icon: IIcon): IconicsDrawable {
         val color = themeHelper
                 .getThemeAttrColor(context, android.R.attr.textColorPrimary)
         return getIcon(icon, color, 24)
+    }
+
+    /**
+     * Get an icon suitable for the swipe menu
+     *
+     * @param icon the icon resource
+     *
+     * @return the icon
+     */
+    fun getBottomNavigationIcon(icon: IIcon): IconicsDrawable {
+        val color = themeHelper
+                .getThemeAttrColor(context, android.R.attr.textColorPrimary)
+        return getIcon(icon, color, 48)
     }
 
     /**

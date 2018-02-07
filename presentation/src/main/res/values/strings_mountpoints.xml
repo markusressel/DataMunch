@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="mountpoints" translatable="false">Mountpoints</string>
+
     <string name="mounted">mounted</string>
 
 </resources>
