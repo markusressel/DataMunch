@@ -16,7 +16,8 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.07.2017.
  */
-abstract class DaggerPreferenceFragment : PreferenceFragment(), HasFragmentInjector, SharedPreferences.OnSharedPreferenceChangeListener {
+abstract class DaggerPreferenceFragment : PreferenceFragment(), HasFragmentInjector,
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
     lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
@@ -29,13 +30,16 @@ abstract class DaggerPreferenceFragment : PreferenceFragment(), HasFragmentInjec
     lateinit var preferenceHandler: PreferenceHandler
 
     override fun onAttach(context: Context?) {
-        AndroidInjection.inject(this)
+        AndroidInjection
+                .inject(this)
 
-        super.onAttach(context)
+        super
+                .onAttach(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super
+                .onCreate(savedInstanceState)
         addPreferencesFromResource(getPreferencesResource())
 
         findPreferences()
@@ -43,13 +47,17 @@ abstract class DaggerPreferenceFragment : PreferenceFragment(), HasFragmentInjec
     }
 
     override fun onStart() {
-        super.onStart()
+        super
+                .onStart()
 
-        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        preferenceManager
+                .sharedPreferences
+                .registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onResume() {
-        super.onResume()
+        super
+                .onResume()
 
         updateSummaries()
     }
@@ -76,9 +84,12 @@ abstract class DaggerPreferenceFragment : PreferenceFragment(), HasFragmentInjec
     }
 
     override fun onStop() {
-        super.onStop()
+        super
+                .onStop()
 
-        preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        preferenceManager
+                .sharedPreferences
+                .unregisterOnSharedPreferenceChangeListener(this)
     }
 
 }

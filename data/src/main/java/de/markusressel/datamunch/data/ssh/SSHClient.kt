@@ -23,21 +23,25 @@ class SSHClient @Inject constructor() {
      *
      * @return the command output
      */
-    fun executeCommand(vararg connectionConfig: SSHConnectionConfig, command: String): ExecuteCommandResult {
+    fun executeCommand(vararg connectionConfig: SSHConnectionConfig,
+                       command: String): ExecuteCommandResult {
         val result: ExecuteCommandResult = runOnSession(*connectionConfig) { session: Session ->
 
             // connect the channel
             val channel = createExecChannel(session, command)
-            channel.connect()
+            channel
+                    .connect()
 
-            val inputStream = channel.inputStream
+            val inputStream = channel
+                    .inputStream
 
             var result = ""
             val tmp = ByteArray(1024)
             while (true) {
 
                 while (inputStream.available() > 0) {
-                    val i: Int = inputStream.read(tmp, 0, tmp.size)
+                    val i: Int = inputStream
+                            .read(tmp, 0, tmp.size)
                     if (i < 0) break
 
                     result += String(tmp, 0, i)
@@ -46,16 +50,19 @@ class SSHClient @Inject constructor() {
                 if (channel.isClosed) {
                     if (inputStream.available() > 0) continue
 
-                    Timber.d { "Exit-Status: ${channel.exitStatus} Result: $result" }
+                    Timber
+                            .d { "Exit-Status: ${channel.exitStatus} Result: $result" }
                     break
                 }
                 try {
-                    Thread.sleep(1000)
+                    Thread
+                            .sleep(1000)
                 } catch (ee: Exception) {
                 }
             }
 
-            channel.disconnect()
+            channel
+                    .disconnect()
 
             ExecuteCommandResult(channel.exitStatus, result)
         }
@@ -63,7 +70,8 @@ class SSHClient @Inject constructor() {
         return result
     }
 
-    private fun <T> runOnSession(vararg sshConnectionConfig: SSHConnectionConfig, run: (session: Session) -> T): T {
+    private fun <T> runOnSession(vararg sshConnectionConfig: SSHConnectionConfig,
+                                 run: (session: Session) -> T): T {
         if (sshConnectionConfig.isEmpty()) {
             throw IllegalArgumentException("There must be at least one ssh conection configuration!")
         }
@@ -72,37 +80,54 @@ class SSHClient @Inject constructor() {
 
         val firstHop = sshConnectionConfig[0]
 
-        val proxySession = sshClient.getSession(firstHop.username, firstHop.host, firstHop.port)
-        proxySession.userInfo = createUserInfo(firstHop.password)
-        proxySession.hostKeyAlias = firstHop.host
-        proxySession.setConfig("StrictHostKeyChecking", "no")
-        proxySession.connect()
+        val proxySession = sshClient
+                .getSession(firstHop.username, firstHop.host, firstHop.port)
+        proxySession
+                .userInfo = createUserInfo(firstHop.password)
+        proxySession
+                .hostKeyAlias = firstHop
+                .host
+        proxySession
+                .setConfig("StrictHostKeyChecking", "no")
+        proxySession
+                .connect()
 
         // remember sessions
-        sessions.add(proxySession)
+        sessions
+                .add(proxySession)
 
         var currentSession: Session = proxySession
         for (config in sshConnectionConfig.drop(1)) {
 
             // create port from assignedPort on local system to port targetPort on targetHost
-            val assignedPort: Int = currentSession.setPortForwardingL(0, config.host, config.port)
+            val assignedPort: Int = currentSession
+                    .setPortForwardingL(0, config.host, config.port)
 
-            currentSession = sshClient.getSession(config.username, "localhost", assignedPort)
+            currentSession = sshClient
+                    .getSession(config.username, "localhost", assignedPort)
 
-            currentSession.userInfo = createUserInfo(config.password)
-            currentSession.hostKeyAlias = config.host
-            currentSession.setConfig("StrictHostKeyChecking", "no")
+            currentSession
+                    .userInfo = createUserInfo(config.password)
+            currentSession
+                    .hostKeyAlias = config
+                    .host
+            currentSession
+                    .setConfig("StrictHostKeyChecking", "no")
 
-            currentSession.connect()
+            currentSession
+                    .connect()
 
             // remember sessions
-            sessions.add(currentSession)
+            sessions
+                    .add(currentSession)
         }
 
-        val result = run.invoke(currentSession)
+        val result = run
+                .invoke(currentSession)
 
         for (session in sessions.reversed()) {
-            session.disconnect()
+            session
+                    .disconnect()
         }
 
         return result
@@ -139,10 +164,13 @@ class SSHClient @Inject constructor() {
         // open channel to work with
         val channel = session.openChannel(TYPE_EXEC) as ChannelExec
 
-        channel.setCommand(command)
+        channel
+                .setCommand(command)
 
-        channel.setInputStream(null)
-        channel.setErrStream(System.err)
+        channel
+                .setInputStream(null)
+        channel
+                .setErrStream(System.err)
 
         return channel
     }
@@ -161,45 +189,51 @@ class SSHClient @Inject constructor() {
     /**
      * Upload a file to the specified ssh server
      */
-    fun uploadFile(vararg sshConnectionConfig: SSHConnectionConfig, file: File, destinationPath: String) {
+    fun uploadFile(vararg sshConnectionConfig: SSHConnectionConfig, file: File,
+                   destinationPath: String) {
         runOnSession(*sshConnectionConfig) { session: Session ->
             val channel = createSFTPChannel(session)
-            channel.connect()
+            channel
+                    .connect()
 
-            val mode = ChannelSftp.OVERWRITE
-//            val mode = ChannelSftp.RESUME
-//            val mode = ChannelSftp.APPEND
+            val mode = ChannelSftp
+                    .OVERWRITE
+            //            val mode = ChannelSftp.RESUME
+            //            val mode = ChannelSftp.APPEND
 
             val monitor = object : SftpProgressMonitor {
                 var count: Long = 0
                 var max: Long = 0
 
                 override fun init(op: Int, src: String?, dest: String?, max: Long) {
-                    Timber.d { "Upload init" }
-                    this.max = max
+                    Timber
+                            .d { "Upload init" }
+                    this
+                            .max = max
                     count = 0
                 }
 
                 override fun count(count: Long): Boolean {
-                    this.count = count
-                    Timber.d { "Upload count: $count/$max" }
+                    this
+                            .count = count
+                    Timber
+                            .d { "Upload count: $count/$max" }
                     return true
                 }
 
                 override fun end() {
-                    Timber.d { "Upload finished" }
+                    Timber
+                            .d { "Upload finished" }
                 }
             }
 
-//            channel.mkdir(destinationPath)
+            //            channel.mkdir(destinationPath)
 
-            channel.put(file.inputStream(), destinationPath, monitor, mode)
+            channel
+                    .put(file.inputStream(), destinationPath, monitor, mode)
         }
     }
 
 }
 
-data class ExecuteCommandResult(
-        val returnCode: Int,
-        val output: String
-)
+data class ExecuteCommandResult(val returnCode: Int, val output: String)

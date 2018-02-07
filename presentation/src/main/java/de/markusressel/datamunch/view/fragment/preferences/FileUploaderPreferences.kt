@@ -11,7 +11,9 @@ import de.mrapp.android.preference.activity.RestoreDefaultsListener
 class FileUploaderPreferences : DaggerPreferenceFragment(), RestoreDefaultsListener {
 
     override fun getPreferencesResource(): Int {
-        return R.xml.preferences_file_uploader
+        return R
+                .xml
+                .preferences_file_uploader
     }
 
     override fun findPreferences() {
@@ -20,11 +22,14 @@ class FileUploaderPreferences : DaggerPreferenceFragment(), RestoreDefaultsListe
     override fun updateSummaries() {
     }
 
-    override fun onRestoredDefaultValue(fragment: PreferenceFragment, preference: Preference, oldValue: Any?, newValue: Any?) {
+    override fun onRestoredDefaultValue(fragment: PreferenceFragment, preference: Preference,
+                                        oldValue: Any?, newValue: Any?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onRestoreDefaultValueRequested(fragment: PreferenceFragment, preference: Preference, currentValue: Any?): Boolean {
+    override fun onRestoreDefaultValueRequested(fragment: PreferenceFragment,
+                                                preference: Preference,
+                                                currentValue: Any?): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

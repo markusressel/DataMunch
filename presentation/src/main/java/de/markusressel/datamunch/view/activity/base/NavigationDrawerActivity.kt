@@ -34,12 +34,14 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
     protected lateinit var navigationDrawer: Drawer
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super
+                .onCreate(savedInstanceState)
 
         val menuItemList = initDrawerMenuItems()
         val accountHeader = initAccountHeader()
 
-        navigationDrawer = DrawerBuilder().withActivity(this)
+        navigationDrawer = DrawerBuilder()
+                .withActivity(this)
                 .withAccountHeader(accountHeader)
                 .withDrawerItems(menuItemList)
                 .withCloseOnClick(false)
@@ -64,7 +66,8 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                 .withCurrentProfileHiddenInList(true)
                 .withDividerBelowHeader(true)
                 .withOnAccountHeaderListener { view, profile, current ->
-                    Timber.d { "Pressed profile: '$profile' with current: '$current'" }
+                    Timber
+                            .d { "Pressed profile: '$profile' with current: '$current'" }
                     false
                 }
 
@@ -74,19 +77,11 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
     private fun getProfiles(): MutableList<IProfile<*>> {
         val profiles: MutableList<IProfile<*>> = LinkedList()
 
-        profiles.add(
-                ProfileDrawerItem()
-                        .withName("Markus Ressel")
-                        .withEmail("")
-                        .withIcon(R.mipmap.ic_launcher)
-        )
+        profiles
+                .add(ProfileDrawerItem().withName("Markus Ressel").withEmail("").withIcon(R.mipmap.ic_launcher))
 
-        profiles.add(
-                ProfileDrawerItem()
-                        .withName("Iris Haderer")
-                        .withEmail("")
-                        .withIcon(R.mipmap.ic_launcher)
-        )
+        profiles
+                .add(ProfileDrawerItem().withName("Iris Haderer").withEmail("").withIcon(R.mipmap.ic_launcher))
 
         return profiles
     }
@@ -94,120 +89,122 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
     private fun initDrawerMenuItems(): MutableList<IDrawerItem<*, *>> {
         val menuItemList: MutableList<IDrawerItem<*, *>> = LinkedList()
 
-        val clickListener = Drawer.OnDrawerItemClickListener { view, position, drawerItem ->
+        val clickListener = Drawer
+                .OnDrawerItemClickListener { view, position, drawerItem ->
 
-            if (drawerItem.identifier == getInitialNavigationDrawerSelection()) {
-                Timber.d { "Closing navigationDrawer because the clicked item (${drawerItem.identifier}) is the currently active page" }
-                navigationDrawer.closeDrawer()
-                return@OnDrawerItemClickListener true
-            }
+                    if (drawerItem.identifier == getInitialNavigationDrawerSelection()) {
+                        Timber
+                                .d { "Closing navigationDrawer because the clicked item (${drawerItem.identifier}) is the currently active page" }
+                        navigationDrawer
+                                .closeDrawer()
+                        return@OnDrawerItemClickListener true
+                    }
 
-            when (drawerItem.identifier) {
-                Status.identifier -> {
-                    navigator.navigateTo(this, Navigator.NavigationPages.MainPage)
-                    navigationDrawer.closeDrawer()
-                    true
+                    when (drawerItem.identifier) {
+                        Status.identifier -> {
+                            navigator
+                                    .navigateTo(this, Navigator.NavigationPages.MainPage)
+                            navigationDrawer
+                                    .closeDrawer()
+                            true
+                        }
+
+                        Services.identifier -> {
+                            navigator
+                                    .navigateTo(this, Navigator.NavigationPages.ServicesPage)
+                            navigationDrawer
+                                    .closeDrawer()
+                            true
+                        }
+
+                        Jails.identifier -> {
+                            navigator
+                                    .navigateTo(this, Navigator.NavigationPages.JailsPage)
+                            navigationDrawer
+                                    .closeDrawer()
+                            true
+                        }
+
+                        Plugins.identifier -> {
+                            navigator
+                                    .navigateTo(this, Navigator.NavigationPages.PluginsPage)
+                            navigationDrawer
+                                    .closeDrawer()
+                            true
+                        }
+
+                        FileUploader.identifier -> {
+                            navigator
+                                    .navigateTo(this, Navigator.NavigationPages.FileUploaderPage)
+                            navigationDrawer
+                                    .closeDrawer()
+                            true
+                        }
+
+                        Settings.identifier -> {
+                            navigator
+                                    .navigateTo(this, Navigator.NavigationPages.PreferencesOverviewPage)
+                            navigationDrawer
+                                    .closeDrawer()
+                            true
+                        }
+
+                        About.identifier -> {
+                            navigator
+                                    .navigateTo(this, Navigator.NavigationPages.AboutPage)
+                            navigationDrawer
+                                    .closeDrawer()
+                            true
+                        }
+
+                        else -> {
+                            Timber
+                                    .w { "Unknown menu item identifier: ${drawerItem.identifier}" }
+                            false
+                        }
+                    }
+
                 }
-
-                Services.identifier -> {
-                    navigator.navigateTo(this, Navigator.NavigationPages.ServicesPage)
-                    navigationDrawer.closeDrawer()
-                    true
-                }
-
-                Jails.identifier -> {
-                    navigator.navigateTo(this, Navigator.NavigationPages.JailsPage)
-                    navigationDrawer.closeDrawer()
-                    true
-                }
-
-                Plugins.identifier -> {
-                    navigator.navigateTo(this, Navigator.NavigationPages.PluginsPage)
-                    navigationDrawer.closeDrawer()
-                    true
-                }
-
-                FileUploader.identifier -> {
-                    navigator.navigateTo(this, Navigator.NavigationPages.FileUploaderPage)
-                    navigationDrawer.closeDrawer()
-                    true
-                }
-
-                Settings.identifier -> {
-                    navigator.navigateTo(this, Navigator.NavigationPages.PreferencesOverviewPage)
-                    navigationDrawer.closeDrawer()
-                    true
-                }
-
-                About.identifier -> {
-                    navigator.navigateTo(this, Navigator.NavigationPages.AboutPage)
-                    navigationDrawer.closeDrawer()
-                    true
-                }
-
-                else -> {
-                    Timber.w { "Unknown menu item identifier: ${drawerItem.identifier}" }
-                    false
-                }
-            }
-
-        }
 
         for (menuItem in listOf(Status, Services, Jails, Plugins, FileUploader)) {
-            menuItemList.add(
-                    PrimaryDrawerItem()
-                            .withName(menuItem.title)
-                            .withIdentifier(menuItem.identifier)
-                            .withIcon(menuItem.getIcon(iconicsHelper))
-                            .withSelectable(menuItem.selectable)
-                            .withOnDrawerItemClickListener(clickListener)
-            )
+            menuItemList
+                    .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(menuItem.identifier).withIcon(menuItem.getIcon(iconicsHelper)).withSelectable(menuItem.selectable).withOnDrawerItemClickListener(clickListener))
         }
 
-        menuItemList.add(
-                DividerDrawerItem()
-        )
+        menuItemList
+                .add(DividerDrawerItem())
 
         var menuItem = Settings
-        menuItemList.add(
-                PrimaryDrawerItem()
-                        .withName(menuItem.title)
-                        .withIdentifier(menuItem.identifier)
-                        .withIcon(menuItem.getIcon(iconicsHelper))
-                        .withSelectable(menuItem.selectable)
-                        .withOnDrawerItemClickListener(clickListener)
-        )
+        menuItemList
+                .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(menuItem.identifier).withIcon(menuItem.getIcon(iconicsHelper)).withSelectable(menuItem.selectable).withOnDrawerItemClickListener(clickListener))
 
-        menuItemList.add(
-                DividerDrawerItem()
-        )
+        menuItemList
+                .add(DividerDrawerItem())
 
         menuItem = About
-        menuItemList.add(
-                SecondaryDrawerItem()
-                        .withName(menuItem.title)
-                        .withIdentifier(menuItem.identifier)
-                        .withIcon(menuItem.getIcon(iconicsHelper))
-                        .withSelectable(menuItem.selectable)
-                        .withOnDrawerItemClickListener(clickListener)
-        )
+        menuItemList
+                .add(SecondaryDrawerItem().withName(menuItem.title).withIdentifier(menuItem.identifier).withIcon(menuItem.getIcon(iconicsHelper)).withSelectable(menuItem.selectable).withOnDrawerItemClickListener(clickListener))
 
         return menuItemList
     }
 
     override fun onResume() {
-        super.onResume()
+        super
+                .onResume()
 
         // reset to this page
-        navigationDrawer.setSelection(getInitialNavigationDrawerSelection())
+        navigationDrawer
+                .setSelection(getInitialNavigationDrawerSelection())
     }
 
     override fun onBackPressed() {
         if (navigationDrawer.isDrawerOpen) {
-            navigationDrawer.closeDrawer()
+            navigationDrawer
+                    .closeDrawer()
             return
         }
 
-        super.onBackPressed()
+        super
+                .onBackPressed()
     }
 }

@@ -32,7 +32,11 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
                 .map<JailEntity, ListItemJailBinding>(R.layout.list_item_jail) {
-                    onCreate { it.binding.presenter = this@JailsFragment }
+                    onCreate {
+                        it
+                                .binding
+                                .presenter = this@JailsFragment
+                    }
                     onClick {
                         openJailDetailView(listValues[it.adapterPosition])
                     }
@@ -44,10 +48,12 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
     }
 
     override fun loadListDataFromSource(): List<JailEntity> {
-        return freeNasWebApiClient.getJails()
+        return freeNasWebApiClient
+                .getJails()
                 .blockingGet()
                 .map {
-                    it.asEntity()
+                    it
+                            .asEntity()
                 }
     }
 
@@ -56,59 +62,64 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
     }
 
     override fun loadListDataFromPersistence(): List<JailEntity> {
-        return super.loadListDataFromPersistence().sortedBy {
-            it.jail_host.toLowerCase()
-        }
+        return super
+                .loadListDataFromPersistence()
+                .sortedBy {
+                    it
+                            .jail_host
+                            .toLowerCase()
+                }
     }
 
     fun startJail(jail: JailEntity) {
-        freeNasWebApiClient.startJail(jail.id)
+        freeNasWebApiClient
+                .startJail(jail.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
-                            reloadDataFromSource()
-                        },
-                        onError = {
-                            Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
-                            showError(it)
-                        }
-                )
+                .subscribeBy(onSuccess = {
+                    Toast
+                            .makeText(activity, "Success!", Toast.LENGTH_SHORT)
+                            .show()
+                    reloadDataFromSource()
+                }, onError = {
+                    Toast
+                            .makeText(activity, "Error!", Toast.LENGTH_LONG)
+                            .show()
+                    showError(it)
+                })
     }
 
     fun stopJail(jail: JailEntity) {
-        freeNasWebApiClient.stopJail(jail.id)
+        freeNasWebApiClient
+                .stopJail(jail.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            Toast.makeText(activity, "Success!", Toast.LENGTH_SHORT).show()
-                            reloadDataFromSource()
-                        },
-                        onError = {
-                            Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
-                            showError(it)
-                        }
-                )
+                .subscribeBy(onSuccess = {
+                    Toast
+                            .makeText(activity, "Success!", Toast.LENGTH_SHORT)
+                            .show()
+                    reloadDataFromSource()
+                }, onError = {
+                    Toast
+                            .makeText(activity, "Error!", Toast.LENGTH_LONG)
+                            .show()
+                    showError(it)
+                })
     }
 
     fun restartJail(jail: JailEntity) {
-        freeNasWebApiClient.restartJail(jail.id)
+        freeNasWebApiClient
+                .restartJail(jail.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onNext = {
-                            // TODO: show progress
-                        },
-                        onComplete = {
-                            reloadDataFromSource()
-                        },
-                        onError = {
-                            Toast.makeText(activity, "Error!", Toast.LENGTH_LONG).show()
-                            showError(it)
-                        }
-                )
+                .subscribeBy(onSuccess = {
+                    reloadDataFromSource()
+                }, onError = {
+                    Toast
+                            .makeText(activity, "Error!", Toast.LENGTH_LONG)
+                            .show()
+                    showError(it)
+                })
     }
 
     private fun openJailDetailView(jail: JailEntity) {

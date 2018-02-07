@@ -15,7 +15,9 @@ class ConnectionPreferences : DaggerPreferenceFragment(), RestoreDefaultsListene
     private lateinit var sshProxyPassword: Preference
 
     override fun getPreferencesResource(): Int {
-        return R.xml.preferences_connection
+        return R
+                .xml
+                .preferences_connection
     }
 
     override fun findPreferences() {
@@ -24,22 +26,31 @@ class ConnectionPreferences : DaggerPreferenceFragment(), RestoreDefaultsListene
     }
 
     override fun updateSummaries() {
-        val pass = preferenceHandler.getValue(PreferenceHandler.SSH_PASS, false)
+        val pass = preferenceHandler
+                .getValue(PreferenceHandler.SSH_PASS, false)
         if (pass.isNotEmpty()) {
-            sshPassword.summary = "*".repeat(pass.length)
+            sshPassword
+                    .summary = "*"
+                    .repeat(pass.length)
         }
 
-        val proxyPass = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_PASSWORD, false)
+        val proxyPass = preferenceHandler
+                .getValue(PreferenceHandler.SSH_PROXY_PASSWORD, false)
         if (proxyPass.isNotEmpty()) {
-            sshProxyPassword.summary = "*".repeat(proxyPass.length)
+            sshProxyPassword
+                    .summary = "*"
+                    .repeat(proxyPass.length)
         }
     }
 
-    override fun onRestoredDefaultValue(fragment: PreferenceFragment, preference: Preference, oldValue: Any?, newValue: Any?) {
+    override fun onRestoredDefaultValue(fragment: PreferenceFragment, preference: Preference,
+                                        oldValue: Any?, newValue: Any?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onRestoreDefaultValueRequested(fragment: PreferenceFragment, preference: Preference, currentValue: Any?): Boolean {
+    override fun onRestoreDefaultValueRequested(fragment: PreferenceFragment,
+                                                preference: Preference,
+                                                currentValue: Any?): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

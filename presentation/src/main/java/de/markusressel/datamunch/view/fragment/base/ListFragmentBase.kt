@@ -37,28 +37,29 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     val freeNasWebApiClient = FreeNasWebApiClient()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        super
+                .onViewCreated(view, savedInstanceState)
 
         recyclerViewAdapter = createAdapter()
 
-        recyclerview.adapter = recyclerViewAdapter
+        recyclerview
+                .adapter = recyclerViewAdapter
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        recyclerview.layoutManager = layoutManager
+        recyclerview
+                .layoutManager = layoutManager
 
 
-        frittenbudeServerManager.setSSHConnectionConfig(
-                connectionManager.getSSHProxy(),
-                connectionManager.getMainSSHConnection()
-        )
+        frittenbudeServerManager
+                .setSSHConnectionConfig(connectionManager.getSSHProxy(), connectionManager.getMainSSHConnection())
 
-        freeNasWebApiClient.hostname = "frittenbude.markusressel.de"
-        freeNasWebApiClient.apiResource = "frittenbudeapi"
-        freeNasWebApiClient.basicAuthConfig = BasicAuthConfig(
-                username = connectionManager.getMainSSHConnection().username,
-                password = connectionManager.getMainSSHConnection().password
-        )
+        freeNasWebApiClient
+                .hostname = "frittenbude.markusressel.de"
+        freeNasWebApiClient
+                .apiResource = "frittenbudeapi"
+        freeNasWebApiClient
+                .basicAuthConfig = BasicAuthConfig(username = connectionManager.getMainSSHConnection().username, password = connectionManager.getMainSSHConnection().password)
 
-        
+
         onListViewCreated(view, savedInstanceState)
 
         fillListFromPersistence()
@@ -80,28 +81,29 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     private fun fillListFromPersistence() {
         showLoading()
 
-        Single.fromCallable {
-            loadListDataFromPersistence()
-        }
+        Single
+                .fromCallable {
+                    loadListDataFromPersistence()
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            listValues.clear()
+                .subscribeBy(onSuccess = {
+                    listValues
+                            .clear()
 
-                            if (it.isEmpty()) {
-                                showEmpty()
-                            } else {
-                                listValues.addAll(it)
-                                showContent()
-                            }
+                    if (it.isEmpty()) {
+                        showEmpty()
+                    } else {
+                        listValues
+                                .addAll(it)
+                        showContent()
+                    }
 
-                            recyclerViewAdapter.notifyDataSetChanged()
-                        },
-                        onError = {
-                            showError(it)
-                        }
-                )
+                    recyclerViewAdapter
+                            .notifyDataSetChanged()
+                }, onError = {
+                    showError(it)
+                })
     }
 
     /**
@@ -110,20 +112,18 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     protected fun reloadDataFromSource() {
         showLoading()
 
-        Single.fromCallable {
-            loadListDataFromSource()
-        }
+        Single
+                .fromCallable {
+                    loadListDataFromSource()
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            persistListData(it)
-                            fillListFromPersistence()
-                        },
-                        onError = {
-                            showError(it)
-                        }
-                )
+                .subscribeBy(onSuccess = {
+                    persistListData(it)
+                    fillListFromPersistence()
+                }, onError = {
+                    showError(it)
+                })
     }
 
     /**
@@ -133,8 +133,12 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
 
     private fun persistListData(data: List<T>) {
         val persistenceHandler = getPersistenceHandler()
-        persistenceHandler.standardOperation().removeAll()
-        persistenceHandler.standardOperation().put(data)
+        persistenceHandler
+                .standardOperation()
+                .removeAll()
+        persistenceHandler
+                .standardOperation()
+                .put(data)
     }
 
     private fun showEmpty() {
@@ -146,7 +150,9 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
      */
     open fun loadListDataFromPersistence(): List<T> {
         val persistenceHandler = getPersistenceHandler()
-        return persistenceHandler.standardOperation().all
+        return persistenceHandler
+                .standardOperation()
+                .all
     }
 
     /**
@@ -165,7 +171,8 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     }
 
     override fun onErrorClicked() {
-        super.onErrorClicked()
+        super
+                .onErrorClicked()
         reloadDataFromSource()
     }
 

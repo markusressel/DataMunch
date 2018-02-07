@@ -16,18 +16,22 @@ class ServicesActivity : NavigationDrawerActivity() {
         get() = R.layout.activity_services
 
     override fun getInitialNavigationDrawerSelection(): Long {
-        return DrawerItemHolder.Services.identifier
+        return DrawerItemHolder
+                .Services
+                .identifier
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super
+                .onCreate(savedInstanceState)
 
         setTitle(R.string.menu_item_services)
 
         val contentFragment = ServicesFragment()
-        supportFragmentManager.beginTransaction()
+        supportFragmentManager
+                .beginTransaction()
                 .replace(R.id.contentLayout, contentFragment)
-//                .addToBackStack(preferencesFragment.tag)
+                //                .addToBackStack(preferencesFragment.tag)
                 .commit()
     }
 

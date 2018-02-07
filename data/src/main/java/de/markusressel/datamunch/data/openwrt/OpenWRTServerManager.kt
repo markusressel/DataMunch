@@ -13,12 +13,17 @@ import javax.inject.Singleton
 class OpenWRTServerManager @Inject constructor() : ServerManager() {
 
     override fun parseUptimeResult(commandResult: ExecuteCommandResult): UptimeResult {
-        val trimmedResult = commandResult.output.trimIndent()
+        val trimmedResult = commandResult
+                .output
+                .trimIndent()
 
-        val lines = trimmedResult.split(",")
+        val lines = trimmedResult
+                .split(",")
 
-        val uptime = lines[0].trim()
-        val clock = lines[1].trim()
+        val uptime = lines[0]
+                .trim()
+        val clock = lines[1]
+                .trim()
 
         val loadAverage1 = lines[2]
                 .trim()

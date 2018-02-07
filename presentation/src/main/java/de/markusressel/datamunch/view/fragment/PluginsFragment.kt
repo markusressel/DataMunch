@@ -28,16 +28,22 @@ class PluginsFragment : ListFragmentBase<PluginEntity>() {
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
                 .map<PluginEntity, ListItemPluginBinding>(R.layout.list_item_plugin) {
-                    onCreate { it.binding.presenter = this@PluginsFragment }
+                    onCreate {
+                        it
+                                .binding
+                                .presenter = this@PluginsFragment
+                    }
                 }
                 .into(recyclerview)
     }
 
     override fun loadListDataFromSource(): List<PluginEntity> {
-        return freeNasWebApiClient.getPlugins()
+        return freeNasWebApiClient
+                .getPlugins()
                 .blockingGet()
                 .map {
-                    it.asEntity()
+                    it
+                            .asEntity()
                 }
     }
 
@@ -46,9 +52,13 @@ class PluginsFragment : ListFragmentBase<PluginEntity>() {
     }
 
     override fun loadListDataFromPersistence(): List<PluginEntity> {
-        return super.loadListDataFromPersistence().sortedBy {
-            it.plugin_name.toLowerCase()
-        }
+        return super
+                .loadListDataFromPersistence()
+                .sortedBy {
+                    it
+                            .plugin_name
+                            .toLowerCase()
+                }
     }
 
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -42,7 +42,8 @@ import javax.inject.Inject
 /**
  * Created by Markus on 20.12.2017.
  */
-abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjector, HasSupportFragmentInjector {
+abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjector,
+    HasSupportFragmentInjector {
 
     @Inject
     internal lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
@@ -83,7 +84,8 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+        AndroidInjection
+                .inject(this)
 
         // apply forced locale (if set in developer options)
         initLocale()
@@ -91,7 +93,8 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
         // set Theme before anything else in onCreate();
         initTheme()
 
-        super.onCreate(savedInstanceState)
+        super
+                .onCreate(savedInstanceState)
 
         // Hide title on dialogs to use view_toolbar instead
         if (style == DIALOG) {
@@ -102,11 +105,13 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
 
         setSupportActionBar(toolbar)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar
+                ?.setDisplayHomeAsUpEnabled(true)
     }
 
     fun initLocale() {
-        val localeValue = preferenceHandler.getValue(PreferenceHandler.LOCALE)
+        val localeValue = preferenceHandler
+                .getValue(PreferenceHandler.LOCALE)
 
         when (localeValue) {
             getString(R.string.locale_EN_value).toInt() -> setLocale(Locale.ENGLISH)
@@ -117,21 +122,28 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
     private fun setLocale(locale: Locale) {
         val res = resources
         // Change locale settings in the app.
-        val dm = res.displayMetrics
-        val conf = res.configuration
+        val dm = res
+                .displayMetrics
+        val conf = res
+                .configuration
 
-        conf.locale = locale
-        conf.setLocale(locale)
-        res.updateConfiguration(conf, dm)
+        conf
+                .locale = locale
+        conf
+                .setLocale(locale)
+        res
+                .updateConfiguration(conf, dm)
 
         onConfigurationChanged(conf)
     }
 
     private fun initTheme() {
         if (style == DIALOG) {
-            themeHelper.applyDialogTheme(this)//set up notitle
+            themeHelper
+                    .applyDialogTheme(this) //set up notitle
         } else {
-            themeHelper.applyTheme(this)
+            themeHelper
+                    .applyTheme(this)
         }
     }
 

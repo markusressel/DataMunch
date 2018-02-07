@@ -16,18 +16,22 @@ class MainActivity : NavigationDrawerActivity() {
         get() = R.layout.activity_main
 
     override fun getInitialNavigationDrawerSelection(): Long {
-        return DrawerItemHolder.Status.identifier
+        return DrawerItemHolder
+                .Status
+                .identifier
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super
+                .onCreate(savedInstanceState)
 
         setTitle(R.string.menu_item_status)
 
         val serverStatusFragment = ServerStatusFragment()
-        supportFragmentManager.beginTransaction()
+        supportFragmentManager
+                .beginTransaction()
                 .replace(R.id.contentLayout, serverStatusFragment)
-//                .addToBackStack(preferencesFragment.tag)
+                //                .addToBackStack(preferencesFragment.tag)
                 .commit()
     }
 

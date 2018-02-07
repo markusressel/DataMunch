@@ -29,7 +29,8 @@ class ThemeHelper @Inject constructor() {
     lateinit var preferenceHandler: PreferenceHandler
 
     fun applyPreferencesTheme(target: Activity) {
-        val theme = preferenceHandler.getValue(THEME)
+        val theme = preferenceHandler
+                .getValue(THEME)
         when (theme) {
             context.getString(R.string.theme_light_value).toInt() -> setTheme(target, R.style.PreferenceActivityThemeLight)
             context.getString(R.string.theme_dark_value).toInt() -> setTheme(target, R.style.PreferenceActivityThemeDark)
@@ -42,7 +43,8 @@ class ThemeHelper @Inject constructor() {
      * @param activity Activity to apply theme on
      */
     fun applyTheme(activity: Activity) {
-        val theme = preferenceHandler.getValue(THEME)
+        val theme = preferenceHandler
+                .getValue(THEME)
         when (theme) {
             context.getString(R.string.theme_light_value).toInt() -> setTheme(activity, R.style.AppThemeLight)
             context.getString(R.string.theme_dark_value).toInt() -> setTheme(activity, R.style.AppThemeDark)
@@ -56,7 +58,8 @@ class ThemeHelper @Inject constructor() {
      * @param activity Activity to apply theme on
      */
     fun applyDialogTheme(activity: Activity) {
-        val theme = preferenceHandler.getValue(THEME)
+        val theme = preferenceHandler
+                .getValue(THEME)
         when (theme) {
             context.getString(R.string.theme_light_value).toInt() -> setTheme(activity, R.style.AppDialogThemeLight)
             context.getString(R.string.theme_dark_value).toInt() -> setTheme(activity, R.style.AppDialogThemeDark)
@@ -71,7 +74,8 @@ class ThemeHelper @Inject constructor() {
      * @param dialogFragment Fragment to apply theme on
      */
     fun applyDialogTheme(dialogFragment: DialogFragment) {
-        val theme = preferenceHandler.getValue(THEME)
+        val theme = preferenceHandler
+                .getValue(THEME)
         when (theme) {
             context.getString(R.string.theme_light_value).toInt() -> dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppDialogThemeLight)
             context.getString(R.string.theme_dark_value).toInt() -> dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppDialogThemeDark)
@@ -80,9 +84,11 @@ class ThemeHelper @Inject constructor() {
     }
 
     private fun setTheme(activity: Activity, @StyleRes themeRes: Int) {
-        activity.applicationContext
+        activity
+                .applicationContext
                 .setTheme(themeRes)
-        activity.setTheme(themeRes)
+        activity
+                .setTheme(themeRes)
     }
 
     /**
@@ -96,12 +102,13 @@ class ThemeHelper @Inject constructor() {
     @ColorInt
     fun getThemeAttrColor(context: Context, @AttrRes attr: Int): Int {
         val typedValue = TypedValue()
-        if (context.theme
-                .resolveAttribute(attr, typedValue, true)) {
+        if (context.theme.resolveAttribute(attr, typedValue, true)) {
             if (typedValue.type >= TypedValue.TYPE_FIRST_INT && typedValue.type <= TypedValue.TYPE_LAST_INT) {
-                return typedValue.data
+                return typedValue
+                        .data
             } else if (typedValue.type == TypedValue.TYPE_STRING) {
-                return ContextCompat.getColor(context, typedValue.resourceId)
+                return ContextCompat
+                        .getColor(context, typedValue.resourceId)
             }
         }
 

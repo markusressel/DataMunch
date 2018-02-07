@@ -14,12 +14,14 @@ import timber.log.Timber
 class App : DaggerApplication(), HasActivityInjector {
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent.builder()
+        return DaggerAppComponent
+                .builder()
                 .create(this)
     }
 
     override fun onCreate() {
-        super.onCreate()
+        super
+                .onCreate()
 
         plantTimberTrees()
         initMemoryLeakDetection()
@@ -31,12 +33,14 @@ class App : DaggerApplication(), HasActivityInjector {
             // You should not init your app in this process.
             return
         }
-        LeakCanary.install(this)
+        LeakCanary
+                .install(this)
     }
 
     private fun plantTimberTrees() {
         if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
+            Timber
+                    .plant(Timber.DebugTree())
         }
     }
 

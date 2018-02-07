@@ -14,7 +14,8 @@ import javax.inject.Singleton
 class FreeBSDServerManager @Inject constructor() : ServerManager() {
 
     override fun setSSHConnectionConfig(vararg sshConnectionConfig: SSHConnectionConfig) {
-        super.setSSHConnectionConfig(*sshConnectionConfig)
+        super
+                .setSSHConnectionConfig(*sshConnectionConfig)
     }
 
     /**
@@ -22,7 +23,8 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      */
     fun retrieveReleaseVersion(): String {
         val commandResult = executeSSHCommand("uname -r")
-        return commandResult.output
+        return commandResult
+                .output
     }
 
     /**
@@ -30,7 +32,8 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      */
     fun retrievePlatform(): String {
         val commandResult = executeSSHCommand("uname -m")
-        return commandResult.output
+        return commandResult
+                .output
     }
 
     /**
@@ -38,20 +41,24 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
      */
     fun retrieveHostname(): String {
         val commandResult = executeSSHCommand("/bin/hostname -s")
-        return commandResult.output
+        return commandResult
+                .output
     }
 
     override fun parseUptimeResult(commandResult: ExecuteCommandResult): UptimeResult {
-        val trimmedResult = commandResult.output.trimIndent()
+        val trimmedResult = commandResult
+                .output
+                .trimIndent()
 
-        val lines = trimmedResult.split(",")
+        val lines = trimmedResult
+                .split(",")
 
-        val uptime = lines[0].trim()
-        val clock = lines[1].trim()
-
-        val users = lines[2]
+        val uptime = lines[0]
                 .trim()
-                .split(' ')[0]
+        val clock = lines[1]
+                .trim()
+
+        val users = lines[2].trim().split(' ')[0]
                 .toInt()
 
         val loadAverage1 = lines[3]

@@ -40,7 +40,8 @@ class IntListPreference : ListPreference {
     override fun getPersistedString(defaultReturnValue: String?): String {
         if (sharedPreferences.contains(key)) {
             val intValue = getPersistedInt(0)
-            return intValue.toString()
+            return intValue
+                    .toString()
         } else {
             return defaultReturnValue as String
         }

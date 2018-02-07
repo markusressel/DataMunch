@@ -2,10 +2,7 @@ package de.markusressel.datamunch.dagger.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import de.markusressel.datamunch.view.fragment.JailsFragment
-import de.markusressel.datamunch.view.fragment.PluginsFragment
-import de.markusressel.datamunch.view.fragment.ServerStatusFragment
-import de.markusressel.datamunch.view.fragment.ServicesFragment
+import de.markusressel.datamunch.view.fragment.*
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.base.LoadingSupportFragmentBase
 
@@ -29,6 +26,9 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun JailsFragment(): JailsFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun MountpointsFragment(): MountpointsFragment
 
     @ContributesAndroidInjector
     internal abstract fun PluginsFragment(): PluginsFragment

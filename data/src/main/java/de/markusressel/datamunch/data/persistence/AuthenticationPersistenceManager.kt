@@ -10,7 +10,8 @@ import kotlin.reflect.KClass
  * Created by Markus on 30.01.2018.
  */
 @Singleton
-class AuthenticationPersistenceManager @Inject constructor() : PersistenceManagerBase<AuthenticationEntity>() {
+class AuthenticationPersistenceManager @Inject constructor() :
+    PersistenceManagerBase<AuthenticationEntity>() {
 
     override fun getEntityType(): KClass<AuthenticationEntity> {
         return AuthenticationEntity::class

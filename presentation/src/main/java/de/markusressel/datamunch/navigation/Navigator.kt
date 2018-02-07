@@ -43,29 +43,36 @@ class Navigator @Inject constructor() {
             return
         }
 
-        val intent = page.createIntent(activityContext)
-        flags?.let {
-            intent.addFlags(it)
-        }
+        val intent = page
+                .createIntent(activityContext)
+        flags
+                ?.let {
+                    intent
+                            .addFlags(it)
+                }
 
-        activityContext.startActivity(intent)
+        activityContext
+                .startActivity(intent)
     }
 
     private fun navigateToAbout(activityContext: Context) {
-        val themeVal = preferenceHandler.getValue(PreferenceHandler.THEME)
+        val themeVal = preferenceHandler
+                .getValue(PreferenceHandler.THEME)
 
         val aboutLibTheme: Libs.ActivityStyle
         if (themeVal == activityContext.getString(R.string.theme_light_value).toInt()) {
-            aboutLibTheme = Libs.ActivityStyle.LIGHT_DARK_TOOLBAR
+            aboutLibTheme = Libs
+                    .ActivityStyle
+                    .LIGHT_DARK_TOOLBAR
         } else {
-            aboutLibTheme = Libs.ActivityStyle.DARK
+            aboutLibTheme = Libs
+                    .ActivityStyle
+                    .DARK
         }
 
         LibsBuilder()
                 .withActivityStyle(aboutLibTheme)
-                .withActivityColor(Colors(
-                        ContextCompat.getColor(activityContext, R.color.primaryColor),
-                        ContextCompat.getColor(activityContext, R.color.primaryColor_dark)))
+                .withActivityColor(Colors(ContextCompat.getColor(activityContext, R.color.primaryColor), ContextCompat.getColor(activityContext, R.color.primaryColor_dark)))
                 .withActivityTitle(activityContext.getString(R.string.menu_item_about))
                 .start(activityContext)
     }

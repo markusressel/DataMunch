@@ -16,8 +16,7 @@ import javax.inject.Singleton
  * Created by Markus on 13.12.2015.
  */
 @Singleton
-class IconicsHelper @Inject
-constructor() {
+class IconicsHelper @Inject constructor() {
 
     @Inject
     lateinit var context: Context
@@ -33,7 +32,8 @@ constructor() {
      * @return the icon
      */
     fun getMenuIcon(icon: IIcon): IconicsDrawable {
-        val color = themeHelper.getThemeAttrColor(context, android.R.attr.textColorPrimary)
+        val color = themeHelper
+                .getThemeAttrColor(context, android.R.attr.textColorPrimary)
         return getIcon(icon, color, 24)
     }
 
@@ -45,7 +45,8 @@ constructor() {
      * @return the icon
      */
     fun getWizardIcon(icon: IIcon): IconicsDrawable {
-        val color = themeHelper.getThemeAttrColor(context, android.R.attr.textColorPrimary)
+        val color = themeHelper
+                .getThemeAttrColor(context, android.R.attr.textColorPrimary)
         return getIcon(icon, color, 64)
     }
 
@@ -57,7 +58,8 @@ constructor() {
      * @return the icon
      */
     fun getConfigurationDialogControlBarIcon(icon: IIcon): IconicsDrawable {
-        val color = themeHelper.getThemeAttrColor(context, android.R.attr.textColorPrimary)
+        val color = themeHelper
+                .getThemeAttrColor(context, android.R.attr.textColorPrimary)
         return getIcon(icon, color, 36)
     }
 
@@ -69,7 +71,8 @@ constructor() {
      * @return the icon
      */
     fun getFabIcon(icon: IIcon): IconicsDrawable {
-        val color = Color.WHITE
+        val color = Color
+                .WHITE
         return getIcon(icon, color, 24, 5)
     }
 
@@ -81,7 +84,8 @@ constructor() {
      * @return the icon
      */
     fun getOptionsMenuIcon(icon: IIcon): IconicsDrawable {
-        val color = themeHelper.getThemeAttrColor(context, android.R.attr.textColorPrimary)
+        val color = themeHelper
+                .getThemeAttrColor(context, android.R.attr.textColorPrimary)
 
         var padding = 0
         if (icon === MaterialDesignIconic.Icon.gmi_plus) {
@@ -93,8 +97,10 @@ constructor() {
         return getIcon(icon, color, 24, padding)
     }
 
-    private fun getIcon(icon: IIcon, @ColorInt color: Int, sizeDp: Int, paddingDp: Int = 0): IconicsDrawable {
-        return IconicsDrawable(context, icon).sizeDp(sizeDp)
+    private fun getIcon(icon: IIcon, @ColorInt color: Int, sizeDp: Int,
+                        paddingDp: Int = 0): IconicsDrawable {
+        return IconicsDrawable(context, icon)
+                .sizeDp(sizeDp)
                 .paddingDp(paddingDp)
                 .color(color)
     }

@@ -23,7 +23,9 @@ import javax.inject.Inject
  *
  * Created by Markus on 08.01.2018.
  */
-abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.PreferenceActivity(), HasFragmentInjector, HasSupportFragmentInjector, SharedPreferences.OnSharedPreferenceChangeListener {
+abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.PreferenceActivity(),
+    HasFragmentInjector, HasSupportFragmentInjector,
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
     internal lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
@@ -47,39 +49,52 @@ abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.Pre
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+        AndroidInjection
+                .inject(this)
 
-        themeHelper.applyPreferencesTheme(this)
+        themeHelper
+                .applyPreferencesTheme(this)
 
-        super.onCreate(savedInstanceState)
+        super
+                .onCreate(savedInstanceState)
 
         initTheme()
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar
+                ?.setDisplayHomeAsUpEnabled(true)
 
         setTitle(R.string.menu_item_settings)
     }
 
     override fun onCreateNavigation(fragment: PreferenceFragment) {
-        super.onCreateNavigation(fragment)
-        fragment.addPreferencesFromResource(getPreferencesResource())
+        super
+                .onCreateNavigation(fragment)
+        fragment
+                .addPreferencesFromResource(getPreferencesResource())
     }
 
     override fun onStart() {
-        super.onStart()
+        super
+                .onStart()
 
-        navigationFragment?.let {
-            findPreferences(it)
-            it.preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-        }
+        navigationFragment
+                ?.let {
+                    findPreferences(it)
+                    it
+                            .preferenceManager
+                            .sharedPreferences
+                            .registerOnSharedPreferenceChangeListener(this)
+                }
     }
 
     override fun onResume() {
-        super.onResume()
+        super
+                .onResume()
 
-        navigationFragment?.let {
-            updateSummaries()
-        }
+        navigationFragment
+                ?.let {
+                    updateSummaries()
+                }
     }
 
     /**
@@ -118,22 +133,30 @@ abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.Pre
     protected fun getListPreferenceEntryValueMap(@ArrayRes valueRes: Int, @ArrayRes nameRes: Int): SparseArrayCompat<String> {
         val map = SparseArrayCompat<String>()
 
-        val values = resources.getStringArray(valueRes)
-        val names = resources.getStringArray(nameRes)
+        val values = resources
+                .getStringArray(valueRes)
+        val names = resources
+                .getStringArray(nameRes)
 
         for (i in values.indices) {
-            map.put(Integer.valueOf(values[i])!!, names[i])
+            map
+                    .put(Integer.valueOf(values[i])!!, names[i])
         }
 
         return map
     }
 
     override fun onStop() {
-        super.onStop()
+        super
+                .onStop()
 
-        navigationFragment?.let {
-            it.preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-        }
+        navigationFragment
+                ?.let {
+                    it
+                            .preferenceManager
+                            .sharedPreferences
+                            .registerOnSharedPreferenceChangeListener(this)
+                }
     }
 
 }

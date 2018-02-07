@@ -11,31 +11,34 @@ import de.markusressel.datamunch.view.IconicsHelper
 /**
  * Created by Markus on 08.01.2018.
  */
-data class DrawerMenuItem(
-        val identifier: Long,
-        @StringRes
-        val title: Int,
-        val icon: IIcon? = null,
-        @DrawableRes
-        val drawableRes: Int? = null,
-        val selectable: Boolean) {
+data class DrawerMenuItem(val identifier: Long, @StringRes val title: Int,
+                          val icon: IIcon? = null, @DrawableRes val drawableRes: Int? = null,
+                          val selectable: Boolean) {
 
 
     /**
      * Get the icon for this DrawerMenuItem
      */
     fun getIcon(iconicsHelper: IconicsHelper): Drawable {
-        icon?.let {
-            return iconicsHelper.getMenuIcon(icon)
-        }
+        icon
+                ?.let {
+                    return iconicsHelper
+                            .getMenuIcon(icon)
+                }
 
-        drawableRes?.let {
-            val drawable = iconicsHelper.context.getDrawable(drawableRes)
-            val color = iconicsHelper.themeHelper.getThemeAttrColor(iconicsHelper.context, android.R.attr.textColorPrimary)
-            drawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+        drawableRes
+                ?.let {
+                    val drawable = iconicsHelper
+                            .context
+                            .getDrawable(drawableRes)
+                    val color = iconicsHelper
+                            .themeHelper
+                            .getThemeAttrColor(iconicsHelper.context, android.R.attr.textColorPrimary)
+                    drawable
+                            .setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
 
-            return drawable
-        }
+                    return drawable
+                }
 
         return IconicsDrawable(iconicsHelper.context)
     }

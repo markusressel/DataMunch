@@ -16,18 +16,22 @@ class JailsActivity : NavigationDrawerActivity() {
         get() = R.layout.activity_jails
 
     override fun getInitialNavigationDrawerSelection(): Long {
-        return DrawerItemHolder.Jails.identifier
+        return DrawerItemHolder
+                .Jails
+                .identifier
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super
+                .onCreate(savedInstanceState)
 
         setTitle(R.string.menu_item_jails)
 
         val contentFragment = JailsFragment()
-        supportFragmentManager.beginTransaction()
+        supportFragmentManager
+                .beginTransaction()
                 .replace(R.id.contentLayout, contentFragment)
-//                .addToBackStack(preferencesFragment.tag)
+                //                .addToBackStack(preferencesFragment.tag)
                 .commit()
     }
 

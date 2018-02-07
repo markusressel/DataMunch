@@ -31,10 +31,13 @@ abstract class DaggerSupportFragmentBase : DaggerFragment() {
     @get:LayoutRes
     protected abstract val layoutRes: Int
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        super
+                .onCreateView(inflater, container, savedInstanceState)
 
-        rootView = inflater.inflate(layoutRes, container, false)
+        rootView = inflater
+                .inflate(layoutRes, container, false)
 
         return rootView
     }

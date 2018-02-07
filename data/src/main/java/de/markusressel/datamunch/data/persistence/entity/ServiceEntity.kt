@@ -8,19 +8,9 @@ import io.objectbox.annotation.Id
  * Created by Markus on 30.01.2018.
  */
 @Entity
-data class ServiceEntity(
-        @Id
-        var entityId: Long,
-        val id: Long,
-        val srv_service: String,
-        val srv_enabled: Boolean
-)
+data class ServiceEntity(@Id var entityId: Long, val id: Long, val srv_service: String,
+                         val srv_enabled: Boolean)
 
 fun ServiceModel.asEntity(): ServiceEntity {
-    return ServiceEntity(
-            0,
-            this.id,
-            this.srv_service,
-            this.srv_enabled
-    )
+    return ServiceEntity(0, this.id, this.srv_service, this.srv_enabled)
 }

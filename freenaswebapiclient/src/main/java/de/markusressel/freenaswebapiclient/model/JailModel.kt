@@ -34,7 +34,7 @@ class JailModel(
         val jail_vnet: Boolean
 ) {
 
-    class Deserializer : ResponseDeserializable<List<JailModel>> {
+    class ListDeserializer : ResponseDeserializable<List<JailModel>> {
         override fun deserialize(content: String): List<JailModel>? {
             if (content.isEmpty()) {
                 return emptyList()

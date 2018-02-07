@@ -35,16 +35,16 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
         get() = R.menu.options_menu_server_status
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        super
+                .onViewCreated(view, savedInstanceState)
 
         val user = UserEntity(0, "Markus", "Markus Ressel", "mail@markusressel.de", 0)
 
-        frittenbudeServerManager.setSSHConnectionConfig(
-                connectionManager.getSSHProxy(),
-                connectionManager.getMainSSHConnection()
-        )
+        frittenbudeServerManager
+                .setSSHConnectionConfig(connectionManager.getSSHProxy(), connectionManager.getMainSSHConnection())
 
-        openWrtServerManager.setSSHConnectionConfig(connectionManager.getSSHProxy())
+        openWrtServerManager
+                .setSSHConnectionConfig(connectionManager.getSSHProxy())
 
         reload()
     }
@@ -52,46 +52,45 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
     private fun reload() {
         showLoading()
 
-        Single.fromCallable {
-            frittenbudeServerManager.retrieveHostname()
-        }
+        Single
+                .fromCallable {
+                    frittenbudeServerManager
+                            .retrieveHostname()
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            serverName.text = it
+                .subscribeBy(onSuccess = {
+                    serverName
+                            .text = it
 
-                            showContent()
-                        },
-                        onError = {
-                            serverName.text = it.message
-                            showError(it)
-                        }
-                )
+                    showContent()
+                }, onError = {
+                    serverName
+                            .text = it
+                            .message
+                    showError(it)
+                })
 
-        Single.fromCallable {
-            frittenbudeServerManager.retrieveUptime()
-        }
+        Single
+                .fromCallable {
+                    frittenbudeServerManager
+                            .retrieveUptime()
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            val text = "Uptime: ${it.uptime}\n" +
-                                    "Clock: ${it.clock}\n" +
-                                    "Users: ${it.users}\n" +
-                                    "Load 1m: ${it.load1m}\n" +
-                                    "Load 5m: ${it.load5m}\n" +
-                                    "Load 15m: ${it.load15m}\n"
+                .subscribeBy(onSuccess = {
+                    val text = "Uptime: ${it.uptime}\n" + "Clock: ${it.clock}\n" + "Users: ${it.users}\n" + "Load 1m: ${it.load1m}\n" + "Load 5m: ${it.load5m}\n" + "Load 15m: ${it.load15m}\n"
 
-                            serverStatus.text = text
+                    serverStatus
+                            .text = text
 
-                            showContent()
-                        },
-                        onError = {
-                            serverStatus.text = it.message
-                            showError(it)
-                        }
-                )
+                    showContent()
+                }, onError = {
+                    serverStatus
+                            .text = it
+                            .message
+                    showError(it)
+                })
     }
 
     override fun onOptionsMenuItemSelected(item: MenuItem): Boolean {

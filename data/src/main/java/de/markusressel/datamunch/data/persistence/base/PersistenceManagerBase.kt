@@ -17,7 +17,8 @@ abstract class PersistenceManagerBase<T : Any> {
     protected lateinit var boxStore: BoxStore
 
     private val jailBox: Box<T> by lazy {
-        boxStore.boxFor(getEntityType())
+        boxStore
+                .boxFor(getEntityType())
     }
 
     protected abstract fun getEntityType(): KClass<T>

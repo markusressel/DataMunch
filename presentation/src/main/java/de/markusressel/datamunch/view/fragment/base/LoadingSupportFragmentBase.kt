@@ -20,16 +20,20 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
     protected lateinit var errorLayout: ViewGroup
     protected lateinit var contentView: ViewGroup
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         contentView = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
 
         rootView = createWrapperLayout()
-        loadingLayout = rootView.findViewById(R.id.layoutLoading)
-        errorLayout = rootView.findViewById(R.id.layoutError)
+        loadingLayout = rootView
+                .findViewById(R.id.layoutLoading)
+        errorLayout = rootView
+                .findViewById(R.id.layoutError)
 
-        errorLayout.setOnClickListener {
-            onErrorClicked()
-        }
+        errorLayout
+                .setOnClickListener {
+                    onErrorClicked()
+                }
 
         return rootView
     }
@@ -40,21 +44,26 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
 
     private fun createWrapperLayout(): LinearLayout {
         val baseLayout = LinearLayout(activity)
-        baseLayout.orientation = LinearLayout.VERTICAL
+        baseLayout
+                .orientation = LinearLayout
+                .VERTICAL
 
         // inflate "layout_loading" and "layout_error" layouts and attach it to a newly created layout
-        val layoutInflater = LayoutInflater.from(context)
+        val layoutInflater = LayoutInflater
+                .from(context)
         layoutInflater.inflate(R.layout.layout_loading, baseLayout, true) as ViewGroup
         layoutInflater.inflate(R.layout.layout_error, baseLayout, true) as ViewGroup
 
         // attach the original content view
-        baseLayout.addView(contentView)
+        baseLayout
+                .addView(contentView)
 
         return baseLayout
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        super
+                .onViewCreated(view, savedInstanceState)
 
         showLoading()
     }
@@ -63,18 +72,30 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
      * Show layout_loading animation
      */
     protected fun showLoading() {
-        loadingLayout.visibility = View.VISIBLE
-        errorLayout.visibility = View.GONE
-        contentView.visibility = View.GONE
+        loadingLayout
+                .visibility = View
+                .VISIBLE
+        errorLayout
+                .visibility = View
+                .GONE
+        contentView
+                .visibility = View
+                .GONE
     }
 
     /**
      * Show the actual page content
      */
     protected fun showContent() {
-        loadingLayout.visibility = View.GONE
-        errorLayout.visibility = View.GONE
-        contentView.visibility = View.VISIBLE
+        loadingLayout
+                .visibility = View
+                .GONE
+        errorLayout
+                .visibility = View
+                .GONE
+        contentView
+                .visibility = View
+                .VISIBLE
     }
 
     /**
@@ -96,10 +117,7 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
     }
 
     private fun Throwable.prettyPrint(): String {
-        val message = "${this.message}:\n" +
-                "${this.stackTrace.joinToString(
-                        separator = "\n"
-                )}}"
+        val message = "${this.message}:\n" + "${this.stackTrace.joinToString(separator = "\n")}}"
 
         return message
     }
@@ -107,16 +125,25 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
     private fun showError(message: String, t: Throwable? = null) {
         var errorDescriptionText = message
 
-        t?.let {
-            Timber.e(t) { message }
-            errorDescriptionText += "\n" + t.prettyPrint()
-        }
+        t
+                ?.let {
+                    Timber
+                            .e(t) { message }
+                    errorDescriptionText += "\n" + t.prettyPrint()
+                }
 
-        errorDescription.text = errorDescriptionText
+        errorDescription
+                .text = errorDescriptionText
 
-        loadingLayout.visibility = View.GONE
-        errorLayout.visibility = View.VISIBLE
-        contentView.visibility = View.GONE
+        loadingLayout
+                .visibility = View
+                .GONE
+        errorLayout
+                .visibility = View
+                .VISIBLE
+        contentView
+                .visibility = View
+                .GONE
     }
 
 }

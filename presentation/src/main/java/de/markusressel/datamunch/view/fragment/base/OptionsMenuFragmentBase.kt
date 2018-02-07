@@ -20,16 +20,20 @@ abstract class OptionsMenuFragmentBase : DaggerSupportFragmentBase() {
     protected abstract val optionsMenuRes: Int?
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        optionsMenuRes?.let {
-            setHasOptionsMenu(true)
-        }
+        super
+                .onCreate(savedInstanceState)
+        optionsMenuRes
+                ?.let {
+                    setHasOptionsMenu(true)
+                }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        optionsMenuRes?.let {
-            inflater?.inflate(it, menu)
-        }
+        optionsMenuRes
+                ?.let {
+                    inflater
+                            ?.inflate(it, menu)
+                }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

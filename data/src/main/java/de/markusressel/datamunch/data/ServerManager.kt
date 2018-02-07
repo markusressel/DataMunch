@@ -46,9 +46,8 @@ abstract class ServerManager {
     }
 
     protected fun executeSSHCommand(command: String): ExecuteCommandResult {
-        return sshClient.executeCommand(
-                *sshConnectionConfigList,
-                command = command)
+        return sshClient
+                .executeCommand(*sshConnectionConfigList, command = command)
     }
 
     /**
@@ -61,12 +60,8 @@ abstract class ServerManager {
 
     protected abstract fun parseUptimeResult(commandResult: ExecuteCommandResult): UptimeResult
 
-    data class UptimeResult(val uptime: String,
-                            val clock: String,
-                            val users: Int,
-                            val load1m: Float,
-                            val load5m: Float,
-                            val load15m: Float)
+    data class UptimeResult(val uptime: String, val clock: String, val users: Int,
+                            val load1m: Float, val load5m: Float, val load15m: Float)
 
     /**
      * Get a list of all virtual machines on a server
@@ -77,7 +72,8 @@ abstract class ServerManager {
      * Upload a file to a server
      */
     fun uploadFile(file: File, destinationPath: String) {
-        sshClient.uploadFile(*sshConnectionConfigList, file = file, destinationPath = destinationPath)
+        sshClient
+                .uploadFile(*sshConnectionConfigList, file = file, destinationPath = destinationPath)
     }
 
 }

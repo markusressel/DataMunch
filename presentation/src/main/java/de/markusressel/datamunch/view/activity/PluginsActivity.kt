@@ -16,18 +16,22 @@ class PluginsActivity : NavigationDrawerActivity() {
         get() = R.layout.activity_plugins
 
     override fun getInitialNavigationDrawerSelection(): Long {
-        return DrawerItemHolder.Plugins.identifier
+        return DrawerItemHolder
+                .Plugins
+                .identifier
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super
+                .onCreate(savedInstanceState)
 
         setTitle(R.string.menu_item_plugins)
 
         val contentFragment = PluginsFragment()
-        supportFragmentManager.beginTransaction()
+        supportFragmentManager
+                .beginTransaction()
                 .replace(R.id.contentLayout, contentFragment)
-//                .addToBackStack(preferencesFragment.tag)
+                //                .addToBackStack(preferencesFragment.tag)
                 .commit()
     }
 

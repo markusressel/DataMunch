@@ -18,33 +18,17 @@ class ConnectionManager @Inject constructor() {
     /**
      * Get an SSHConnectionConfig from the given parameters
      */
-    private fun getSSHConnectionConfig(host: HostEntity, port: Int = 22, auth: AuthenticationEntity): SSHConnectionConfig {
-        return SSHConnectionConfig(
-                host = host.hostname,
-                port = port,
-                username = auth.username,
-                password = auth.password
-        )
+    private fun getSSHConnectionConfig(host: HostEntity, port: Int = 22,
+                                       auth: AuthenticationEntity): SSHConnectionConfig {
+        return SSHConnectionConfig(host = host.hostname, port = port, username = auth.username, password = auth.password)
     }
 
     fun getSSHProxy(): SSHConnectionConfig {
-        return SSHConnectionConfig(
-                host = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_HOST),
-                port = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_PORT),
-                username = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_USER),
-                password = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_PASSWORD)
-        )
+        return SSHConnectionConfig(host = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_HOST), port = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_PORT), username = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_USER), password = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_PASSWORD))
     }
 
     fun getMainSSHConnection(): SSHConnectionConfig {
-        return getSSHConnectionConfig(host = HostEntity(0,
-                preferenceHandler.getValue(PreferenceHandler.CONNECTION_HOST),
-                isActive = true),
-                auth = AuthenticationEntity(
-                        0,
-                        username = preferenceHandler.getValue(PreferenceHandler.SSH_USER),
-                        password = preferenceHandler.getValue(PreferenceHandler.SSH_PASS)
-                ))
+        return getSSHConnectionConfig(host = HostEntity(0, preferenceHandler.getValue(PreferenceHandler.CONNECTION_HOST), isActive = true), auth = AuthenticationEntity(0, username = preferenceHandler.getValue(PreferenceHandler.SSH_USER), password = preferenceHandler.getValue(PreferenceHandler.SSH_PASS)))
     }
 
 }
