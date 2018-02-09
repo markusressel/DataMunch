@@ -38,6 +38,7 @@ buildscript {
         google()
         jcenter()
         maven { url "http://objectbox.net/beta-repo/" }
+        maven { url 'http://dl.bintray.com/gigamole/maven/' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradle_plugin_version"
