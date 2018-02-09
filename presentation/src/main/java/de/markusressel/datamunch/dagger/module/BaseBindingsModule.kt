@@ -34,6 +34,9 @@ abstract class BaseBindingsModule {
     internal abstract fun VolumesFragment(): VolumesFragment
 
     @ContributesAndroidInjector
+    internal abstract fun DatasetsFragment(): DatasetsFragment
+
+    @ContributesAndroidInjector
     internal abstract fun DisksFragment(): DisksFragment
 
     @ContributesAndroidInjector

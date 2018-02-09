@@ -25,13 +25,13 @@ data class VolumeEntity(@Id var entityId: Long, val id: Long, val status: String
 }
 
 fun VolumeModel.asEntity(): VolumeEntity {
-    val childEntities: List<VolumeEntity> = createEntityReq(listOf(this))
+    val childEntities: List<VolumeEntity> = createEntityRecursive(listOf(this))
     return childEntities
             .first()
 }
 
 
-private fun createEntityReq(children: List<VolumeModel>?): List<VolumeEntity> {
+private fun createEntityRecursive(children: List<VolumeModel>?): List<VolumeEntity> {
 
     fun convertToEntity(model: VolumeModel): VolumeEntity {
         return VolumeEntity(0, model.id, model.status, model.vol_guid, model.used, model.name,
@@ -49,7 +49,7 @@ private fun createEntityReq(children: List<VolumeModel>?): List<VolumeEntity> {
     for (child in children) {
         val entity = convertToEntity(child)
         entity
-                .childEntities = createEntityReq(child.children)
+                .childEntities = createEntityRecursive(child.children)
 
         entities
                 .add(entity)

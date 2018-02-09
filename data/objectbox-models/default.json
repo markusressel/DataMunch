@@ -659,9 +659,85 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "14:731793405921824936",
+      "lastPropertyId": "18:6044557727529536705",
+      "name": "DatasetEntity",
+      "properties": [
+        {
+          "id": "2:5365735939705974785",
+          "name": "entityId"
+        },
+        {
+          "id": "3:4895582757141784333",
+          "name": "atime"
+        },
+        {
+          "id": "4:6427488774109453806",
+          "name": "avail"
+        },
+        {
+          "id": "5:3593845729327747189",
+          "name": "comments"
+        },
+        {
+          "id": "6:4416574933941599160",
+          "name": "compression"
+        },
+        {
+          "id": "7:1966075823311515247",
+          "name": "dedup"
+        },
+        {
+          "id": "8:2903347832419216062",
+          "name": "mountpoint"
+        },
+        {
+          "id": "9:4605927958646249778",
+          "name": "name"
+        },
+        {
+          "id": "10:4318248425678131486",
+          "name": "pool"
+        },
+        {
+          "id": "11:7006563981159230610",
+          "name": "quota"
+        },
+        {
+          "id": "12:8411457108457137550",
+          "name": "readonly"
+        },
+        {
+          "id": "13:8053074178782720123",
+          "name": "recordsize"
+        },
+        {
+          "id": "14:890414555283324036",
+          "name": "refer"
+        },
+        {
+          "id": "15:1722220284304577086",
+          "name": "refquota"
+        },
+        {
+          "id": "16:7261150125580863105",
+          "name": "refreservation"
+        },
+        {
+          "id": "17:2439709211221031834",
+          "name": "reservation"
+        },
+        {
+          "id": "18:6044557727529536705",
+          "name": "used"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "13:6087587784354562840",
+  "lastEntityId": "14:731793405921824936",
   "lastIndexId": "0:0",
   "lastRelationId": "1:9185694220009639810",
   "lastSequenceId": "0:0",
@@ -669,7 +745,9 @@
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    4369752129617665470
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

@@ -7,6 +7,11 @@ import io.reactivex.Single
 
 interface DatasetApi {
     /**
+     * Get a list of all datasets
+     */
+    fun getDatasets(): Single<List<DatasetModel>>
+
+    /**
      * Get datasets for a volume
      */
     fun getDatasets(volumeId: Long): Single<List<DatasetModel>>
@@ -21,4 +26,5 @@ interface DatasetApi {
      */
     fun deleteDataset(volumeId: Long,
                       datasetName: String): Single<Pair<Response, Result<ByteArray, FuelError>>>
+
 }

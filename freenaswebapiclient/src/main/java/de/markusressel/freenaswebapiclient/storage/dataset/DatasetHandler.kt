@@ -12,6 +12,11 @@ import io.reactivex.Single
  */
 class DatasetHandler(private val requestManager: RequestManager) : DatasetApi {
 
+    override fun getDatasets(): Single<List<DatasetModel>> {
+        return requestManager
+                .doRequest("/storage/dataset/", Method.GET, DatasetModel.ListDeserializer())
+    }
+
     override fun getDatasets(volumeId: Long): Single<List<DatasetModel>> {
         return requestManager
                 .doRequest("/storage/volume/$volumeId/datasets/", Method.GET,
