@@ -541,12 +541,85 @@
           "name": "total_si"
         }
       ],
+      "relations": [
+        {
+          "id": "1:9185694220009639810",
+          "name": "childEntities"
+        }
+      ]
+    },
+    {
+      "id": "12:5275779710552893320",
+      "lastPropertyId": "15:3761651459248113114",
+      "name": "DiskEntity",
+      "properties": [
+        {
+          "id": "1:2240281772701420291",
+          "name": "entityId"
+        },
+        {
+          "id": "2:718316079318857962",
+          "name": "disk_acousticlevel"
+        },
+        {
+          "id": "3:8869562480324206367",
+          "name": "disk_advpowermgmt"
+        },
+        {
+          "id": "4:3313046789135481161",
+          "name": "disk_serial"
+        },
+        {
+          "id": "5:4790686786318866332",
+          "name": "disk_size"
+        },
+        {
+          "id": "6:2324211883868362785",
+          "name": "disk_multipath_name"
+        },
+        {
+          "id": "7:148064490170841217",
+          "name": "disk_identifier"
+        },
+        {
+          "id": "8:8485740634982229004",
+          "name": "disk_togglesmart"
+        },
+        {
+          "id": "9:2162162117159496840",
+          "name": "disk_hddstandby"
+        },
+        {
+          "id": "10:4230750482197774855",
+          "name": "disk_transfermode"
+        },
+        {
+          "id": "11:1521809349283455044",
+          "name": "disk_multipath_member"
+        },
+        {
+          "id": "12:9129829508380992570",
+          "name": "disk_description"
+        },
+        {
+          "id": "13:3268026616595480153",
+          "name": "disk_smartoptions"
+        },
+        {
+          "id": "14:1534448673913551820",
+          "name": "disk_expiretime"
+        },
+        {
+          "id": "15:3761651459248113114",
+          "name": "disk_name"
+        }
+      ],
       "relations": []
     }
   ],
-  "lastEntityId": "11:181461448950160424",
+  "lastEntityId": "12:5275779710552893320",
   "lastIndexId": "0:0",
-  "lastRelationId": "0:0",
+  "lastRelationId": "1:9185694220009639810",
   "lastSequenceId": "0:0",
   "modelVersion": 4,
   "modelVersionParserMinimum": 4,

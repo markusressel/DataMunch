@@ -12,27 +12,18 @@ import io.reactivex.Single
  */
 class DatasetHandler(private val requestManager: RequestManager) : DatasetApi {
 
-    /**
-     * Get datasets for a volume
-     */
     override fun getDatasets(volumeId: Long): Single<List<DatasetModel>> {
         return requestManager
                 .doRequest("/storage/volume/$volumeId/datasets/", Method.GET,
                            DatasetModel.ListDeserializer())
     }
 
-    /**
-     * Create a dataset for a volume
-     */
     override fun createDataset(volumeId: Long, data: DatasetModel): Single<DatasetModel> {
         return requestManager
                 .doJsonRequest("/storage/volume/$volumeId/datasets/", Method.POST, data,
                                DatasetModel.SingleDeserializer())
     }
 
-    /**
-     * Delete dataset of a volume
-     */
     override fun deleteDataset(volumeId: Long,
                                datasetName: String): Single<Pair<Response, Result<ByteArray, FuelError>>> {
         return requestManager

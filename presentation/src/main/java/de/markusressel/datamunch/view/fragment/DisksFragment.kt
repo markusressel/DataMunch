@@ -2,18 +2,15 @@ package de.markusressel.datamunch.view.fragment
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.VolumePersistenceManager
+import de.markusressel.datamunch.data.persistence.DiskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.VolumeEntity
+import de.markusressel.datamunch.data.persistence.entity.DiskEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemVolumeBinding
+import de.markusressel.datamunch.databinding.ListItemDiskBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.rxkotlin.toObservable
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
 
@@ -23,18 +20,18 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class VolumesFragment : ListFragmentBase<VolumeEntity>() {
+class DisksFragment : ListFragmentBase<DiskEntity>() {
 
     @Inject
-    lateinit var volumePersistenceManager: VolumePersistenceManager
+    lateinit var diskPersistenceManager: DiskPersistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<VolumeEntity, ListItemVolumeBinding>(R.layout.list_item_volume) {
+                .map<DiskEntity, ListItemDiskBinding>(R.layout.list_item_disk) {
                     onCreate {
                         it
                                 .binding
-                                .presenter = this@VolumesFragment
+                                .presenter = this@DisksFragment
                     }
                     onClick {
                         openDetailView(listValues[it.adapterPosition])
@@ -46,41 +43,31 @@ class VolumesFragment : ListFragmentBase<VolumeEntity>() {
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
-    override fun loadListDataFromSource(): List<VolumeEntity> {
-        val volumesAndChildren: List<VolumeEntity> = freeNasWebApiClient
-                .getVolumes()
+    override fun loadListDataFromSource(): List<DiskEntity> {
+        return freeNasWebApiClient
+                .getDisks()
                 .blockingGet()
                 .map {
                     it
                             .asEntity()
                 }
-
-        return volumesAndChildren
     }
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<VolumeEntity> {
-        return volumePersistenceManager
+    override fun getPersistenceHandler(): PersistenceManagerBase<DiskEntity> {
+        return diskPersistenceManager
     }
 
-    override fun loadListDataFromPersistence(): List<VolumeEntity> {
+    override fun loadListDataFromPersistence(): List<DiskEntity> {
         return super
                 .loadListDataFromPersistence()
                 .sortedBy {
                     it
-                            .name
+                            .disk_name
                             .toLowerCase()
                 }
     }
 
-    private fun openDetailView(volume: VolumeEntity) {
-        volume
-                .childEntities
-                .toObservable()
-                .subscribeBy(onNext = {
-                    Toast
-                            .makeText(context, it.name, Toast.LENGTH_LONG)
-                            .show()
-                })
+    private fun openDetailView(disk: DiskEntity) {
     }
 
 }
