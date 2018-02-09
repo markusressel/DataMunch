@@ -1,4 +1,4 @@
-package de.markusressel.freenaswebapiclient.model
+package de.markusressel.freenaswebapiclient.jails.template
 
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.github.salomonbrys.kotson.fromJson

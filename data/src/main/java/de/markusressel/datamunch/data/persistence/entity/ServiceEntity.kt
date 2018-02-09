@@ -1,6 +1,6 @@
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.freenaswebapiclient.model.ServiceModel
+import de.markusressel.freenaswebapiclient.services.service.ServiceModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 

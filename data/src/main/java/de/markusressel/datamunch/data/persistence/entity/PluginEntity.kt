@@ -1,6 +1,6 @@
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.freenaswebapiclient.model.PluginModel
+import de.markusressel.freenaswebapiclient.plugins.PluginModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 

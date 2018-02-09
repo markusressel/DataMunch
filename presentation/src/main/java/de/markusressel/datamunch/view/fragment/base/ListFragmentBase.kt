@@ -54,13 +54,13 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
                                         connectionManager.getMainSSHConnection())
 
         freeNasWebApiClient
-                .hostname = "frittenbude.markusressel.de"
+                .setHostname("frittenbude.markusressel.de")
         freeNasWebApiClient
-                .apiResource = "frittenbudeapi"
+                .setApiResource("frittenbudeapi")
         freeNasWebApiClient
-                .basicAuthConfig = BasicAuthConfig(
-                username = connectionManager.getMainSSHConnection().username,
-                password = connectionManager.getMainSSHConnection().password)
+                .setBasicAuthConfig(BasicAuthConfig(
+                        username = connectionManager.getMainSSHConnection().username,
+                        password = connectionManager.getMainSSHConnection().password))
 
 
         onListViewCreated(view, savedInstanceState)
