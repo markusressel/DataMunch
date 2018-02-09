@@ -3,5 +3,6 @@
 
     <string name="volumes" translatable="false">Volumes</string>
     <string name="disks" translatable="false">Disks</string>
+    <string name="snapshots" translatable="false">Snapshots</string>
 
 </resources>
