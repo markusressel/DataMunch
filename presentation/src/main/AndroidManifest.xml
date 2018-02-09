@@ -36,6 +36,7 @@
         <activity android:name=".view.activity.ServicesActivity" />
         <activity android:name=".view.activity.PluginsActivity" />
         <activity android:name=".view.activity.AccountsActivity" />
+        <activity android:name=".view.activity.StorageActivity" />
 
 
         <service android:name=".service.FileUploadService" />

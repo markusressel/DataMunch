@@ -8,6 +8,8 @@ import de.markusressel.freenaswebapiclient.plugins.PluginApi
 import de.markusressel.freenaswebapiclient.plugins.PluginHandler
 import de.markusressel.freenaswebapiclient.services.ServicesApi
 import de.markusressel.freenaswebapiclient.services.ServicesManager
+import de.markusressel.freenaswebapiclient.storage.StorageApi
+import de.markusressel.freenaswebapiclient.storage.StorageManager
 
 /**
  * Convenience delegation class for easy access to all api methods
@@ -18,9 +20,10 @@ class FreeNasWebApiClient(private val requestManager: RequestManager = RequestMa
                           accountApi: AccountApi = AccountManager(requestManager),
                           jailsApi: JailsApi = JailsManager(requestManager),
                           servicesApi: ServicesApi = ServicesManager(requestManager),
+                          storageApi: StorageApi = StorageManager(requestManager),
                           pluginApi: PluginApi = PluginHandler(requestManager)) :
     AccountApi by accountApi, JailsApi by jailsApi, ServicesApi by servicesApi,
-    PluginApi by pluginApi {
+    StorageApi by storageApi, PluginApi by pluginApi {
 
     /**
      * Set the hostname for this client

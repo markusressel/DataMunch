@@ -4,19 +4,17 @@ import android.os.Bundle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.navigation.DrawerItemHolder
 import de.markusressel.datamunch.view.activity.base.TabNavigationActivity
-import de.markusressel.datamunch.view.fragment.JailsFragment
-import de.markusressel.datamunch.view.fragment.MountpointsFragment
-import de.markusressel.datamunch.view.fragment.TemplatesFragment
+import de.markusressel.datamunch.view.fragment.VolumesFragment
 
 
-class JailsActivity : TabNavigationActivity() {
+class StorageActivity : TabNavigationActivity() {
 
     override val style: Int
         get() = DEFAULT
 
     override fun getInitialNavigationDrawerSelection(): Long {
         return DrawerItemHolder
-                .Jails
+                .Storage
                 .identifier
     }
 
@@ -24,13 +22,11 @@ class JailsActivity : TabNavigationActivity() {
         super
                 .onCreate(savedInstanceState)
 
-        setTitle(R.string.menu_item_jails)
+        setTitle(R.string.menu_item_storage)
     }
 
     override fun getTabItems(): List<TabItemConfig> {
-        return listOf(TabItemConfig(R.string.jails, ::JailsFragment),
-                      TabItemConfig(R.string.mountpoints, ::MountpointsFragment),
-                      TabItemConfig(R.string.templates, ::TemplatesFragment))
+        return listOf(TabItemConfig(R.string.volumes, ::VolumesFragment))
     }
 
     override fun onTabItemSelected(position: Int, wasSelected: Boolean) {

@@ -21,6 +21,7 @@ import de.markusressel.datamunch.navigation.DrawerItemHolder.Plugins
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Services
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Settings
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Status
+import de.markusressel.datamunch.navigation.DrawerItemHolder.Storage
 import de.markusressel.datamunch.navigation.Navigator
 import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
@@ -128,6 +129,14 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                             true
                         }
 
+                        Storage.identifier -> {
+                            navigator
+                                    .navigateTo(this, Navigator.NavigationPages.StoragePage)
+                            navigationDrawer
+                                    .closeDrawer()
+                            true
+                        }
+
                         Jails.identifier -> {
                             navigator
                                     .navigateTo(this, Navigator.NavigationPages.JailsPage)
@@ -178,7 +187,8 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
                 }
 
-        for (menuItem in listOf(Status, Accounts, Services, Jails, Plugins, FileUploader)) {
+        for (menuItem in listOf(Status, Accounts, Services, Storage, Jails, Plugins,
+                                FileUploader)) {
             menuItemList
                     .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(
                             menuItem.identifier).withIcon(

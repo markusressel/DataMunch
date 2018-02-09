@@ -21,6 +21,9 @@ abstract class TabNavigationActivity : NavigationDrawerActivity() {
 
     class TabItemConfig(@StringRes val title: Int, val fragment: KFunction0<Fragment>)
 
+    override val layoutRes: Int
+        get() = R.layout.activity_tab_navigation
+
     private val tabNavigation: NavigationTabStrip by lazy {
         findViewById<NavigationTabStrip>(R.id.tabBar)
     }

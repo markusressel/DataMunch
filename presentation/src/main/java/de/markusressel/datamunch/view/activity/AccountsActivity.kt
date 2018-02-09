@@ -13,9 +13,6 @@ class AccountsActivity : TabNavigationActivity() {
     override val style: Int
         get() = DEFAULT
 
-    override val layoutRes: Int
-        get() = R.layout.activity_accounts
-
     override fun getInitialNavigationDrawerSelection(): Long {
         return DrawerItemHolder
                 .Accounts

@@ -41,6 +41,9 @@ abstract class AppModule {
     internal abstract fun ServicesActivity(): ServicesActivity
 
     @ContributesAndroidInjector
+    internal abstract fun StorageActivity(): StorageActivity
+
+    @ContributesAndroidInjector
     internal abstract fun JailsActivity(): JailsActivity
 
     @ContributesAndroidInjector

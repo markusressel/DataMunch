@@ -16,7 +16,7 @@ abstract class PersistenceManagerBase<T : Any> {
     @Inject
     protected lateinit var boxStore: BoxStore
 
-    private val jailBox: Box<T> by lazy {
+    private val box: Box<T> by lazy {
         boxStore
                 .boxFor(getEntityType())
     }
@@ -27,7 +27,17 @@ abstract class PersistenceManagerBase<T : Any> {
      * Returns the BoxStore for this PersistenceManager to perform standard (ObjectBox) operations
      */
     fun standardOperation(): Box<T> {
-        return jailBox
+        return box
+    }
+
+    /**
+     * Removes database files entirely
+     */
+    fun clearData() {
+        boxStore
+                .close()
+        boxStore
+                .deleteAllFiles()
     }
 
 }

@@ -17,6 +17,9 @@ object DrawerItemHolder {
     val Services = DrawerMenuItem(identifier = 20, title = R.string.menu_item_services,
                                   drawableRes = R.drawable.cube_outline, selectable = true)
 
+    val Storage = DrawerMenuItem(identifier = 25, title = R.string.menu_item_storage,
+                                 icon = MaterialDesignIconic.Icon.gmi_storage, selectable = true)
+
     val Jails = DrawerMenuItem(identifier = 30, title = R.string.menu_item_jails,
                                drawableRes = R.drawable.cube_outline, selectable = true)
 

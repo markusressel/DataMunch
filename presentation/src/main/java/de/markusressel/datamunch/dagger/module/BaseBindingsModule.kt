@@ -31,6 +31,9 @@ abstract class BaseBindingsModule {
     internal abstract fun ServicesFragment(): ServicesFragment
 
     @ContributesAndroidInjector
+    internal abstract fun VolumesFragment(): VolumesFragment
+
+    @ContributesAndroidInjector
     internal abstract fun JailsFragment(): JailsFragment
 
     @ContributesAndroidInjector

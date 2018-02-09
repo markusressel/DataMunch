@@ -1,4 +1,4 @@
-package de.markusressel.freenaswebapiclient.model
+package de.markusressel.freenaswebapiclient.jails.configuration
 
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.github.salomonbrys.kotson.fromJson
@@ -13,7 +13,14 @@ class JailConfigurationModel(val id: Long, val jc_collectionurl: String,
                              val jc_ipv6_network_end: String, val jc_ipv6_network_start: String,
                              val jc_path: String) {
 
-    class Deserializer : ResponseDeserializable<List<JailConfigurationModel>> {
+    class SingleDeserializer : ResponseDeserializable<JailConfigurationModel> {
+        override fun deserialize(content: String): JailConfigurationModel? {
+            return Gson()
+                    .fromJson(content)
+        }
+    }
+
+    class ListDeserializer : ResponseDeserializable<List<JailConfigurationModel>> {
         override fun deserialize(content: String): List<JailConfigurationModel>? {
             if (content.isEmpty()) {
                 return emptyList()
@@ -22,7 +29,6 @@ class JailConfigurationModel(val id: Long, val jc_collectionurl: String,
             return Gson()
                     .fromJson(content)
         }
-
     }
 
 }
