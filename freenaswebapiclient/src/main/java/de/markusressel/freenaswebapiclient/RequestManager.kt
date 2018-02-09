@@ -59,7 +59,12 @@ class RequestManager(hostname: String = "localhost", apiResource: String = "api"
     }
 
     private fun createRequest(url: String, method: Method): Request {
-        return getAuthenticatedRequest(fuelManager.request(method, url))
+        return createRequest(url, emptyList(), method)
+    }
+
+    private fun createRequest(url: String, urlParameters: List<Pair<String, Any?>>,
+                              method: Method): Request {
+        return getAuthenticatedRequest(fuelManager.request(method, url, urlParameters))
     }
 
     private fun getAuthenticatedRequest(request: Request): Request {
@@ -81,6 +86,17 @@ class RequestManager(hostname: String = "localhost", apiResource: String = "api"
     fun <T : Any> doRequest(url: String, method: Method,
                             deserializer: ResponseDeserializable<T>): Single<T> {
         return createRequest(url, method)
+                .rx_object(deserializer)
+                .map {
+                    it.component1()
+                            ?: throw it.component2()
+                                    ?: throw Exception()
+                }
+    }
+
+    fun <T : Any> doRequest(url: String, urlParameters: List<Pair<String, Any?>>, method: Method,
+                            deserializer: ResponseDeserializable<T>): Single<T> {
+        return createRequest(url, urlParameters, method)
                 .rx_object(deserializer)
                 .map {
                     it.component1()
@@ -120,11 +136,16 @@ class RequestManager(hostname: String = "localhost", apiResource: String = "api"
                 }
     }
 
+    fun createLimitOffsetParams(limit: Int, offset: Int): List<Pair<String, Any?>> {
+        return listOf(Pair("limit", limit), Pair("offset", offset))
+    }
+
     companion object {
         const val DEFAULT_LIMIT = 20
-        const val DEFAULT_OFFSET = 0
 
+        const val DEFAULT_OFFSET = 0
         val HEADER_CONTENT_TYPE_JSON = Pair("Content-Type", "application/json")
+
     }
 
 }

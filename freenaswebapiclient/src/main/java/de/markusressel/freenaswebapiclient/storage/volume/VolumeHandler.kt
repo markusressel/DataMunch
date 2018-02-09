@@ -14,8 +14,10 @@ import io.reactivex.Single
 class VolumeHandler(private val requestManager: RequestManager) : VolumeApi {
 
     override fun getVolumes(limit: Int, offset: Int): Single<List<VolumeModel>> {
+        val params = requestManager
+                .createLimitOffsetParams(limit, offset)
         return requestManager
-                .doRequest("/storage/volume/", Method.GET, VolumeModel.ListDeserializer())
+                .doRequest("/storage/volume/", params, Method.GET, VolumeModel.ListDeserializer())
     }
 
     override fun createVolume(

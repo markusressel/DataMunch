@@ -6,7 +6,7 @@ interface ConfigurationApi {
     /**
      * Get the (common) jail configuration
      */
-    fun getJailsConfiguration(limit: Int, offset: Int): Single<JailConfigurationModel>
+    fun getJailsConfiguration(): Single<JailConfigurationModel>
 
     /**
      * Set the (common) jail configuration

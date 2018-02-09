@@ -12,14 +12,18 @@ import io.reactivex.Single
  */
 class DatasetHandler(private val requestManager: RequestManager) : DatasetApi {
 
-    override fun getDatasets(): Single<List<DatasetModel>> {
+    override fun getDatasets(limit: Int, offset: Int): Single<List<DatasetModel>> {
+        val params = requestManager
+                .createLimitOffsetParams(limit, offset)
         return requestManager
-                .doRequest("/storage/dataset/", Method.GET, DatasetModel.ListDeserializer())
+                .doRequest("/storage/dataset/", params, Method.GET, DatasetModel.ListDeserializer())
     }
 
-    override fun getDatasets(volumeId: Long): Single<List<DatasetModel>> {
+    override fun getDatasets(volumeId: Long, limit: Int, offset: Int): Single<List<DatasetModel>> {
+        val params = requestManager
+                .createLimitOffsetParams(limit, offset)
         return requestManager
-                .doRequest("/storage/volume/$volumeId/datasets/", Method.GET,
+                .doRequest("/storage/volume/$volumeId/datasets/", params, Method.GET,
                            DatasetModel.ListDeserializer())
     }
 

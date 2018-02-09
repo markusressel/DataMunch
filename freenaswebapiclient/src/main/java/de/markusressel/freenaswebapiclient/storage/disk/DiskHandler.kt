@@ -10,8 +10,10 @@ import io.reactivex.Single
 class DiskHandler(private val requestManager: RequestManager) : DiskApi {
 
     override fun getDisks(limit: Int, offset: Int): Single<List<DiskModel>> {
+        val params = requestManager
+                .createLimitOffsetParams(limit, offset)
         return requestManager
-                .doRequest("/storage/disk/", Method.GET, DiskModel.ListDeserializer())
+                .doRequest("/storage/disk/", params, Method.GET, DiskModel.ListDeserializer())
     }
 
     override fun updateDisk(data: DiskModel): Single<DiskModel> {

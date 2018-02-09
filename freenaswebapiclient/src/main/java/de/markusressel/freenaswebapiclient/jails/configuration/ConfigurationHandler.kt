@@ -9,7 +9,7 @@ import io.reactivex.Single
  */
 class ConfigurationHandler(private val requestManager: RequestManager) : ConfigurationApi {
 
-    override fun getJailsConfiguration(limit: Int, offset: Int): Single<JailConfigurationModel> {
+    override fun getJailsConfiguration(): Single<JailConfigurationModel> {
         return requestManager
                 .doRequest("/jails/configuration/", Method.GET,
                            JailConfigurationModel.SingleDeserializer())

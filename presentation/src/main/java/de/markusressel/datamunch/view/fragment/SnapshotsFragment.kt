@@ -45,7 +45,7 @@ class SnapshotsFragment : ListFragmentBase<SnapshotEntity>() {
 
     override fun loadListDataFromSource(): List<SnapshotEntity> {
         return freeNasWebApiClient
-                .getSnapshots()
+                .getSnapshots(limit = 1000)
                 .blockingGet()
                 .map {
                     it

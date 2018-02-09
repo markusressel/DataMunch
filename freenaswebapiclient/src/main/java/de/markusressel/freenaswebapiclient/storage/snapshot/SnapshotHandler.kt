@@ -14,8 +14,11 @@ import io.reactivex.Single
 class SnapshotHandler(private val requestManager: RequestManager) : SnapshotApi {
 
     override fun getSnapshots(limit: Int, offset: Int): Single<List<SnapshotModel>> {
+        val params = requestManager
+                .createLimitOffsetParams(limit, offset)
         return requestManager
-                .doRequest("/storage/snapshot/", Method.GET, SnapshotModel.ListDeserializer())
+                .doRequest("/storage/snapshot/", params, Method.GET,
+                           SnapshotModel.ListDeserializer())
     }
 
     override fun createSnapshot(dataset: String, name: String,

@@ -17,8 +17,11 @@ class TemplateHandler(private val requestManager: RequestManager) : TemplateApi 
      * Get a list of all templates
      */
     override fun getTemplates(limit: Int, offset: Int): Single<List<TemplateModel>> {
+        val params = requestManager
+                .createLimitOffsetParams(limit, offset)
         return requestManager
-                .doRequest("/jails/templates/", Method.GET, TemplateModel.ListDeserializer())
+                .doRequest("/jails/templates/", params, Method.GET,
+                           TemplateModel.ListDeserializer())
     }
 
     /**

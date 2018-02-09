@@ -16,8 +16,11 @@ class MountpointHandler(private val requestManager: RequestManager) : Mountpoint
      * Get a list of all jail mountpoints
      */
     override fun getMountpoints(limit: Int, offset: Int): Single<List<MountpointModel>> {
+        val params = requestManager
+                .createLimitOffsetParams(limit, offset)
         return requestManager
-                .doRequest("/jails/mountpoints/", Method.GET, MountpointModel.ListDeserializer())
+                .doRequest("/jails/mountpoints/", params, Method.GET,
+                           MountpointModel.ListDeserializer())
     }
 
     /**

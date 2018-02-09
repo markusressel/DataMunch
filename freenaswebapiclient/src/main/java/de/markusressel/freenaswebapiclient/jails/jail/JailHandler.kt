@@ -13,8 +13,10 @@ import io.reactivex.Single
 class JailHandler(private val requestManager: RequestManager) : JailApi {
 
     override fun getJails(limit: Int, offset: Int): Single<List<JailModel>> {
+        val params = requestManager
+                .createLimitOffsetParams(limit, offset)
         return requestManager
-                .doRequest("/jails/jails/", Method.GET, JailModel.ListDeserializer())
+                .doRequest("/jails/jails/", params, Method.GET, JailModel.ListDeserializer())
     }
 
     override fun createJail(

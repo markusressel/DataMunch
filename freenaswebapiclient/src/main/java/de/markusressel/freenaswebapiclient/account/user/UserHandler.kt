@@ -13,8 +13,10 @@ import io.reactivex.Single
 class UserHandler(private val requestManager: RequestManager) : UserApi {
 
     override fun getUsers(limit: Int, offset: Int): Single<List<UserModel>> {
+        val params = requestManager
+                .createLimitOffsetParams(limit, offset)
         return requestManager
-                .doRequest("/account/users/", Method.GET, UserModel.ListDeserializer())
+                .doRequest("/account/users/", params, Method.GET, UserModel.ListDeserializer())
     }
 
     override fun createUser(data: UserModel): Single<UserModel> {

@@ -13,8 +13,10 @@ import io.reactivex.Single
 class PluginHandler(private val requestManager: RequestManager) : PluginApi {
 
     override fun getPlugins(limit: Int, offset: Int): Single<List<PluginModel>> {
+        val params = requestManager
+                .createLimitOffsetParams(limit, offset)
         return requestManager
-                .doRequest("/plugins/plugins/", Method.GET, PluginModel.Deserializer())
+                .doRequest("/plugins/plugins/", params, Method.GET, PluginModel.Deserializer())
     }
 
     override fun startPlugin(pluginId: Long): Single<Pair<Response, Result<ByteArray, FuelError>>> {

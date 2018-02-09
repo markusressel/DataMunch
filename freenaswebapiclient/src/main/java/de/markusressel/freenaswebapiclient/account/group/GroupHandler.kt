@@ -13,8 +13,10 @@ import io.reactivex.Single
 class GroupHandler(private val requestManager: RequestManager) : GroupApi {
 
     override fun getGroups(limit: Int, offset: Int): Single<List<GroupModel>> {
+        val params = requestManager
+                .createLimitOffsetParams(limit, offset)
         return requestManager
-                .doRequest("/account/groups/", Method.GET, GroupModel.ListDeserializer())
+                .doRequest("/account/groups/", params, Method.GET, GroupModel.ListDeserializer())
     }
 
     override fun createGroup(data: GroupModel): Single<GroupModel> {
