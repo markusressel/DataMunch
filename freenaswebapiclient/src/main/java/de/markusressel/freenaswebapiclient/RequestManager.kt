@@ -36,15 +36,21 @@ class RequestManager(hostname: String = "localhost", apiResource: String = "api"
     private val fuelManager = FuelManager()
 
     init {
+        addLogger()
         updateBaseUrl()
+    }
+
+    private fun addLogger() {
         fuelManager
-                .addRequestInterceptor({ next: (Request) -> Request ->
-                                           { t: Request ->
-                                               Log
-                                                       .d("Fuel", t.toString())
-                                               next(t)
-                                           }
-                                       })
+                .addResponseInterceptor { next: (Request, Response) -> Response ->
+                    { req: Request, res: Response ->
+                        Log
+                                .v("Fuel-Request", req.toString())
+                        Log
+                                .v("Fuel-Response", res.toString())
+                        next(req, res)
+                    }
+                }
     }
 
     private fun updateBaseUrl() {
