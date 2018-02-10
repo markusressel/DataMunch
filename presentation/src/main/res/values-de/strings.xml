@@ -20,7 +20,7 @@
     <string name="comment">Kommentar</string>
 
     <string name="refresh">Aktualisieren</string>
-    <string name="no_items_found">Keine Einträge gefunden</string>
+    <string name="no_items_found">Keine Einträge</string>
     <string name="unknown_error">Unbekannter Fehler</string>
 
     <string name="updates">Updates</string>

@@ -31,11 +31,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     override val optionsMenuRes: Int?
         get() = R.menu.options_menu_list
 
-    var isAddable = true
-        set(value) {
-            field = value
-            updateFabVisibility(View.VISIBLE)
-        }
+    open val isAddable = true
 
     protected val listValues: MutableList<T> = ArrayList()
     private lateinit var recyclerViewAdapter: LastAdapter
@@ -213,12 +209,10 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     }
 
     private fun updateFabVisibility(visible: Int) {
-        if (visible == View.VISIBLE) {
-            if (isAddable) {
-                addFabButton
-                        .visibility = View
-                        .VISIBLE
-            }
+        if (isAddable && visible == View.VISIBLE) {
+            addFabButton
+                    .visibility = View
+                    .VISIBLE
         } else {
             addFabButton
                     .visibility = View

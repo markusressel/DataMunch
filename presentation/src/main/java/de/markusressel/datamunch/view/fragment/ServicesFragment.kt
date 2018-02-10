@@ -25,6 +25,9 @@ class ServicesFragment : ListFragmentBase<ServiceEntity>() {
     @Inject
     lateinit var servicePersistenceManager: ServicePersistenceManager
 
+    override val isAddable: Boolean
+        get() = false
+
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
                 .map<ServiceEntity, ListItemServiceBinding>(R.layout.list_item_service) {

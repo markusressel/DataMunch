@@ -38,7 +38,7 @@ class IconHandler @Inject constructor() {
     }
 
     /**
-     * Get an icon suitable for the swipe menu
+     * Get an icon suitable for the bottom navigation bar
      *
      * @param icon the icon resource
      *

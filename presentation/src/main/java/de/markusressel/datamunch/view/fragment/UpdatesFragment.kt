@@ -25,6 +25,9 @@ class UpdatesFragment : ListFragmentBase<UpdateEntity>() {
     @Inject
     lateinit var updatePersistenceManager: UpdatePersistenceManager
 
+    override val isAddable: Boolean
+        get() = false
+
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
                 .map<UpdateEntity, ListItemUpdateBinding>(R.layout.list_item_update) {
