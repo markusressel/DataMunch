@@ -37,7 +37,7 @@ class MountpointsFragment : ListFragmentBase<MountpointEntity>() {
                         openDetailView(listValues[it.adapterPosition])
                     }
                 }
-                .into(recyclerview)
+                .into(recyclerView)
     }
 
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {

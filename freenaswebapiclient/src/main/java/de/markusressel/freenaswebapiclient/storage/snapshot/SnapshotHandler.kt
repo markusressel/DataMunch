@@ -23,8 +23,7 @@ class SnapshotHandler(private val requestManager: RequestManager) : SnapshotApi 
 
     override fun createSnapshot(dataset: String, name: String,
                                 recursive: Boolean): Single<SnapshotModel> {
-        val data = jsonObject(Pair("dataset", dataset), Pair("name", name),
-                              Pair("recursive", recursive))
+        val data = jsonObject("dataset" to dataset, "name" to name, "recursive" to recursive)
         return requestManager
                 .doJsonRequest("/storage/snapshot/", Method.POST, data,
                                SnapshotModel.SingleDeserializer())
@@ -36,14 +35,16 @@ class SnapshotHandler(private val requestManager: RequestManager) : SnapshotApi 
                 .doRequest("/storage/snapshot/$snapshotId/", Method.DELETE)
     }
 
-    override fun cloneSnapshot(snapshotId: Long, cloneName: String): Single<String> {
-        val data = jsonObject(Pair("name", cloneName))
+    override fun cloneSnapshot(snapshotId: Long,
+                               cloneName: String): Single<Pair<Response, Result<ByteArray, FuelError>>> {
+        val data = jsonObject("name" to cloneName)
         return requestManager
                 .doJsonRequest("/storage/snapshot/$snapshotId/clone/", Method.POST, data)
     }
 
-    override fun rollbackSnapshot(snapshotId: Long, force: Boolean): Single<String> {
-        val data = jsonObject(Pair("force", force))
+    override fun rollbackSnapshot(snapshotId: Long,
+                                  force: Boolean): Single<Pair<Response, Result<ByteArray, FuelError>>> {
+        val data = jsonObject("force" to force)
         return requestManager
                 .doJsonRequest("/storage/snapshot/$snapshotId/rollback/", Method.POST, data)
     }

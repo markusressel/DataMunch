@@ -1,10 +1,12 @@
 package de.markusressel.datamunch.view.fragment.base
 
 import android.os.Bundle
+import android.support.annotation.CallSuper
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.MenuItem
 import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -28,6 +30,12 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     override val optionsMenuRes: Int?
         get() = R.menu.options_menu_list
 
+    var isAddable = true
+        set(value) {
+            field = value
+            updateFabVisibility(View.VISIBLE)
+        }
+
     protected val listValues: MutableList<T> = ArrayList()
     private lateinit var recyclerViewAdapter: LastAdapter
 
@@ -42,11 +50,20 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
 
         recyclerViewAdapter = createAdapter()
 
-        recyclerview
+        recyclerView
                 .adapter = recyclerViewAdapter
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        recyclerview
+        recyclerView
                 .layoutManager = layoutManager
+
+        // setup fab
+        addFabButton
+                .setImageDrawable(iconHandler.getFabIcon(MaterialDesignIconic.Icon.gmi_plus))
+        addFabButton
+                .setOnClickListener {
+                    onAddClicked()
+                }
+        updateFabVisibility(View.VISIBLE)
 
 
         frittenbudeServerManager
@@ -173,10 +190,43 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
         }
     }
 
+    override fun showContent() {
+        super
+                .showContent()
+        updateFabVisibility(View.VISIBLE)
+    }
+
+    private fun updateFabVisibility(visible: Int) {
+        if (visible == View.VISIBLE) {
+            if (isAddable) {
+                addFabButton
+                        .visibility = View
+                        .VISIBLE
+            }
+        } else {
+            addFabButton
+                    .visibility = View
+                    .INVISIBLE
+        }
+    }
+
+    override fun onShowError(message: String, t: Throwable?) {
+        super
+                .onShowError(message, t)
+        updateFabVisibility(View.INVISIBLE)
+    }
+
     override fun onErrorClicked() {
         super
                 .onErrorClicked()
         reloadDataFromSource()
+    }
+
+    /**
+     * Called when tha "+"/Add Button is clicked
+     */
+    @CallSuper
+    open fun onAddClicked() {
     }
 
 }

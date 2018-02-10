@@ -37,7 +37,7 @@ class ServicesFragment : ListFragmentBase<ServiceEntity>() {
 
                     }
                 }
-                .into(recyclerview)
+                .into(recyclerView)
     }
 
     override fun loadListDataFromSource(): List<ServiceEntity> {

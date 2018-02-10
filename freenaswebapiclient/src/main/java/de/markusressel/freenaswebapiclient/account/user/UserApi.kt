@@ -32,15 +32,17 @@ interface UserApi {
     /**
      * Set a password for a user
      */
-    fun setUserPassword(userId: Long, newPassword: String): Single<String>
+    fun setUserPassword(userId: Long,
+                        newPassword: String): Single<Pair<Response, Result<ByteArray, FuelError>>>
 
     /**
      * Get user auxiliary groups
      */
-    fun getGroups(userId: Long): Single<List<String>>
+    fun getGroups(userId: Long): Single<Pair<Response, Result<ByteArray, FuelError>>>
 
     /**
      * Get user auxiliary groups
      */
-    fun setGroups(userId: Long, vararg group: String): Single<List<String>>
+    fun setGroups(userId: Long,
+                  vararg group: String): Single<Pair<Response, Result<ByteArray, FuelError>>>
 }

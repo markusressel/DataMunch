@@ -16,6 +16,9 @@ class VolumeHandler(private val requestManager: RequestManager) : VolumeApi {
     override fun getVolumes(limit: Int, offset: Int): Single<List<VolumeModel>> {
         val params = requestManager
                 .createLimitOffsetParams(limit, offset)
+
+        val test: List<Pair<String, String>> = listOf("foo" to "foo", "bar" to "bar")
+
         return requestManager
                 .doRequest("/storage/volume/", params, Method.GET, VolumeModel.ListDeserializer())
     }

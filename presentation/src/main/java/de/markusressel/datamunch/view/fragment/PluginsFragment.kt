@@ -34,7 +34,7 @@ class PluginsFragment : ListFragmentBase<PluginEntity>() {
                                 .presenter = this@PluginsFragment
                     }
                 }
-                .into(recyclerview)
+                .into(recyclerView)
     }
 
     override fun loadListDataFromSource(): List<PluginEntity> {

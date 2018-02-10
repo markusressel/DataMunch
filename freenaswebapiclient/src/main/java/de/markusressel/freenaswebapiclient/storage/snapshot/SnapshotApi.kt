@@ -31,10 +31,12 @@ interface SnapshotApi {
     /**
      * Delete a snapshot
      */
-    fun cloneSnapshot(snapshotId: Long, cloneName: String): Single<String>
+    fun cloneSnapshot(snapshotId: Long,
+                      cloneName: String): Single<Pair<Response, Result<ByteArray, FuelError>>>
 
     /**
      * Rollback a snapshot
      */
-    fun rollbackSnapshot(snapshotId: Long, force: Boolean): Single<String>
+    fun rollbackSnapshot(snapshotId: Long,
+                         force: Boolean): Single<Pair<Response, Result<ByteArray, FuelError>>>
 }

@@ -4,6 +4,8 @@ import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.Method
 import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.result.Result
+import com.github.salomonbrys.kotson.jsonArray
+import com.github.salomonbrys.kotson.jsonObject
 import de.markusressel.freenaswebapiclient.RequestManager
 import io.reactivex.Single
 
@@ -35,20 +37,23 @@ class UserHandler(private val requestManager: RequestManager) : UserApi {
                 .doRequest("/account/users/${user.id}/", Method.DELETE)
     }
 
-    override fun setUserPassword(userId: Long, newPassword: String): Single<String> {
-        val passwordMap = mapOf(Pair("", newPassword))
+    override fun setUserPassword(userId: Long,
+                                 newPassword: String): Single<Pair<Response, Result<ByteArray, FuelError>>> {
+        val passwordMap = jsonObject("bsdusr_password" to newPassword)
         return requestManager
                 .doJsonRequest("/account/users/$userId/password/", Method.POST, passwordMap)
     }
 
-    override fun getGroups(userId: Long): Single<List<String>> {
-        throw NotImplementedError()
-        //        return doRequest("/account/users/${userId}/", Method.GET)
+    override fun getGroups(userId: Long): Single<Pair<Response, Result<ByteArray, FuelError>>> {
+        return requestManager
+                .doRequest("/account/users/$userId/groups/", Method.GET)
     }
 
-    override fun setGroups(userId: Long, vararg group: String): Single<List<String>> {
-        throw NotImplementedError()
-        //        return doRequest("/account/users/${userId}/", Method.GET)
+    override fun setGroups(userId: Long,
+                           vararg group: String): Single<Pair<Response, Result<ByteArray, FuelError>>> {
+        val data = jsonArray(group.asList())
+        return requestManager
+                .doJsonRequest("/account/users/$userId/groups/", Method.GET, data)
     }
 
 }

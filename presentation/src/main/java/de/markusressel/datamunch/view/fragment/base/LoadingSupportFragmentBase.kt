@@ -1,6 +1,7 @@
 package de.markusressel.datamunch.view.fragment.base
 
 import android.os.Bundle
+import android.support.annotation.CallSuper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,7 +72,8 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
     /**
      * Show layout_loading animation
      */
-    protected fun showLoading() {
+    @CallSuper
+    protected open fun showLoading() {
         loadingLayout
                 .visibility = View
                 .VISIBLE
@@ -86,7 +88,8 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
     /**
      * Show the actual page content
      */
-    protected fun showContent() {
+    @CallSuper
+    protected open fun showContent() {
         loadingLayout
                 .visibility = View
                 .GONE
@@ -122,6 +125,12 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
         return message
     }
 
+    /**
+     * Called when the error screen is shown
+     */
+    protected open fun onShowError(message: String, t: Throwable? = null) {
+    }
+
     private fun showError(message: String, t: Throwable? = null) {
         var errorDescriptionText = message
 
@@ -144,6 +153,8 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
         contentView
                 .visibility = View
                 .GONE
+
+        onShowError(message, t)
     }
 
 }

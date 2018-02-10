@@ -4,7 +4,6 @@ import android.util.Log
 import com.github.kittinunf.fuel.core.*
 import com.github.kittinunf.fuel.rx.rx_object
 import com.github.kittinunf.fuel.rx.rx_response
-import com.github.kittinunf.fuel.rx.rx_string
 import com.github.kittinunf.result.Result
 import com.google.gson.Gson
 import io.reactivex.Single
@@ -121,30 +120,26 @@ class RequestManager(hostname: String = "localhost", apiResource: String = "api"
                 }
     }
 
-    fun doJsonRequest(url: String, method: Method, jsonData: Any): Single<String> {
+    fun doJsonRequest(url: String, method: Method,
+                      jsonData: Any): Single<Pair<Response, Result<ByteArray, FuelError>>> {
         val json = Gson()
                 .toJson(jsonData)
 
         return createRequest(url, method)
                 .body(json)
                 .header(HEADER_CONTENT_TYPE_JSON)
-                .rx_string()
-                .map {
-                    it.component1()
-                            ?: throw it.component2()
-                                    ?: throw Exception()
-                }
+                .rx_response()
     }
 
     fun createLimitOffsetParams(limit: Int, offset: Int): List<Pair<String, Any?>> {
-        return listOf(Pair("limit", limit), Pair("offset", offset))
+        return listOf("limit" to limit, "offset" to offset)
     }
 
     companion object {
         const val DEFAULT_LIMIT = 20
-
         const val DEFAULT_OFFSET = 0
-        val HEADER_CONTENT_TYPE_JSON = Pair("Content-Type", "application/json")
+
+        val HEADER_CONTENT_TYPE_JSON = "Content-Type" to "application/json"
 
     }
 
