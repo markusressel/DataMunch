@@ -1,12 +1,12 @@
 package de.markusressel.datamunch.view.activity
 
-import android.os.Bundle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.navigation.DrawerItemHolder
+import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.TabNavigationActivity
-import de.markusressel.datamunch.view.fragment.AfpSharesFragment
-import de.markusressel.datamunch.view.fragment.CifsSharesFragment
-import de.markusressel.datamunch.view.fragment.NfsSharesFragment
+import de.markusressel.datamunch.view.fragment.sharing.AfpSharesFragment
+import de.markusressel.datamunch.view.fragment.sharing.CifsSharesFragment
+import de.markusressel.datamunch.view.fragment.sharing.NfsSharesFragment
 
 
 class SharingActivity : TabNavigationActivity() {
@@ -14,17 +14,9 @@ class SharingActivity : TabNavigationActivity() {
     override val style: Int
         get() = DEFAULT
 
-    override fun getInitialNavigationDrawerSelection(): Long {
+    override fun getDrawerMenuItem(): DrawerMenuItem {
         return DrawerItemHolder
                 .Sharing
-                .identifier
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super
-                .onCreate(savedInstanceState)
-
-        setTitle(R.string.menu_item_sharing)
     }
 
     override fun getTabItems(): List<TabItemConfig> {

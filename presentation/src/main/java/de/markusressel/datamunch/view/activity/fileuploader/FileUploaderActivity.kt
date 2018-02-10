@@ -4,6 +4,7 @@ import android.os.Bundle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.FileUploadManager
 import de.markusressel.datamunch.navigation.DrawerItemHolder
+import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import javax.inject.Inject
 
@@ -18,17 +19,14 @@ class FileUploaderActivity : NavigationDrawerActivity() {
     override val layoutRes: Int
         get() = R.layout.activity_fileuploader
 
-    override fun getInitialNavigationDrawerSelection(): Long {
+    override fun getDrawerMenuItem(): DrawerMenuItem {
         return DrawerItemHolder
                 .FileUploader
-                .identifier
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super
                 .onCreate(savedInstanceState)
-
-        setTitle(R.string.menu_item_file_uploader)
 
         //        val rxPermissions = RxPermissions(activity!!)
         //

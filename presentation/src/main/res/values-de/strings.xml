@@ -4,10 +4,12 @@
     <string name="menu_item_status">Status</string>
     <string name="menu_item_accounts">Accounts</string>
     <string name="menu_item_services">Services</string>
+    <string name="menu_item_sharing">Sharing</string>
     <string name="menu_item_storage">Storage</string>
     <string name="menu_item_jails">Jails</string>
     <string name="menu_item_plugins">Plugins</string>
     <string name="menu_item_file_uploader">File Uploader</string>
+    <string name="menu_item_system">System</string>
     <string name="menu_item_settings">Einstellungen</string>
     <string name="menu_item_about">Über</string>
 
@@ -20,5 +22,8 @@
     <string name="refresh">Aktualisieren</string>
     <string name="no_items_found">Keine Einträge gefunden</string>
     <string name="unknown_error">Unbekannter Fehler</string>
+
+    <string name="updates">Updates</string>
+    <string name="operation">Operation</string>
 
 </resources>

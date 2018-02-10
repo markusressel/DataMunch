@@ -38,6 +38,7 @@
         <activity android:name=".view.activity.AccountsActivity" />
         <activity android:name=".view.activity.StorageActivity" />
         <activity android:name=".view.activity.SharingActivity" />
+        <activity android:name=".view.activity.SystemActivity" />
 
 
         <service android:name=".service.FileUploadService" />

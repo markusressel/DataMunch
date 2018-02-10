@@ -1,15 +1,15 @@
-package de.markusressel.datamunch.view.fragment
+package de.markusressel.datamunch.view.fragment.jail
 
 import android.os.Bundle
 import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.DatasetPersistenceManager
+import de.markusressel.datamunch.data.persistence.MountpointPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.DatasetEntity
+import de.markusressel.datamunch.data.persistence.entity.MountpointEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemDatasetBinding
+import de.markusressel.datamunch.databinding.ListItemMountpointBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
@@ -20,18 +20,18 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class DatasetsFragment : ListFragmentBase<DatasetEntity>() {
+class MountpointsFragment : ListFragmentBase<MountpointEntity>() {
 
     @Inject
-    lateinit var datasetPersistenceManager: DatasetPersistenceManager
+    lateinit var mountpointPersistenceManager: MountpointPersistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<DatasetEntity, ListItemDatasetBinding>(R.layout.list_item_dataset) {
+                .map<MountpointEntity, ListItemMountpointBinding>(R.layout.list_item_mountpoint) {
                     onCreate {
                         it
                                 .binding
-                                .presenter = this@DatasetsFragment
+                                .presenter = this@MountpointsFragment
                     }
                     onClick {
                         openDetailView(listValues[it.adapterPosition])
@@ -43,9 +43,9 @@ class DatasetsFragment : ListFragmentBase<DatasetEntity>() {
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
-    override fun loadListDataFromSource(): List<DatasetEntity> {
+    override fun loadListDataFromSource(): List<MountpointEntity> {
         return freeNasWebApiClient
-                .getDatasets()
+                .getMountpoints()
                 .blockingGet()
                 .map {
                     it
@@ -53,21 +53,21 @@ class DatasetsFragment : ListFragmentBase<DatasetEntity>() {
                 }
     }
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<DatasetEntity> {
-        return datasetPersistenceManager
+    override fun getPersistenceHandler(): PersistenceManagerBase<MountpointEntity> {
+        return mountpointPersistenceManager
     }
 
-    override fun loadListDataFromPersistence(): List<DatasetEntity> {
+    override fun loadListDataFromPersistence(): List<MountpointEntity> {
         return super
                 .loadListDataFromPersistence()
                 .sortedBy {
                     it
-                            .name
-                            .toLowerCase()
+                            .id
                 }
     }
 
-    private fun openDetailView(dataset: DatasetEntity) {
+    private fun openDetailView(mountpoint: MountpointEntity) {
+
     }
 
 }

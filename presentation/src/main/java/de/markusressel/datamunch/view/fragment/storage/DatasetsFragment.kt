@@ -1,15 +1,15 @@
-package de.markusressel.datamunch.view.fragment
+package de.markusressel.datamunch.view.fragment.storage
 
 import android.os.Bundle
 import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.UserPersistenceManager
+import de.markusressel.datamunch.data.persistence.DatasetPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.UserEntity
+import de.markusressel.datamunch.data.persistence.entity.DatasetEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemUserBinding
+import de.markusressel.datamunch.databinding.ListItemDatasetBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
@@ -20,18 +20,18 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class UsersFragment : ListFragmentBase<UserEntity>() {
+class DatasetsFragment : ListFragmentBase<DatasetEntity>() {
 
     @Inject
-    lateinit var userPersistenceManager: UserPersistenceManager
+    lateinit var datasetPersistenceManager: DatasetPersistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<UserEntity, ListItemUserBinding>(R.layout.list_item_user) {
+                .map<DatasetEntity, ListItemDatasetBinding>(R.layout.list_item_dataset) {
                     onCreate {
                         it
                                 .binding
-                                .presenter = this@UsersFragment
+                                .presenter = this@DatasetsFragment
                     }
                     onClick {
                         openDetailView(listValues[it.adapterPosition])
@@ -43,9 +43,9 @@ class UsersFragment : ListFragmentBase<UserEntity>() {
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
-    override fun loadListDataFromSource(): List<UserEntity> {
+    override fun loadListDataFromSource(): List<DatasetEntity> {
         return freeNasWebApiClient
-                .getUsers()
+                .getDatasets()
                 .blockingGet()
                 .map {
                     it
@@ -53,22 +53,21 @@ class UsersFragment : ListFragmentBase<UserEntity>() {
                 }
     }
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> {
-        return userPersistenceManager
+    override fun getPersistenceHandler(): PersistenceManagerBase<DatasetEntity> {
+        return datasetPersistenceManager
     }
 
-    override fun loadListDataFromPersistence(): List<UserEntity> {
+    override fun loadListDataFromPersistence(): List<DatasetEntity> {
         return super
                 .loadListDataFromPersistence()
                 .sortedBy {
                     it
-                            .bsdusr_username
+                            .name
                             .toLowerCase()
                 }
     }
 
-    private fun openDetailView(user: UserEntity) {
-
+    private fun openDetailView(dataset: DatasetEntity) {
     }
 
 }

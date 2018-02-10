@@ -1,15 +1,15 @@
-package de.markusressel.datamunch.view.fragment
+package de.markusressel.datamunch.view.fragment.sharing
 
 import android.os.Bundle
 import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.NfsSharePersistenceManager
+import de.markusressel.datamunch.data.persistence.AfpSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.NfsShareEntity
+import de.markusressel.datamunch.data.persistence.entity.AfpShareEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemNfsShareBinding
+import de.markusressel.datamunch.databinding.ListItemAfpShareBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
@@ -20,18 +20,18 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class NfsSharesFragment : ListFragmentBase<NfsShareEntity>() {
+class AfpSharesFragment : ListFragmentBase<AfpShareEntity>() {
 
     @Inject
-    lateinit var nfsSharePersistenceManager: NfsSharePersistenceManager
+    lateinit var afpSharePersistenceManager: AfpSharePersistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<NfsShareEntity, ListItemNfsShareBinding>(R.layout.list_item_nfs_share) {
+                .map<AfpShareEntity, ListItemAfpShareBinding>(R.layout.list_item_afp_share) {
                     onCreate {
                         it
                                 .binding
-                                .setVariable(BR.presenter, this@NfsSharesFragment)
+                                .setVariable(BR.presenter, this@AfpSharesFragment)
                     }
                     onClick {
 
@@ -40,9 +40,9 @@ class NfsSharesFragment : ListFragmentBase<NfsShareEntity>() {
                 .into(recyclerView)
     }
 
-    override fun loadListDataFromSource(): List<NfsShareEntity> {
+    override fun loadListDataFromSource(): List<AfpShareEntity> {
         return freeNasWebApiClient
-                .getNfsShares()
+                .getAfpShares()
                 .blockingGet()
                 .map {
                     it
@@ -50,16 +50,17 @@ class NfsSharesFragment : ListFragmentBase<NfsShareEntity>() {
                 }
     }
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<NfsShareEntity> {
-        return nfsSharePersistenceManager
+    override fun getPersistenceHandler(): PersistenceManagerBase<AfpShareEntity> {
+        return afpSharePersistenceManager
     }
 
-    override fun loadListDataFromPersistence(): List<NfsShareEntity> {
+    override fun loadListDataFromPersistence(): List<AfpShareEntity> {
         return super
                 .loadListDataFromPersistence()
                 .sortedBy {
                     it
-                            .id
+                            .afp_name
+                            .toLowerCase()
                 }
     }
 

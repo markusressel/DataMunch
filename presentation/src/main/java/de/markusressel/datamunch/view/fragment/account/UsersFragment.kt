@@ -1,17 +1,17 @@
-package de.markusressel.datamunch.view.fragment
+package de.markusressel.datamunch.view.fragment.account
 
 import android.os.Bundle
 import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.CifsSharePersistenceManager
+import de.markusressel.datamunch.data.persistence.UserPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.CifsShareEntity
+import de.markusressel.datamunch.data.persistence.entity.UserEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemCifsShareBinding
+import de.markusressel.datamunch.databinding.ListItemUserBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
 
 
@@ -20,29 +20,32 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class CifsSharesFragment : ListFragmentBase<CifsShareEntity>() {
+class UsersFragment : ListFragmentBase<UserEntity>() {
 
     @Inject
-    lateinit var cifsSharePersistenceManager: CifsSharePersistenceManager
+    lateinit var userPersistenceManager: UserPersistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<CifsShareEntity, ListItemCifsShareBinding>(R.layout.list_item_cifs_share) {
+                .map<UserEntity, ListItemUserBinding>(R.layout.list_item_user) {
                     onCreate {
                         it
                                 .binding
-                                .setVariable(BR.presenter, this@CifsSharesFragment)
+                                .presenter = this@UsersFragment
                     }
                     onClick {
-
+                        openDetailView(listValues[it.adapterPosition])
                     }
                 }
                 .into(recyclerView)
     }
 
-    override fun loadListDataFromSource(): List<CifsShareEntity> {
+    override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
+    }
+
+    override fun loadListDataFromSource(): List<UserEntity> {
         return freeNasWebApiClient
-                .getCifsShares()
+                .getUsers()
                 .blockingGet()
                 .map {
                     it
@@ -50,21 +53,22 @@ class CifsSharesFragment : ListFragmentBase<CifsShareEntity>() {
                 }
     }
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<CifsShareEntity> {
-        return cifsSharePersistenceManager
+    override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> {
+        return userPersistenceManager
     }
 
-    override fun loadListDataFromPersistence(): List<CifsShareEntity> {
+    override fun loadListDataFromPersistence(): List<UserEntity> {
         return super
                 .loadListDataFromPersistence()
                 .sortedBy {
                     it
-                            .cifs_name
+                            .bsdusr_username
                             .toLowerCase()
                 }
     }
 
-    override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
+    private fun openDetailView(user: UserEntity) {
+
     }
 
 }

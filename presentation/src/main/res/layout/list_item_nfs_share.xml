@@ -26,7 +26,7 @@
 
         <variable
             name="presenter"
-            type="de.markusressel.datamunch.view.fragment.NfsSharesFragment" />
+            type="de.markusressel.datamunch.view.fragment.sharing.NfsSharesFragment" />
     </data>
 
     <LinearLayout

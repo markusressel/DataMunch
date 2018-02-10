@@ -1,15 +1,15 @@
-package de.markusressel.datamunch.view.fragment
+package de.markusressel.datamunch.view.fragment.jail
 
 import android.os.Bundle
 import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.SnapshotPersistenceManager
+import de.markusressel.datamunch.data.persistence.TemplatePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.SnapshotEntity
+import de.markusressel.datamunch.data.persistence.entity.TemplateEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemSnapshotBinding
+import de.markusressel.datamunch.databinding.ListItemTemplateBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
@@ -20,18 +20,18 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class SnapshotsFragment : ListFragmentBase<SnapshotEntity>() {
+class TemplatesFragment : ListFragmentBase<TemplateEntity>() {
 
     @Inject
-    lateinit var snapshotPersistenceManager: SnapshotPersistenceManager
+    lateinit var templatePersistenceManager: TemplatePersistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<SnapshotEntity, ListItemSnapshotBinding>(R.layout.list_item_snapshot) {
+                .map<TemplateEntity, ListItemTemplateBinding>(R.layout.list_item_template) {
                     onCreate {
                         it
                                 .binding
-                                .presenter = this@SnapshotsFragment
+                                .presenter = this@TemplatesFragment
                     }
                     onClick {
                         openDetailView(listValues[it.adapterPosition])
@@ -43,9 +43,9 @@ class SnapshotsFragment : ListFragmentBase<SnapshotEntity>() {
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
-    override fun loadListDataFromSource(): List<SnapshotEntity> {
+    override fun loadListDataFromSource(): List<TemplateEntity> {
         return freeNasWebApiClient
-                .getSnapshots(limit = 1000)
+                .getTemplates()
                 .blockingGet()
                 .map {
                     it
@@ -53,21 +53,21 @@ class SnapshotsFragment : ListFragmentBase<SnapshotEntity>() {
                 }
     }
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<SnapshotEntity> {
-        return snapshotPersistenceManager
+    override fun getPersistenceHandler(): PersistenceManagerBase<TemplateEntity> {
+        return templatePersistenceManager
     }
 
-    override fun loadListDataFromPersistence(): List<SnapshotEntity> {
+    override fun loadListDataFromPersistence(): List<TemplateEntity> {
         return super
                 .loadListDataFromPersistence()
                 .sortedBy {
                     it
-                            .name
-                            .toLowerCase()
+                            .id
                 }
     }
 
-    private fun openDetailView(volume: SnapshotEntity) {
+    private fun openDetailView(template: TemplateEntity) {
+
     }
 
 }

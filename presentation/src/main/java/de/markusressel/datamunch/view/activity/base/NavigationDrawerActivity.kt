@@ -23,7 +23,9 @@ import de.markusressel.datamunch.navigation.DrawerItemHolder.Settings
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Sharing
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Status
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Storage
+import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.navigation.Navigator
+import de.markusressel.datamunch.navigation.page.NavigationPage
 import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
 
@@ -40,6 +42,8 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         super
                 .onCreate(savedInstanceState)
 
+        setTitle(getDrawerMenuItem().title)
+
         val menuItemList = initDrawerMenuItems()
         val accountHeader = initAccountHeader()
 
@@ -49,7 +53,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                 .withDrawerItems(menuItemList)
                 .withCloseOnClick(false)
                 .withToolbar(toolbar)
-                .withSelectedItem(getInitialNavigationDrawerSelection())
+                .withSelectedItem(getDrawerMenuItem().identifier)
                 .build()
     }
 
@@ -57,7 +61,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
      * Override this and define an identifier which should be selected when
      * this activity is first created
      */
-    abstract fun getInitialNavigationDrawerSelection(): Long
+    abstract fun getDrawerMenuItem(): DrawerMenuItem
 
     private fun initAccountHeader(): AccountHeader {
         val profiles: MutableList<IProfile<*>> = getProfiles()
@@ -97,7 +101,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         val clickListener = Drawer
                 .OnDrawerItemClickListener { view, position, drawerItem ->
 
-                    if (drawerItem.identifier == getInitialNavigationDrawerSelection()) {
+                    if (drawerItem.identifier == getDrawerMenuItem().identifier) {
                         Timber
                                 .d { "Closing navigationDrawer because the clicked item (${drawerItem.identifier}) is the currently active page" }
                         navigationDrawer
@@ -105,133 +109,82 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                         return@OnDrawerItemClickListener true
                     }
 
-                    when (drawerItem.identifier) {
-                        Status.identifier -> {
-                            navigator
-                                    .navigateTo(this, Navigator.NavigationPages.MainPage)
-                            navigationDrawer
-                                    .closeDrawer()
-                            true
-                        }
 
-                        Accounts.identifier -> {
-                            navigator
-                                    .navigateTo(this, Navigator.NavigationPages.AccountsPage)
-                            navigationDrawer
-                                    .closeDrawer()
-                            true
-                        }
-
-                        Services.identifier -> {
-                            navigator
-                                    .navigateTo(this, Navigator.NavigationPages.ServicesPage)
-                            navigationDrawer
-                                    .closeDrawer()
-                            true
-                        }
-
-                        Sharing.identifier -> {
-                            navigator
-                                    .navigateTo(this, Navigator.NavigationPages.SharingPage)
-                            navigationDrawer
-                                    .closeDrawer()
-                            true
-                        }
-
-                        Storage.identifier -> {
-                            navigator
-                                    .navigateTo(this, Navigator.NavigationPages.StoragePage)
-                            navigationDrawer
-                                    .closeDrawer()
-                            true
-                        }
-
-                        Jails.identifier -> {
-                            navigator
-                                    .navigateTo(this, Navigator.NavigationPages.JailsPage)
-                            navigationDrawer
-                                    .closeDrawer()
-                            true
-                        }
-
-                        Plugins.identifier -> {
-                            navigator
-                                    .navigateTo(this, Navigator.NavigationPages.PluginsPage)
-                            navigationDrawer
-                                    .closeDrawer()
-                            true
-                        }
-
-                        FileUploader.identifier -> {
-                            navigator
-                                    .navigateTo(this, Navigator.NavigationPages.FileUploaderPage)
-                            navigationDrawer
-                                    .closeDrawer()
-                            true
-                        }
-
-                        Settings.identifier -> {
-                            navigator
-                                    .navigateTo(this,
-                                                Navigator.NavigationPages.PreferencesOverviewPage)
-                            navigationDrawer
-                                    .closeDrawer()
-                            true
-                        }
-
-                        About.identifier -> {
-                            navigator
-                                    .navigateTo(this, Navigator.NavigationPages.AboutPage)
-                            navigationDrawer
-                                    .closeDrawer()
-                            true
-                        }
-
+                    val page: NavigationPage? = when (drawerItem.identifier) {
+                        Status.identifier -> Navigator.NavigationPages.MainPage
+                        Accounts.identifier -> Navigator.NavigationPages.AccountsPage
+                        Services.identifier -> Navigator.NavigationPages.ServicesPage
+                        Sharing.identifier -> Navigator.NavigationPages.SharingPage
+                        Storage.identifier -> Navigator.NavigationPages.StoragePage
+                        Jails.identifier -> Navigator.NavigationPages.JailsPage
+                        Plugins.identifier -> Navigator.NavigationPages.PluginsPage
+                        Navigator.DrawerItems.System.identifier -> Navigator.NavigationPages.SystemPage
+                        FileUploader.identifier -> Navigator.NavigationPages.FileUploaderPage
+                        Settings.identifier -> Navigator.NavigationPages.PreferencesOverviewPage
+                        About.identifier -> Navigator.NavigationPages.AboutPage
                         else -> {
                             Timber
                                     .w { "Unknown menu item identifier: ${drawerItem.identifier}" }
-                            false
+                            null
                         }
                     }
 
+                    page
+                            ?.let {
+                                navigator
+                                        .navigateTo(this, page)
+                                navigationDrawer
+                                        .closeDrawer()
+                                return@OnDrawerItemClickListener true
+                            }
+
+                    false
                 }
 
-        for (menuItem in listOf(Status, Accounts, Storage, Sharing, Services, Plugins, Jails)) {
+
+
+        for (menuItem in listOf(Status, Accounts, Storage, Sharing, Services, Plugins, Jails,
+                                Navigator.DrawerItems.System)) {
             menuItemList
-                    .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(
-                            menuItem.identifier).withIcon(
-                            menuItem.getIcon(iconHandler)).withSelectable(
-                            menuItem.selectable).withOnDrawerItemClickListener(clickListener))
+                    .add(createPrimaryMenuItem(menuItem, clickListener))
         }
 
         menuItemList
                 .add(DividerDrawerItem())
 
-        var menuItem = Settings
         menuItemList
-                .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(
-                        menuItem.identifier).withIcon(menuItem.getIcon(iconHandler)).withSelectable(
-                        menuItem.selectable).withOnDrawerItemClickListener(clickListener))
+                .add(createPrimaryMenuItem(FileUploader, clickListener))
 
         menuItemList
                 .add(DividerDrawerItem())
 
-        menuItem = FileUploader
         menuItemList
-                .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(
-                        menuItem.identifier).withIcon(menuItem.getIcon(iconHandler)).withSelectable(
-                        menuItem.selectable).withOnDrawerItemClickListener(clickListener))
+                .add(createPrimaryMenuItem(Settings, clickListener))
 
         menuItemList
-                .add(DividerDrawerItem())
-
-        menuItem = About
-        menuItemList
-                .add(SecondaryDrawerItem().withName(menuItem.title).withIdentifier(
-                        menuItem.identifier).withIcon(menuItem.getIcon(iconHandler)).withSelectable(
-                        menuItem.selectable).withOnDrawerItemClickListener(clickListener))
+                .add(createSecondaryMenuItem(About, clickListener))
 
         return menuItemList
+    }
+
+    private fun createPrimaryMenuItem(menuItem: DrawerMenuItem,
+                                      clickListener: Drawer.OnDrawerItemClickListener): PrimaryDrawerItem {
+        return PrimaryDrawerItem()
+                .withName(menuItem.title)
+                .withIdentifier(menuItem.identifier)
+                .withIcon(menuItem.getIcon(iconHandler))
+                .withSelectable(menuItem.selectable)
+                .withOnDrawerItemClickListener(clickListener)
+    }
+
+    private fun createSecondaryMenuItem(menuItem: DrawerMenuItem,
+                                        clickListener: Drawer.OnDrawerItemClickListener): SecondaryDrawerItem {
+        return SecondaryDrawerItem()
+                .withName(menuItem.title)
+                .withIdentifier(menuItem.identifier)
+                .withIcon(menuItem.getIcon(iconHandler))
+                .withSelectable(menuItem.selectable)
+                .withOnDrawerItemClickListener(clickListener)
     }
 
     override fun onResume() {
@@ -240,7 +193,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
         // reset to this page
         navigationDrawer
-                .setSelection(getInitialNavigationDrawerSelection())
+                .setSelection(getDrawerMenuItem().identifier)
     }
 
     override fun onBackPressed() {

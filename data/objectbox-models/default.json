@@ -939,9 +939,29 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "18:3200916820137431126",
+      "lastPropertyId": "3:9219001868252063312",
+      "name": "UpdateEntity",
+      "properties": [
+        {
+          "id": "1:2734256575839913262",
+          "name": "entityId"
+        },
+        {
+          "id": "2:6720420422731967464",
+          "name": "name"
+        },
+        {
+          "id": "3:9219001868252063312",
+          "name": "operation"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "17:5102433582466473271",
+  "lastEntityId": "18:3200916820137431126",
   "lastIndexId": "0:0",
   "lastRelationId": "1:9185694220009639810",
   "lastSequenceId": "0:0",

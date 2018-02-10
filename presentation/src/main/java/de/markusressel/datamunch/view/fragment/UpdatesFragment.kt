@@ -5,11 +5,11 @@ import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.AfpSharePersistenceManager
+import de.markusressel.datamunch.data.persistence.UpdatePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.AfpShareEntity
+import de.markusressel.datamunch.data.persistence.entity.UpdateEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemAfpShareBinding
+import de.markusressel.datamunch.databinding.ListItemUpdateBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
@@ -20,18 +20,18 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class AfpSharesFragment : ListFragmentBase<AfpShareEntity>() {
+class UpdatesFragment : ListFragmentBase<UpdateEntity>() {
 
     @Inject
-    lateinit var afpSharePersistenceManager: AfpSharePersistenceManager
+    lateinit var updatePersistenceManager: UpdatePersistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<AfpShareEntity, ListItemAfpShareBinding>(R.layout.list_item_afp_share) {
+                .map<UpdateEntity, ListItemUpdateBinding>(R.layout.list_item_update) {
                     onCreate {
                         it
                                 .binding
-                                .setVariable(BR.presenter, this@AfpSharesFragment)
+                                .setVariable(BR.presenter, this@UpdatesFragment)
                     }
                     onClick {
 
@@ -40,9 +40,9 @@ class AfpSharesFragment : ListFragmentBase<AfpShareEntity>() {
                 .into(recyclerView)
     }
 
-    override fun loadListDataFromSource(): List<AfpShareEntity> {
+    override fun loadListDataFromSource(): List<UpdateEntity> {
         return freeNasWebApiClient
-                .getAfpShares()
+                .getPendingUpdates()
                 .blockingGet()
                 .map {
                     it
@@ -50,16 +50,16 @@ class AfpSharesFragment : ListFragmentBase<AfpShareEntity>() {
                 }
     }
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<AfpShareEntity> {
-        return afpSharePersistenceManager
+    override fun getPersistenceHandler(): PersistenceManagerBase<UpdateEntity> {
+        return updatePersistenceManager
     }
 
-    override fun loadListDataFromPersistence(): List<AfpShareEntity> {
+    override fun loadListDataFromPersistence(): List<UpdateEntity> {
         return super
                 .loadListDataFromPersistence()
                 .sortedBy {
                     it
-                            .afp_name
+                            .name
                             .toLowerCase()
                 }
     }

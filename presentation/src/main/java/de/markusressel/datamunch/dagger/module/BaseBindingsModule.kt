@@ -2,9 +2,24 @@ package de.markusressel.datamunch.dagger.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import de.markusressel.datamunch.view.fragment.*
+import de.markusressel.datamunch.view.fragment.PluginsFragment
+import de.markusressel.datamunch.view.fragment.ServerStatusFragment
+import de.markusressel.datamunch.view.fragment.ServicesFragment
+import de.markusressel.datamunch.view.fragment.UpdatesFragment
+import de.markusressel.datamunch.view.fragment.account.GroupsFragment
+import de.markusressel.datamunch.view.fragment.account.UsersFragment
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.base.LoadingSupportFragmentBase
+import de.markusressel.datamunch.view.fragment.jail.JailsFragment
+import de.markusressel.datamunch.view.fragment.jail.MountpointsFragment
+import de.markusressel.datamunch.view.fragment.jail.TemplatesFragment
+import de.markusressel.datamunch.view.fragment.sharing.AfpSharesFragment
+import de.markusressel.datamunch.view.fragment.sharing.CifsSharesFragment
+import de.markusressel.datamunch.view.fragment.sharing.NfsSharesFragment
+import de.markusressel.datamunch.view.fragment.storage.DatasetsFragment
+import de.markusressel.datamunch.view.fragment.storage.DisksFragment
+import de.markusressel.datamunch.view.fragment.storage.SnapshotsFragment
+import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
 
 /**
  * Created by Markus on 07.01.2018.
@@ -62,5 +77,8 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun NfsSharesFragment(): NfsSharesFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun UpdatesFragment(): UpdatesFragment
 
 }

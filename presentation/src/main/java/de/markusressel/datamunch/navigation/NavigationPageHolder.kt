@@ -15,6 +15,7 @@ object NavigationPageHolder {
     val ServicesPage = NavigationPage(ServicesActivity::class.java)
     val SharingPage = NavigationPage(SharingActivity::class.java)
     val StoragePage = NavigationPage(StorageActivity::class.java)
+    val SystemPage = NavigationPage(SystemActivity::class.java)
     val JailsPage = NavigationPage(JailsActivity::class.java)
     val PluginsPage = NavigationPage(PluginsActivity::class.java)
     val FileUploaderPage = NavigationPage(FileUploaderActivity::class.java)

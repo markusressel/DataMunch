@@ -3,11 +3,12 @@ package de.markusressel.datamunch.view.activity
 import android.os.Bundle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.navigation.DrawerItemHolder
+import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.TabNavigationActivity
-import de.markusressel.datamunch.view.fragment.DatasetsFragment
-import de.markusressel.datamunch.view.fragment.DisksFragment
-import de.markusressel.datamunch.view.fragment.SnapshotsFragment
-import de.markusressel.datamunch.view.fragment.VolumesFragment
+import de.markusressel.datamunch.view.fragment.storage.DatasetsFragment
+import de.markusressel.datamunch.view.fragment.storage.DisksFragment
+import de.markusressel.datamunch.view.fragment.storage.SnapshotsFragment
+import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
 
 
 class StorageActivity : TabNavigationActivity() {
@@ -15,10 +16,9 @@ class StorageActivity : TabNavigationActivity() {
     override val style: Int
         get() = DEFAULT
 
-    override fun getInitialNavigationDrawerSelection(): Long {
+    override fun getDrawerMenuItem(): DrawerMenuItem {
         return DrawerItemHolder
                 .Storage
-                .identifier
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

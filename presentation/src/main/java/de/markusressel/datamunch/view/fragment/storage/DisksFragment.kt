@@ -1,15 +1,15 @@
-package de.markusressel.datamunch.view.fragment
+package de.markusressel.datamunch.view.fragment.storage
 
 import android.os.Bundle
 import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.GroupPersistenceManager
+import de.markusressel.datamunch.data.persistence.DiskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.GroupEntity
+import de.markusressel.datamunch.data.persistence.entity.DiskEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemGroupBinding
+import de.markusressel.datamunch.databinding.ListItemDiskBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
@@ -20,18 +20,18 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class GroupsFragment : ListFragmentBase<GroupEntity>() {
+class DisksFragment : ListFragmentBase<DiskEntity>() {
 
     @Inject
-    lateinit var groupPersistenceManager: GroupPersistenceManager
+    lateinit var diskPersistenceManager: DiskPersistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<GroupEntity, ListItemGroupBinding>(R.layout.list_item_group) {
+                .map<DiskEntity, ListItemDiskBinding>(R.layout.list_item_disk) {
                     onCreate {
                         it
                                 .binding
-                                .presenter = this@GroupsFragment
+                                .presenter = this@DisksFragment
                     }
                     onClick {
                         openDetailView(listValues[it.adapterPosition])
@@ -43,9 +43,9 @@ class GroupsFragment : ListFragmentBase<GroupEntity>() {
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
-    override fun loadListDataFromSource(): List<GroupEntity> {
+    override fun loadListDataFromSource(): List<DiskEntity> {
         return freeNasWebApiClient
-                .getGroups()
+                .getDisks()
                 .blockingGet()
                 .map {
                     it
@@ -53,22 +53,21 @@ class GroupsFragment : ListFragmentBase<GroupEntity>() {
                 }
     }
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<GroupEntity> {
-        return groupPersistenceManager
+    override fun getPersistenceHandler(): PersistenceManagerBase<DiskEntity> {
+        return diskPersistenceManager
     }
 
-    override fun loadListDataFromPersistence(): List<GroupEntity> {
+    override fun loadListDataFromPersistence(): List<DiskEntity> {
         return super
                 .loadListDataFromPersistence()
                 .sortedBy {
                     it
-                            .bsdgrp_group
+                            .disk_name
                             .toLowerCase()
                 }
     }
 
-    private fun openDetailView(group: GroupEntity) {
-
+    private fun openDetailView(disk: DiskEntity) {
     }
 
 }

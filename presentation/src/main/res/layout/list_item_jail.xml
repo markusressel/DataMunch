@@ -26,7 +26,7 @@
 
         <variable
             name="presenter"
-            type="de.markusressel.datamunch.view.fragment.JailsFragment" />
+            type="de.markusressel.datamunch.view.fragment.jail.JailsFragment" />
     </data>
 
     <LinearLayout

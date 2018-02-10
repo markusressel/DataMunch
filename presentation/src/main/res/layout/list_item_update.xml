@@ -22,11 +22,11 @@
 
         <variable
             name="item"
-            type="de.markusressel.datamunch.data.persistence.entity.MountpointEntity" />
+            type="de.markusressel.datamunch.data.persistence.entity.UpdateEntity" />
 
         <variable
             name="presenter"
-            type="de.markusressel.datamunch.view.fragment.jail.MountpointsFragment" />
+            type="de.markusressel.datamunch.view.fragment.UpdatesFragment" />
     </data>
 
     <LinearLayout
@@ -49,37 +49,25 @@
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/id" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="@{Long.toString(item.id)}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
-
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/jail" />
+                    android:text="@string/name" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@{item.jail}"
+                    android:text="@{item.name}"
                     android:textColor="?android:textColorPrimary"
                     android:textSize="18sp" />
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/mounted" />
+                    android:text="@string/operation" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="@{Boolean.toString(item.mounted)}"
+                    android:text="@{item.operation}"
                     android:textColor="?android:textColorPrimary"
                     android:textSize="18sp" />
 

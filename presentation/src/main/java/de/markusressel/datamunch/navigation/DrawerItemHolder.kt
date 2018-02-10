@@ -33,6 +33,9 @@ object DrawerItemHolder {
     val FileUploader = DrawerMenuItem(identifier = 50, title = R.string.menu_item_file_uploader,
                                       icon = MaterialDesignIconic.Icon.gmi_file, selectable = true)
 
+    val System = DrawerMenuItem(identifier = 50, title = R.string.menu_item_system,
+                                icon = MaterialDesignIconic.Icon.gmi_settings, selectable = true)
+
     val Settings = DrawerMenuItem(identifier = 500, title = R.string.menu_item_settings,
                                   icon = MaterialDesignIconic.Icon.gmi_settings, selectable = true)
 
