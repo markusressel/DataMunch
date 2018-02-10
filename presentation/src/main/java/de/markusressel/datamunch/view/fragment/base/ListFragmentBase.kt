@@ -17,6 +17,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import kotlinx.android.synthetic.main.layout_empty.*
 import javax.inject.Inject
 
 /**
@@ -114,10 +115,11 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
                     if (it.isEmpty()) {
                         showEmpty()
                     } else {
+                        hideEmpty()
                         listValues
                                 .addAll(it)
-                        showContent()
                     }
+                    showContent()
 
                     recyclerViewAdapter
                             .notifyDataSetChanged()
@@ -162,7 +164,21 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     }
 
     private fun showEmpty() {
-        showError(getString(R.string.no_items_found))
+        recyclerView
+                .visibility = View
+                .INVISIBLE
+        layoutEmpty
+                .visibility = View
+                .VISIBLE
+    }
+
+    private fun hideEmpty() {
+        recyclerView
+                .visibility = View
+                .VISIBLE
+        layoutEmpty
+                .visibility = View
+                .INVISIBLE
     }
 
     /**
@@ -213,6 +229,9 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     override fun onShowError(message: String, t: Throwable?) {
         super
                 .onShowError(message, t)
+        layoutEmpty
+                .visibility = View
+                .GONE
         updateFabVisibility(View.INVISIBLE)
     }
 
