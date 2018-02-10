@@ -20,6 +20,7 @@ import de.markusressel.datamunch.navigation.DrawerItemHolder.Jails
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Plugins
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Services
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Settings
+import de.markusressel.datamunch.navigation.DrawerItemHolder.Sharing
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Status
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Storage
 import de.markusressel.datamunch.navigation.Navigator
@@ -129,6 +130,14 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                             true
                         }
 
+                        Sharing.identifier -> {
+                            navigator
+                                    .navigateTo(this, Navigator.NavigationPages.SharingPage)
+                            navigationDrawer
+                                    .closeDrawer()
+                            true
+                        }
+
                         Storage.identifier -> {
                             navigator
                                     .navigateTo(this, Navigator.NavigationPages.StoragePage)
@@ -187,8 +196,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
                 }
 
-        for (menuItem in listOf(Status, Accounts, Services, Storage, Jails, Plugins,
-                                FileUploader)) {
+        for (menuItem in listOf(Status, Accounts, Storage, Sharing, Services, Plugins, Jails)) {
             menuItemList
                     .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(
                             menuItem.identifier).withIcon(
@@ -200,6 +208,15 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                 .add(DividerDrawerItem())
 
         var menuItem = Settings
+        menuItemList
+                .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(
+                        menuItem.identifier).withIcon(menuItem.getIcon(iconHandler)).withSelectable(
+                        menuItem.selectable).withOnDrawerItemClickListener(clickListener))
+
+        menuItemList
+                .add(DividerDrawerItem())
+
+        menuItem = FileUploader
         menuItemList
                 .add(PrimaryDrawerItem().withName(menuItem.title).withIdentifier(
                         menuItem.identifier).withIcon(menuItem.getIcon(iconHandler)).withSelectable(

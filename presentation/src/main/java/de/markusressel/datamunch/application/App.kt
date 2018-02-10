@@ -6,7 +6,6 @@ import dagger.android.DaggerApplication
 import dagger.android.HasActivityInjector
 import de.markusressel.datamunch.BuildConfig
 import de.markusressel.datamunch.dagger.DaggerAppComponent
-import io.objectbox.BoxStore
 import timber.log.Timber
 
 /**
@@ -25,8 +24,8 @@ class App : DaggerApplication(), HasActivityInjector {
                 .onCreate()
 
         // Clear DB entirely
-        BoxStore
-                .deleteAllFiles(applicationContext, null)
+        //        BoxStore
+        //                .deleteAllFiles(applicationContext, null)
 
         plantTimberTrees()
         initMemoryLeakDetection()

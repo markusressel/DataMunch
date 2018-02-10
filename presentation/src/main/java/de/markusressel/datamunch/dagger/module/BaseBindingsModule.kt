@@ -54,4 +54,13 @@ abstract class BaseBindingsModule {
     @ContributesAndroidInjector
     internal abstract fun PluginsFragment(): PluginsFragment
 
+    @ContributesAndroidInjector
+    internal abstract fun AfpSharesFragment(): AfpSharesFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun CifsSharesFragment(): CifsSharesFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun NfsSharesFragment(): NfsSharesFragment
+
 }
