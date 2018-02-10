@@ -15,42 +15,6 @@ class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) :
 
 
     /**
-     * Same animation that FloatingActionButton.Behavior uses to
-     * hide the FAB when the AppBarLayout exits
-     *
-     * @param floatingActionButton FAB
-     */
-    private fun animateOut(floatingActionButton: FloatingActionButton) {
-        ViewCompat
-                .animate(floatingActionButton)
-                .scaleX(0.0f)
-                .scaleY(0.0f)
-                .alpha(0.0f)
-                .setInterpolator(INTERPOLATOR)
-                .withLayer()
-                .setListener(object : ViewPropertyAnimatorListener {
-                    override fun onAnimationStart(view: View) {
-                        this@ScrollAwareFABBehavior
-                                .mIsAnimatingOut = true
-                    }
-
-                    override fun onAnimationCancel(view: View) {
-                        this@ScrollAwareFABBehavior
-                                .mIsAnimatingOut = false
-                    }
-
-                    override fun onAnimationEnd(view: View) {
-                        this@ScrollAwareFABBehavior
-                                .mIsAnimatingOut = false
-                        view
-                                .visibility = View
-                                .INVISIBLE
-                    }
-                })
-                .start()
-    }
-
-    /**
      * Same animation that FloatingActionButton.Behavior
      * uses to show the FAB when the AppBarLayout enters
      *
@@ -68,6 +32,7 @@ class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) :
                 .scaleY(1.0f)
                 .alpha(1.0f)
                 .setInterpolator(INTERPOLATOR)
+                .setDuration(300)
                 .withLayer()
                 .setListener(object : ViewPropertyAnimatorListener {
                     override fun onAnimationStart(view: View) {
@@ -86,6 +51,43 @@ class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) :
                     override fun onAnimationEnd(view: View) {
                         this@ScrollAwareFABBehavior
                                 .mIsAnimatingOut = false
+                    }
+                })
+                .start()
+    }
+
+    /**
+     * Same animation that FloatingActionButton.Behavior uses to
+     * hide the FAB when the AppBarLayout exits
+     *
+     * @param floatingActionButton FAB
+     */
+    private fun animateOut(floatingActionButton: FloatingActionButton) {
+        ViewCompat
+                .animate(floatingActionButton)
+                .scaleX(0.0f)
+                .scaleY(0.0f)
+                .alpha(0.0f)
+                .setInterpolator(INTERPOLATOR)
+                .setDuration(150)
+                .withLayer()
+                .setListener(object : ViewPropertyAnimatorListener {
+                    override fun onAnimationStart(view: View) {
+                        this@ScrollAwareFABBehavior
+                                .mIsAnimatingOut = true
+                    }
+
+                    override fun onAnimationCancel(view: View) {
+                        this@ScrollAwareFABBehavior
+                                .mIsAnimatingOut = false
+                    }
+
+                    override fun onAnimationEnd(view: View) {
+                        this@ScrollAwareFABBehavior
+                                .mIsAnimatingOut = false
+                        view
+                                .visibility = View
+                                .INVISIBLE
                     }
                 })
                 .start()
