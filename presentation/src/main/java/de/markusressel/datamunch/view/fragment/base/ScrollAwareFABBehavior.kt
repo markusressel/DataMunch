@@ -1,16 +1,13 @@
 package de.markusressel.datamunch.view.fragment.base
 
-import android.content.Context
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPropertyAnimatorListener
 import android.support.v4.view.animation.FastOutSlowInInterpolator
-import android.util.AttributeSet
 import android.view.View
 
-class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) :
-    FloatingActionButton.Behavior() {
+class ScrollAwareFABBehavior : FloatingActionButton.Behavior() {
     private var mIsAnimatingOut = false
 
 

@@ -1,10 +1,12 @@
 package de.markusressel.datamunch.view.fragment.base
 
+import android.content.Context
 import android.os.Bundle
-import android.support.annotation.CallSuper
+import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.MenuItem
 import android.view.View
+import com.afollestad.materialdialogs.MaterialDialog
 import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
@@ -19,6 +21,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty.*
 import javax.inject.Inject
+
 
 /**
  * Created by Markus on 29.01.2018.
@@ -54,14 +57,20 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
                 .layoutManager = layoutManager
 
         // setup fab
-        addFabButton
-                .setImageDrawable(iconHandler.getFabIcon(MaterialDesignIconic.Icon.gmi_plus))
-        addFabButton
-                .setOnClickListener {
-                    onAddClicked()
-                }
-        updateFabVisibility(View.VISIBLE)
+        if (isAddable) {
+            addFabButton
+                    .setImageDrawable(iconHandler.getFabIcon(MaterialDesignIconic.Icon.gmi_plus))
+            addFabButton
+                    .setOnClickListener {
+                        onAddClicked()
+                    }
 
+            val fabBehavior = ScrollAwareFABBehavior()
+            val params = addFabButton.layoutParams as CoordinatorLayout.LayoutParams
+            params
+                    .behavior = fabBehavior
+        }
+        updateFabVisibility(View.VISIBLE)
 
         frittenbudeServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy(),
@@ -238,8 +247,13 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     /**
      * Called when tha "+"/Add Button is clicked
      */
-    @CallSuper
     open fun onAddClicked() {
+        MaterialDialog
+                .Builder(context as Context)
+                .title(R.string.add)
+                .content("Not yet implemented")
+                .positiveText(android.R.string.ok)
+                .show()
     }
 
 }
