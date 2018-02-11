@@ -959,9 +959,37 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "19:4488243644431850775",
+      "lastPropertyId": "5:25519976352585651",
+      "name": "AlertEntity",
+      "properties": [
+        {
+          "id": "1:1066781341071022700",
+          "name": "entityId"
+        },
+        {
+          "id": "2:5552697645421245953",
+          "name": "id"
+        },
+        {
+          "id": "3:1163059039696684461",
+          "name": "level"
+        },
+        {
+          "id": "4:8709545060480471438",
+          "name": "message"
+        },
+        {
+          "id": "5:25519976352585651",
+          "name": "dismissed"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "18:3200916820137431126",
+  "lastEntityId": "19:4488243644431850775",
   "lastIndexId": "0:0",
   "lastRelationId": "1:9185694220009639810",
   "lastSequenceId": "0:0",

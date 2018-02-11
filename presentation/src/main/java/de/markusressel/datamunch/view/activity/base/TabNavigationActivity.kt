@@ -1,13 +1,14 @@
 package de.markusressel.datamunch.view.activity.base
 
 import android.os.Bundle
-import android.support.annotation.StringRes
+import android.support.annotation.CallSuper
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import com.gigamole.navigationtabstrip.NavigationTabStrip
 import com.github.ajalt.timberkt.Timber
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable
@@ -18,8 +19,6 @@ import kotlin.reflect.KFunction0
  * Created by Markus on 07.02.2018.
  */
 abstract class TabNavigationActivity : NavigationDrawerActivity() {
-
-    class TabItemConfig(@StringRes val title: Int, val fragment: KFunction0<Fragment>)
 
     override val layoutRes: Int
         get() = R.layout.activity_tab_navigation
@@ -32,7 +31,7 @@ abstract class TabNavigationActivity : NavigationDrawerActivity() {
         findViewById<ViewPager>(R.id.viewPager)
     }
 
-    abstract fun getTabItems(): List<TabItemConfig>
+    abstract val tabItems: List<Pair<Int, KFunction0<DaggerSupportFragmentBase>>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super
@@ -51,17 +50,17 @@ abstract class TabNavigationActivity : NavigationDrawerActivity() {
                 .adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 // get fragment and create a new instance
-                return getTabItems()[position]
-                        .fragment()
+                return tabItems[position]
+                        .second()
             }
 
             override fun getCount(): Int {
-                return getTabItems()
+                return tabItems
                         .size
             }
         }
         viewPager
-                .offscreenPageLimit = getTabItems()
+                .offscreenPageLimit = tabItems
                 .size
     }
 
@@ -71,9 +70,9 @@ abstract class TabNavigationActivity : NavigationDrawerActivity() {
     private fun createTabBar() {
         // set tab titles
         Single
-                .fromObservable(getTabItems().toObservable().map {
+                .fromObservable(tabItems.toObservable().map {
                     // convert from StringRes to String
-                    getString(it.title)
+                    getString(it.first)
                 }.toList().toObservable())
                 .map {
                     it
@@ -107,7 +106,10 @@ abstract class TabNavigationActivity : NavigationDrawerActivity() {
     /**
      * Called when a tab navigation item was selected
      */
-    abstract fun onTabItemSelected(position: Int, wasSelected: Boolean)
+    @CallSuper
+    open fun onTabItemSelected(position: Int, wasSelected: Boolean) {
+
+    }
 
 }
 

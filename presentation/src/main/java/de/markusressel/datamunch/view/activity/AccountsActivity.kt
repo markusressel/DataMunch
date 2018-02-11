@@ -6,6 +6,8 @@ import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.TabNavigationActivity
 import de.markusressel.datamunch.view.fragment.account.GroupsFragment
 import de.markusressel.datamunch.view.fragment.account.UsersFragment
+import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
+import kotlin.reflect.KFunction0
 
 
 class AccountsActivity : TabNavigationActivity() {
@@ -18,12 +20,9 @@ class AccountsActivity : TabNavigationActivity() {
                 .Accounts
     }
 
-    override fun getTabItems(): List<TabItemConfig> {
-        return listOf(TabItemConfig(R.string.users, ::UsersFragment),
-                      TabItemConfig(R.string.groups, ::GroupsFragment))
-    }
-
-    override fun onTabItemSelected(position: Int, wasSelected: Boolean) {
-    }
+    override val tabItems: List<Pair<Int, KFunction0<DaggerSupportFragmentBase>>>
+        get() {
+            return listOf(R.string.users to ::UsersFragment, R.string.groups to ::GroupsFragment)
+        }
 
 }

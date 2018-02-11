@@ -238,9 +238,9 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
         updateFabVisibility(View.INVISIBLE)
     }
 
-    override fun onErrorClicked() {
+    override fun onErrorClicked(message: String, t: Throwable?) {
         super
-                .onErrorClicked()
+                .onErrorClicked(message, t)
         reloadDataFromSource()
     }
 

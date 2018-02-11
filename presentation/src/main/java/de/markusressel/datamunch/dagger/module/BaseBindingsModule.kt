@@ -5,7 +5,6 @@ import dagger.android.ContributesAndroidInjector
 import de.markusressel.datamunch.view.fragment.PluginsFragment
 import de.markusressel.datamunch.view.fragment.ServerStatusFragment
 import de.markusressel.datamunch.view.fragment.ServicesFragment
-import de.markusressel.datamunch.view.fragment.UpdatesFragment
 import de.markusressel.datamunch.view.fragment.account.GroupsFragment
 import de.markusressel.datamunch.view.fragment.account.UsersFragment
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
@@ -20,6 +19,8 @@ import de.markusressel.datamunch.view.fragment.storage.DatasetsFragment
 import de.markusressel.datamunch.view.fragment.storage.DisksFragment
 import de.markusressel.datamunch.view.fragment.storage.SnapshotsFragment
 import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
+import de.markusressel.datamunch.view.fragment.system.AlertsFragment
+import de.markusressel.datamunch.view.fragment.system.UpdatesFragment
 
 /**
  * Created by Markus on 07.01.2018.
@@ -80,5 +81,8 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun UpdatesFragment(): UpdatesFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun AlertsFragment(): AlertsFragment
 
 }

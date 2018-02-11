@@ -26,6 +26,11 @@
     <string name="updates">Updates</string>
     <string name="operation">Operation</string>
 
+    <string name="alerts">Alarmmeldungen</string>
+
     <string name="add">Hinzufügen</string>
+
+    <string name="error">Fehler</string>
+    <string name="exception_raised">Ausnahme aufgetreten</string>
 
 </resources>

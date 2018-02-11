@@ -4,9 +4,11 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.navigation.DrawerItemHolder
 import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.TabNavigationActivity
+import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.sharing.AfpSharesFragment
 import de.markusressel.datamunch.view.fragment.sharing.CifsSharesFragment
 import de.markusressel.datamunch.view.fragment.sharing.NfsSharesFragment
+import kotlin.reflect.KFunction0
 
 
 class SharingActivity : TabNavigationActivity() {
@@ -19,13 +21,10 @@ class SharingActivity : TabNavigationActivity() {
                 .Sharing
     }
 
-    override fun getTabItems(): List<TabItemConfig> {
-        return listOf(TabItemConfig(R.string.afp, ::AfpSharesFragment),
-                      TabItemConfig(R.string.nfs, ::NfsSharesFragment),
-                      TabItemConfig(R.string.cifs, ::CifsSharesFragment))
-    }
-
-    override fun onTabItemSelected(position: Int, wasSelected: Boolean) {
-    }
+    override val tabItems: List<Pair<Int, KFunction0<DaggerSupportFragmentBase>>>
+        get() {
+            return listOf(R.string.afp to ::AfpSharesFragment, R.string.nfs to ::NfsSharesFragment,
+                          R.string.cifs to ::CifsSharesFragment)
+        }
 
 }

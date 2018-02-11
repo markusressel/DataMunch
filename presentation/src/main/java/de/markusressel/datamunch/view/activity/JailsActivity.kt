@@ -4,9 +4,11 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.navigation.DrawerItemHolder
 import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.TabNavigationActivity
+import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.jail.JailsFragment
 import de.markusressel.datamunch.view.fragment.jail.MountpointsFragment
 import de.markusressel.datamunch.view.fragment.jail.TemplatesFragment
+import kotlin.reflect.KFunction0
 
 
 class JailsActivity : TabNavigationActivity() {
@@ -19,13 +21,11 @@ class JailsActivity : TabNavigationActivity() {
                 .Jails
     }
 
-    override fun getTabItems(): List<TabItemConfig> {
-        return listOf(TabItemConfig(R.string.jails, ::JailsFragment),
-                      TabItemConfig(R.string.mountpoints, ::MountpointsFragment),
-                      TabItemConfig(R.string.templates, ::TemplatesFragment))
-    }
-
-    override fun onTabItemSelected(position: Int, wasSelected: Boolean) {
-    }
+    override val tabItems: List<Pair<Int, KFunction0<DaggerSupportFragmentBase>>>
+        get() {
+            return listOf(R.string.jails to ::JailsFragment,
+                          R.string.mountpoints to ::MountpointsFragment,
+                          R.string.templates to ::TemplatesFragment)
+        }
 
 }

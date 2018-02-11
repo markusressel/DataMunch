@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment
+package de.markusressel.datamunch.view.fragment.system
 
 import android.os.Bundle
 import android.view.View

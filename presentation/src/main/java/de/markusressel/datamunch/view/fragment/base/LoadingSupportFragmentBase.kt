@@ -1,11 +1,14 @@
 package de.markusressel.datamunch.view.fragment.base
 
+import android.content.Context
 import android.os.Bundle
 import android.support.annotation.CallSuper
+import android.support.annotation.StringRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.afollestad.materialdialogs.MaterialDialog
 import com.github.ajalt.timberkt.Timber
 import de.markusressel.datamunch.R
 import kotlinx.android.synthetic.main.layout_error.*
@@ -31,16 +34,7 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
         errorLayout = rootView
                 .findViewById(R.id.layoutError)
 
-        errorLayout
-                .setOnClickListener {
-                    onErrorClicked()
-                }
-
         return rootView
-    }
-
-    protected open fun onErrorClicked() {
-        // TODO: Show sophisticated layout_error screen
     }
 
     private fun createWrapperLayout(): LinearLayout {
@@ -102,7 +96,16 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
     }
 
     /**
-     * Show an layout_error screen
+     * Show an error screen
+     *
+     * @param message the message to show
+     */
+    protected fun showError(@StringRes message: Int) {
+        showError(getString(message))
+    }
+
+    /**
+     * Show an error screen
      *
      * @param message the message to show
      */
@@ -111,12 +114,62 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
     }
 
     /**
-     * Show an layout_error screen
+     * Show an error screen
      *
      * @param throwable the exception that was raised
      */
     protected fun showError(throwable: Throwable) {
-        showError("Exception raised", throwable)
+        showError(R.string.exception_raised, throwable)
+    }
+
+    private fun showError(@StringRes message: Int, throwable: Throwable? = null) {
+        showError(getString(message), throwable)
+    }
+
+    private fun showError(message: String, throwable: Throwable? = null) {
+        throwable
+                ?.let {
+                    Timber
+                            .e(throwable) { message }
+                }
+        val errorDescriptionText: CharSequence = throwable?.let {
+            var text = ""
+
+            if (message.isNotEmpty()) {
+                text += "$message\n\n"
+            }
+
+            text += "${throwable.javaClass.simpleName}\n"
+
+            throwable
+                    .message
+                    ?.let {
+                        if (it.isNotEmpty()) text += it
+                    }
+
+            text
+        }
+                ?: message
+
+        errorDescription
+                .text = errorDescriptionText
+
+        errorLayout
+                .setOnClickListener {
+                    onErrorClicked(message, throwable)
+                }
+
+        loadingLayout
+                .visibility = View
+                .GONE
+        errorLayout
+                .visibility = View
+                .VISIBLE
+        contentView
+                .visibility = View
+                .GONE
+
+        onShowError(message, throwable)
     }
 
     private fun Throwable.prettyPrint(): String {
@@ -131,30 +184,22 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
     protected open fun onShowError(message: String, t: Throwable? = null) {
     }
 
-    private fun showError(message: String, t: Throwable? = null) {
-        var errorDescriptionText = message
+    /**
+     * Called when the error is clicked
+     * Show a sophisticated error screen here
+     */
+    protected open fun onErrorClicked(message: String, t: Throwable?) {
+        val contentText = t?.let {
+            message + "\n\n\n" + t.message + "\n" + t.prettyPrint()
+        }
+                ?: message
 
-        t
-                ?.let {
-                    Timber
-                            .e(t) { message }
-                    errorDescriptionText += "\n" + t.prettyPrint()
-                }
-
-        errorDescription
-                .text = errorDescriptionText
-
-        loadingLayout
-                .visibility = View
-                .GONE
-        errorLayout
-                .visibility = View
-                .VISIBLE
-        contentView
-                .visibility = View
-                .GONE
-
-        onShowError(message, t)
+        MaterialDialog
+                .Builder(context as Context)
+                .title(R.string.error)
+                .content(contentText)
+                .positiveText(android.R.string.ok)
+                .show()
     }
 
 }

@@ -32,6 +32,11 @@
     <string name="updates">Updates</string>
     <string name="operation">Operation</string>
 
+    <string name="alerts">Alerts</string>
+
     <string name="add">Add</string>
+
+    <string name="error">Error</string>
+    <string name="exception_raised">Exception raised</string>
 
 </resources>
