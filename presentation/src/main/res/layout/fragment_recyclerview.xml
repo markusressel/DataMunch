@@ -17,7 +17,7 @@
             android:scrollbars="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <include layout="@layout/layout_empty" />
+        <include layout="@layout/layout_empty_list" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/addFabButton"

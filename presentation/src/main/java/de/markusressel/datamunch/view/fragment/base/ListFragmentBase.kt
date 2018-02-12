@@ -19,7 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
-import kotlinx.android.synthetic.main.layout_empty.*
+import kotlinx.android.synthetic.main.layout_empty_list.*
 import javax.inject.Inject
 
 

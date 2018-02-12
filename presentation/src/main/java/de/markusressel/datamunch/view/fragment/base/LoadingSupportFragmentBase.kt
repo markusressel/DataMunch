@@ -1,5 +1,6 @@
 package de.markusressel.datamunch.view.fragment.base
 
+import android.animation.Animator
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.CallSuper
@@ -7,7 +8,9 @@ import android.support.annotation.StringRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.LinearInterpolator
+import android.widget.FrameLayout
 import com.afollestad.materialdialogs.MaterialDialog
 import com.github.ajalt.timberkt.Timber
 import de.markusressel.datamunch.R
@@ -37,21 +40,18 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
         return rootView
     }
 
-    private fun createWrapperLayout(): LinearLayout {
-        val baseLayout = LinearLayout(activity)
-        baseLayout
-                .orientation = LinearLayout
-                .VERTICAL
-
-        // inflate "layout_loading" and "layout_error" layouts and attach it to a newly created layout
-        val layoutInflater = LayoutInflater
-                .from(context)
-        layoutInflater.inflate(R.layout.layout_loading, baseLayout, true) as ViewGroup
-        layoutInflater.inflate(R.layout.layout_error, baseLayout, true) as ViewGroup
+    private fun createWrapperLayout(): ViewGroup {
+        val baseLayout = FrameLayout(activity)
 
         // attach the original content view
         baseLayout
                 .addView(contentView)
+
+        // inflate "layout_loading" and "layout_error" layouts and attach it to a newly created layout
+        val layoutInflater = LayoutInflater
+                .from(context)
+        layoutInflater.inflate(R.layout.layout_error, baseLayout, true) as ViewGroup
+        layoutInflater.inflate(R.layout.layout_loading, baseLayout, true) as ViewGroup
 
         return baseLayout
     }
@@ -68,15 +68,7 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
      */
     @CallSuper
     protected open fun showLoading() {
-        loadingLayout
-                .visibility = View
-                .VISIBLE
-        errorLayout
-                .visibility = View
-                .GONE
-        contentView
-                .visibility = View
-                .GONE
+        fadeView(loadingLayout, 1f)
     }
 
     /**
@@ -84,15 +76,9 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
      */
     @CallSuper
     protected open fun showContent() {
-        loadingLayout
-                .visibility = View
-                .GONE
-        errorLayout
-                .visibility = View
-                .GONE
-        contentView
-                .visibility = View
-                .VISIBLE
+        setViewVisibility(errorLayout, View.GONE)
+        setViewVisibility(contentView, View.VISIBLE)
+        fadeView(loadingLayout, 0f)
     }
 
     /**
@@ -159,15 +145,9 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
                     onErrorClicked(message, throwable)
                 }
 
-        loadingLayout
-                .visibility = View
-                .GONE
-        errorLayout
-                .visibility = View
-                .VISIBLE
-        contentView
-                .visibility = View
-                .GONE
+        setViewVisibility(errorLayout, View.VISIBLE)
+        setViewVisibility(contentView, View.GONE)
+        fadeView(loadingLayout, 0f)
 
         onShowError(message, throwable)
     }
@@ -190,7 +170,7 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
      */
     protected open fun onErrorClicked(message: String, t: Throwable?) {
         val contentText = t?.let {
-            message + "\n\n\n" + t.message + "\n" + t.prettyPrint()
+            message + "\n\n\n" + t.prettyPrint()
         }
                 ?: message
 
@@ -200,6 +180,61 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
                 .content(contentText)
                 .positiveText(android.R.string.ok)
                 .show()
+    }
+
+    private fun setViewVisibility(view: View, visibility: Int) {
+        view
+                .visibility = visibility
+    }
+
+    private fun fadeView(view: View, alpha: Float) {
+        val interpolator = when {
+            alpha > 0 -> DecelerateInterpolator()
+            else -> LinearInterpolator()
+        }
+
+        val duration = when {
+            alpha >= 1 -> FADE_IN_DURATION_MS
+            alpha <= 0 -> FADE_OUT_DURATION_MS
+            else -> FADE_DURATION_MS
+        }
+
+        view
+                .animate()
+                .alpha(alpha)
+                .setDuration(duration)
+                .setInterpolator(interpolator)
+                .setListener(object : Animator.AnimatorListener {
+                    override fun onAnimationStart(p0: Animator?) {
+                        if (alpha > 0) {
+                            view
+                                    .alpha = 0f
+                            view
+                                    .visibility = View
+                                    .VISIBLE
+                        }
+                    }
+
+                    override fun onAnimationEnd(p0: Animator?) {
+                        if (alpha <= 0) {
+                            view
+                                    .visibility = View
+                                    .GONE
+                        }
+                    }
+
+                    override fun onAnimationCancel(p0: Animator?) {
+                    }
+
+                    override fun onAnimationRepeat(p0: Animator?) {
+                    }
+                })
+    }
+
+    companion object {
+        const val FADE_DURATION_MS = 300L
+        const val FADE_IN_DURATION_MS = 400L
+        const val FADE_OUT_DURATION_MS = FADE_IN_DURATION_MS / 2
     }
 
 }
