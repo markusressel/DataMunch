@@ -1,6 +1,5 @@
 package de.markusressel.datamunch.view.fragment.base
 
-import android.animation.Animator
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.CallSuper
@@ -77,7 +76,7 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
     @CallSuper
     protected open fun showContent() {
         setViewVisibility(errorLayout, View.GONE)
-        setViewVisibility(contentView, View.VISIBLE)
+        fadeView(contentView, 1f)
         fadeView(loadingLayout, 0f)
     }
 
@@ -146,7 +145,7 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
                 }
 
         setViewVisibility(errorLayout, View.VISIBLE)
-        setViewVisibility(contentView, View.GONE)
+        fadeView(contentView, 0f)
         fadeView(loadingLayout, 0f)
 
         onShowError(message, throwable)
@@ -204,31 +203,22 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
                 .alpha(alpha)
                 .setDuration(duration)
                 .setInterpolator(interpolator)
-                .setListener(object : Animator.AnimatorListener {
-                    override fun onAnimationStart(p0: Animator?) {
-                        if (alpha > 0) {
-                            view
-                                    .alpha = 0f
-                            view
-                                    .visibility = View
-                                    .VISIBLE
-                        }
+                .withStartAction {
+                    if (alpha > 0) {
+                        view
+                                .alpha = 0f
+                        view
+                                .visibility = View
+                                .VISIBLE
                     }
-
-                    override fun onAnimationEnd(p0: Animator?) {
-                        if (alpha <= 0) {
-                            view
-                                    .visibility = View
-                                    .GONE
-                        }
+                }
+                .withEndAction {
+                    if (alpha <= 0) {
+                        view
+                                .visibility = View
+                                .GONE
                     }
-
-                    override fun onAnimationCancel(p0: Animator?) {
-                    }
-
-                    override fun onAnimationRepeat(p0: Animator?) {
-                    }
-                })
+                }
     }
 
     companion object {
