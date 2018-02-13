@@ -25,9 +25,6 @@ class DisksFragment : ListFragmentBase<DiskEntity>() {
     @Inject
     lateinit var diskPersistenceManager: DiskPersistenceManager
 
-    override val isAddable: Boolean
-        get() = false
-
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
                 .map<DiskEntity, ListItemDiskBinding>(R.layout.list_item_disk) {

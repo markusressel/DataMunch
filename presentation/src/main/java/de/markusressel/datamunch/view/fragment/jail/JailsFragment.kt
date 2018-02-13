@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.github.nitrico.lastadapter.LastAdapter
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.JailPersistenceManager
@@ -11,6 +12,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.JailEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemJailBinding
+import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -69,6 +71,16 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
                             .jail_host
                             .toLowerCase()
                 }
+    }
+
+    override fun getRightFabs(): List<FabConfig.Fab> {
+        return listOf(FabConfig.Fab(icon = MaterialDesignIconic.Icon.gmi_plus, onClick = {
+            openAddDialog()
+        }))
+    }
+
+    private fun openAddDialog() {
+
     }
 
     fun startJail(jail: JailEntity) {

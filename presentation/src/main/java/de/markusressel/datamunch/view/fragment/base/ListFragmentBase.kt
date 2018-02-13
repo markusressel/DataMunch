@@ -4,12 +4,14 @@ import android.content.Context
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.FloatingActionButton
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import com.afollestad.materialdialogs.MaterialDialog
+import android.view.ViewGroup
 import com.github.nitrico.lastadapter.LastAdapter
-import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -33,7 +35,9 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     override val optionsMenuRes: Int?
         get() = R.menu.options_menu_list
 
-    open val isAddable = true
+    protected open val fabConfig: FabConfig = FabConfig(left = mutableListOf(),
+                                                        right = mutableListOf())
+    private val fabButtonViews = mutableListOf<FloatingActionButton>()
 
     protected val listValues: MutableList<T> = ArrayList()
     private lateinit var recyclerViewAdapter: LastAdapter
@@ -54,21 +58,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
         recyclerView
                 .layoutManager = layoutManager
 
-        // setup fab
-        if (isAddable) {
-            addFabButton
-                    .setImageDrawable(iconHandler.getFabIcon(MaterialDesignIconic.Icon.gmi_plus))
-            addFabButton
-                    .setOnClickListener {
-                        onAddClicked()
-                    }
-
-            val fabBehavior = ScrollAwareFABBehavior()
-            val params = addFabButton.layoutParams as CoordinatorLayout.LayoutParams
-            params
-                    .behavior = fabBehavior
-        }
-        updateFabVisibility(View.VISIBLE)
+        setupFabs()
 
         frittenbudeServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy(),
@@ -77,6 +67,95 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
         onListViewCreated(view, savedInstanceState)
 
         fillListFromPersistence()
+    }
+
+    private fun setupFabs() {
+        fabConfig
+                .left
+                .addAll(getLeftFabs())
+        fabConfig
+                .right
+                .addAll(getRightFabs())
+
+        // setup fabs
+        fabConfig
+                .left
+                .forEach {
+                    addFab(true, it)
+                }
+        fabConfig
+                .right
+                .forEach {
+                    addFab(false, it)
+                }
+
+        updateFabVisibility(View.VISIBLE)
+    }
+
+    protected open fun getLeftFabs(): List<FabConfig.Fab> {
+        return emptyList()
+    }
+
+    protected open fun getRightFabs(): List<FabConfig.Fab> {
+        return emptyList()
+    }
+
+    private fun addFab(isLeft: Boolean, fab: FabConfig.Fab) {
+        val inflater = LayoutInflater
+                .from(context)
+
+        val layout = when (isLeft) {
+            true -> R.layout.view_fab_left
+            false -> R.layout.view_fab_right
+        }
+
+        val fabView: FloatingActionButton = inflater.inflate(layout,
+                                                             recyclerView.parent as ViewGroup,
+                                                             false) as FloatingActionButton
+
+        // icon
+        fabView
+                .setImageDrawable(iconHandler.getFabIcon(fab.icon))
+        // fab color
+        fab
+                .color
+                ?.let {
+                    fabView
+                            .backgroundTintList = ContextCompat
+                            .getColorStateList(context as Context, it)
+                }
+
+        // behaviour
+        val fabBehavior = ScrollAwareFABBehavior()
+        val params = fabView.layoutParams as CoordinatorLayout.LayoutParams
+        params
+                .behavior = fabBehavior
+
+        // listeners
+        fab
+                .onClick
+                ?.let {
+                    fabView
+                            .setOnClickListener {
+                                it()
+                            }
+                }
+
+        fab
+                .onLongClick
+                ?.let {
+                    val listener = it
+                    fabView
+                            .setOnLongClickListener {
+                                listener()
+                            }
+                }
+
+        fabButtonViews
+                .add(fabView)
+        val parent = recyclerView.parent as ViewGroup
+        parent
+                .addView(fabView)
     }
 
     /**
@@ -189,6 +268,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
      */
     abstract fun loadListDataFromSource(): List<T>
 
+
     override fun onOptionsMenuItemSelected(item: MenuItem): Boolean {
         return when {
             item.itemId == R.id.refresh -> {
@@ -206,14 +286,20 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     }
 
     private fun updateFabVisibility(visible: Int) {
-        if (isAddable && visible == View.VISIBLE) {
-            addFabButton
-                    .visibility = View
-                    .VISIBLE
+        if (visible == View.VISIBLE) {
+            fabButtonViews
+                    .forEach {
+                        it
+                                .visibility = View
+                                .VISIBLE
+                    }
         } else {
-            addFabButton
-                    .visibility = View
-                    .INVISIBLE
+            fabButtonViews
+                    .forEach {
+                        it
+                                .visibility = View
+                                .INVISIBLE
+                    }
         }
     }
 
@@ -230,18 +316,6 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
         super
                 .onErrorClicked(message, t)
         reloadDataFromSource()
-    }
-
-    /**
-     * Called when tha "+"/Add Button is clicked
-     */
-    open fun onAddClicked() {
-        MaterialDialog
-                .Builder(context as Context)
-                .title(R.string.add)
-                .content("Not yet implemented")
-                .positiveText(android.R.string.ok)
-                .show()
     }
 
 }

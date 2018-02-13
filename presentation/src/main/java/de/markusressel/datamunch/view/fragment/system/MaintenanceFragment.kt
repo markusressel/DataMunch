@@ -6,9 +6,11 @@ import android.support.annotation.StringRes
 import android.view.LayoutInflater
 import android.view.View
 import com.afollestad.materialdialogs.MaterialDialog
-import com.ebanx.swipebtn.SwipeButton
+import com.ncorti.slidetoact.SlideToActView
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.view.fragment.base.LoadingSupportFragmentBase
+import io.reactivex.Single
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_maintenance.*
 
 
@@ -31,7 +33,7 @@ class MaintenanceFragment : LoadingSupportFragmentBase() {
 
         buttonRestart
                 .setOnClickListener {
-                    showWarningDialog(R.string.swipe_to_restart) {
+                    showWarningDialog(R.string.restart) {
                         freeNasWebApiClient
                                 .rebootSystem()
                     }
@@ -39,7 +41,7 @@ class MaintenanceFragment : LoadingSupportFragmentBase() {
 
         buttonShutdown
                 .setOnClickListener {
-                    showWarningDialog(R.string.swipe_to_shutdown) {
+                    showWarningDialog(R.string.shutdown) {
                         freeNasWebApiClient
                                 .shutdownSystem()
                     }
@@ -53,23 +55,38 @@ class MaintenanceFragment : LoadingSupportFragmentBase() {
                 .from(context)
         val dialogContentView = inflater
                 .inflate(R.layout.dialog_danger_zone_warning_single_action, null)
-        val button: SwipeButton = dialogContentView
-                .findViewById(R.id.swipeButton)
-        button
-                .setText(getString(buttonText))
-        button
-                .setOnStateChangeListener {
-                    if (it) {
-                        function()
-                    }
-                }
 
-        MaterialDialog
+        val dialog = MaterialDialog
                 .Builder(context as Context)
                 .customView(dialogContentView, false)
                 .title(R.string.warning)
                 .neutralText(R.string.abort)
                 .show()
+
+        val button: SlideToActView = dialogContentView
+                .findViewById(R.id.swipeButton)
+        button
+                .text = getString(buttonText)
+        button
+                .onSlideCompleteListener = object : SlideToActView.OnSlideCompleteListener {
+            override fun onSlideComplete(view: SlideToActView) {
+                dialog
+                        .dismiss()
+
+                showLoading()
+
+                Single
+                        .fromCallable { function() }
+                        .subscribeBy(onSuccess = {
+                            showContent()
+                            dialog
+                                    .dismiss()
+                        }, onError = {
+                            showError(it)
+
+                        })
+            }
+        }
     }
 
 }

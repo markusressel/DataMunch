@@ -3,6 +3,7 @@ package de.markusressel.datamunch.view.fragment.jail
 import android.os.Bundle
 import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.MountpointPersistenceManager
@@ -10,6 +11,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.MountpointEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemMountpointBinding
+import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
@@ -64,6 +66,15 @@ class MountpointsFragment : ListFragmentBase<MountpointEntity>() {
                     it
                             .id
                 }
+    }
+
+    override fun getRightFabs(): List<FabConfig.Fab> {
+        return listOf(FabConfig.Fab(icon = MaterialDesignIconic.Icon.gmi_plus, onClick = {
+            openAddView()
+        }))
+    }
+
+    private fun openAddView() {
     }
 
     private fun openDetailView(mountpoint: MountpointEntity) {

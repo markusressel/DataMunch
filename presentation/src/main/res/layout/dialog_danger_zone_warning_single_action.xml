@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     android:orientation="vertical"
     android:paddingEnd="8dp"
     android:paddingLeft="8dp"
@@ -12,18 +13,26 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/danger_zone_warning" />
+        android:text="@string/danger_zone_warning"
+        android:textSize="20sp" />
 
-    <com.ebanx.swipebtn.SwipeButton
+    <com.ncorti.slidetoact.SlideToActView
         android:id="@+id/swipeButton"
-        style="@style/swipe_button"
-        android:layout_marginTop="16dp"
-        app:button_background="@drawable/swipe_button_dragger_shape"
-        app:has_activate_state="true"
-        app:initial_state="disabled"
-        app:inner_text="@string/swipe_to_shutdown"
-        app:inner_text_background="@drawable/swipe_button_bar_shape" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:elevation="4dp"
+        app:inner_color="?attr/colorAccent"
+        app:outer_color="@color/md_red_900"
+        app:text="Slide"
+        app:text_size="22sp" />
 
 </LinearLayout>

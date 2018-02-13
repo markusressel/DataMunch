@@ -25,9 +25,6 @@ class AlertsFragment : ListFragmentBase<AlertEntity>() {
     @Inject
     lateinit var alertPersistenceManager: AlertPersistenceManager
 
-    override val isAddable: Boolean
-        get() = false
-
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
                 .map<AlertEntity, ListItemAlertBinding>(R.layout.list_item_alert) {

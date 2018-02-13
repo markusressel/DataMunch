@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.github.nitrico.lastadapter.LastAdapter
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.VolumePersistenceManager
@@ -11,6 +12,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.VolumeEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemVolumeBinding
+import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable
@@ -70,6 +72,16 @@ class VolumesFragment : ListFragmentBase<VolumeEntity>() {
                             .name
                             .toLowerCase()
                 }
+    }
+
+    override fun getRightFabs(): List<FabConfig.Fab> {
+        return listOf(FabConfig.Fab(icon = MaterialDesignIconic.Icon.gmi_plus, onClick = {
+            openAddDialog()
+        }))
+    }
+
+    private fun openAddDialog() {
+
     }
 
     private fun openDetailView(volume: VolumeEntity) {

@@ -25,9 +25,6 @@ class PluginsFragment : ListFragmentBase<PluginEntity>() {
     @Inject
     lateinit var pluginPersistenceManager: PluginPersistenceManager
 
-    override val isAddable: Boolean
-        get() = false
-
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
                 .map<PluginEntity, ListItemPluginBinding>(R.layout.list_item_plugin) {

@@ -14,20 +14,4 @@
         <item name="android:textColor">?attr/colorAccent</item>
     </style>
 
-    <style name="swipe_button">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:elevation">8dp</item>
-        <item name="button_left_padding">30dp</item>
-        <item name="button_right_padding">30dp</item>
-        <item name="button_top_padding">30dp</item>
-        <item name="button_bottom_padding">30dp</item>
-        <item name="inner_text_top_padding">18dp</item>
-        <item name="inner_text_bottom_padding">18dp</item>
-        <item name="inner_text_size">16sp</item>
-        <item name="inner_text_color">?attr/colorAccent</item>
-    </style>
-
 </resources>
