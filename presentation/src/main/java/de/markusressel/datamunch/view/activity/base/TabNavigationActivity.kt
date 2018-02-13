@@ -37,15 +37,13 @@ abstract class TabNavigationActivity : NavigationDrawerActivity() {
         super
                 .onCreate(savedInstanceState)
 
-        createViewPager()
+        setupViewPager()
 
         setTabBarStyle()
         createTabBar()
     }
 
-    private fun createViewPager() {
-        fragmentManager
-
+    private fun setupViewPager() {
         viewPager
                 .adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int): Fragment {
@@ -59,6 +57,7 @@ abstract class TabNavigationActivity : NavigationDrawerActivity() {
                         .size
             }
         }
+
         viewPager
                 .offscreenPageLimit = tabItems
                 .size
