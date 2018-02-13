@@ -16,6 +16,6 @@ interface UpdateApi {
     /**
      * Perform system update
      */
-    fun performSystemUpdate(): Single<Pair<Response, Result<ByteArray, FuelError>>>
+    fun applyPendingUpdates(): Single<Pair<Response, Result<ByteArray, FuelError>>>
 
 }

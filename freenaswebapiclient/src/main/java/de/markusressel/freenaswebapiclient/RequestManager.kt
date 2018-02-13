@@ -80,6 +80,18 @@ class RequestManager(hostname: String = "localhost", apiResource: String = "api"
                   method: Method): Single<Pair<Response, Result<ByteArray, FuelError>>> {
         return createRequest(url, method)
                 .rx_response()
+                .map {
+                    it
+                            .second
+                            .component2()
+                            ?.let {
+                                throw it
+                            }
+                    it
+                }
+                .map {
+                    it
+                }
     }
 
     fun <T : Any> doRequest(url: String, method: Method,

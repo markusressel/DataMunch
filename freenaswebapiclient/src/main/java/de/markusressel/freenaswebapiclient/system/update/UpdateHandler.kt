@@ -20,7 +20,7 @@ class UpdateHandler(private val requestManager: RequestManager) : UpdateApi {
                            UpdateModel.ListDeserializer())
     }
 
-    override fun performSystemUpdate(): Single<Pair<Response, Result<ByteArray, FuelError>>> {
+    override fun applyPendingUpdates(): Single<Pair<Response, Result<ByteArray, FuelError>>> {
         return requestManager
                 .doRequest("/system/update/update/", Method.POST)
     }
