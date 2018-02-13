@@ -1,6 +1,7 @@
 package de.markusressel.datamunch.view.fragment
 
 import android.os.Bundle
+import android.support.annotation.CallSuper
 import android.view.MenuItem
 import android.view.View
 import de.markusressel.datamunch.R
@@ -33,6 +34,7 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
     override val optionsMenuRes: Int?
         get() = R.menu.options_menu_server_status
 
+    @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
                 .onViewCreated(view, savedInstanceState)

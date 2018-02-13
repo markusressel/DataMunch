@@ -20,6 +20,7 @@ import de.markusressel.datamunch.view.fragment.storage.DisksFragment
 import de.markusressel.datamunch.view.fragment.storage.SnapshotsFragment
 import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
 import de.markusressel.datamunch.view.fragment.system.AlertsFragment
+import de.markusressel.datamunch.view.fragment.system.MaintenanceFragment
 import de.markusressel.datamunch.view.fragment.system.UpdatesFragment
 
 /**
@@ -84,5 +85,8 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun AlertsFragment(): AlertsFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun MaintenanceFragment(): MaintenanceFragment
 
 }

@@ -2,6 +2,7 @@ package de.markusressel.datamunch.view.fragment.base
 
 import android.content.Context
 import android.os.Bundle
+import android.support.annotation.CallSuper
 import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.MenuItem
@@ -12,8 +13,6 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.freenaswebapiclient.BasicAuthConfig
-import de.markusressel.freenaswebapiclient.FreeNasWebApiClient
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -42,8 +41,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
-    val freeNasWebApiClient = FreeNasWebApiClient()
-
+    @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
                 .onViewCreated(view, savedInstanceState)
@@ -75,16 +73,6 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
         frittenbudeServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy(),
                                         connectionManager.getMainSSHConnection())
-
-        freeNasWebApiClient
-                .setHostname("frittenbude.markusressel.de")
-        freeNasWebApiClient
-                .setApiResource("frittenbudeapi")
-        freeNasWebApiClient
-                .setBasicAuthConfig(BasicAuthConfig(
-                        username = connectionManager.getMainSSHConnection().username,
-                        password = connectionManager.getMainSSHConnection().password))
-
 
         onListViewCreated(view, savedInstanceState)
 

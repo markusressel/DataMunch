@@ -9,6 +9,7 @@ import dagger.android.support.DaggerFragment
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.data.ssh.ConnectionManager
 import de.markusressel.datamunch.view.IconHandler
+import de.markusressel.freenaswebapiclient.FreeNasWebApiClient
 import javax.inject.Inject
 
 /**
@@ -28,6 +29,8 @@ abstract class DaggerSupportFragmentBase : DaggerFragment() {
 
     @Inject
     protected lateinit var iconHandler: IconHandler
+
+    val freeNasWebApiClient = FreeNasWebApiClient()
 
     /**
      * The layout resource for this Activity

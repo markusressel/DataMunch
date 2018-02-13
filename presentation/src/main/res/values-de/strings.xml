@@ -28,9 +28,18 @@
 
     <string name="alerts">Alarmmeldungen</string>
 
+    <string name="maintenance">Verwaltung</string>
+
     <string name="add">Hinzufügen</string>
 
     <string name="error">Fehler</string>
     <string name="exception_raised">Ausnahme aufgetreten</string>
+
+    <string name="warning">Warnung</string>
+
+    <string name="shutdown">Herunterfahren</string>
+
+    <string name="do_it">Tu es!</string>
+    <string name="abort">Abbrechen</string>
 
 </resources>

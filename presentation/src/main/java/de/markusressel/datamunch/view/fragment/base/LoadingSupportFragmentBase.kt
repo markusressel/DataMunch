@@ -55,6 +55,7 @@ abstract class LoadingSupportFragmentBase : OptionsMenuFragmentBase() {
         return baseLayout
     }
 
+    @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
                 .onViewCreated(view, savedInstanceState)

@@ -34,9 +34,23 @@
 
     <string name="alerts">Alerts</string>
 
+    <string name="maintenance">Maintenance</string>
+
     <string name="add">Add</string>
 
     <string name="error">Error</string>
     <string name="exception_raised">Exception raised</string>
+
+    <string name="warning">Warning</string>
+    <string name="danger_zone_warning">Be sure to have physical access to your
+        server in case anything goes wrong!</string>
+
+    <string name="swipe_to_restart">Swipe to RESTART</string>
+    <string name="swipe_to_shutdown">Swipe to SHUTDOWN</string>
+
+    <string name="shutdown">Shutdown</string>
+
+    <string name="do_it">Do it!</string>
+    <string name="abort">Abort</string>
 
 </resources>

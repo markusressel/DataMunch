@@ -6,8 +6,10 @@ import android.support.annotation.MenuRes
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
+import de.markusressel.freenaswebapiclient.BasicAuthConfig
 
 /**
  * Base class for a fragment with an options menu
@@ -29,6 +31,21 @@ abstract class OptionsMenuFragmentBase : DaggerSupportFragmentBase() {
                 ?.let {
                     setHasOptionsMenu(true)
                 }
+    }
+
+    @CallSuper
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super
+                .onViewCreated(view, savedInstanceState)
+
+        freeNasWebApiClient
+                .setHostname("frittenbude.markusressel.de")
+        freeNasWebApiClient
+                .setApiResource("frittenbudeapi")
+        freeNasWebApiClient
+                .setBasicAuthConfig(BasicAuthConfig(
+                        username = connectionManager.getMainSSHConnection().username,
+                        password = connectionManager.getMainSSHConnection().password))
     }
 
     @CallSuper

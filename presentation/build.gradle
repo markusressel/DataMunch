@@ -121,11 +121,14 @@ dependencies {
     implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
 
     // Tab Navigation
-    implementation 'com.github.devlight.navigationtabstrip:navigationtabstrip:+'
+    implementation 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
 
     // Material Dialogs
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
+
+    // Swipe Button
+    implementation 'com.ebanx:swipe-button:0.8.3'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
