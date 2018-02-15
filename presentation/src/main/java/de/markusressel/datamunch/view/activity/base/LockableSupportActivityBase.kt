@@ -104,7 +104,7 @@ abstract class LockableSupportActivityBase : DaggerSupportActivityBase() {
          * Indicates whether the screen is locked
          */
         @Volatile
-        private var isLocked = true
+        private var isLocked = false
     }
 
 }

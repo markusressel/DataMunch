@@ -5,7 +5,7 @@ import android.view.View
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.UserPersistenceManager
-import de.markusressel.datamunch.view.fragment.account.user.UserDetailActivity.Companion.KEY_ENTITY_ID
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase.Companion.KEY_ENTITY_ID
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import kotlinx.android.synthetic.main.content_user_detail.*
 import javax.inject.Inject

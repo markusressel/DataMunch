@@ -11,6 +11,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.UserEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemUserBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.account.user.UserModel
@@ -84,7 +85,13 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
     private fun openDetailView(user: UserEntity) {
         context
                 ?.let {
-                    startActivity(UserDetailActivity.newInstance(it, user))
+                    val intent = DetailActivityBase
+                            .newInstance(UserDetailActivity::class.java, it)
+                            .apply {
+                                putExtra(DetailActivityBase.KEY_ENTITY_ID, user.entityId)
+                            }
+
+                    startActivity(intent)
                 }
     }
 

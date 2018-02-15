@@ -4,6 +4,8 @@
     <string name="users">Benutzer</string>
     <string name="groups">Gruppen</string>
 
+    <string name="user">Benutzer</string>
+
     <string name="user_id">Benutzer ID</string>
     <string name="group_id">Gruppen ID</string>
     <string name="username">Benutzername</string>
