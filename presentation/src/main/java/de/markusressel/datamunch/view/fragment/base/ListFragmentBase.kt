@@ -258,9 +258,9 @@ abstract class ListFragmentBase<K : Any, T : Any> : OptionsMenuFragmentBase() {
     protected abstract fun getPersistenceHandler(): PersistenceManagerBase<T>
 
     private fun persistListData(data: List<T>) {
-        val persistenceHandler = getPersistenceHandler()
-
-        persistenceHandler
+        getPersistenceHandler()
+                .clearData()
+        getPersistenceHandler()
                 .standardOperation()
                 .put(data)
     }
