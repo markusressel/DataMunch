@@ -18,7 +18,8 @@ object DrawerItemHolder {
                                   drawableRes = R.drawable.cube_outline, selectable = true)
 
     val Sharing = DrawerMenuItem(identifier = 32, title = R.string.menu_item_sharing,
-                                 drawableRes = R.drawable.cube_outline, selectable = true)
+                                 icon = MaterialDesignIconic.Icon.gmi_folder_shared,
+                                 selectable = true)
 
     val Storage = DrawerMenuItem(identifier = 25, title = R.string.menu_item_storage,
                                  icon = MaterialDesignIconic.Icon.gmi_storage, selectable = true)

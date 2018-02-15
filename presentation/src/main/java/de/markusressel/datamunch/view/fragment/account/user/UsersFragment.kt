@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment.account
+package de.markusressel.datamunch.view.fragment.account.user
 
 import android.os.Bundle
 import android.view.View
@@ -82,7 +82,10 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
     }
 
     private fun openDetailView(user: UserEntity) {
-
+        context
+                ?.let {
+                    startActivity(UserDetailFragment.newInstance(it, user))
+                }
     }
 
 }

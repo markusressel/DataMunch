@@ -7,15 +7,14 @@ import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.StaggeredGridLayoutManager
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.github.nitrico.lastadapter.LastAdapter
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.view.plugin.LoadingPlugin
+import de.markusressel.datamunch.view.plugin.OptionsMenuPlugin
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -29,13 +28,10 @@ import javax.inject.Inject
 /**
  * Created by Markus on 29.01.2018.
  */
-abstract class ListFragmentBase<K : Any, T : Any> : OptionsMenuFragmentBase() {
+abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() {
 
     override val layoutRes: Int
         get() = R.layout.fragment_recyclerview
-
-    override val optionsMenuRes: Int?
-        get() = R.menu.options_menu_list
 
     protected open val fabConfig: FabConfig = FabConfig(left = mutableListOf(),
                                                         right = mutableListOf())
@@ -57,7 +53,24 @@ abstract class ListFragmentBase<K : Any, T : Any> : OptionsMenuFragmentBase() {
     })
 
     init {
-        addFragmentPlugins(loadingPlugin)
+        addFragmentPlugins(loadingPlugin, OptionsMenuPlugin(R.menu.options_menu_list,
+                                                            onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
+                                                                // set refresh icon
+                                                                val refreshIcon = iconHandler
+                                                                        .getOptionsMenuIcon(
+                                                                                MaterialDesignIconic.Icon.gmi_refresh)
+                                                                menu
+                                                                        ?.findItem(R.id.refresh)
+                                                                        ?.icon = refreshIcon
+                                                            }, onOptionsMenuItemClicked = {
+            when {
+                it.itemId == R.id.refresh -> {
+                    reloadDataFromSource()
+                    true
+                }
+                else -> false
+            }
+        }))
     }
 
     @CallSuper
@@ -298,17 +311,6 @@ abstract class ListFragmentBase<K : Any, T : Any> : OptionsMenuFragmentBase() {
      * Load the data to be displayed in the list asEntity it's original source
      */
     abstract fun loadListDataFromSource(): Single<List<K>>
-
-
-    override fun onOptionsMenuItemSelected(item: MenuItem): Boolean {
-        return when {
-            item.itemId == R.id.refresh -> {
-                reloadDataFromSource()
-                true
-            }
-            else -> false
-        }
-    }
 
     private fun updateFabVisibility(visible: Int) {
         if (visible == View.VISIBLE) {

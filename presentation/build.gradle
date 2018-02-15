@@ -81,7 +81,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}"
 
     // RxBus (event bus)
-    compile 'com.eightbitlab:rxbus:1.0.2'
+    implementation 'com.eightbitlab:rxbus:1.0.2'
 
     implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
 
@@ -131,21 +131,24 @@ dependencies {
     implementation 'com.ncorti:slidetoact:0.2.0'
 
     // Pattern Lock Screen
-    compile 'com.andrognito.patternlockview:patternlockview:1.0.0'
+    implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
     // Optional, for RxJava2 adapter
-    compile 'com.andrognito.patternlockview:patternlockview-reactive:1.0.0'
+    implementation 'com.andrognito.patternlockview:patternlockview-reactive:1.0.0'
 
     // CircleImageView
-    compile 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    // MaterialViewPager
+    implementation 'com.github.florent37:materialviewpager:1.2.3'
 
     // CompositeAndroid
     // contains CompositeActivity
     def compositeAndroidVersion = rootProject.ext.supportLibVersion
     compositeAndroidVersion = compositeAndroidVersion[0..-2] + "0"
 
-    compile "com.pascalwelsch.compositeandroid:activity:$compositeAndroidVersion"
+    implementation "com.pascalwelsch.compositeandroid:activity:$compositeAndroidVersion"
     // contains CompositeFragment and CompositeDialogFragment
-    compile "com.pascalwelsch.compositeandroid:fragment:$compositeAndroidVersion"
+    implementation "com.pascalwelsch.compositeandroid:fragment:$compositeAndroidVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

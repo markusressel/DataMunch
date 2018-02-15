@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment.account
+package de.markusressel.datamunch.view.fragment.account.group
 
 import android.os.Bundle
 import android.view.View
