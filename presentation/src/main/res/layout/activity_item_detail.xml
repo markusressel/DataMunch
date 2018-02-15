@@ -20,7 +20,7 @@
         app:viewpager_hideLogoWithFade="false"
         app:viewpager_hideToolbarAndTitle="true"
         app:viewpager_logo="@layout/item_detail__header_logo"
-        app:viewpager_logoMarginTop="80dp"
+        app:viewpager_logoMarginTop="75dp"
         app:viewpager_pagerTitleStrip="@layout/item_detail__tab_bar"
         app:viewpager_parallaxHeaderFactor="1.5"
         app:viewpager_transparentToolbar="true" />

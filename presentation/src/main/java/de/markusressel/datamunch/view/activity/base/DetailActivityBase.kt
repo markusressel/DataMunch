@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
-import android.view.View
 import com.github.florent37.materialviewpager.header.HeaderDesign
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -131,12 +130,12 @@ abstract class DetailActivityBase<T : Any> : DaggerSupportActivityBase() {
                 .pagerTitleStrip
                 .setViewPager(materialViewPager.viewPager)
 
-        if ((viewPager.adapter as FragmentStatePagerAdapter).count == 1) {
-            materialViewPager
-                    .pagerTitleStrip
-                    .visibility = View
-                    .GONE
-        }
+        //        if ((viewPager.adapter as FragmentStatePagerAdapter).count == 1) {
+        //            materialViewPager
+        //                    .pagerTitleStrip
+        //                    .visibility = View
+        //                    .GONE
+        //        }
     }
 
     private fun getEntityId(): Long {

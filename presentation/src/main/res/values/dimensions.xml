@@ -7,4 +7,6 @@
     <dimen name="cardview_elevation_while_moving">8dp</dimen>
     <dimen name="cardview_default_height">64dp</dimen>
 
+    <integer name="list_column_count">1</integer>
+
 </resources>

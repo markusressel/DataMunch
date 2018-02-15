@@ -18,7 +18,15 @@ class UserDetailActivity : DetailActivityBase<UserEntity>() {
     protected lateinit var userPersistenceHandler: UserPersistenceManager
 
     override val headerTextString: String
-        get() = "${getString(R.string.user)}: ${getEntity().bsdusr_username}"
+        get() {
+            val entity = getEntity()
+            if (!entity.bsdusr_builtin && entity.bsdusr_full_name.isNotEmpty()) {
+                return entity
+                        .bsdusr_full_name
+            }
+
+            return "${getString(R.string.user)}: ${entity.bsdusr_username}"
+        }
 
     override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
         get() = listOf(R.string.users to ::UserDetailContentFragment)
@@ -26,5 +34,4 @@ class UserDetailActivity : DetailActivityBase<UserEntity>() {
     override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> {
         return userPersistenceHandler
     }
-
 }

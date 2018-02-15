@@ -82,7 +82,9 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
 
         recyclerView
                 .adapter = recyclerViewAdapter
-        val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        val layoutManager = StaggeredGridLayoutManager(
+                resources.getInteger(R.integer.list_column_count),
+                StaggeredGridLayoutManager.VERTICAL)
         recyclerView
                 .layoutManager = layoutManager
 
