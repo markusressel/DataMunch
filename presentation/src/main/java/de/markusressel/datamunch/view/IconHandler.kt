@@ -3,9 +3,11 @@ package de.markusressel.datamunch.view
 import android.content.Context
 import android.graphics.Color
 import android.support.annotation.ColorInt
+import android.support.v4.content.ContextCompat
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.R
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -97,8 +99,10 @@ class IconHandler @Inject constructor() {
      * @return the icon
      */
     fun getOptionsMenuIcon(icon: IIcon): IconicsDrawable {
-        val color = themeHelper
-                .getThemeAttrColor(context, android.R.attr.textColorPrimary)
+        //        val color = themeHelper
+        //                .getThemeAttrColor(context, android.R.attr.textColorPrimary)
+        val color = ContextCompat
+                .getColor(context, R.color.white)
 
         var padding = 0
         if (icon === MaterialDesignIconic.Icon.gmi_plus) {

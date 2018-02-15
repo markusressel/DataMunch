@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryColor_dark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccentLight</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -52,7 +52,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/primaryColor_dark</item>
         <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -122,7 +122,7 @@
         <item name="colorPrimaryDark">@color/primaryColor_dark</item>
         <item name="colorPrimary">@color/primaryColor</item>
         <!--<item name="colorPrimaryLight">@color/primaryColor_lightInverse</item>-->
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccentLight</item>
         <item name="android:windowBackground">@color/color_gray_100</item>
         <item name="android:colorBackground">@color/color_gray_100</item>
 
@@ -150,7 +150,7 @@
         <!--<item name="colorPrimaryDark">@color/primaryColor_dark</item>-->
         <item name="colorPrimaryDark">@color/primaryColor_dark</item>
         <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
         <item name="android:windowBackground">@color/windowBackgroundColor</item>
         <item name="android:colorBackground">@color/windowBackgroundColor</item>
 
@@ -174,7 +174,7 @@
     <style name="PreferenceActivityThemeLight" parent="@style/PreferenceActivity.Light">
         <item name="colorPrimaryDark">@color/primaryColor_dark</item>
         <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccentLight</item>
 
         <item name="windowActionBar">false</item>
 
@@ -185,7 +185,7 @@
     <style name="PreferenceActivityThemeDark" parent="@style/PreferenceActivity">
         <item name="colorPrimaryDark">@color/primaryColor_dark</item>
         <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
 
         <item name="windowActionBar">false</item>
 
