@@ -40,8 +40,8 @@
 
         <activity
             android:name=".view.fragment.account.user.UserDetailActivity"
-            android:parentActivityName=".view.activity.AccountActivity" />
-
+            android:parentActivityName=".view.activity.AccountActivity"
+            android:windowSoftInputMode="stateHidden" />
 
         <service android:name=".service.FileUploadService" />
     </application>
