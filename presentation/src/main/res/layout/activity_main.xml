@@ -3,13 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/view_toolbar" />
-
     <LinearLayout
         android:id="@+id/drawerLayoutParent"
         android:layout_width="270dp"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
         android:orientation="horizontal" />
 
     <View
@@ -18,6 +15,12 @@
         android:layout_height="match_parent"
         android:layout_toEndOf="@id/drawerLayoutParent"
         android:background="?attr/colorPrimaryDark" />
+
+    <include
+        layout="@layout/view_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_toEndOf="@id/drawerDividerView" />
 
     <FrameLayout
         android:id="@+id/contentLayout"

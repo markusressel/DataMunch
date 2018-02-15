@@ -67,11 +67,6 @@ abstract class NavigationDrawerActivity : LockableSupportActivityBase() {
                     .buildView()
             drawerLayoutParent
                     .addView(navigationDrawer.slider, 0)
-
-            // hide toolbar
-            toolbar
-                    .visibility = View
-                    .GONE
         } else {
             drawerLayoutParent
                     .visibility = View
