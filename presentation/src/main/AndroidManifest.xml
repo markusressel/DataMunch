@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".view.activity.JailsActivity"
+            android:name=".view.activity.JailActivity"
             android:parentActivityName=".view.activity.MainActivity" />
 
         <activity
@@ -34,8 +34,8 @@
             android:name=".view.activity.fileuploader.FileUploaderActivity"
             android:parentActivityName=".view.activity.MainActivity" />
         <activity android:name=".view.activity.ServicesActivity" />
-        <activity android:name=".view.activity.PluginsActivity" />
-        <activity android:name=".view.activity.AccountsActivity" />
+        <activity android:name=".view.activity.PluginActivity" />
+        <activity android:name=".view.activity.AccountActivity" />
         <activity android:name=".view.activity.StorageActivity" />
         <activity android:name=".view.activity.SharingActivity" />
         <activity android:name=".view.activity.SystemActivity" />

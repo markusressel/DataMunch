@@ -1,11 +1,11 @@
 package de.markusressel.datamunch.view.activity
 
-import android.os.Bundle
-import de.markusressel.datamunch.R
 import de.markusressel.datamunch.navigation.DrawerItemHolder
 import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import de.markusressel.datamunch.view.fragment.ServerStatusFragment
+import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
+import kotlin.reflect.KFunction0
 
 
 class MainActivity : NavigationDrawerActivity() {
@@ -13,24 +13,12 @@ class MainActivity : NavigationDrawerActivity() {
     override val style: Int
         get() = DEFAULT
 
-    override val layoutRes: Int
-        get() = R.layout.activity_main
-
     override fun getDrawerMenuItem(): DrawerMenuItem {
         return DrawerItemHolder
                 .Status
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super
-                .onCreate(savedInstanceState)
-
-        val serverStatusFragment = ServerStatusFragment()
-        supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.contentLayout, serverStatusFragment)
-                //                .addToBackStack(preferencesFragment.tag)
-                .commit()
-    }
+    override val contentFragment: KFunction0<DaggerSupportFragmentBase>
+        get() = ::ServerStatusFragment
 
 }

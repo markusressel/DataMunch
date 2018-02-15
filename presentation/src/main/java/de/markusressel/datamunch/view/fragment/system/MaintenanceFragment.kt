@@ -8,7 +8,8 @@ import android.view.View
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ncorti.slidetoact.SlideToActView
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.view.fragment.base.LoadingSupportFragmentBase
+import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
+import de.markusressel.datamunch.view.plugin.LoadingPlugin
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_maintenance.*
@@ -19,13 +20,16 @@ import kotlinx.android.synthetic.main.fragment_maintenance.*
  *
  * Created by Markus on 07.01.2018.
  */
-class MaintenanceFragment : LoadingSupportFragmentBase() {
+class MaintenanceFragment : DaggerSupportFragmentBase() {
 
     override val layoutRes: Int
         get() = R.layout.fragment_maintenance
 
-    override val optionsMenuRes: Int?
-        get() = null
+    val loadingPlugin = LoadingPlugin()
+
+    init {
+        addPlugin(loadingPlugin)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
@@ -47,7 +51,8 @@ class MaintenanceFragment : LoadingSupportFragmentBase() {
                     }
                 }
 
-        showContent()
+        loadingPlugin
+                .showContent()
     }
 
     private fun showWarningDialog(@StringRes buttonText: Int, function: () -> Any) {
@@ -73,17 +78,19 @@ class MaintenanceFragment : LoadingSupportFragmentBase() {
                 dialog
                         .dismiss()
 
-                showLoading()
+                loadingPlugin
+                        .showLoading()
 
                 Single
                         .fromCallable { function() }
                         .subscribeBy(onSuccess = {
-                            showContent()
+                            loadingPlugin
+                                    .showContent()
                             dialog
                                     .dismiss()
                         }, onError = {
-                            showError(it)
-
+                            loadingPlugin
+                                    .showError(it)
                         })
             }
         }

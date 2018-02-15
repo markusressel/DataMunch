@@ -15,9 +15,11 @@ import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.view.plugin.LoadingPlugin
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.rxkotlin.toObservable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_list.*
@@ -27,7 +29,7 @@ import javax.inject.Inject
 /**
  * Created by Markus on 29.01.2018.
  */
-abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
+abstract class ListFragmentBase<K : Any, T : Any> : OptionsMenuFragmentBase() {
 
     override val layoutRes: Int
         get() = R.layout.fragment_recyclerview
@@ -44,6 +46,19 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
 
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
+
+    protected val loadingPlugin = LoadingPlugin(onShowContent = {
+        updateFabVisibility(View.VISIBLE)
+    }, onShowError = { s: String, throwable: Throwable? ->
+        layoutEmpty
+                .visibility = View
+                .GONE
+        updateFabVisibility(View.INVISIBLE)
+    })
+
+    init {
+        addFragmentPlugins(loadingPlugin)
+    }
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -172,7 +187,8 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
      * Loads the data using {@link loadListDataFromPersistence()}
      */
     private fun fillListFromPersistence() {
-        showLoading()
+        loadingPlugin
+                .showLoading()
 
         Single
                 .fromCallable {
@@ -191,12 +207,14 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
                         listValues
                                 .addAll(it)
                     }
-                    showContent()
+                    loadingPlugin
+                            .showContent()
 
                     recyclerViewAdapter
                             .notifyDataSetChanged()
                 }, onError = {
-                    showError(it)
+                    loadingPlugin
+                            .showError(it)
                 })
     }
 
@@ -204,21 +222,35 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
      * Reload list data asEntity it's original source, persist it and display it to the user afterwards
      */
     protected fun reloadDataFromSource() {
-        showLoading()
+        loadingPlugin
+                .showLoading()
 
-        Single
-                .fromCallable {
-                    loadListDataFromSource()
-                }
+        loadListDataFromSource()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onSuccess = {
-                    persistListData(it)
-                    fillListFromPersistence()
+                    it
+                            .toObservable()
+                            .map {
+                                mapToPersistenceEntity(it)
+                            }
+                            .toList()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeBy(onSuccess = {
+                                persistListData(it)
+                                fillListFromPersistence()
+                            }, onError = {
+                                loadingPlugin
+                                        .showError(it)
+                            })
                 }, onError = {
-                    showError(it)
+                    loadingPlugin
+                            .showError(it)
                 })
     }
+
+    abstract fun mapToPersistenceEntity(it: K): T
 
     /**
      * Get the persistence handler for this list
@@ -227,9 +259,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
 
     private fun persistListData(data: List<T>) {
         val persistenceHandler = getPersistenceHandler()
-        persistenceHandler
-                .standardOperation()
-                .removeAll()
+
         persistenceHandler
                 .standardOperation()
                 .put(data)
@@ -266,7 +296,7 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
     /**
      * Load the data to be displayed in the list asEntity it's original source
      */
-    abstract fun loadListDataFromSource(): List<T>
+    abstract fun loadListDataFromSource(): Single<List<K>>
 
 
     override fun onOptionsMenuItemSelected(item: MenuItem): Boolean {
@@ -277,12 +307,6 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
             }
             else -> false
         }
-    }
-
-    override fun showContent() {
-        super
-                .showContent()
-        updateFabVisibility(View.VISIBLE)
     }
 
     private fun updateFabVisibility(visible: Int) {
@@ -301,21 +325,6 @@ abstract class ListFragmentBase<T : Any> : LoadingSupportFragmentBase() {
                                 .INVISIBLE
                     }
         }
-    }
-
-    override fun onShowError(message: String, t: Throwable?) {
-        super
-                .onShowError(message, t)
-        layoutEmpty
-                .visibility = View
-                .GONE
-        updateFabVisibility(View.INVISIBLE)
-    }
-
-    override fun onErrorClicked(message: String, t: Throwable?) {
-        super
-                .onErrorClicked(message, t)
-        reloadDataFromSource()
     }
 
 }

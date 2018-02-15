@@ -75,9 +75,6 @@ dependencies {
     // RxPermissions
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
-    // Butterknife for Kotlin
-    implementation 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
-
     // RxJava (RxKotlin actually)
     implementation "io.reactivex.rxjava2:rxjava:2.1.8"
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -137,6 +134,18 @@ dependencies {
     compile 'com.andrognito.patternlockview:patternlockview:1.0.0'
     // Optional, for RxJava2 adapter
     compile 'com.andrognito.patternlockview:patternlockview-reactive:1.0.0'
+
+    // CircleImageView
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+
+    // CompositeAndroid
+    // contains CompositeActivity
+    def compositeAndroidVersion = rootProject.ext.supportLibVersion
+    compositeAndroidVersion = compositeAndroidVersion[0..-2] + "0"
+
+    compile "com.pascalwelsch.compositeandroid:activity:$compositeAndroidVersion"
+    // contains CompositeFragment and CompositeDialogFragment
+    compile "com.pascalwelsch.compositeandroid:fragment:$compositeAndroidVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

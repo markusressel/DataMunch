@@ -1,5 +1,6 @@
 package de.markusressel.datamunch.view.fragment.base
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.MenuRes
@@ -9,7 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
-import de.markusressel.freenaswebapiclient.BasicAuthConfig
 
 /**
  * Base class for a fragment with an options menu
@@ -24,6 +24,7 @@ abstract class OptionsMenuFragmentBase : DaggerSupportFragmentBase() {
     @get:MenuRes
     protected abstract val optionsMenuRes: Int?
 
+    @SuppressLint("MissingSuperCall")
     override fun onCreate(savedInstanceState: Bundle?) {
         super
                 .onCreate(savedInstanceState)
@@ -37,15 +38,6 @@ abstract class OptionsMenuFragmentBase : DaggerSupportFragmentBase() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
                 .onViewCreated(view, savedInstanceState)
-
-        freeNasWebApiClient
-                .setHostname("frittenbude.markusressel.de")
-        freeNasWebApiClient
-                .setApiResource("frittenbudeapi")
-        freeNasWebApiClient
-                .setBasicAuthConfig(BasicAuthConfig(
-                        username = connectionManager.getMainSSHConnection().username,
-                        password = connectionManager.getMainSSHConnection().password))
     }
 
     @CallSuper

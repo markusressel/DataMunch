@@ -14,6 +14,8 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemJailBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.freenaswebapiclient.jails.jail.JailModel
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -26,7 +28,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class JailsFragment : ListFragmentBase<JailEntity>() {
+class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
 
     @Inject
     lateinit var jailPersistenceManager: JailPersistenceManager
@@ -49,14 +51,14 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
-    override fun loadListDataFromSource(): List<JailEntity> {
+    override fun loadListDataFromSource(): Single<List<JailModel>> {
         return freeNasWebApiClient
                 .getJails()
-                .blockingGet()
-                .map {
-                    it
-                            .asEntity()
-                }
+    }
+
+    override fun mapToPersistenceEntity(it: JailModel): JailEntity {
+        return it
+                .asEntity()
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<JailEntity> {
@@ -97,7 +99,8 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
                     Toast
                             .makeText(activity, "Error!", Toast.LENGTH_LONG)
                             .show()
-                    showError(it)
+                    loadingPlugin
+                            .showError(it)
                 })
     }
 
@@ -115,7 +118,8 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
                     Toast
                             .makeText(activity, "Error!", Toast.LENGTH_LONG)
                             .show()
-                    showError(it)
+                    loadingPlugin
+                            .showError(it)
                 })
     }
 
@@ -130,7 +134,8 @@ class JailsFragment : ListFragmentBase<JailEntity>() {
                     Toast
                             .makeText(activity, "Error!", Toast.LENGTH_LONG)
                             .show()
-                    showError(it)
+                    loadingPlugin
+                            .showError(it)
                 })
     }
 

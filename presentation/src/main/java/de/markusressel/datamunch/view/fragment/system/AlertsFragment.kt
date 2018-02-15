@@ -11,6 +11,8 @@ import de.markusressel.datamunch.data.persistence.entity.AlertEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemAlertBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.freenaswebapiclient.system.alert.AlertModel
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
@@ -20,7 +22,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class AlertsFragment : ListFragmentBase<AlertEntity>() {
+class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
 
     @Inject
     lateinit var alertPersistenceManager: AlertPersistenceManager
@@ -40,14 +42,14 @@ class AlertsFragment : ListFragmentBase<AlertEntity>() {
                 .into(recyclerView)
     }
 
-    override fun loadListDataFromSource(): List<AlertEntity> {
+    override fun loadListDataFromSource(): Single<List<AlertModel>> {
         return freeNasWebApiClient
                 .getSystemAlerts()
-                .blockingGet()
-                .map {
-                    it
-                            .asEntity()
-                }
+    }
+
+    override fun mapToPersistenceEntity(it: AlertModel): AlertEntity {
+        return it
+                .asEntity()
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<AlertEntity> {

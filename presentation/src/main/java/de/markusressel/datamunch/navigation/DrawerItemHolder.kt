@@ -24,7 +24,7 @@ object DrawerItemHolder {
                                  icon = MaterialDesignIconic.Icon.gmi_storage, selectable = true)
 
     val Jails = DrawerMenuItem(identifier = 30, title = R.string.menu_item_jails,
-                               drawableRes = R.drawable.cube_outline, selectable = true)
+                               drawableRes = R.drawable.ic_jail, selectable = true)
 
     val Plugins = DrawerMenuItem(identifier = 40, title = R.string.menu_item_plugins,
                                  icon = MaterialDesignIconic.Icon.gmi_puzzle_piece,

@@ -13,6 +13,8 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemAfpShareBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.freenaswebapiclient.sharing.afp.AfpShareModel
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
@@ -22,8 +24,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class AfpSharesFragment : ListFragmentBase<AfpShareEntity>() {
-
+class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
     @Inject
     lateinit var afpSharePersistenceManager: AfpSharePersistenceManager
 
@@ -42,14 +43,14 @@ class AfpSharesFragment : ListFragmentBase<AfpShareEntity>() {
                 .into(recyclerView)
     }
 
-    override fun loadListDataFromSource(): List<AfpShareEntity> {
+    override fun loadListDataFromSource(): Single<List<AfpShareModel>> {
         return freeNasWebApiClient
                 .getAfpShares()
-                .blockingGet()
-                .map {
-                    it
-                            .asEntity()
-                }
+    }
+
+    override fun mapToPersistenceEntity(it: AfpShareModel): AfpShareEntity {
+        return it
+                .asEntity()
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<AfpShareEntity> {

@@ -13,6 +13,8 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemTemplateBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.freenaswebapiclient.jails.template.TemplateModel
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
 
@@ -22,7 +24,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class TemplatesFragment : ListFragmentBase<TemplateEntity>() {
+class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
 
     @Inject
     lateinit var templatePersistenceManager: TemplatePersistenceManager
@@ -45,14 +47,14 @@ class TemplatesFragment : ListFragmentBase<TemplateEntity>() {
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
-    override fun loadListDataFromSource(): List<TemplateEntity> {
+    override fun loadListDataFromSource(): Single<List<TemplateModel>> {
         return freeNasWebApiClient
                 .getTemplates()
-                .blockingGet()
-                .map {
-                    it
-                            .asEntity()
-                }
+    }
+
+    override fun mapToPersistenceEntity(it: TemplateModel): TemplateEntity {
+        return it
+                .asEntity()
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<TemplateEntity> {

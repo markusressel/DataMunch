@@ -34,7 +34,10 @@ import java.util.*
  *
  * Created by Markus on 07.01.2018.
  */
-abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
+abstract class NavigationDrawerActivity : LockableSupportActivityBase() {
+
+    override val layoutRes: Int
+        get() = R.layout.activity_main
 
     protected lateinit var navigationDrawer: Drawer
 

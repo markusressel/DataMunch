@@ -13,6 +13,8 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemDatasetBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.freenaswebapiclient.storage.dataset.DatasetModel
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
 
@@ -22,7 +24,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class DatasetsFragment : ListFragmentBase<DatasetEntity>() {
+class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
 
     @Inject
     lateinit var datasetPersistenceManager: DatasetPersistenceManager
@@ -45,14 +47,14 @@ class DatasetsFragment : ListFragmentBase<DatasetEntity>() {
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
-    override fun loadListDataFromSource(): List<DatasetEntity> {
+    override fun loadListDataFromSource(): Single<List<DatasetModel>> {
         return freeNasWebApiClient
                 .getDatasets()
-                .blockingGet()
-                .map {
-                    it
-                            .asEntity()
-                }
+    }
+
+    override fun mapToPersistenceEntity(it: DatasetModel): DatasetEntity {
+        return it
+                .asEntity()
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<DatasetEntity> {

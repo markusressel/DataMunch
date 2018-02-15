@@ -5,10 +5,6 @@
     android:orientation="vertical">
 
     <include
-        android:id="@+id/toolbar"
-        layout="@layout/view_toolbar" />
-
-    <include
         android:id="@+id/tabBar"
         layout="@layout/view_tab_layout" />
 

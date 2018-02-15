@@ -13,6 +13,8 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemNfsShareBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.freenaswebapiclient.sharing.nfs.NfsShareModel
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
@@ -22,7 +24,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class NfsSharesFragment : ListFragmentBase<NfsShareEntity>() {
+class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
 
     @Inject
     lateinit var nfsSharePersistenceManager: NfsSharePersistenceManager
@@ -42,14 +44,14 @@ class NfsSharesFragment : ListFragmentBase<NfsShareEntity>() {
                 .into(recyclerView)
     }
 
-    override fun loadListDataFromSource(): List<NfsShareEntity> {
+    override fun loadListDataFromSource(): Single<List<NfsShareModel>> {
         return freeNasWebApiClient
                 .getNfsShares()
-                .blockingGet()
-                .map {
-                    it
-                            .asEntity()
-                }
+    }
+
+    override fun mapToPersistenceEntity(it: NfsShareModel): NfsShareEntity {
+        return it
+                .asEntity()
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<NfsShareEntity> {

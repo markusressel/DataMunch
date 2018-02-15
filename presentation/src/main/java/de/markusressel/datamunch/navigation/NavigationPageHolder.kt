@@ -11,13 +11,13 @@ import de.markusressel.datamunch.view.activity.preferences.PreferenceOverviewAct
 object NavigationPageHolder {
 
     val MainPage = NavigationPage(MainActivity::class.java)
-    val AccountsPage = NavigationPage(AccountsActivity::class.java)
+    val AccountsPage = NavigationPage(AccountActivity::class.java)
     val ServicesPage = NavigationPage(ServicesActivity::class.java)
     val SharingPage = NavigationPage(SharingActivity::class.java)
     val StoragePage = NavigationPage(StorageActivity::class.java)
     val SystemPage = NavigationPage(SystemActivity::class.java)
-    val JailsPage = NavigationPage(JailsActivity::class.java)
-    val PluginsPage = NavigationPage(PluginsActivity::class.java)
+    val JailsPage = NavigationPage(JailActivity::class.java)
+    val PluginsPage = NavigationPage(PluginActivity::class.java)
     val FileUploaderPage = NavigationPage(FileUploaderActivity::class.java)
     val PreferencesOverviewPage = NavigationPage(PreferenceOverviewActivity::class.java)
     val AboutPage = NavigationPage(null)

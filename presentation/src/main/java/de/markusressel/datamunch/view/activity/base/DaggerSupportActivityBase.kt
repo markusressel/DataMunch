@@ -23,8 +23,9 @@ import android.support.annotation.CallSuper
 import android.support.annotation.IntDef
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.view.Window
+import android.view.WindowManager
+import com.pascalwelsch.compositeandroid.activity.CompositeActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -42,7 +43,7 @@ import javax.inject.Inject
 /**
  * Created by Markus on 20.12.2017.
  */
-abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjector,
+abstract class DaggerSupportActivityBase : CompositeActivity(), HasFragmentInjector,
     HasSupportFragmentInjector {
 
     @Inject
@@ -96,8 +97,14 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
         super
                 .onCreate(savedInstanceState)
 
-        // Hide title on dialogs to use view_toolbar instead
-        if (style == DIALOG) {
+        if (style == FULLSCREEN) {
+            supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            window
+                    .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                              WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        } else if (style == DIALOG) {
+            // Hide title on dialogs to use view_toolbar instead
             supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         }
 
@@ -159,9 +166,14 @@ abstract class DaggerSupportActivityBase : AppCompatActivity(), HasFragmentInjec
         const val DEFAULT = 0
 
         /**
-         * Normal activity style
+         * Dialog style
          */
         const val DIALOG = 1
+
+        /**
+         * Fullscreen activity style
+         */
+        const val FULLSCREEN = 2
     }
 
 }

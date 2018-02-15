@@ -11,6 +11,8 @@ import de.markusressel.datamunch.data.persistence.entity.ServiceEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemServiceBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.freenaswebapiclient.services.service.ServiceModel
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
@@ -20,7 +22,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class ServicesFragment : ListFragmentBase<ServiceEntity>() {
+class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
 
     @Inject
     lateinit var servicePersistenceManager: ServicePersistenceManager
@@ -40,14 +42,14 @@ class ServicesFragment : ListFragmentBase<ServiceEntity>() {
                 .into(recyclerView)
     }
 
-    override fun loadListDataFromSource(): List<ServiceEntity> {
+    override fun loadListDataFromSource(): Single<List<ServiceModel>> {
         return freeNasWebApiClient
                 .getServices()
-                .blockingGet()
-                .map {
-                    it
-                            .asEntity()
-                }
+    }
+
+    override fun mapToPersistenceEntity(it: ServiceModel): ServiceEntity {
+        return it
+                .asEntity()
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<ServiceEntity> {

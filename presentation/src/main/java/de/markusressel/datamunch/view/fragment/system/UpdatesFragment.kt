@@ -13,6 +13,8 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemUpdateBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.freenaswebapiclient.system.update.UpdateModel
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -25,7 +27,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class UpdatesFragment : ListFragmentBase<UpdateEntity>() {
+class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
     @Inject
     lateinit var updatePersistenceManager: UpdatePersistenceManager
 
@@ -47,19 +49,20 @@ class UpdatesFragment : ListFragmentBase<UpdateEntity>() {
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
-    override fun loadListDataFromSource(): List<UpdateEntity> {
+    override fun loadListDataFromSource(): Single<List<UpdateModel>> {
         return freeNasWebApiClient
                 .getPendingUpdates()
-                .blockingGet()
-                .map {
-                    it
-                            .asEntity()
-                }
+    }
+
+    override fun mapToPersistenceEntity(it: UpdateModel): UpdateEntity {
+        return it
+                .asEntity()
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<UpdateEntity> {
         return updatePersistenceManager
     }
+
 
     override fun loadListDataFromPersistence(): List<UpdateEntity> {
         return super
@@ -78,15 +81,18 @@ class UpdatesFragment : ListFragmentBase<UpdateEntity>() {
     }
 
     private fun applyPendingUpdates() {
-        showLoading()
+        loadingPlugin
+                .showLoading()
         freeNasWebApiClient
                 .applyPendingUpdates()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onSuccess = {
-                    showContent()
+                    loadingPlugin
+                            .showContent()
                 }, onError = {
-                    showError(it)
+                    loadingPlugin
+                            .showError(it)
                 })
     }
 

@@ -35,7 +35,7 @@ abstract class AppModule {
     internal abstract fun MainActivity(): MainActivity
 
     @ContributesAndroidInjector
-    internal abstract fun AccountsActivity(): AccountsActivity
+    internal abstract fun AccountsActivity(): AccountActivity
 
     @ContributesAndroidInjector
     internal abstract fun ServicesActivity(): ServicesActivity
@@ -50,10 +50,10 @@ abstract class AppModule {
     internal abstract fun SystemActivity(): SystemActivity
 
     @ContributesAndroidInjector
-    internal abstract fun JailsActivity(): JailsActivity
+    internal abstract fun JailsActivity(): JailActivity
 
     @ContributesAndroidInjector
-    internal abstract fun PluginsActivity(): PluginsActivity
+    internal abstract fun PluginsActivity(): PluginActivity
 
 
     @Module

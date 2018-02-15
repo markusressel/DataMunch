@@ -1,51 +1,47 @@
-package de.markusressel.datamunch.view.activity.base
+package de.markusressel.datamunch.view.fragment.base
 
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
+import android.view.View
 import com.gigamole.navigationtabstrip.NavigationTabStrip
 import com.github.ajalt.timberkt.Timber
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable
 import kotlin.reflect.KFunction0
 
-
 /**
- * Created by Markus on 07.02.2018.
+ * Created by Markus on 14.02.2018.
  */
-abstract class TabNavigationActivity : NavigationDrawerActivity() {
+abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
 
     override val layoutRes: Int
-        get() = R.layout.activity_tab_navigation
+        get() = R.layout.fragment_tab_navigation
 
-    private val tabNavigation: NavigationTabStrip by lazy {
-        findViewById<NavigationTabStrip>(R.id.tabBar)
-    }
+    private lateinit var tabNavigation: NavigationTabStrip
 
-    private val viewPager: ViewPager by lazy {
-        findViewById<ViewPager>(R.id.viewPager)
-    }
+    private lateinit var viewPager: ViewPager
 
     abstract val tabItems: List<Pair<Int, KFunction0<DaggerSupportFragmentBase>>>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
-                .onCreate(savedInstanceState)
+                .onViewCreated(view, savedInstanceState)
+
+        viewPager = view.findViewById(R.id.viewPager) as ViewPager
+        tabNavigation = view.findViewById(R.id.tabBar) as NavigationTabStrip
 
         setupViewPager()
-
-        setTabBarStyle()
         createTabBar()
     }
 
     private fun setupViewPager() {
         viewPager
-                .adapter = object : FragmentPagerAdapter(supportFragmentManager) {
+                .adapter = object : FragmentPagerAdapter(childFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 // get fragment and create a new instance
                 return tabItems[position]
@@ -61,9 +57,6 @@ abstract class TabNavigationActivity : NavigationDrawerActivity() {
         viewPager
                 .offscreenPageLimit = tabItems
                 .size
-    }
-
-    private fun setTabBarStyle() {
     }
 
     private fun createTabBar() {
@@ -111,4 +104,3 @@ abstract class TabNavigationActivity : NavigationDrawerActivity() {
     }
 
 }
-

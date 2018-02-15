@@ -2,11 +2,15 @@ package de.markusressel.datamunch.view.fragment
 
 import android.os.Bundle
 import android.support.annotation.CallSuper
-import android.view.MenuItem
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
-import de.markusressel.datamunch.view.fragment.base.LoadingSupportFragmentBase
+import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
+import de.markusressel.datamunch.view.plugin.LoadingPlugin
+import de.markusressel.datamunch.view.plugin.OptionsMenuPlugin
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -20,7 +24,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class ServerStatusFragment : LoadingSupportFragmentBase() {
+class ServerStatusFragment : DaggerSupportFragmentBase() {
 
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
@@ -31,8 +35,29 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
     override val layoutRes: Int
         get() = R.layout.fragment_server_status
 
-    override val optionsMenuRes: Int?
-        get() = R.menu.options_menu_server_status
+    val loadingPlugin = LoadingPlugin()
+
+    init {
+        addFragmentPlugins(loadingPlugin,
+                           OptionsMenuPlugin(optionsMenuRes = R.menu.options_menu_server_status,
+                                             onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
+                                                 // set refresh icon
+                                                 val refreshIcon = iconHandler
+                                                         .getOptionsMenuIcon(
+                                                                 MaterialDesignIconic.Icon.gmi_refresh)
+                                                 menu
+                                                         ?.findItem(R.id.refresh)
+                                                         ?.icon = refreshIcon
+                                             }, onOptionsMenuItemClicked = {
+                               when {
+                                   it.itemId == R.id.refresh -> {
+                                       reload()
+                                       true
+                                   }
+                                   else -> false
+                               }
+                           }))
+    }
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,7 +75,8 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
     }
 
     private fun reload() {
-        showLoading()
+        loadingPlugin
+                .showLoading()
 
         Single
                 .fromCallable {
@@ -63,12 +89,14 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
                     serverName
                             .text = it
 
-                    showContent()
+                    loadingPlugin
+                            .showContent()
                 }, onError = {
                     serverName
                             .text = it
                             .message
-                    showError(it)
+                    loadingPlugin
+                            .showError(it)
                 })
 
         Single
@@ -84,23 +112,15 @@ class ServerStatusFragment : LoadingSupportFragmentBase() {
                     serverStatus
                             .text = text
 
-                    showContent()
+                    loadingPlugin
+                            .showContent()
                 }, onError = {
                     serverStatus
                             .text = it
                             .message
-                    showError(it)
+                    loadingPlugin
+                            .showError(it)
                 })
-    }
-
-    override fun onOptionsMenuItemSelected(item: MenuItem): Boolean {
-        return when {
-            item.itemId == R.id.refresh -> {
-                reload()
-                true
-            }
-            else -> false
-        }
     }
 
 }

@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.activity.base
+package de.markusressel.datamunch.view.fragment.base
 
 import android.support.v4.app.DialogFragment
 

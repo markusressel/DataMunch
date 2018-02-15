@@ -11,6 +11,8 @@ import de.markusressel.datamunch.data.persistence.entity.PluginEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemPluginBinding
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.freenaswebapiclient.plugins.PluginModel
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_services.*
 import javax.inject.Inject
 
@@ -20,7 +22,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class PluginsFragment : ListFragmentBase<PluginEntity>() {
+class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
 
     @Inject
     lateinit var pluginPersistenceManager: PluginPersistenceManager
@@ -37,14 +39,14 @@ class PluginsFragment : ListFragmentBase<PluginEntity>() {
                 .into(recyclerView)
     }
 
-    override fun loadListDataFromSource(): List<PluginEntity> {
+    override fun loadListDataFromSource(): Single<List<PluginModel>> {
         return freeNasWebApiClient
                 .getPlugins()
-                .blockingGet()
-                .map {
-                    it
-                            .asEntity()
-                }
+    }
+
+    override fun mapToPersistenceEntity(it: PluginModel): PluginEntity {
+        return it
+                .asEntity()
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<PluginEntity> {

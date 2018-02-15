@@ -13,6 +13,8 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemSnapshotBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.freenaswebapiclient.storage.snapshot.SnapshotModel
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
 
@@ -22,7 +24,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class SnapshotsFragment : ListFragmentBase<SnapshotEntity>() {
+class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
 
     @Inject
     lateinit var snapshotPersistenceManager: SnapshotPersistenceManager
@@ -45,14 +47,14 @@ class SnapshotsFragment : ListFragmentBase<SnapshotEntity>() {
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
-    override fun loadListDataFromSource(): List<SnapshotEntity> {
+    override fun loadListDataFromSource(): Single<List<SnapshotModel>> {
         return freeNasWebApiClient
                 .getSnapshots(limit = 1000)
-                .blockingGet()
-                .map {
-                    it
-                            .asEntity()
-                }
+    }
+
+    override fun mapToPersistenceEntity(it: SnapshotModel): SnapshotEntity {
+        return it
+                .asEntity()
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<SnapshotEntity> {

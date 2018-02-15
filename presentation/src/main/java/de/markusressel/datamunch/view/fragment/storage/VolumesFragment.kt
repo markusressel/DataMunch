@@ -14,6 +14,8 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemVolumeBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.freenaswebapiclient.storage.volume.VolumeModel
+import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable
 import kotlinx.android.synthetic.main.fragment_jails.*
@@ -25,8 +27,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class VolumesFragment : ListFragmentBase<VolumeEntity>() {
-
+class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
     @Inject
     lateinit var volumePersistenceManager: VolumePersistenceManager
 
@@ -48,16 +49,14 @@ class VolumesFragment : ListFragmentBase<VolumeEntity>() {
     override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
-    override fun loadListDataFromSource(): List<VolumeEntity> {
-        val volumesAndChildren: List<VolumeEntity> = freeNasWebApiClient
+    override fun loadListDataFromSource(): Single<List<VolumeModel>> {
+        return freeNasWebApiClient
                 .getVolumes()
-                .blockingGet()
-                .map {
-                    it
-                            .asEntity()
-                }
+    }
 
-        return volumesAndChildren
+    override fun mapToPersistenceEntity(it: VolumeModel): VolumeEntity {
+        return it
+                .asEntity()
     }
 
     override fun getPersistenceHandler(): PersistenceManagerBase<VolumeEntity> {
