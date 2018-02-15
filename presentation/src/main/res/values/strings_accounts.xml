@@ -9,9 +9,12 @@
     <string name="user_id">User ID</string>
     <string name="group_id">Group ID</string>
     <string name="username">Username</string>
+    <string name="password">Password</string>
     <string name="full_name">Full name</string>
     <string name="email" translatable="false">E-Mail</string>
-
+    <string name="home_directory">Home directory</string>
+    <string name="shell" translatable="false">Shell</string>
     <string name="locked">Locked</string>
+    <string name="sudo_access">Superuser access</string>
 
 </resources>

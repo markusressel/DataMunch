@@ -2,6 +2,7 @@ package de.markusressel.datamunch.view.activity.base
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
@@ -134,12 +135,22 @@ abstract class DetailActivityBase<T : Any> : DaggerSupportActivityBase() {
                 .pagerTitleStrip
                 .setViewPager(materialViewPager.viewPager)
 
-        //        if ((viewPager.adapter as FragmentStatePagerAdapter).count == 1) {
-        //            materialViewPager
-        //                    .pagerTitleStrip
-        //                    .visibility = View
-        //                    .GONE
-        //        }
+        if ((viewPager.adapter as FragmentStatePagerAdapter).count == 1) {
+            materialViewPager
+                    .pagerTitleStrip
+                    .underlineColor = Color
+                    .TRANSPARENT
+
+            materialViewPager
+                    .pagerTitleStrip
+                    .indicatorColor = Color
+                    .TRANSPARENT
+
+            //                    materialViewPager
+            //                            .pagerTitleStrip
+            //                            .visibility = View
+            //                            .GONE
+        }
     }
 
     private fun getEntityId(): Long {

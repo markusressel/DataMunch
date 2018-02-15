@@ -24,7 +24,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1000dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -66,6 +66,20 @@
 
                 <TextView
                     style="@style/sub_header"
+                    android:labelFor="@id/passwordEditText"
+                    android:text="@string/password" />
+
+                <EditText
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:inputType="textPassword"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    style="@style/sub_header"
                     android:labelFor="@id/fullNameEditText"
                     android:text="@string/full_name" />
 
@@ -92,11 +106,43 @@
                     android:textColor="?android:textColorPrimary"
                     android:textSize="18sp" />
 
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/home_directory" />
+
+                <TextView
+                    android:id="@+id/homeDirectoryTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:labelFor="@id/shellEditText"
+                    android:text="@string/shell" />
+
+                <EditText
+                    android:id="@+id/shellEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:inputType="text"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
+
                 <CheckBox
                     android:id="@+id/lockedCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/locked" />
+
+                <CheckBox
+                    android:id="@+id/sudoCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sudo_access" />
 
             </LinearLayout>
 

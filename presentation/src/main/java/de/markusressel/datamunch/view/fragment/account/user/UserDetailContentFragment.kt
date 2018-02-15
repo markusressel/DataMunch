@@ -28,47 +28,53 @@ class UserDetailContentFragment : DaggerSupportFragmentBase() {
         MaterialViewPagerHelper
                 .registerScrollView(activity, scrollView)
 
-        arguments
-                ?.let {
-                    val entityId: Long = it
-                            .getLong(KEY_ENTITY_ID)
-
-                    val entity = userPersistenceManager
-                            .standardOperation()
-                            .get(entityId)
-
-                    userIdTextView
-                            .text = "${entity.bsdusr_uid}"
-
-                    groupIdTextView
-                            .text = "${entity.bsdusr_group}"
-
-                    usernameTextView
-                            .text = entity
-                            .bsdusr_username
-
-                    fullNameEditText
-                            .setText(entity.bsdusr_full_name)
-
-                    emailEditText
-                            .setText(entity.bsdusr_email)
-
-                    lockedCheckBox
-                            .isChecked = entity
-                            .bsdusr_locked
-                }
+        updateUiFromEntity()
     }
 
-    companion object {
-        fun newInstance(entityId: Long): UserDetailContentFragment {
-            val fragment = UserDetailContentFragment()
-            val args = Bundle()
-            args
-                    .putLong(KEY_ENTITY_ID, entityId)
-            fragment
-                    .arguments = args
-            return fragment
-        }
+    private fun updateUiFromEntity() {
+        val args = arguments
+                ?: return
+
+        val entityId: Long = args
+                .getLong(KEY_ENTITY_ID)
+
+        val entity = userPersistenceManager
+                .standardOperation()
+                .get(entityId)
+
+        userIdTextView
+                .text = "${entity.bsdusr_uid}"
+
+        groupIdTextView
+                .text = "${entity.bsdusr_group}"
+
+        usernameTextView
+                .text = entity
+                .bsdusr_username
+
+        fullNameEditText
+                .setText(entity.bsdusr_full_name)
+
+        passwordEditText
+                .setText("********")
+
+        emailEditText
+                .setText(entity.bsdusr_email)
+
+        homeDirectoryTextView
+                .text = entity
+                .bsdusr_home
+
+        shellEditText
+                .setText(entity.bsdusr_shell)
+
+        lockedCheckBox
+                .isChecked = entity
+                .bsdusr_locked
+
+        sudoCheckBox
+                .isChecked = entity
+                .bsdusr_sudo
     }
 
 }
