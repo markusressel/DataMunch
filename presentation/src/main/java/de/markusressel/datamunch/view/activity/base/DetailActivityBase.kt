@@ -61,7 +61,11 @@ abstract class DetailActivityBase<T : Any> : DaggerSupportActivityBase() {
                             HeaderDesign.fromColorResAndDrawable(R.color.md_yellow_800, getDrawable(
                                     R.drawable.header_colorful_2)),
                             HeaderDesign.fromColorResAndDrawable(R.color.md_red_800, getDrawable(
-                                    R.drawable.header_dark_red))
+                                    R.drawable.header_dark_red)),
+                            HeaderDesign.fromColorResAndDrawable(R.color.md_green_800, getDrawable(
+                                    R.drawable.header_green)),
+                            HeaderDesign.fromColorResAndDrawable(R.color.md_brown_800, getDrawable(
+                                    R.drawable.header_sepia))
 
                     )
 
