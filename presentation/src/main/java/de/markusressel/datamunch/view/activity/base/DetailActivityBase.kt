@@ -21,7 +21,13 @@ import kotlinx.android.synthetic.main.item_detail__header_logo.*
 abstract class DetailActivityBase<T : Any> : DaggerSupportActivityBase() {
 
     override val style: Int
-        get() = DEFAULT
+        get() {
+            return if (resources.getBoolean(R.bool.is_tablet)) {
+                DIALOG
+            } else {
+                DEFAULT
+            }
+        }
 
     override val layoutRes: Int
         get() = R.layout.activity_item_detail
@@ -176,5 +182,4 @@ abstract class DetailActivityBase<T : Any> : DaggerSupportActivityBase() {
             return Intent(context, clazz)
         }
     }
-
 }
