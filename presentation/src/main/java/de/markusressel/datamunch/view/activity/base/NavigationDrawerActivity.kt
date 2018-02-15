@@ -1,6 +1,7 @@
 package de.markusressel.datamunch.view.activity.base
 
 import android.os.Bundle
+import android.view.View
 import com.github.ajalt.timberkt.Timber
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
@@ -13,6 +14,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IProfile
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.extensions.isTablet
 import de.markusressel.datamunch.navigation.DrawerItemHolder.About
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Accounts
 import de.markusressel.datamunch.navigation.DrawerItemHolder.FileUploader
@@ -26,6 +28,7 @@ import de.markusressel.datamunch.navigation.DrawerItemHolder.Storage
 import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.navigation.page.NavigationPage
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
 
@@ -50,14 +53,36 @@ abstract class NavigationDrawerActivity : LockableSupportActivityBase() {
         val menuItemList = initDrawerMenuItems()
         val accountHeader = initAccountHeader()
 
-        navigationDrawer = DrawerBuilder()
+        val builder = DrawerBuilder()
                 .withActivity(this)
                 .withAccountHeader(accountHeader)
                 .withDrawerItems(menuItemList)
                 .withCloseOnClick(false)
                 .withToolbar(toolbar)
+                .withSavedInstance(savedInstanceState)
                 .withSelectedItem(getDrawerMenuItem().identifier)
-                .build()
+
+        if (isTablet()) {
+            navigationDrawer = builder
+                    .buildView()
+            drawerLayoutParent
+                    .addView(navigationDrawer.slider, 0)
+
+            // hide toolbar
+            toolbar
+                    .visibility = View
+                    .GONE
+        } else {
+            drawerLayoutParent
+                    .visibility = View
+                    .GONE
+            drawerDividerView
+                    .visibility = View
+                    .GONE
+
+            navigationDrawer = builder
+                    .build()
+        }
     }
 
     /**
