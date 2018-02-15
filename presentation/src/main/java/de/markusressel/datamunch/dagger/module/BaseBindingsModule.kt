@@ -7,8 +7,8 @@ import de.markusressel.datamunch.view.fragment.PluginsFragment
 import de.markusressel.datamunch.view.fragment.ServerStatusFragment
 import de.markusressel.datamunch.view.fragment.ServicesFragment
 import de.markusressel.datamunch.view.fragment.account.group.GroupsFragment
+import de.markusressel.datamunch.view.fragment.account.user.UserDetailActivity
 import de.markusressel.datamunch.view.fragment.account.user.UserDetailContentFragment
-import de.markusressel.datamunch.view.fragment.account.user.UserDetailFragment
 import de.markusressel.datamunch.view.fragment.account.user.UsersFragment
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.jail.JailsFragment
@@ -114,7 +114,7 @@ abstract class BaseBindingsModule {
     internal abstract fun SystemFragment(): SystemFragment
 
     @ContributesAndroidInjector
-    internal abstract fun UserDetailFragment(): UserDetailFragment
+    internal abstract fun UserDetailFragment(): UserDetailActivity
 
     @ContributesAndroidInjector
     internal abstract fun UserDetailContentFragment(): UserDetailContentFragment

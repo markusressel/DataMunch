@@ -22,24 +22,25 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".view.activity.JailActivity"
-            android:parentActivityName=".view.activity.MainActivity" />
+        <activity android:name=".view.activity.JailActivity" />
 
         <activity
             android:name=".view.activity.preferences.PreferenceOverviewActivity"
             android:parentActivityName=".view.activity.MainActivity" />
 
-        <activity
-            android:name=".view.activity.fileuploader.FileUploaderActivity"
-            android:parentActivityName=".view.activity.MainActivity" />
+
         <activity android:name=".view.activity.ServicesActivity" />
         <activity android:name=".view.activity.PluginActivity" />
         <activity android:name=".view.activity.AccountActivity" />
         <activity android:name=".view.activity.StorageActivity" />
         <activity android:name=".view.activity.SharingActivity" />
         <activity android:name=".view.activity.SystemActivity" />
-        <activity android:name=".view.fragment.account.user.UserDetailFragment" />
+
+        <activity android:name=".view.activity.fileuploader.FileUploaderActivity" />
+
+        <activity
+            android:name=".view.fragment.account.user.UserDetailActivity"
+            android:parentActivityName=".view.activity.AccountActivity" />
 
 
         <service android:name=".service.FileUploadService" />

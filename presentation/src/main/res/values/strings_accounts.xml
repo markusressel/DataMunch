@@ -4,6 +4,12 @@
     <string name="users">Users</string>
     <string name="groups">Groups</string>
 
+    <string name="user_id">User ID</string>
+    <string name="group_id">Group ID</string>
     <string name="username">Username</string>
+    <string name="full_name">Full name</string>
+    <string name="email" translatable="false">E-Mail</string>
+
+    <string name="locked">Locked</string>
 
 </resources>

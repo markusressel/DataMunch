@@ -84,7 +84,7 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
     private fun openDetailView(user: UserEntity) {
         context
                 ?.let {
-                    startActivity(UserDetailFragment.newInstance(it, user))
+                    startActivity(UserDetailActivity.newInstance(it, user))
                 }
     }
 
