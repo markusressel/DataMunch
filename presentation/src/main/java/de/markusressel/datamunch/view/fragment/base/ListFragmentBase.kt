@@ -259,7 +259,8 @@ abstract class ListFragmentBase<K : Any, T : Any> : OptionsMenuFragmentBase() {
 
     private fun persistListData(data: List<T>) {
         getPersistenceHandler()
-                .clearData()
+                .standardOperation()
+                .removeAll()
         getPersistenceHandler()
                 .standardOperation()
                 .put(data)
