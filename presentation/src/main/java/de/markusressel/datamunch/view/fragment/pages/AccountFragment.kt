@@ -5,12 +5,11 @@ import de.markusressel.datamunch.view.fragment.account.group.GroupsFragment
 import de.markusressel.datamunch.view.fragment.account.user.UsersFragment
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabNavigationFragment
-import kotlin.reflect.KFunction0
 
 
 class AccountFragment : TabNavigationFragment() {
 
-    override val tabItems: List<Pair<Int, KFunction0<DaggerSupportFragmentBase>>>
+    override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
         get() {
             return listOf(R.string.users to ::UsersFragment, R.string.groups to ::GroupsFragment)
         }

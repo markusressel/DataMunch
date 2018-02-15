@@ -5,7 +5,6 @@ import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.pages.JailFragment
-import kotlin.reflect.KFunction0
 
 
 class JailActivity : NavigationDrawerActivity() {
@@ -18,7 +17,7 @@ class JailActivity : NavigationDrawerActivity() {
                 .Jails
     }
 
-    override val contentFragment: KFunction0<DaggerSupportFragmentBase>
+    override val contentFragment: () -> DaggerSupportFragmentBase
         get() = ::JailFragment
 
 

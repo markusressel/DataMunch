@@ -29,7 +29,7 @@ class UserDetailActivity : DetailActivityBase<UserEntity>() {
         }
 
     override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
-        get() = listOf(R.string.users to ::UserDetailContentFragment)
+        get() = listOf(R.string.details to ::UserDetailContentFragment)
 
     override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> {
         return userPersistenceHandler

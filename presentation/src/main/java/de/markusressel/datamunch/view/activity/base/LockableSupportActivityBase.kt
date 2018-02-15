@@ -26,7 +26,6 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.event.LockEvent
 import de.markusressel.datamunch.view.fragment.LockscreenFragment
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
-import kotlin.reflect.KFunction0
 
 /**
  * Created by Markus on 20.12.2017.
@@ -39,7 +38,7 @@ abstract class LockableSupportActivityBase : DaggerSupportActivityBase() {
     /**
      * The content fragment for this Activity
      */
-    protected abstract val contentFragment: KFunction0<DaggerSupportFragmentBase>
+    protected abstract val contentFragment: () -> DaggerSupportFragmentBase
 
     @SuppressLint("MissingSuperCall")
     public override fun onSaveInstanceState(outState: Bundle) {

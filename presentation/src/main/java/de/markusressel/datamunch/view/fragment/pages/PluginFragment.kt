@@ -5,12 +5,11 @@ import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabNavigationFragment
 import de.markusressel.datamunch.view.fragment.jail.MountpointsFragment
 import de.markusressel.datamunch.view.fragment.jail.TemplatesFragment
-import kotlin.reflect.KFunction0
 
 
 class PluginFragment : TabNavigationFragment() {
 
-    override val tabItems: List<Pair<Int, KFunction0<DaggerSupportFragmentBase>>>
+    override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
         get() {
             return listOf(R.string.jails to ::PluginFragment,
                           R.string.mountpoints to ::MountpointsFragment,

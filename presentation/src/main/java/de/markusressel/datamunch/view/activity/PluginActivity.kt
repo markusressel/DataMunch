@@ -5,7 +5,6 @@ import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import de.markusressel.datamunch.view.fragment.PluginsFragment
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
-import kotlin.reflect.KFunction0
 
 
 class PluginActivity : NavigationDrawerActivity() {
@@ -18,7 +17,7 @@ class PluginActivity : NavigationDrawerActivity() {
                 .Plugins
     }
 
-    override val contentFragment: KFunction0<DaggerSupportFragmentBase>
+    override val contentFragment: () -> DaggerSupportFragmentBase
         get() = ::PluginsFragment
 
 }

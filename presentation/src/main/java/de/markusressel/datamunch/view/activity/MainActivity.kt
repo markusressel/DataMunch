@@ -5,7 +5,6 @@ import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import de.markusressel.datamunch.view.fragment.ServerStatusFragment
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
-import kotlin.reflect.KFunction0
 
 
 class MainActivity : NavigationDrawerActivity() {
@@ -18,7 +17,7 @@ class MainActivity : NavigationDrawerActivity() {
                 .Status
     }
 
-    override val contentFragment: KFunction0<DaggerSupportFragmentBase>
+    override val contentFragment: () -> DaggerSupportFragmentBase
         get() = ::ServerStatusFragment
 
 }

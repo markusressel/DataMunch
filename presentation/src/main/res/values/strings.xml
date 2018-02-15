@@ -53,4 +53,6 @@
     <string name="do_it">Do it!</string>
     <string name="abort">Abort</string>
 
+    <string name="details">Details</string>
+
 </resources>

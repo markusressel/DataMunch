@@ -5,7 +5,6 @@ import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.pages.StorageFragment
-import kotlin.reflect.KFunction0
 
 
 class StorageActivity : NavigationDrawerActivity() {
@@ -18,7 +17,7 @@ class StorageActivity : NavigationDrawerActivity() {
                 .Storage
     }
 
-    override val contentFragment: KFunction0<DaggerSupportFragmentBase>
+    override val contentFragment: () -> DaggerSupportFragmentBase
         get() = ::StorageFragment
 
 

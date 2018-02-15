@@ -42,4 +42,6 @@
     <string name="do_it">Tu es!</string>
     <string name="abort">Abbrechen</string>
 
+    <string name="details">Details</string>
+
 </resources>

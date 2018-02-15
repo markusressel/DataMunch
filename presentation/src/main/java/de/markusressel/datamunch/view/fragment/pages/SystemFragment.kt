@@ -6,12 +6,11 @@ import de.markusressel.datamunch.view.fragment.base.TabNavigationFragment
 import de.markusressel.datamunch.view.fragment.system.AlertsFragment
 import de.markusressel.datamunch.view.fragment.system.MaintenanceFragment
 import de.markusressel.datamunch.view.fragment.system.UpdatesFragment
-import kotlin.reflect.KFunction0
 
 
 class SystemFragment : TabNavigationFragment() {
 
-    override val tabItems: List<Pair<Int, KFunction0<DaggerSupportFragmentBase>>>
+    override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
         get() {
             return listOf(R.string.alerts to ::AlertsFragment,
                           R.string.updates to ::UpdatesFragment,

@@ -12,7 +12,6 @@ import de.markusressel.datamunch.R
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable
-import kotlin.reflect.KFunction0
 
 /**
  * Created by Markus on 14.02.2018.
@@ -26,7 +25,7 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
 
     private lateinit var viewPager: ViewPager
 
-    abstract val tabItems: List<Pair<Int, KFunction0<DaggerSupportFragmentBase>>>
+    abstract val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super

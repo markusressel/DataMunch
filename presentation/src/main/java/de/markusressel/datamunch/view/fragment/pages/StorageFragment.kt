@@ -7,12 +7,11 @@ import de.markusressel.datamunch.view.fragment.storage.DatasetsFragment
 import de.markusressel.datamunch.view.fragment.storage.DisksFragment
 import de.markusressel.datamunch.view.fragment.storage.SnapshotsFragment
 import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
-import kotlin.reflect.KFunction0
 
 
 class StorageFragment : TabNavigationFragment() {
 
-    override val tabItems: List<Pair<Int, KFunction0<DaggerSupportFragmentBase>>>
+    override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
         get() {
             return listOf(R.string.volumes to ::VolumesFragment,
                           R.string.datasets to ::DatasetsFragment,

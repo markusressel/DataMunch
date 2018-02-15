@@ -5,7 +5,6 @@ import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.pages.SharingFragment
-import kotlin.reflect.KFunction0
 
 
 class SharingActivity : NavigationDrawerActivity() {
@@ -18,7 +17,7 @@ class SharingActivity : NavigationDrawerActivity() {
                 .Sharing
     }
 
-    override val contentFragment: KFunction0<DaggerSupportFragmentBase>
+    override val contentFragment: () -> DaggerSupportFragmentBase
         get() = ::SharingFragment
 
 }
