@@ -6,7 +6,7 @@ import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import de.markusressel.datamunch.view.fragment.ServicesFragment
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 
-
+// TODO: setup as fragment instead of activity
 class ServicesActivity : NavigationDrawerActivity() {
 
     override val style: Int

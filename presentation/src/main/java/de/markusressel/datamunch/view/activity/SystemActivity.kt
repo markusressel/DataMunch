@@ -6,7 +6,7 @@ import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.pages.SystemFragment
 
-
+// TODO: setup as fragment instead of activity
 class SystemActivity : NavigationDrawerActivity() {
 
     override val style: Int
@@ -19,6 +19,5 @@ class SystemActivity : NavigationDrawerActivity() {
 
     override val contentFragment: () -> DaggerSupportFragmentBase
         get() = ::SystemFragment
-
 
 }

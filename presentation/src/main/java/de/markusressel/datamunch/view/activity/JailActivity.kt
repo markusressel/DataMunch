@@ -6,7 +6,7 @@ import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.pages.JailFragment
 
-
+// TODO: setup as fragment instead of activity
 class JailActivity : NavigationDrawerActivity() {
 
     override val style: Int
