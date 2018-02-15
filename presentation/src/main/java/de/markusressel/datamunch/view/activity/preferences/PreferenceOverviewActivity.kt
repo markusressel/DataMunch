@@ -74,7 +74,8 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
         finish()
 
         navigator
-                .navigateTo(this, Navigator.NavigationPages.MainPage, Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                .startActivity(this, Navigator.NavigationPages.MainPage,
+                               Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
 
         navigator
                 .navigateTo(this, Navigator.NavigationPages.PreferencesOverviewPage)

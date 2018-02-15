@@ -13,6 +13,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.github.ajalt.timberkt.Timber
+import com.jakewharton.rxbinding2.view.RxView
 import com.pascalwelsch.compositeandroid.fragment.FragmentPlugin
 import de.markusressel.datamunch.R
 
@@ -168,12 +169,13 @@ class LoadingPlugin(val onShowContent: ((animated: Boolean) -> Unit)? = null,
         errorDescription
                 .text = errorDescriptionText
 
-        errorLayout
-                .setOnClickListener {
+        RxView
+                .clicks(errorLayout)
+                .subscribe {
                     onErrorClicked
                             ?.let {
                                 it(message, throwable)
-                                return@setOnClickListener
+                                return@subscribe
                             }
 
                     val contentText = throwable?.let {

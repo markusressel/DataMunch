@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import de.markusressel.datamunch.application.App
-import de.markusressel.datamunch.view.activity.*
+import de.markusressel.datamunch.view.activity.MainActivity
 import de.markusressel.datamunch.view.activity.base.BottomNavigationActivity
 import de.markusressel.datamunch.view.activity.base.DaggerSupportActivityBase
 import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
@@ -33,28 +33,6 @@ abstract class AppModule {
 
     @ContributesAndroidInjector
     internal abstract fun MainActivity(): MainActivity
-
-    @ContributesAndroidInjector
-    internal abstract fun AccountsActivity(): AccountActivity
-
-    @ContributesAndroidInjector
-    internal abstract fun ServicesActivity(): ServicesActivity
-
-    @ContributesAndroidInjector
-    internal abstract fun SharingActivity(): SharingActivity
-
-    @ContributesAndroidInjector
-    internal abstract fun StorageActivity(): StorageActivity
-
-    @ContributesAndroidInjector
-    internal abstract fun SystemActivity(): SystemActivity
-
-    @ContributesAndroidInjector
-    internal abstract fun JailsActivity(): JailActivity
-
-    @ContributesAndroidInjector
-    internal abstract fun PluginsActivity(): PluginActivity
-
 
     @Module
     companion object {

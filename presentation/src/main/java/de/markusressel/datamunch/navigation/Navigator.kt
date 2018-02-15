@@ -2,6 +2,7 @@ package de.markusressel.datamunch.navigation
 
 import android.content.Context
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mikepenz.aboutlibraries.util.Colors
@@ -26,8 +27,22 @@ class Navigator @Inject constructor() {
      * @param activityContext activity context
      * @param page the page to navigate to
      */
-    fun navigateTo(activityContext: Context, page: NavigationPage) {
-        navigateTo(activityContext, page, null)
+    fun startActivity(activityContext: Context, page: NavigationPage) {
+        startActivity(activityContext, page, null)
+    }
+
+    /**
+     * Navigate to a specific page
+     */
+    fun navigateTo(activityContext: AppCompatActivity, page: NavigationPage) {
+        val fragment = page.fragment!!()
+
+        activityContext
+                .supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.contentLayout, fragment)
+                //                .addToBackStack(preferencesFragment.tag)
+                .commitAllowingStateLoss()
     }
 
     /**
@@ -37,7 +52,7 @@ class Navigator @Inject constructor() {
      * @param page the page to navigate to
      * @param flags Intent flags
      */
-    fun navigateTo(activityContext: Context, page: NavigationPage, flags: Int?) {
+    fun startActivity(activityContext: Context, page: NavigationPage, flags: Int?) {
         if (page == NavigationPages.AboutPage) {
             navigateToAbout(activityContext)
             return
@@ -72,7 +87,9 @@ class Navigator @Inject constructor() {
 
         LibsBuilder()
                 .withActivityStyle(aboutLibTheme)
-                .withActivityColor(Colors(ContextCompat.getColor(activityContext, R.color.primaryColor), ContextCompat.getColor(activityContext, R.color.primaryColor_dark)))
+                .withActivityColor(
+                        Colors(ContextCompat.getColor(activityContext, R.color.primaryColor),
+                               ContextCompat.getColor(activityContext, R.color.primaryColor_dark)))
                 .withActivityTitle(activityContext.getString(R.string.menu_item_about))
                 .start(activityContext)
     }

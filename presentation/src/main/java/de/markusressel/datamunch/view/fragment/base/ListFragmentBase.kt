@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
 import com.github.nitrico.lastadapter.LastAdapter
+import com.jakewharton.rxbinding2.view.RxView
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
@@ -45,7 +46,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
 
     protected val loadingPlugin = LoadingPlugin(onShowContent = {
         updateFabVisibility(View.VISIBLE)
-    }, onShowError = { s: String, throwable: Throwable? ->
+    }, onShowError = { message: String, throwable: Throwable? ->
         layoutEmpty
                 .visibility = View
                 .GONE
@@ -53,16 +54,16 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
     })
 
     init {
-        addFragmentPlugins(loadingPlugin, OptionsMenuPlugin(R.menu.options_menu_list,
-                                                            onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
-                                                                // set refresh icon
-                                                                val refreshIcon = iconHandler
-                                                                        .getOptionsMenuIcon(
-                                                                                MaterialDesignIconic.Icon.gmi_refresh)
-                                                                menu
-                                                                        ?.findItem(R.id.refresh)
-                                                                        ?.icon = refreshIcon
-                                                            }, onOptionsMenuItemClicked = {
+        val optionsMenuPlugin = OptionsMenuPlugin(R.menu.options_menu_list,
+                                                  onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
+                                                      // set refresh icon
+                                                      val refreshIcon = iconHandler
+                                                              .getOptionsMenuIcon(
+                                                                      MaterialDesignIconic.Icon.gmi_refresh)
+                                                      menu
+                                                              ?.findItem(R.id.refresh)
+                                                              ?.icon = refreshIcon
+                                                  }, onOptionsMenuItemClicked = {
             when {
                 it.itemId == R.id.refresh -> {
                     reloadDataFromSource()
@@ -70,7 +71,9 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 }
                 else -> false
             }
-        }))
+        })
+
+        addFragmentPlugins(loadingPlugin, optionsMenuPlugin)
     }
 
     @CallSuper
@@ -165,9 +168,11 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         fab
                 .onClick
                 ?.let {
-                    fabView
-                            .setOnClickListener {
-                                it()
+                    val listener = it
+                    RxView
+                            .clicks(fabView)
+                            .subscribe {
+                                listener()
                             }
                 }
 
@@ -175,8 +180,9 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 .onLongClick
                 ?.let {
                     val listener = it
-                    fabView
-                            .setOnLongClickListener {
+                    RxView
+                            .longClicks(fabView)
+                            .subscribe {
                                 listener()
                             }
                 }

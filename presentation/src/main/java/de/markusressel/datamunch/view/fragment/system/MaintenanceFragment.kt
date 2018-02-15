@@ -6,6 +6,7 @@ import android.support.annotation.StringRes
 import android.view.LayoutInflater
 import android.view.View
 import com.afollestad.materialdialogs.MaterialDialog
+import com.jakewharton.rxbinding2.view.RxView
 import com.ncorti.slidetoact.SlideToActView
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
@@ -35,16 +36,18 @@ class MaintenanceFragment : DaggerSupportFragmentBase() {
         super
                 .onViewCreated(view, savedInstanceState)
 
-        buttonRestart
-                .setOnClickListener {
+        RxView
+                .clicks(buttonRestart)
+                .subscribe {
                     showWarningDialog(R.string.restart) {
                         freeNasWebApiClient
                                 .rebootSystem()
                     }
                 }
 
-        buttonShutdown
-                .setOnClickListener {
+        RxView
+                .clicks(buttonShutdown)
+                .subscribe {
                     showWarningDialog(R.string.shutdown) {
                         freeNasWebApiClient
                                 .shutdownSystem()

@@ -15,6 +15,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IProfile
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.extensions.isTablet
+import de.markusressel.datamunch.navigation.DrawerItemHolder
 import de.markusressel.datamunch.navigation.DrawerItemHolder.About
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Accounts
 import de.markusressel.datamunch.navigation.DrawerItemHolder.FileUploader
@@ -26,6 +27,7 @@ import de.markusressel.datamunch.navigation.DrawerItemHolder.Sharing
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Status
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Storage
 import de.markusressel.datamunch.navigation.DrawerMenuItem
+import de.markusressel.datamunch.navigation.NavigationPageHolder
 import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.navigation.page.NavigationPage
 import kotlinx.android.synthetic.main.activity_main.*
@@ -43,6 +45,12 @@ abstract class NavigationDrawerActivity : LockableSupportActivityBase() {
         get() = R.layout.activity_main
 
     protected lateinit var navigationDrawer: Drawer
+
+    protected var currentNavigationDrawerItem = DrawerItemHolder
+            .Status
+            .identifier
+    protected var currentPage: NavigationPage = NavigationPageHolder
+            .MainPage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super
@@ -108,8 +116,8 @@ abstract class NavigationDrawerActivity : LockableSupportActivityBase() {
         val profiles: MutableList<IProfile<*>> = LinkedList()
 
         profiles
-                .add(ProfileDrawerItem().withName("Markus Ressel").withEmail("").withIcon(
-                        R.mipmap.ic_launcher))
+                .add(ProfileDrawerItem().withName("Markus Ressel").withEmail(
+                        "mail@markusressel.de").withIcon(R.mipmap.ic_launcher))
 
         profiles
                 .add(ProfileDrawerItem().withName("Iris Haderer").withEmail("").withIcon(
@@ -123,15 +131,15 @@ abstract class NavigationDrawerActivity : LockableSupportActivityBase() {
 
         val clickListener = Drawer
                 .OnDrawerItemClickListener { view, position, drawerItem ->
-
-                    if (drawerItem.identifier == getDrawerMenuItem().identifier) {
-                        Timber
-                                .d { "Closing navigationDrawer because the clicked item (${drawerItem.identifier}) is the currently active page" }
-                        navigationDrawer
-                                .closeDrawer()
-                        return@OnDrawerItemClickListener true
+                    if (!isTablet()) {
+                        if (drawerItem.identifier == currentNavigationDrawerItem) {
+                            Timber
+                                    .d { "Closing navigationDrawer because the clicked item (${drawerItem.identifier}) is the currently active page" }
+                            navigationDrawer
+                                    .closeDrawer()
+                            return@OnDrawerItemClickListener true
+                        }
                     }
-
 
                     val page: NavigationPage? = when (drawerItem.identifier) {
                         Status.identifier -> Navigator.NavigationPages.MainPage
@@ -154,10 +162,22 @@ abstract class NavigationDrawerActivity : LockableSupportActivityBase() {
 
                     page
                             ?.let {
-                                navigator
-                                        .navigateTo(this, page)
-                                navigationDrawer
-                                        .closeDrawer()
+                                if (it.fragment != null) {
+                                    navigator
+                                            .navigateTo(this, it)
+                                } else {
+                                    navigator
+                                            .startActivity(this, it)
+                                }
+
+                                currentPage = it
+                                currentNavigationDrawerItem = drawerItem
+                                        .identifier
+
+                                if (!isTablet()) {
+                                    navigationDrawer
+                                            .closeDrawer()
+                                }
                                 return@OnDrawerItemClickListener true
                             }
 
@@ -208,15 +228,6 @@ abstract class NavigationDrawerActivity : LockableSupportActivityBase() {
                 .withIcon(menuItem.getIcon(iconHandler))
                 .withSelectable(menuItem.selectable)
                 .withOnDrawerItemClickListener(clickListener)
-    }
-
-    override fun onResume() {
-        super
-                .onResume()
-
-        // reset to this page
-        navigationDrawer
-                .setSelection(getDrawerMenuItem().identifier)
     }
 
     override fun onBackPressed() {
