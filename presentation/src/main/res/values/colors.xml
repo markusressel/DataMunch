@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="colorAccent">@color/colorAccentLight</color>
     <color name="colorAccentDark">@color/md_amber_A200</color>
     <color name="colorAccentLight">@color/md_amber_A700</color>
 
