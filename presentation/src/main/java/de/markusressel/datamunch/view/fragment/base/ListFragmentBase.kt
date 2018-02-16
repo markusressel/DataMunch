@@ -18,6 +18,7 @@ import de.markusressel.datamunch.view.plugin.LoadingPlugin
 import de.markusressel.datamunch.view.plugin.OptionsMenuPlugin
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable
 import io.reactivex.schedulers.Schedulers
@@ -43,6 +44,8 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
 
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
+
+    var loadFromPersistenceDisposable: Disposable? = null
 
     protected val loadingPlugin = LoadingPlugin(onShowContent = {
         updateFabVisibility(View.VISIBLE)
@@ -211,7 +214,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         loadingPlugin
                 .showLoading()
 
-        Single
+        loadFromPersistenceDisposable = Single
                 .fromCallable {
                     loadListDataFromPersistence()
                 }
@@ -336,6 +339,13 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                                 .INVISIBLE
                     }
         }
+    }
+
+    override fun onPause() {
+        super
+                .onPause()
+        loadFromPersistenceDisposable
+                ?.dispose()
     }
 
 }

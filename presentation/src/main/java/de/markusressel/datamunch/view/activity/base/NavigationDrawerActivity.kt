@@ -135,14 +135,16 @@ abstract class NavigationDrawerActivity : LockableSupportActivityBase() {
 
         val clickListener = Drawer
                 .OnDrawerItemClickListener { view, position, drawerItem ->
-                    if (!isTablet()) {
-                        if (drawerItem.identifier == currentNavigationDrawerItem) {
-                            Timber
-                                    .d { "Closing navigationDrawer because the clicked item (${drawerItem.identifier}) is the currently active page" }
+
+                    if (drawerItem.identifier == currentNavigationDrawerItem) {
+                        Timber
+                                .d { "Closing navigationDrawer because the clicked item (${drawerItem.identifier}) is the currently active page" }
+                        if (!isTablet()) {
+
                             navigationDrawer
                                     .closeDrawer()
-                            return@OnDrawerItemClickListener true
                         }
+                        return@OnDrawerItemClickListener true
                     }
 
                     val page: NavigationPage? = when (drawerItem.identifier) {

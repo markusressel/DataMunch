@@ -55,6 +55,6 @@
 
     <string name="details">Details</string>
 
-    <string name="plugins">Plugins</string>
+    <string name="plugins" translatable="false">Plugins</string>
 
 </resources>
