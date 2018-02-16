@@ -1,7 +1,5 @@
 package de.markusressel.datamunch.view.fragment.system
 
-import android.os.Bundle
-import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
@@ -69,9 +67,6 @@ class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
                                           it
                                                   .message
                                       }))
-    }
-
-    override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
 }

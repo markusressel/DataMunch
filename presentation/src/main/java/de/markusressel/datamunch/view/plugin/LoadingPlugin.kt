@@ -15,6 +15,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.github.ajalt.timberkt.Timber
 import com.jakewharton.rxbinding2.view.RxView
 import com.pascalwelsch.compositeandroid.fragment.FragmentPlugin
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 
 /**
@@ -171,6 +172,7 @@ class LoadingPlugin(val onShowContent: ((animated: Boolean) -> Unit)? = null,
 
         RxView
                 .clicks(errorLayout)
+                .bindToLifecycle(errorLayout)
                 .subscribe {
                     onErrorClicked
                             ?.let {

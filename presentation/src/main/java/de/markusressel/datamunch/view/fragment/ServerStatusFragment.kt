@@ -8,12 +8,12 @@ import android.view.View
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
+import de.markusressel.datamunch.extensions.disposeOnPause
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.plugin.LoadingPlugin
 import de.markusressel.datamunch.view.plugin.OptionsMenuPlugin
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_server_status.*
@@ -37,9 +37,6 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
         get() = R.layout.fragment_server_status
 
     val loadingPlugin = LoadingPlugin()
-
-    private var reloadObservable: Disposable? = null
-    private var reloadObservable2: Disposable? = null
 
     init {
         addFragmentPlugins(loadingPlugin,
@@ -82,7 +79,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
         loadingPlugin
                 .showLoading()
 
-        reloadObservable = Single
+        Single
                 .fromCallable {
                     frittenbudeServerManager
                             .retrieveHostname()
@@ -102,8 +99,9 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                     loadingPlugin
                             .showError(it)
                 })
+                .disposeOnPause(disposables)
 
-        reloadObservable2 = Single
+        Single
                 .fromCallable {
                     frittenbudeServerManager
                             .retrieveUptime()
@@ -125,15 +123,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                     loadingPlugin
                             .showError(it)
                 })
-    }
-
-    override fun onPause() {
-        super
-                .onPause()
-        reloadObservable
-                ?.dispose()
-        reloadObservable2
-                ?.dispose()
+                .disposeOnPause(disposables)
     }
 
 }

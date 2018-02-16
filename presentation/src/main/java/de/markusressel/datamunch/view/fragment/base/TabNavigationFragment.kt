@@ -9,6 +9,7 @@ import android.view.View
 import com.gigamole.navigationtabstrip.NavigationTabStrip
 import com.github.ajalt.timberkt.Timber
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.extensions.disposeOnPause
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable
@@ -35,7 +36,6 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
         tabNavigation = view.findViewById(R.id.tabBar) as NavigationTabStrip
 
         setupViewPager()
-        createTabBar()
     }
 
     private fun setupViewPager() {
@@ -58,6 +58,13 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
                 .size
     }
 
+    override fun onResume() {
+        super
+                .onResume()
+
+        createTabBar()
+    }
+
     private fun createTabBar() {
         // set tab titles
         Single
@@ -76,6 +83,7 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
                     Timber
                             .e { "Error adding Tab Navigation items" }
                 })
+                .disposeOnPause(disposables)
 
         tabNavigation
                 .setViewPager(viewPager)

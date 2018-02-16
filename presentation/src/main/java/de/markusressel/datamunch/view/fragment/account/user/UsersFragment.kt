@@ -1,7 +1,5 @@
 package de.markusressel.datamunch.view.fragment.account.user
 
-import android.os.Bundle
-import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.BR
@@ -43,9 +41,6 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
                     }
                 }
                 .into(recyclerView)
-    }
-
-    override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
     override fun loadListDataFromSource(): Single<List<UserModel>> {

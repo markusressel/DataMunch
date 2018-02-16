@@ -1,7 +1,5 @@
 package de.markusressel.datamunch.view.fragment.system
 
-import android.os.Bundle
-import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.BR
@@ -44,9 +42,6 @@ class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
                     }
                 }
                 .into(recyclerView)
-    }
-
-    override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
     override fun loadListDataFromSource(): Single<List<UpdateModel>> {

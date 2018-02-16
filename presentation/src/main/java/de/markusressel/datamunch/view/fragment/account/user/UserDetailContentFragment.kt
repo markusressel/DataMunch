@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper
 import com.jakewharton.rxbinding2.widget.RxTextView
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.UserPersistenceManager
 import de.markusressel.datamunch.data.persistence.entity.UserEntity
@@ -30,7 +31,11 @@ class UserDetailContentFragment : DaggerSupportFragmentBase() {
 
         MaterialViewPagerHelper
                 .registerScrollView(activity, scrollView)
+    }
 
+    override fun onResume() {
+        super
+                .onResume()
         updateUiFromEntity()
     }
 
@@ -59,6 +64,7 @@ class UserDetailContentFragment : DaggerSupportFragmentBase() {
                 .setText(entity.bsdusr_full_name)
         RxTextView
                 .textChanges(fullNameEditText)
+                .bindToLifecycle(fullNameEditText)
                 .subscribeBy(onNext = {
                     val entityCopy = entity
                             .copy(bsdusr_full_name = it.toString())
@@ -70,6 +76,7 @@ class UserDetailContentFragment : DaggerSupportFragmentBase() {
                 .setText("")
         RxTextView
                 .textChanges(passwordEditText)
+                .bindToLifecycle(passwordEditText)
                 .subscribeBy(onNext = {
 
                 })
@@ -79,6 +86,7 @@ class UserDetailContentFragment : DaggerSupportFragmentBase() {
                 .setText(entity.bsdusr_email)
         RxTextView
                 .textChanges(emailEditText)
+                .bindToLifecycle(emailEditText)
                 .subscribeBy(onNext = {
                     val entityCopy = entity
                             .copy(bsdusr_email = it.toString())
@@ -94,6 +102,7 @@ class UserDetailContentFragment : DaggerSupportFragmentBase() {
                 .setText(entity.bsdusr_shell)
         RxTextView
                 .textChanges(shellEditText)
+                .bindToLifecycle(shellEditText)
                 .subscribeBy(onNext = {
                     val entityCopy = entity
                             .copy(bsdusr_email = it.toString())

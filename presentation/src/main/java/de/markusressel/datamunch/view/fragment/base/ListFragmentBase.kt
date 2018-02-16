@@ -11,19 +11,23 @@ import android.view.*
 import com.github.nitrico.lastadapter.LastAdapter
 import com.jakewharton.rxbinding2.view.RxView
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import com.philosophicalhacker.lib.RxLoader
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.extensions.disposeOnPause
 import de.markusressel.datamunch.view.plugin.LoadingPlugin
 import de.markusressel.datamunch.view.plugin.OptionsMenuPlugin
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_list.*
+import java.util.*
+import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 
@@ -45,8 +49,14 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
-    var loadFromPersistenceDisposable: Disposable? = null
-    var loadDataFromSourceDisposable: Disposable? = null
+    protected val rxLoader by lazy {
+        RxLoader(activity as Context, activity?.supportLoaderManager)
+    }
+
+    private val persistenceLoaderId = loaderIdCounter
+            .getAndIncrement()
+    private val sourceLoaderId = loaderIdCounter
+            .getAndIncrement()
 
     protected val loadingPlugin = LoadingPlugin(onShowContent = {
         updateFabVisibility(View.VISIBLE)
@@ -100,8 +110,11 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         frittenbudeServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy(),
                                         connectionManager.getMainSSHConnection())
+    }
 
-        onListViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super
+                .onResume()
 
         fillListFromPersistence()
     }
@@ -175,6 +188,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                     val listener = it
                     RxView
                             .clicks(fabView)
+                            .bindToLifecycle(fabView)
                             .subscribe {
                                 listener()
                             }
@@ -186,6 +200,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                     val listener = it
                     RxView
                             .longClicks(fabView)
+                            .bindToLifecycle(fabView)
                             .subscribe {
                                 listener()
                             }
@@ -204,26 +219,17 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
     abstract fun createAdapter(): LastAdapter
 
     /**
-     * Called after the list view layout has been inflated
-     */
-    abstract fun onListViewCreated(view: View, savedInstanceState: Bundle?)
-
-    /**
      * Loads the data using {@link loadListDataFromPersistence()}
      */
     private fun fillListFromPersistence() {
-        loadFromPersistenceDisposable
-                ?.dispose()
-
         loadingPlugin
                 .showLoading()
 
-        loadFromPersistenceDisposable = Single
+        Single
                 .fromCallable {
                     loadListDataFromPersistence()
                 }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(rxLoader.makeSingleTransformer(persistenceLoaderId))
                 .subscribeBy(onSuccess = {
                     listValues
                             .clear()
@@ -250,15 +256,11 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
      * Reload list data asEntity it's original source, persist it and display it to the user afterwards
      */
     protected fun reloadDataFromSource() {
-        loadDataFromSourceDisposable
-                ?.dispose()
-
         loadingPlugin
                 .showLoading()
 
-        loadDataFromSourceDisposable = loadListDataFromSource()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        loadListDataFromSource()
+                .compose(rxLoader.makeSingleTransformer(sourceLoaderId))
                 .subscribeBy(onSuccess = {
                     it
                             .toObservable()
@@ -275,6 +277,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                                 loadingPlugin
                                         .showError(it)
                             })
+                            .disposeOnPause(disposables)
                 }, onError = {
                     loadingPlugin
                             .showError(it)
@@ -348,13 +351,8 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         }
     }
 
-    override fun onPause() {
-        super
-                .onPause()
-        loadFromPersistenceDisposable
-                ?.dispose()
-        loadDataFromSourceDisposable
-                ?.dispose()
+    companion object {
+        private val loaderIdCounter: AtomicInteger = AtomicInteger()
     }
 
 }

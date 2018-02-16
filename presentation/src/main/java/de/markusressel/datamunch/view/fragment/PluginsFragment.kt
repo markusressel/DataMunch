@@ -1,7 +1,5 @@
 package de.markusressel.datamunch.view.fragment
 
-import android.os.Bundle
-import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
@@ -61,9 +59,6 @@ class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
                             .plugin_name
                             .toLowerCase()
                 }
-    }
-
-    override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
 }

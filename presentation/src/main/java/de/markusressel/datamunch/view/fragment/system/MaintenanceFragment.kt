@@ -8,6 +8,7 @@ import android.view.View
 import com.afollestad.materialdialogs.MaterialDialog
 import com.jakewharton.rxbinding2.view.RxView
 import com.ncorti.slidetoact.SlideToActView
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.plugin.LoadingPlugin
@@ -36,8 +37,17 @@ class MaintenanceFragment : DaggerSupportFragmentBase() {
         super
                 .onViewCreated(view, savedInstanceState)
 
+        loadingPlugin
+                .showContent()
+    }
+
+    override fun onResume() {
+        super
+                .onResume()
+
         RxView
                 .clicks(buttonRestart)
+                .bindToLifecycle(buttonRestart)
                 .subscribe {
                     showWarningDialog(R.string.restart) {
                         freeNasWebApiClient
@@ -47,6 +57,7 @@ class MaintenanceFragment : DaggerSupportFragmentBase() {
 
         RxView
                 .clicks(buttonShutdown)
+                .bindToLifecycle(buttonShutdown)
                 .subscribe {
                     showWarningDialog(R.string.shutdown) {
                         freeNasWebApiClient
@@ -54,8 +65,6 @@ class MaintenanceFragment : DaggerSupportFragmentBase() {
                     }
                 }
 
-        loadingPlugin
-                .showContent()
     }
 
     private fun showWarningDialog(@StringRes buttonText: Int, function: () -> Any) {
@@ -86,6 +95,7 @@ class MaintenanceFragment : DaggerSupportFragmentBase() {
 
                 Single
                         .fromCallable { function() }
+                        .bindToLifecycle(button)
                         .subscribeBy(onSuccess = {
                             loadingPlugin
                                     .showContent()

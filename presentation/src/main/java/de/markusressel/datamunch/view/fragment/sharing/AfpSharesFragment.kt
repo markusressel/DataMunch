@@ -1,7 +1,5 @@
 package de.markusressel.datamunch.view.fragment.sharing
 
-import android.os.Bundle
-import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.BR
@@ -74,9 +72,6 @@ class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
     }
 
     private fun openAddView() {
-    }
-
-    override fun onListViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
 }
