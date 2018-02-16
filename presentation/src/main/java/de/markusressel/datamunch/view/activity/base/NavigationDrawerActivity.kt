@@ -147,24 +147,8 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                         return@OnDrawerItemClickListener true
                     }
 
-                    val page: NavigationPage? = when (drawerItem.identifier) {
-                        Status.identifier -> Navigator.NavigationPages.MainPage
-                        Accounts.identifier -> Navigator.NavigationPages.AccountsPage
-                        Services.identifier -> Navigator.NavigationPages.ServicesPage
-                        Sharing.identifier -> Navigator.NavigationPages.SharingPage
-                        Storage.identifier -> Navigator.NavigationPages.StoragePage
-                        Jails.identifier -> Navigator.NavigationPages.JailsPage
-                        Plugins.identifier -> Navigator.NavigationPages.PluginsPage
-                        Navigator.DrawerItems.System.identifier -> Navigator.NavigationPages.SystemPage
-                        FileUploader.identifier -> Navigator.NavigationPages.FileUploaderPage
-                        Settings.identifier -> Navigator.NavigationPages.PreferencesOverviewPage
-                        About.identifier -> Navigator.NavigationPages.AboutPage
-                        else -> {
-                            Timber
-                                    .w { "Unknown menu item identifier: ${drawerItem.identifier}" }
-                            null
-                        }
-                    }
+                    val page: NavigationPage? = NavigationPage
+                            .fromDrawerItem(drawerItem)
 
                     page
                             ?.let {
