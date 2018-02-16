@@ -9,6 +9,9 @@
     <string name="fileUploader_title">File Uploader</string>
     <string name="fileUploader_summary">Settings related to uploading files</string>
 
+    <string name="security_title">Security</string>
+    <string name="security_summary">App related security settings</string>
+
     <!-- Theme -->
     <string name="theme_title">Theme</string>
     <string name="theme_summary">Application theme</string>

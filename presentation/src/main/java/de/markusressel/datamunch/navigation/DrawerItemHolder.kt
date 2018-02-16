@@ -38,7 +38,7 @@ object DrawerItemHolder {
                                 icon = MaterialDesignIconic.Icon.gmi_settings, selectable = true)
 
     val Settings = DrawerMenuItem(identifier = 500, title = R.string.menu_item_settings,
-                                  icon = MaterialDesignIconic.Icon.gmi_settings, selectable = true)
+                                  icon = MaterialDesignIconic.Icon.gmi_settings, selectable = false)
 
     val About = DrawerMenuItem(identifier = 1000, title = R.string.menu_item_about,
                                icon = MaterialDesignIconic.Icon.gmi_info, selectable = false)

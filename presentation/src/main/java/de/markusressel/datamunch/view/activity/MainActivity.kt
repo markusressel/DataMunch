@@ -3,8 +3,6 @@ package de.markusressel.datamunch.view.activity
 import de.markusressel.datamunch.navigation.DrawerItemHolder
 import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
-import de.markusressel.datamunch.view.fragment.ServerStatusFragment
-import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 
 class MainActivity : NavigationDrawerActivity() {
 
@@ -15,8 +13,5 @@ class MainActivity : NavigationDrawerActivity() {
         return DrawerItemHolder
                 .Status
     }
-
-    override val contentFragment: () -> DaggerSupportFragmentBase
-        get() = ::ServerStatusFragment
 
 }

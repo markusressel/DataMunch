@@ -32,6 +32,12 @@
             android:summary="@string/fileUploader_summary"
             android:title="@string/fileUploader_title" />
 
+        <de.mrapp.android.preference.activity.NavigationPreference
+            android:breadCrumbTitle="@string/security_title"
+            android:fragment="de.markusressel.datamunch.view.fragment.preferences.SecurityPreferences"
+            android:summary="@string/security_summary"
+            android:title="@string/security_title" />
+
         <de.markusressel.datamunch.view.preferences.IntListPreference
             android:breadCrumbTitle="@string/theme_title"
             android:entries="@array/theme_names"

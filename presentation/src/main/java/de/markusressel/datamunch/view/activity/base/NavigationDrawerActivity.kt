@@ -39,7 +39,7 @@ import java.util.*
  *
  * Created by Markus on 07.01.2018.
  */
-abstract class NavigationDrawerActivity : LockableSupportActivityBase() {
+abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
     override val layoutRes: Int
         get() = R.layout.activity_main

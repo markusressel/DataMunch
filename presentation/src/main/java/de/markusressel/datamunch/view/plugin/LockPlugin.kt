@@ -2,7 +2,6 @@ package de.markusressel.datamunch.view.plugin
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -11,13 +10,14 @@ import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
 import com.pascalwelsch.compositeandroid.activity.ActivityPlugin
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.event.LockEvent
 import de.markusressel.datamunch.view.fragment.LockscreenFragment
 
 /**
  * Created by Markus on 15.02.2018.
  */
-class LockPlugin(val contentFragment: () -> Fragment) : ActivityPlugin() {
+class LockPlugin : ActivityPlugin() {
 
     @SuppressLint("MissingSuperCall")
     public override fun onSaveInstanceState(outState: Bundle) {
@@ -45,6 +45,10 @@ class LockPlugin(val contentFragment: () -> Fragment) : ActivityPlugin() {
         val baseLayout = FrameLayout(original)
 
         originalLayout = view
+        // hide initially to unlock it later
+        originalLayout
+                .visibility = View
+                .GONE
 
         // attach the original content view
         baseLayout
@@ -67,7 +71,15 @@ class LockPlugin(val contentFragment: () -> Fragment) : ActivityPlugin() {
                 //                .addToBackStack(preferencesFragment.tag)
                 .commitAllowingStateLoss()
 
-        lockScreen()
+        // instantiate manually since CompositeAndroid cant access injected objects
+        val preferenceHandler = PreferenceHandler(original)
+        val usePattern = preferenceHandler
+                .getValue(PreferenceHandler.USE_PATTERN_LOCK)
+        if (usePattern) {
+            lockScreen()
+        } else {
+            unlockScreen()
+        }
 
         return baseLayout
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="category_fileUploader">File Uploader</string>
+    <string name="category_fileUploader">Datei Uploader</string>
+    <string name="category_security">Sicherheit</string>
 
 </resources>

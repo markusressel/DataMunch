@@ -7,6 +7,7 @@ import de.markusressel.datamunch.view.activity.preferences.PreferenceOverviewAct
 import de.markusressel.datamunch.view.fragment.preferences.ConnectionPreferences
 import de.markusressel.datamunch.view.fragment.preferences.DaggerPreferenceFragment
 import de.markusressel.datamunch.view.fragment.preferences.FileUploaderPreferences
+import de.markusressel.datamunch.view.fragment.preferences.SecurityPreferences
 
 /**
  * Created by Markus on 20.12.2017.
@@ -28,5 +29,8 @@ abstract class PreferencesBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun FileUploaderPreferences(): FileUploaderPreferences
+
+    @ContributesAndroidInjector
+    internal abstract fun SecurityPreferences(): SecurityPreferences
 
 }

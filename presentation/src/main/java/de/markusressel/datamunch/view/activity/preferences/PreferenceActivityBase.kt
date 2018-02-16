@@ -119,7 +119,8 @@ abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.Pre
     }
 
     private fun initTheme() {
-        setNavigationBackgroundColor(themeHelper.getThemeAttrColor(this, android.R.attr.windowBackground))
+        setNavigationBackgroundColor(
+                themeHelper.getThemeAttrColor(this, android.R.attr.windowBackground))
     }
 
     /**

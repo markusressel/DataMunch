@@ -1,6 +1,5 @@
 package de.markusressel.datamunch.data.preferences
 
-import android.annotation.SuppressLint
 import android.content.Context
 import de.markusressel.datamunch.data.R
 import de.markusressel.typedpreferences.PreferenceItem
@@ -22,13 +21,9 @@ class PreferenceHandler @Inject constructor(context: Context) : PreferencesHandl
                                                                         SSH_PASS, SSH_PROXY_HOST,
                                                                         SSH_PROXY_PORT,
                                                                         SSH_PROXY_USER,
-                                                                        SSH_PROXY_PASSWORD)
-
-    @SuppressLint("MissingSuperCall")
-    override fun <T : Any> getValue(preferenceItem: PreferenceItem<T>): T {
-        return super
-                .getValue(preferenceItem)
-    }
+                                                                        SSH_PROXY_PASSWORD,
+                                                                        USE_PATTERN_LOCK,
+                                                                        LOCK_PATTERN)
 
     companion object {
         val THEME = PreferenceItem(R.string.theme_key, 0)
@@ -45,6 +40,9 @@ class PreferenceHandler @Inject constructor(context: Context) : PreferencesHandl
         val SSH_PROXY_USER = PreferenceItem(R.string.connection_ssh_proxy_user_key, "root")
         val SSH_PROXY_PASSWORD = PreferenceItem(R.string.connection_ssh_proxy_password_key,
                                                 "JxYZbT47vvXmzy952h4H")
+
+        val USE_PATTERN_LOCK = PreferenceItem(R.string.use_pattern_lock_key, false)
+        val LOCK_PATTERN = PreferenceItem(R.string.lock_pattern_key, false)
     }
 
 }

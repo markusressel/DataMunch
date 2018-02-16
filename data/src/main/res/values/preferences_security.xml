@@ -1,0 +1,6 @@
+<resources>
+
+    <string name="use_pattern_lock_key">use_pattern_lock_key</string>
+    <string name="lock_pattern_key">lock_pattern_key</string>
+
+</resources>
