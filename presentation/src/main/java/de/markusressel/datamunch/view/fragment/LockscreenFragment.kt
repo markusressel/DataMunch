@@ -19,7 +19,6 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_lockscreen.*
 import java.util.concurrent.TimeUnit
 
@@ -84,7 +83,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                                 .setViewMode(PatternLockView.PatternViewMode.CORRECT)
                     }
                     .delay(250, TimeUnit.MILLISECONDS)
-                    .observeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .subscribeBy(onSuccess = {
                         unlockScreen()
@@ -99,7 +98,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                         // TODO: disable touch input
                     }
                     .delay(1, TimeUnit.SECONDS)
-                    .observeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .subscribeBy(onSuccess = {
                         patternLockView
