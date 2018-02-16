@@ -36,6 +36,7 @@
     <string name="exception_raised">Ausnahme aufgetreten</string>
 
     <string name="warning">Warnung</string>
+    <string name="danger_zone_warning">Vergewissere dich physikalischen Zugriff auf deinen Server zu haben falls irgendetwas schief gehen sollte!</string>
 
     <string name="shutdown">Herunterfahren</string>
 
