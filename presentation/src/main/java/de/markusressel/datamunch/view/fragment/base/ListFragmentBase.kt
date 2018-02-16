@@ -214,6 +214,13 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         loadingPlugin
                 .showLoading()
 
+        loadFromPersistenceDisposable
+                ?.let {
+                    if (!it.isDisposed) {
+                        it
+                                .dispose()
+                    }
+                }
         loadFromPersistenceDisposable = Single
                 .fromCallable {
                     loadListDataFromPersistence()
