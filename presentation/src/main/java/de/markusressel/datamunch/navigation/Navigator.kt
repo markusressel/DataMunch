@@ -42,7 +42,7 @@ class Navigator @Inject constructor() {
                 .beginTransaction()
                 .replace(R.id.contentLayout, fragment)
                 //                .addToBackStack(preferencesFragment.tag)
-                .commitAllowingStateLoss()
+                .commit()
     }
 
     /**

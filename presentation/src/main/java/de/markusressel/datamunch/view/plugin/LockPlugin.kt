@@ -31,7 +31,7 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
                     .setContentView(wrapperLayout)
         } else {
             Timber
-                    .e { "LockPlugin coulnd't attach to the parent view as it was NULL" }
+                    .e { "LockPlugin couldn't attach to the parent view as it was NULL" }
             original
                     .delegate
                     .setContentView(view)
@@ -70,7 +70,7 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
                 .beginTransaction()
                 .replace(lockLayout.id, LockscreenFragment())
                 //                .addToBackStack(preferencesFragment.tag)
-                .commitAllowingStateLoss()
+                .commit()
 
         // lock on create if enabled
         val useLock = preferenceHandler()
