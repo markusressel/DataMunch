@@ -46,6 +46,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
     var loadFromPersistenceDisposable: Disposable? = null
+    var loadDataFromSourceDisposable: Disposable? = null
 
     protected val loadingPlugin = LoadingPlugin(onShowContent = {
         updateFabVisibility(View.VISIBLE)
@@ -211,16 +212,12 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
      * Loads the data using {@link loadListDataFromPersistence()}
      */
     private fun fillListFromPersistence() {
+        loadFromPersistenceDisposable
+                ?.dispose()
+
         loadingPlugin
                 .showLoading()
 
-        loadFromPersistenceDisposable
-                ?.let {
-                    if (!it.isDisposed) {
-                        it
-                                .dispose()
-                    }
-                }
         loadFromPersistenceDisposable = Single
                 .fromCallable {
                     loadListDataFromPersistence()
@@ -253,10 +250,13 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
      * Reload list data asEntity it's original source, persist it and display it to the user afterwards
      */
     protected fun reloadDataFromSource() {
+        loadDataFromSourceDisposable
+                ?.dispose()
+
         loadingPlugin
                 .showLoading()
 
-        loadListDataFromSource()
+        loadDataFromSourceDisposable = loadListDataFromSource()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onSuccess = {
@@ -352,6 +352,8 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         super
                 .onPause()
         loadFromPersistenceDisposable
+                ?.dispose()
+        loadDataFromSourceDisposable
                 ?.dispose()
     }
 
