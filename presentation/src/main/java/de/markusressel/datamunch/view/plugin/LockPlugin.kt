@@ -72,11 +72,6 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
                 //                .addToBackStack(preferencesFragment.tag)
                 .commit()
 
-        // lock on create if enabled
-        val useLock = preferenceHandler()
-                .getValue(PreferenceHandler.USE_PATTERN_LOCK)
-        setScreenLock(useLock)
-
         return baseLayout
     }
 
