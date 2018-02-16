@@ -4,16 +4,24 @@ import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.util.Log
 import android.view.View
+import com.andrognito.patternlockview.PatternLockView
 import com.andrognito.patternlockview.utils.PatternLockUtils
+import com.andrognito.patternlockview.utils.PatternLockUtils.patternToSha1
 import com.andrognito.rxpatternlockview.RxPatternLockView
 import com.andrognito.rxpatternlockview.events.PatternLockCompoundEvent
 import com.eightbitlab.rxbus.Bus
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.event.LockEvent
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_lockscreen.*
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -53,7 +61,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                                        "Pattern complete: " + PatternLockUtils.patternToString(
                                                patternLockView, event.pattern))
 
-                            unlockScreen()
+                            checkPattern(event.pattern)
                         } else if (event.eventType == PatternLockCompoundEvent.EventType.PATTERN_CLEARED) {
                             Log
                                     .d(javaClass.name, "Pattern has been cleared")
@@ -63,9 +71,42 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
 
     }
 
-    private fun lockScreen() {
-        Bus
-                .send(LockEvent(true))
+    private fun checkPattern(pattern: List<PatternLockView.Dot>?) {
+        val correctPattern = preferenceHandler
+                .getValue(PreferenceHandler.LOCK_PATTERN)
+        val patternAsString = patternToSha1(patternLockView, pattern)
+
+        // TODO: remove true!
+        if (true || patternAsString == correctPattern) {
+            Single
+                    .fromCallable {
+                        patternLockView
+                                .setViewMode(PatternLockView.PatternViewMode.CORRECT)
+                    }
+                    .delay(250, TimeUnit.MILLISECONDS)
+                    .observeOn(Schedulers.io())
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(onSuccess = {
+                        unlockScreen()
+                        patternLockView
+                                .clearPattern()
+                    })
+        } else {
+            Single
+                    .fromCallable {
+                        patternLockView
+                                .setViewMode(PatternLockView.PatternViewMode.WRONG)
+                        // TODO: disable touch input
+                    }
+                    .delay(1, TimeUnit.SECONDS)
+                    .observeOn(Schedulers.io())
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(onSuccess = {
+                        patternLockView
+                                .clearPattern()
+                        // TODO: enable touch input
+                    })
+        }
     }
 
     private fun unlockScreen() {

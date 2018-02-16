@@ -20,7 +20,7 @@ import de.markusressel.datamunch.view.fragment.LockscreenFragment
 class LockPlugin : ActivityPlugin() {
 
     @SuppressLint("MissingSuperCall")
-    public override fun onSaveInstanceState(outState: Bundle) {
+    override fun onSaveInstanceState(outState: Bundle) {
     }
 
     override fun setContentView(view: View?) {
@@ -40,6 +40,11 @@ class LockPlugin : ActivityPlugin() {
 
     private lateinit var lockLayout: ViewGroup
     private lateinit var originalLayout: View
+
+    // instantiate manually since CompositeAndroid cant access injected objects
+    val preferenceHandler by lazy {
+        PreferenceHandler(original)
+    }
 
     private fun createWrapperLayout(view: View): ViewGroup {
         val baseLayout = FrameLayout(original)
@@ -71,15 +76,10 @@ class LockPlugin : ActivityPlugin() {
                 //                .addToBackStack(preferencesFragment.tag)
                 .commitAllowingStateLoss()
 
-        // instantiate manually since CompositeAndroid cant access injected objects
-        val preferenceHandler = PreferenceHandler(original)
-        val usePattern = preferenceHandler
+        // lock on create if enabled
+        val useLock = preferenceHandler
                 .getValue(PreferenceHandler.USE_PATTERN_LOCK)
-        if (usePattern) {
-            lockScreen()
-        } else {
-            unlockScreen()
-        }
+        setScreenLock(useLock)
 
         return baseLayout
     }
@@ -91,33 +91,62 @@ class LockPlugin : ActivityPlugin() {
         Bus
                 .observe<LockEvent>()
                 .subscribe {
-                    if (it.lock) {
-                        lockScreen()
-                        isLocked = true
-                    } else {
-                        unlockScreen()
-                        isLocked = false
-                    }
+                    setScreenLock(it.lock)
                 }
                 .registerInBus(this)
     }
 
-    private fun lockScreen() {
-        originalLayout
-                .visibility = View
-                .GONE
-        lockLayout
-                .visibility = View
-                .VISIBLE
+    override fun onResume() {
+        super
+                .onResume()
+        setScreenLock(isLocked)
     }
 
+    private fun setScreenLock(locked: Boolean) {
+        if (locked) {
+            lockScreen()
+        } else {
+            unlockScreen()
+        }
+    }
+
+    /**
+     * Locks the screen if enabled in preferences
+     * Otherwise this is a no-op
+     */
+    private fun lockScreen() {
+        val useLock = preferenceHandler
+                .getValue(PreferenceHandler.USE_PATTERN_LOCK)
+        if (useLock) {
+            original
+                    .runOnUiThread {
+                        originalLayout
+                                .visibility = View
+                                .GONE
+                        lockLayout
+                                .visibility = View
+                                .VISIBLE
+                    }
+
+            isLocked = true
+        }
+    }
+
+    /**
+     * Unlocks the screen
+     */
     private fun unlockScreen() {
-        originalLayout
-                .visibility = View
-                .VISIBLE
-        lockLayout
-                .visibility = View
-                .GONE
+        original
+                .runOnUiThread {
+                    originalLayout
+                            .visibility = View
+                            .VISIBLE
+                    lockLayout
+                            .visibility = View
+                            .GONE
+                }
+
+        isLocked = false
     }
 
     override fun onDestroy() {
@@ -134,7 +163,6 @@ class LockPlugin : ActivityPlugin() {
          * Indicates whether the screen is locked
          */
         @Volatile
-        private var isLocked = true
+        var isLocked = true
     }
-
 }

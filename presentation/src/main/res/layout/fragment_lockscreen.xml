@@ -16,7 +16,10 @@
     <com.andrognito.patternlockview.PatternLockView
         android:id="@+id/patternLockView"
         android:layout_width="280dp"
-        android:layout_height="280dp" />
+        android:layout_height="280dp"
+        app:correctStateColor="@color/md_green_A400"
+        app:normalStateColor="@color/white"
+        app:wrongStateColor="@color/md_red_A700" />
 
     <View
         android:id="@+id/lockContentLayout"
