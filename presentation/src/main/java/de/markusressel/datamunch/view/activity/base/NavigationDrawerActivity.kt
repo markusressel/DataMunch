@@ -107,7 +107,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                 .withCloseDrawerOnProfileListClick(false)
                 .withCurrentProfileHiddenInList(true)
                 .withDividerBelowHeader(true)
-                .withOnAccountHeaderListener { view, profile, current ->
+                .withOnAccountHeaderListener { _, profile, current ->
                     Timber
                             .d { "Pressed profile: '$profile' with current: '$current'" }
                     false
@@ -134,7 +134,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         val menuItemList: MutableList<IDrawerItem<*, *>> = LinkedList()
 
         val clickListener = Drawer
-                .OnDrawerItemClickListener { view, position, drawerItem ->
+                .OnDrawerItemClickListener { _, _, drawerItem ->
 
                     if (drawerItem.identifier == currentNavigationDrawerItem) {
                         Timber

@@ -45,9 +45,6 @@
     <string name="danger_zone_warning">Be sure to have physical access to your
         server in case anything goes wrong!</string>
 
-    <string name="swipe_to_restart">Swipe to RESTART</string>
-    <string name="swipe_to_shutdown">Swipe to SHUTDOWN</string>
-
     <string name="shutdown">Shutdown</string>
 
     <string name="do_it">Do it!</string>

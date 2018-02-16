@@ -59,12 +59,14 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
 
     private fun setListeners() {
         themeListener = preferenceHandler
-                .addOnPreferenceChangedListener(PreferenceHandler.THEME) { preferenceItem: PreferenceItem<Int>, old: Int, new: Int ->
+                .addOnPreferenceChangedListener(
+                        PreferenceHandler.THEME) { _: PreferenceItem<Int>, _: Int, _: Int ->
                     restartActivity()
                 }
 
         localeListener = preferenceHandler
-                .addOnPreferenceChangedListener(PreferenceHandler.LOCALE) { preferenceItem: PreferenceItem<Int>, old: Int, new: Int ->
+                .addOnPreferenceChangedListener(
+                        PreferenceHandler.LOCALE) { _: PreferenceItem<Int>, _: Int, _: Int ->
                     restartActivity()
                     recreate()
                 }
