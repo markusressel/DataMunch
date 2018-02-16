@@ -16,7 +16,6 @@ import de.markusressel.datamunch.data.ssh.ConnectionManager
 import de.markusressel.datamunch.view.IconHandler
 import de.markusressel.freenaswebapiclient.BasicAuthConfig
 import de.markusressel.freenaswebapiclient.FreeNasWebApiClient
-import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 
@@ -52,9 +51,6 @@ abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFr
 
     val freeNasWebApiClient = FreeNasWebApiClient()
 
-    // RxJava disposables that need to be disposed when the fragment is paused
-    val disposables: MutableList<Disposable> = mutableListOf()
-
     /**
      * The layout resource for this Activity
      */
@@ -73,17 +69,6 @@ abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFr
         } else {
             return newContainer
         }
-    }
-
-    override fun onPause() {
-        super
-                .onPause()
-
-        disposables
-                .forEach {
-                    it
-                            .dispose()
-                }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

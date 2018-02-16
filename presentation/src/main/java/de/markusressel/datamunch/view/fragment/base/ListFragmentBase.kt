@@ -1,5 +1,6 @@
 package de.markusressel.datamunch.view.fragment.base
 
+import android.arch.lifecycle.Lifecycle
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.CallSuper
@@ -8,14 +9,15 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
+import com.github.ajalt.timberkt.Timber
 import com.github.nitrico.lastadapter.LastAdapter
 import com.jakewharton.rxbinding2.view.RxView
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.extensions.disposeOnPause
 import de.markusressel.datamunch.view.plugin.LoadingPlugin
 import de.markusressel.datamunch.view.plugin.OptionsMenuPlugin
 import io.reactivex.Single
@@ -26,6 +28,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_list.*
 import java.util.*
+import java.util.concurrent.CancellationException
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
@@ -224,6 +227,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
                 .subscribeBy(onSuccess = {
                     listValues
                             .clear()
@@ -241,10 +245,14 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                     recyclerViewAdapter
                             .notifyDataSetChanged()
                 }, onError = {
-                    loadingPlugin
-                            .showError(it)
+                    if (it is CancellationException) {
+                        Timber
+                                .d { "reload from persistence cancelled" }
+                    } else {
+                        loadingPlugin
+                                .showError(it)
+                    }
                 })
-                .disposeOnPause(disposables)
     }
 
     /**
@@ -257,9 +265,11 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         loadListDataFromSource()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
                 .subscribeBy(onSuccess = {
                     it
                             .toObservable()
+                            .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
                             .map {
                                 mapToPersistenceEntity(it)
                             }
@@ -270,15 +280,23 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                                 persistListData(it)
                                 fillListFromPersistence()
                             }, onError = {
-                                loadingPlugin
-                                        .showError(it)
+                                if (it is CancellationException) {
+                                    Timber
+                                            .d { "persisting reload from source cancelled" }
+                                } else {
+                                    loadingPlugin
+                                            .showError(it)
+                                }
                             })
-                            .disposeOnPause(disposables)
                 }, onError = {
-                    loadingPlugin
-                            .showError(it)
+                    if (it is CancellationException) {
+                        Timber
+                                .d { "reload from source cancelled" }
+                    } else {
+                        loadingPlugin
+                                .showError(it)
+                    }
                 })
-                .disposeOnPause(disposables)
     }
 
     abstract fun mapToPersistenceEntity(it: K): T

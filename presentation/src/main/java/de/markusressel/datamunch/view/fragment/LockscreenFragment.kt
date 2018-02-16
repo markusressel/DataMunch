@@ -1,5 +1,6 @@
 package de.markusressel.datamunch.view.fragment
 
+import android.arch.lifecycle.Lifecycle
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.util.Log
@@ -11,11 +12,11 @@ import com.andrognito.rxpatternlockview.RxPatternLockView
 import com.andrognito.rxpatternlockview.events.PatternLockCompoundEvent
 import com.eightbitlab.rxbus.Bus
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.event.LockEvent
-import de.markusressel.datamunch.extensions.disposeOnPause
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -60,12 +61,14 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                                     .d(javaClass.name, "Pattern drawing started")
                         } else if (event.eventType == PatternLockCompoundEvent.EventType.PATTERN_PROGRESS) {
                             Log
-                                    .d(javaClass.name, "Pattern progress: " + PatternLockUtils.patternToString(
-                                            patternLockView, event.pattern))
+                                    .d(javaClass.name,
+                                       "Pattern progress: " + PatternLockUtils.patternToString(
+                                               patternLockView, event.pattern))
                         } else if (event.eventType == PatternLockCompoundEvent.EventType.PATTERN_COMPLETE) {
                             Log
-                                    .d(javaClass.name, "Pattern complete: " + PatternLockUtils.patternToString(
-                                            patternLockView, event.pattern))
+                                    .d(javaClass.name,
+                                       "Pattern complete: " + PatternLockUtils.patternToString(
+                                               patternLockView, event.pattern))
 
                             checkPattern(event.pattern)
                         } else if (event.eventType == PatternLockCompoundEvent.EventType.PATTERN_CLEARED) {
@@ -88,6 +91,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                         patternLockView
                                 .setViewMode(PatternLockView.PatternViewMode.CORRECT)
                     }
+                    .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
                     .delay(250, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(AndroidSchedulers.mainThread())
@@ -96,7 +100,6 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                         patternLockView
                                 .clearPattern()
                     })
-                    .disposeOnPause(disposables)
         } else {
             Single
                     .fromCallable {
@@ -104,6 +107,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                                 .setViewMode(PatternLockView.PatternViewMode.WRONG)
                         // TODO: disable touch input
                     }
+                    .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
                     .delay(1, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(AndroidSchedulers.mainThread())
@@ -112,7 +116,6 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                                 .clearPattern()
                         // TODO: enable touch input
                     })
-                    .disposeOnPause(disposables)
         }
     }
 

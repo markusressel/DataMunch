@@ -33,6 +33,7 @@ buildscript {
         fuelVersion = "1.12.0"
 
         rxBindingVersion = "2.1.1"
+        rxLifecycleVersion = "2.2.1"
 
     }
 

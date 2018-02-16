@@ -8,8 +8,8 @@ import android.support.v4.view.ViewPager
 import android.view.View
 import com.gigamole.navigationtabstrip.NavigationTabStrip
 import com.github.ajalt.timberkt.Timber
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.extensions.disposeOnPause
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable
@@ -76,6 +76,7 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
                     it
                             .toTypedArray()
                 }
+                .bindToLifecycle(this)
                 .subscribeBy(onSuccess = {
                     tabNavigation
                             .setTitles(*it)
@@ -83,7 +84,6 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
                     Timber
                             .e { "Error adding Tab Navigation items" }
                 })
-                .disposeOnPause(disposables)
 
         tabNavigation
                 .setViewPager(viewPager)

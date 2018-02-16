@@ -157,9 +157,11 @@ dependencies {
     implementation "com.pascalwelsch.compositeandroid:fragment:$compositeAndroidVersion"
 
     // RxLifecycle to prevent memory leaks
-    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-kotlin:2.2.1'
+    def rxLifecycleVersion = rootProject.ext.rxLifecycleVersion
+    implementation "com.trello.rxlifecycle2:rxlifecycle:$rxLifecycleVersion"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-kotlin:$rxLifecycleVersion"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-android:$rxLifecycleVersion"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:$rxLifecycleVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

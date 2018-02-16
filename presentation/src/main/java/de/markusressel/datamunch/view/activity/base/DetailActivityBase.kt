@@ -98,8 +98,8 @@ abstract class DetailActivityBase<T : Any> : DaggerSupportActivityBase() {
         if (toolbar != null) {
             setSupportActionBar(toolbar)
 
-            val actionBar = supportActionBar
-            actionBar!!
+            val actionBar = supportActionBar!!
+            actionBar
                     .setDisplayHomeAsUpEnabled(true)
 
             //            actionBar

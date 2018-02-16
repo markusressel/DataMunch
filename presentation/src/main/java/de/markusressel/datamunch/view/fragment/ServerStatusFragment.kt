@@ -1,14 +1,16 @@
 package de.markusressel.datamunch.view.fragment
 
+import android.arch.lifecycle.Lifecycle
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import com.github.ajalt.timberkt.Timber
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
-import de.markusressel.datamunch.extensions.disposeOnPause
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.plugin.LoadingPlugin
 import de.markusressel.datamunch.view.plugin.OptionsMenuPlugin
@@ -17,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_server_status.*
+import java.util.concurrent.CancellationException
 import javax.inject.Inject
 
 
@@ -84,6 +87,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                     frittenbudeServerManager
                             .retrieveHostname()
                 }
+                .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onSuccess = {
@@ -93,19 +97,24 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                     loadingPlugin
                             .showContent()
                 }, onError = {
-                    serverName
-                            .text = it
-                            .message
-                    loadingPlugin
-                            .showError(it)
+                    if (it is CancellationException) {
+                        Timber
+                                .d { "Request cancelled" }
+                    } else {
+                        serverName
+                                .text = it
+                                .message
+                        loadingPlugin
+                                .showError(it)
+                    }
                 })
-                .disposeOnPause(disposables)
 
         Single
                 .fromCallable {
                     frittenbudeServerManager
                             .retrieveUptime()
                 }
+                .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onSuccess = {
@@ -117,13 +126,17 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                     loadingPlugin
                             .showContent()
                 }, onError = {
-                    serverStatus
-                            .text = it
-                            .message
-                    loadingPlugin
-                            .showError(it)
+                    if (it is CancellationException) {
+                        Timber
+                                .d { "Request cancelled" }
+                    } else {
+                        serverStatus
+                                .text = it
+                                .message
+                        loadingPlugin
+                                .showError(it)
+                    }
                 })
-                .disposeOnPause(disposables)
     }
 
 }

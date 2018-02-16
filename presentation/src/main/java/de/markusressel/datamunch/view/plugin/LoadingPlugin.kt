@@ -79,7 +79,7 @@ class LoadingPlugin(val onShowContent: ((animated: Boolean) -> Unit)? = null,
      * Show layout_loading animation
      */
     @CallSuper
-    open fun showLoading() {
+    fun showLoading() {
         fadeView(loadingLayout, 1f)
     }
 
@@ -87,7 +87,7 @@ class LoadingPlugin(val onShowContent: ((animated: Boolean) -> Unit)? = null,
      * Show the actual page content
      */
     @CallSuper
-    open fun showContent(animated: Boolean = true) {
+    fun showContent(animated: Boolean = true) {
         setViewVisibility(errorLayout, View.GONE)
 
         contentView
