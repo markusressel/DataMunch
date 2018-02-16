@@ -85,7 +85,7 @@ abstract class DaggerSupportActivityBase : CompositeActivity(), HasFragmentInjec
     }
 
     init {
-        addActivityPlugins(LockPlugin())
+        addActivityPlugins(LockPlugin({ preferenceHandler }))
     }
 
     @CallSuper

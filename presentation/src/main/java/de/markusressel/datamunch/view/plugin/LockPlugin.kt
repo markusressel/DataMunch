@@ -17,7 +17,7 @@ import de.markusressel.datamunch.view.fragment.LockscreenFragment
 /**
  * Created by Markus on 15.02.2018.
  */
-class LockPlugin : ActivityPlugin() {
+class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugin() {
 
     @SuppressLint("MissingSuperCall")
     override fun onSaveInstanceState(outState: Bundle) {
@@ -41,10 +41,6 @@ class LockPlugin : ActivityPlugin() {
     private lateinit var lockLayout: ViewGroup
     private lateinit var originalLayout: View
 
-    // instantiate manually since CompositeAndroid cant access injected objects
-    val preferenceHandler by lazy {
-        PreferenceHandler(original)
-    }
 
     private fun createWrapperLayout(view: View): ViewGroup {
         val baseLayout = FrameLayout(original)
@@ -77,7 +73,7 @@ class LockPlugin : ActivityPlugin() {
                 .commitAllowingStateLoss()
 
         // lock on create if enabled
-        val useLock = preferenceHandler
+        val useLock = preferenceHandler()
                 .getValue(PreferenceHandler.USE_PATTERN_LOCK)
         setScreenLock(useLock)
 
@@ -115,7 +111,7 @@ class LockPlugin : ActivityPlugin() {
      * Otherwise this is a no-op
      */
     private fun lockScreen() {
-        val useLock = preferenceHandler
+        val useLock = preferenceHandler()
                 .getValue(PreferenceHandler.USE_PATTERN_LOCK)
         if (useLock) {
             original
