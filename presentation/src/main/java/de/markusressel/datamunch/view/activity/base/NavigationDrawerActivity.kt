@@ -176,9 +176,11 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                                             .startActivity(this, it)
                                 }
 
-                                currentPage = it
-                                currentNavigationDrawerItem = drawerItem
-                                        .identifier
+                                if (drawerItem.isSelectable) {
+                                    currentPage = it
+                                    currentNavigationDrawerItem = drawerItem
+                                            .identifier
+                                }
 
                                 if (!isTablet()) {
                                     navigationDrawer
