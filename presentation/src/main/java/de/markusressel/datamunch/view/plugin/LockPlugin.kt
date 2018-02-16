@@ -3,8 +3,12 @@ package de.markusressel.datamunch.view.plugin
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
+import com.github.ajalt.timberkt.Timber
 import com.pascalwelsch.compositeandroid.activity.ActivityPlugin
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.event.LockEvent
@@ -17,6 +21,55 @@ class LockPlugin(val contentFragment: () -> Fragment) : ActivityPlugin() {
 
     @SuppressLint("MissingSuperCall")
     public override fun onSaveInstanceState(outState: Bundle) {
+    }
+
+    override fun setContentView(view: View?) {
+        if (view != null) {
+            val wrapperLayout = createWrapperLayout(view)
+            original
+                    .delegate
+                    .setContentView(wrapperLayout)
+        } else {
+            Timber
+                    .e { "LockPlugin coulnd't attach to the parent view as it was NULL" }
+            original
+                    .delegate
+                    .setContentView(view)
+        }
+    }
+
+    private lateinit var lockLayout: ViewGroup
+    private lateinit var originalLayout: View
+
+    private fun createWrapperLayout(view: View): ViewGroup {
+        val baseLayout = FrameLayout(original)
+
+        originalLayout = view
+
+        // attach the original content view
+        baseLayout
+                .addView(view, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                                                        FrameLayout.LayoutParams.MATCH_PARENT))
+        // create content container
+        lockLayout = FrameLayout(original)
+        lockLayout
+                .id = R
+                .id
+                .lockContentLayout
+        baseLayout
+                .addView(lockLayout, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                                                              FrameLayout.LayoutParams.MATCH_PARENT))
+
+        original
+                .supportFragmentManager
+                .beginTransaction()
+                .replace(lockLayout.id, LockscreenFragment())
+                //                .addToBackStack(preferencesFragment.tag)
+                .commitAllowingStateLoss()
+
+        lockScreen()
+
+        return baseLayout
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,36 +88,24 @@ class LockPlugin(val contentFragment: () -> Fragment) : ActivityPlugin() {
                     }
                 }
                 .registerInBus(this)
-
-        val fragment: Fragment = when (isLocked) {
-            true -> LockscreenFragment()
-            false -> contentFragment()
-        }
-
-        original
-                .supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.contentLayout, fragment)
-                //                .addToBackStack(preferencesFragment.tag)
-                .commitAllowingStateLoss()
     }
 
     private fun lockScreen() {
-        original
-                .supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.contentLayout, LockscreenFragment())
-                //                .addToBackStack(preferencesFragment.tag)
-                .commitAllowingStateLoss()
+        originalLayout
+                .visibility = View
+                .GONE
+        lockLayout
+                .visibility = View
+                .VISIBLE
     }
 
     private fun unlockScreen() {
-        original
-                .supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.contentLayout, contentFragment())
-                //                .addToBackStack(preferencesFragment.tag)
-                .commitAllowingStateLoss()
+        originalLayout
+                .visibility = View
+                .VISIBLE
+        lockLayout
+                .visibility = View
+                .GONE
     }
 
     override fun onDestroy() {

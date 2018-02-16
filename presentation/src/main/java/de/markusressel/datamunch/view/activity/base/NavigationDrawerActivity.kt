@@ -86,6 +86,10 @@ abstract class NavigationDrawerActivity : LockableSupportActivityBase() {
             navigationDrawer = builder
                     .build()
         }
+
+        // set initial page
+        navigator
+                .navigateTo(this, currentPage)
     }
 
     /**

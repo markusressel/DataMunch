@@ -18,6 +18,7 @@
 
 package de.markusressel.datamunch.view.activity.base
 
+import android.os.Bundle
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.plugin.LockPlugin
 
@@ -36,6 +37,11 @@ abstract class LockableSupportActivityBase : DaggerSupportActivityBase() {
 
     init {
         addActivityPlugins(LockPlugin(contentFragment))
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super
+                .onCreate(savedInstanceState)
     }
 
 }

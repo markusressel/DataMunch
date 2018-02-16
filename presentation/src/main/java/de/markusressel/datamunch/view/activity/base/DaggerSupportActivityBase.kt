@@ -111,7 +111,8 @@ abstract class DaggerSupportActivityBase : CompositeActivity(), HasFragmentInjec
         // inflate view manually so it can be altered in plugins
         val contentView = layoutInflater
                 .inflate(layoutRes, null)
-        setContentView(contentView)
+        super
+                .setContentView(contentView)
 
         setSupportActionBar(toolbar)
 
