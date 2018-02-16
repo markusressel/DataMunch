@@ -11,7 +11,6 @@ import android.view.*
 import com.github.nitrico.lastadapter.LastAdapter
 import com.jakewharton.rxbinding2.view.RxView
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
-import com.philosophicalhacker.lib.RxLoader
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
@@ -49,13 +48,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
-    protected val rxLoader by lazy {
-        RxLoader(activity as Context, activity?.supportLoaderManager)
-    }
-
     private val persistenceLoaderId = loaderIdCounter
-            .getAndIncrement()
-    private val sourceLoaderId = loaderIdCounter
             .getAndIncrement()
 
     protected val loadingPlugin = LoadingPlugin(onShowContent = {
@@ -229,7 +222,8 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 .fromCallable {
                     loadListDataFromPersistence()
                 }
-                .compose(rxLoader.makeSingleTransformer(persistenceLoaderId))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onSuccess = {
                     listValues
                             .clear()
@@ -250,6 +244,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                     loadingPlugin
                             .showError(it)
                 })
+                .disposeOnPause(disposables)
     }
 
     /**
@@ -260,7 +255,8 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 .showLoading()
 
         loadListDataFromSource()
-                .compose(rxLoader.makeSingleTransformer(sourceLoaderId))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onSuccess = {
                     it
                             .toObservable()
@@ -282,6 +278,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                     loadingPlugin
                             .showError(it)
                 })
+                .disposeOnPause(disposables)
     }
 
     abstract fun mapToPersistenceEntity(it: K): T

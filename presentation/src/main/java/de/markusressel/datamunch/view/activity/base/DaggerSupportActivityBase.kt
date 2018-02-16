@@ -25,7 +25,6 @@ import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.view.Window
 import android.view.WindowManager
-import com.pascalwelsch.compositeandroid.activity.CompositeActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -44,7 +43,7 @@ import javax.inject.Inject
 /**
  * Created by Markus on 20.12.2017.
  */
-abstract class DaggerSupportActivityBase : CompositeActivity(), HasFragmentInjector,
+abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentInjector,
     HasSupportFragmentInjector {
 
     @Inject

@@ -10,13 +10,12 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasFragmentInjector
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
-import de.mrapp.android.preference.activity.PreferenceFragment
 import javax.inject.Inject
 
 /**
  * Created by Markus on 15.07.2017.
  */
-abstract class DaggerPreferenceFragment : PreferenceFragment(), HasFragmentInjector,
+abstract class DaggerPreferenceFragment : LifecyclePreferenceFragmentBase(), HasFragmentInjector,
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject

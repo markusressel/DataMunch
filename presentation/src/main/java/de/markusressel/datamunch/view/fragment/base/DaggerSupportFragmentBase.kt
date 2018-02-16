@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.pascalwelsch.compositeandroid.fragment.CompositeFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
@@ -26,7 +25,7 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-abstract class DaggerSupportFragmentBase : CompositeFragment(), HasSupportFragmentInjector {
+abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
