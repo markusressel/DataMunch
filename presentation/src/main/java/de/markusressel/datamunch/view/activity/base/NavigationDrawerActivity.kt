@@ -120,6 +120,11 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
     }
 
     private fun setDrawerVisibility(visible: Boolean) {
+        if (isTablet()) {
+            // nothing to do here
+            return
+        }
+
         if (visible) {
             navigationDrawer
                     .drawerLayout
