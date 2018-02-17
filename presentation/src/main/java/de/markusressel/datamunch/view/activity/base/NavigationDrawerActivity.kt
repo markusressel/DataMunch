@@ -1,7 +1,10 @@
 package de.markusressel.datamunch.view.activity.base
 
 import android.os.Bundle
+import android.support.v4.widget.DrawerLayout
 import android.view.View
+import com.eightbitlab.rxbus.Bus
+import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
@@ -14,6 +17,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IProfile
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.event.LockEvent
 import de.markusressel.datamunch.extensions.isTablet
 import de.markusressel.datamunch.navigation.DrawerItemHolder
 import de.markusressel.datamunch.navigation.DrawerItemHolder.About
@@ -30,6 +34,7 @@ import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.navigation.NavigationPageHolder
 import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.navigation.page.NavigationPage
+import de.markusressel.datamunch.view.plugin.LockPlugin.Companion.isLocked
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
@@ -73,6 +78,14 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         if (isTablet()) {
             navigationDrawer = builder
                     .buildView()
+
+            drawerLayoutParent
+                    .visibility = View
+                    .VISIBLE
+            drawerDividerView
+                    .visibility = View
+                    .VISIBLE
+
             drawerLayoutParent
                     .addView(navigationDrawer.slider, 0)
         } else {
@@ -90,6 +103,32 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         // set initial page
         navigator
                 .navigateTo(this, currentPage)
+    }
+
+    override fun onResume() {
+        super
+                .onResume()
+
+        Bus
+                .observe<LockEvent>()
+                .subscribe {
+                    setDrawerVisibility(!it.lock)
+                }
+                .registerInBus(this)
+
+        setDrawerVisibility(!isLocked)
+    }
+
+    private fun setDrawerVisibility(visible: Boolean) {
+        if (visible) {
+            navigationDrawer
+                    .drawerLayout
+                    .setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        } else {
+            navigationDrawer
+                    .drawerLayout
+                    .setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        }
     }
 
     /**
