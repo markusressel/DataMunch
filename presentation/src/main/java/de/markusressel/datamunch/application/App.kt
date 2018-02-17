@@ -27,13 +27,18 @@ class App : DaggerApplication(), HasActivityInjector {
     override fun onCreate() {
         super
                 .onCreate()
-
         // register app lifecycle
         registerActivityLifecycleCallbacks(AppLifecycleTracker(preferenceHandler))
 
         // Clear DB entirely
         //        BoxStore
         //                .deleteAllFiles(applicationContext, null)
+
+        // TODO: Remove when preference is implemented
+        // set default pattern
+        preferenceHandler
+                .setValue(PreferenceHandler.LOCK_PATTERN,
+                          "cb69e3a54154e27cad0c566f520742c2645847c1")
 
         plantTimberTrees()
         initMemoryLeakDetection()

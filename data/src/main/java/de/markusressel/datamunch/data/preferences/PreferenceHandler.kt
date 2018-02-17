@@ -42,7 +42,8 @@ class PreferenceHandler @Inject constructor(context: Context) : PreferencesHandl
                                                 "JxYZbT47vvXmzy952h4H")
 
         val USE_PATTERN_LOCK = PreferenceItem(R.string.use_pattern_lock_key, false)
-        val LOCK_PATTERN = PreferenceItem(R.string.lock_pattern_key, "")
+        val LOCK_PATTERN = PreferenceItem(R.string.lock_pattern_key,
+                                          "cb69e3a54154e27cad0c566f520742c2645847c1")
     }
 
 }

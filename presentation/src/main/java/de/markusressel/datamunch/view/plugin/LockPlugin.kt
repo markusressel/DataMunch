@@ -91,11 +91,6 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
         super
                 .onResume()
 
-        // TODO: Remove when preference is implemented
-        preferenceHandler()
-                .setValue(PreferenceHandler.LOCK_PATTERN,
-                          "cb69e3a54154e27cad0c566f520742c2645847c1")
-
         val useLock = preferenceHandler()
                 .getValue(PreferenceHandler.USE_PATTERN_LOCK)
         val pattern = preferenceHandler()

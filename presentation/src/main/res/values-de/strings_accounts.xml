@@ -15,4 +15,6 @@
     <string name="locked">Gesperrt</string>
     <string name="sudo_access">Superuser Zugriff</string>
 
+    <string name="built_in">Integriert/Vorgeschrieben</string>
+
 </resources>
