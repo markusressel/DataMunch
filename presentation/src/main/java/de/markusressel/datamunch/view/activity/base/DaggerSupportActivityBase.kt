@@ -124,7 +124,7 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
                 ?.setDisplayHomeAsUpEnabled(true)
 
         Bus
-                .observe<LockPlugin.StatusBarState>()
+                .observe<LockPlugin.SetStatusBarStateEvent>()
                 .subscribe {
                     if (it.visible) {
                         showStatusBar()
