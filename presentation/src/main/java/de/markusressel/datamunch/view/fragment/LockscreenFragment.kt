@@ -159,11 +159,6 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
     }
 
     private fun checkPattern(pattern: List<PatternLockView.Dot>?) {
-        // TODO: Remove when preference is implemented
-        preferenceHandler
-                .setValue(PreferenceHandler.LOCK_PATTERN,
-                          "cb69e3a54154e27cad0c566f520742c2645847c1")
-
         val correctPattern = preferenceHandler
                 .getValue(PreferenceHandler.LOCK_PATTERN)
         val patternAsString = patternToSha1(patternLockView, pattern)
