@@ -90,7 +90,12 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
     override fun onResume() {
         super
                 .onResume()
-        setScreenLock(isLocked)
+        val useLock = preferenceHandler()
+                .getValue(PreferenceHandler.USE_PATTERN_LOCK)
+        val pattern = preferenceHandler()
+                .getValue(PreferenceHandler.LOCK_PATTERN)
+
+        setScreenLock(useLock && pattern.isNotEmpty() && isLocked)
     }
 
     private fun setScreenLock(locked: Boolean) {
@@ -106,21 +111,17 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
      * Otherwise this is a no-op
      */
     private fun lockScreen() {
-        val useLock = preferenceHandler()
-                .getValue(PreferenceHandler.USE_PATTERN_LOCK)
-        if (useLock) {
-            original
-                    .runOnUiThread {
-                        originalLayout
-                                .visibility = View
-                                .GONE
-                        lockLayout
-                                .visibility = View
-                                .VISIBLE
-                    }
+        original
+                .runOnUiThread {
+                    originalLayout
+                            .visibility = View
+                            .GONE
+                    lockLayout
+                            .visibility = View
+                            .VISIBLE
+                }
 
-            isLocked = true
-        }
+        isLocked = true
     }
 
     /**
