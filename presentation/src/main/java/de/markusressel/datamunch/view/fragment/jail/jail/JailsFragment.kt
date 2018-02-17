@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment.jail
+package de.markusressel.datamunch.view.fragment.jail.jail
 
 import android.widget.Toast
 import com.github.nitrico.lastadapter.LastAdapter
@@ -10,6 +10,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.JailEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemJailBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.jails.jail.JailModel
@@ -133,7 +134,12 @@ class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
     }
 
     private fun openDetailView(jail: JailEntity) {
-
+        context
+                ?.let {
+                    val intent = DetailActivityBase
+                            .newInstanceIntent(JailDetailActivity::class.java, it, jail.entityId)
+                    startActivity(intent)
+                }
     }
 
 }

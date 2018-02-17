@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.view.MenuItem
 import com.github.florent37.materialviewpager.header.HeaderDesign
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -168,6 +169,9 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
                 .getLongExtra(KEY_ENTITY_ID, -1)
     }
 
+    /**
+     * Get the entity from persistence
+     */
     protected fun getEntity(): EntityType {
         return getPersistenceHandler()
                 .standardOperation()
@@ -179,14 +183,33 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
      */
     protected abstract fun getPersistenceHandler(): PersistenceManagerBase<EntityType>
 
-    companion object {
-        const val KEY_ENTITY_ID = "entity_id"
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (super.onOptionsItemSelected(item)) {
+            return true
+        }
 
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                // TODO: Show dialog if unsaved changes still exist
+                finish()
+                true
+            }
+            else -> {
+                false
+            }
+        }
+    }
+
+    companion object {
+
+        const val KEY_ENTITY_ID = "entity_id"
         fun <T : Class<*>> newInstanceIntent(clazz: T, context: Context, entityId: Long): Intent {
             return Intent(context, clazz)
                     .apply {
                         putExtra(KEY_ENTITY_ID, entityId)
                     }
         }
+
     }
+
 }

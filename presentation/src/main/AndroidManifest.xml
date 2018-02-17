@@ -32,6 +32,9 @@
         <activity
             android:name=".view.fragment.account.group.GroupDetailActivity"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".view.fragment.jail.jail.JailDetailActivity"
+            android:windowSoftInputMode="stateHidden" />
 
         <service android:name=".service.FileUploadService" />
     </application>

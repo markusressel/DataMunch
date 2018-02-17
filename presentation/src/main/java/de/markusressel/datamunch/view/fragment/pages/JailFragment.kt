@@ -3,9 +3,9 @@ package de.markusressel.datamunch.view.fragment.pages
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabNavigationFragment
-import de.markusressel.datamunch.view.fragment.jail.JailsFragment
 import de.markusressel.datamunch.view.fragment.jail.MountpointsFragment
 import de.markusressel.datamunch.view.fragment.jail.TemplatesFragment
+import de.markusressel.datamunch.view.fragment.jail.jail.JailsFragment
 
 
 class JailFragment : TabNavigationFragment() {
