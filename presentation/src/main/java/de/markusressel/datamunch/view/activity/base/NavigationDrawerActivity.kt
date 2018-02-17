@@ -112,27 +112,27 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         Bus
                 .observe<LockEvent>()
                 .subscribe {
-                    setDrawerVisibility(!it.lock)
+                    setDrawerLockState(it.lock)
                 }
                 .registerInBus(this)
 
-        setDrawerVisibility(!isLocked)
+        setDrawerLockState(isLocked)
     }
 
-    private fun setDrawerVisibility(visible: Boolean) {
+    private fun setDrawerLockState(locked: Boolean) {
         if (isTablet()) {
             // nothing to do here
             return
         }
 
-        if (visible) {
-            navigationDrawer
-                    .drawerLayout
-                    .setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        } else {
+        if (locked) {
             navigationDrawer
                     .drawerLayout
                     .setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        } else {
+            navigationDrawer
+                    .drawerLayout
+                    .setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         }
     }
 
