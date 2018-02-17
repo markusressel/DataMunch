@@ -114,8 +114,8 @@ class IconHandler @Inject constructor() {
         return getIcon(icon, color, 24, padding)
     }
 
-    private fun getIcon(icon: IIcon, @ColorInt color: Int, sizeDp: Int,
-                        paddingDp: Int = 0): IconicsDrawable {
+    fun getIcon(icon: IIcon, @ColorInt color: Int, sizeDp: Int,
+                paddingDp: Int = 0): IconicsDrawable {
         return IconicsDrawable(context, icon)
                 .sizeDp(sizeDp)
                 .paddingDp(paddingDp)

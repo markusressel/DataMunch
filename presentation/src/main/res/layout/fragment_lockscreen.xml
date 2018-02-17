@@ -1,29 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profileImage"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp" />
+    <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+        android:id="@+id/backgroundImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:panEnabled="false"
+        app:zoomEnabled="false" />
 
-    <com.andrognito.patternlockview.PatternLockView
-        android:id="@+id/patternLockView"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
-        app:correctStateColor="@color/md_green_A400"
-        app:normalStateColor="@color/white"
-        app:wrongStateColor="@color/md_red_A700" />
+    <LinearLayout
+        android:id="@+id/rootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <View
-        android:id="@+id/lockContentLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp" />
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/shimmerLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            app:shimmer_animation_duration="4000"
+            app:shimmer_color="#FFFFFFFF">
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:id="@+id/profileImage"-->
+                <!--android:layout_width="128dp"-->
+                <!--android:layout_height="128dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--app:civ_border_color="#FF000000"-->
+                <!--app:civ_border_width="2dp" />-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:text="Please enter code"
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
+        <com.andrognito.patternlockview.PatternLockView
+            android:id="@+id/patternLockView"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_marginTop="36dp"
+            app:correctStateColor="@color/md_green_A400"
+            app:normalStateColor="@color/white"
+            app:wrongStateColor="@color/md_red_A700" />
+
+        <View
+            android:id="@+id/lockContentLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+
+    </LinearLayout>
+
+</FrameLayout>
