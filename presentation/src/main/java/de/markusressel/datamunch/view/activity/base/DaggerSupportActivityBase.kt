@@ -25,6 +25,8 @@ import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.view.Window
 import android.view.WindowManager
+import com.eightbitlab.rxbus.Bus
+import com.eightbitlab.rxbus.registerInBus
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -104,9 +106,7 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
         if (style == FULLSCREEN) {
             supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
             requestWindowFeature(Window.FEATURE_NO_TITLE)
-            window
-                    .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                              WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            hideStatusBar()
         } else if (style == DIALOG) {
             // Hide title on dialogs to use view_toolbar instead
             supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -122,6 +122,34 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
 
         supportActionBar
                 ?.setDisplayHomeAsUpEnabled(true)
+
+        Bus
+                .observe<LockPlugin.StatusBarState>()
+                .subscribe {
+                    if (it.visible) {
+                        showStatusBar()
+                    } else {
+                        hideStatusBar()
+                    }
+                }
+                .registerInBus(this)
+    }
+
+    /**
+     * Show the status bar
+     */
+    protected fun showStatusBar() {
+        window
+                .clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    }
+
+    /**
+     * Hide the status bar
+     */
+    protected fun hideStatusBar() {
+        window
+                .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                          WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
     fun initLocale() {

@@ -100,12 +100,16 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
     }
 
     private fun setScreenLock(locked: Boolean) {
+        Bus
+                .send(StatusBarState(!locked))
         if (locked) {
             lockScreen()
         } else {
             unlockScreen()
         }
     }
+
+    data class StatusBarState(val visible: Boolean)
 
     /**
      * Locks the screen if enabled in preferences
