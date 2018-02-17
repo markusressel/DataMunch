@@ -58,7 +58,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                 .showLoading()
 
         backgroundImageView
-                .setImage(ImageSource.resource(R.drawable.lockscreen_background_black_lines_4k))
+                .setImage(ImageSource.resource(R.drawable.lockscreen_background_black_lines))
         backgroundImageView
                 .setOnImageEventListener(object : SubsamplingScaleImageView.OnImageEventListener {
                     override fun onImageLoaded() {
@@ -72,15 +72,36 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                     }
 
                     override fun onTileLoadError(p0: java.lang.Exception?) {
+                        if (p0 != null) {
+                            loadingPlugin
+                                    .showError(p0)
+                        } else {
+                            loadingPlugin
+                                    .showError("Error loading tile")
+                        }
                     }
 
                     override fun onPreviewReleased() {
                     }
 
                     override fun onImageLoadError(p0: java.lang.Exception?) {
+                        if (p0 != null) {
+                            loadingPlugin
+                                    .showError(p0)
+                        } else {
+                            loadingPlugin
+                                    .showError("Error loading image")
+                        }
                     }
 
                     override fun onPreviewLoadError(p0: java.lang.Exception?) {
+                        if (p0 != null) {
+                            loadingPlugin
+                                    .showError(p0)
+                        } else {
+                            loadingPlugin
+                                    .showError("Error loading preview")
+                        }
                     }
                 })
 
