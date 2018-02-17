@@ -11,22 +11,20 @@ import kotlin.reflect.KClass
  *
  * Created by Markus on 30.01.2018.
  */
-abstract class PersistenceManagerBase<T : Any> {
+open class PersistenceManagerBase<EntityType : Any>(val entityType: KClass<EntityType>) {
 
     @Inject
     protected lateinit var boxStore: BoxStore
 
-    private val box: Box<T> by lazy {
+    private val box: Box<EntityType> by lazy {
         boxStore
-                .boxFor(getEntityType())
+                .boxFor(entityType)
     }
-
-    protected abstract fun getEntityType(): KClass<T>
 
     /**
      * Returns the BoxStore for this PersistenceManager to perform standard (ObjectBox) operations
      */
-    fun standardOperation(): Box<T> {
+    fun standardOperation(): Box<EntityType> {
         return box
     }
 

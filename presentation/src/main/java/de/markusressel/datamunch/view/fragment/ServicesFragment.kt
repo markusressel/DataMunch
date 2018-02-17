@@ -23,7 +23,9 @@ import javax.inject.Inject
 class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
 
     @Inject
-    lateinit var servicePersistenceManager: ServicePersistenceManager
+    lateinit var persistenceManager: ServicePersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<ServiceEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -45,13 +47,9 @@ class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
                 .getServices()
     }
 
-    override fun mapToPersistenceEntity(it: ServiceModel): ServiceEntity {
+    override fun mapToEntity(it: ServiceModel): ServiceEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<ServiceEntity> {
-        return servicePersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<ServiceEntity> {

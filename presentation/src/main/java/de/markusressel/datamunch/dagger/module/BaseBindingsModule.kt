@@ -6,6 +6,8 @@ import de.markusressel.datamunch.view.fragment.LockscreenFragment
 import de.markusressel.datamunch.view.fragment.PluginsFragment
 import de.markusressel.datamunch.view.fragment.ServerStatusFragment
 import de.markusressel.datamunch.view.fragment.ServicesFragment
+import de.markusressel.datamunch.view.fragment.account.group.GroupDetailActivity
+import de.markusressel.datamunch.view.fragment.account.group.GroupDetailContentFragment
 import de.markusressel.datamunch.view.fragment.account.group.GroupsFragment
 import de.markusressel.datamunch.view.fragment.account.user.UserDetailActivity
 import de.markusressel.datamunch.view.fragment.account.user.UserDetailContentFragment
@@ -114,9 +116,15 @@ abstract class BaseBindingsModule {
     internal abstract fun SystemFragment(): SystemFragment
 
     @ContributesAndroidInjector
-    internal abstract fun UserDetailFragment(): UserDetailActivity
+    internal abstract fun UserDetailActivity(): UserDetailActivity
 
     @ContributesAndroidInjector
     internal abstract fun UserDetailContentFragment(): UserDetailContentFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun GroupDetailActivity(): GroupDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun GroupDetailContentFragment(): GroupDetailContentFragment
 
 }

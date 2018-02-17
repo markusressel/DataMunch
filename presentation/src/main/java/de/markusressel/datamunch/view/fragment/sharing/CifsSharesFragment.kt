@@ -25,7 +25,9 @@ import javax.inject.Inject
 class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
 
     @Inject
-    lateinit var cifsSharePersistenceManager: CifsSharePersistenceManager
+    lateinit var persistenceManager: CifsSharePersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<CifsShareEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -47,13 +49,9 @@ class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
                 .getCifsShares()
     }
 
-    override fun mapToPersistenceEntity(it: CifsShareModel): CifsShareEntity {
+    override fun mapToEntity(it: CifsShareModel): CifsShareEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<CifsShareEntity> {
-        return cifsSharePersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<CifsShareEntity> {

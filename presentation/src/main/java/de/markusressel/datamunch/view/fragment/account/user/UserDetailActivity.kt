@@ -15,7 +15,9 @@ import javax.inject.Inject
 class UserDetailActivity : DetailActivityBase<UserEntity>() {
 
     @Inject
-    protected lateinit var userPersistenceHandler: UserPersistenceManager
+    lateinit var persistenceHandler: UserPersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> = persistenceHandler
 
     override val headerTextString: String
         get() {
@@ -31,7 +33,5 @@ class UserDetailActivity : DetailActivityBase<UserEntity>() {
     override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
         get() = listOf(R.string.details to ::UserDetailContentFragment)
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> {
-        return userPersistenceHandler
-    }
+
 }

@@ -25,7 +25,9 @@ import javax.inject.Inject
 class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>() {
 
     @Inject
-    lateinit var mountpointPersistenceManager: MountpointPersistenceManager
+    lateinit var persistenceManager: MountpointPersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<MountpointEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -47,14 +49,9 @@ class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>(
                 .getMountpoints()
     }
 
-    override fun mapToPersistenceEntity(it: MountpointModel): MountpointEntity {
+    override fun mapToEntity(it: MountpointModel): MountpointEntity {
         return it
                 .asEntity()
-    }
-
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<MountpointEntity> {
-        return mountpointPersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<MountpointEntity> {

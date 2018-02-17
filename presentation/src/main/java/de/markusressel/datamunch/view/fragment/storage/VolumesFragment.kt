@@ -27,7 +27,9 @@ import javax.inject.Inject
  */
 class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
     @Inject
-    lateinit var volumePersistenceManager: VolumePersistenceManager
+    lateinit var persistenceManager: VolumePersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<VolumeEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -49,13 +51,9 @@ class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
                 .getVolumes()
     }
 
-    override fun mapToPersistenceEntity(it: VolumeModel): VolumeEntity {
+    override fun mapToEntity(it: VolumeModel): VolumeEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<VolumeEntity> {
-        return volumePersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<VolumeEntity> {

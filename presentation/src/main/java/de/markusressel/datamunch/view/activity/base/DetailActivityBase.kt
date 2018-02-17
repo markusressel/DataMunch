@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.item_detail__header_logo.*
 /**
  * Created by Markus on 15.02.2018.
  */
-abstract class DetailActivityBase<T : Any> : DaggerSupportActivityBase() {
+abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase() {
 
     override val style: Int
         get() {
@@ -52,13 +52,6 @@ abstract class DetailActivityBase<T : Any> : DaggerSupportActivityBase() {
         materialViewPager
                 .setMaterialViewPagerListener {
                     val headerList = listOf(
-                            //                            HeaderDesign.fromColorResAndUrl(R.color.blue,
-                            //                                                                            "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg"),
-                            //                                            HeaderDesign.fromColorResAndUrl(R.color.cyan,
-                            //                                                                            "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg"),
-                            //                                            HeaderDesign.fromColorResAndUrl(R.color.red,
-                            //                                                                            "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg"),
-
                             HeaderDesign.fromColorResAndDrawable(R.color.md_blue_800, getDrawable(
                                     R.drawable.header_blue)),
                             HeaderDesign.fromColorResAndDrawable(R.color.md_blue_800, getDrawable(
@@ -175,7 +168,7 @@ abstract class DetailActivityBase<T : Any> : DaggerSupportActivityBase() {
                 .getLongExtra(KEY_ENTITY_ID, -1)
     }
 
-    protected fun getEntity(): T {
+    protected fun getEntity(): EntityType {
         return getPersistenceHandler()
                 .standardOperation()
                 .get(getEntityId())
@@ -184,13 +177,16 @@ abstract class DetailActivityBase<T : Any> : DaggerSupportActivityBase() {
     /**
      * Get the persistence handler for this view
      */
-    protected abstract fun getPersistenceHandler(): PersistenceManagerBase<T>
+    protected abstract fun getPersistenceHandler(): PersistenceManagerBase<EntityType>
 
     companion object {
         const val KEY_ENTITY_ID = "entity_id"
 
-        fun <T : Class<*>> newInstance(clazz: T, context: Context): Intent {
+        fun <T : Class<*>> newInstanceIntent(clazz: T, context: Context, entityId: Long): Intent {
             return Intent(context, clazz)
+                    .apply {
+                        putExtra(KEY_ENTITY_ID, entityId)
+                    }
         }
     }
 }

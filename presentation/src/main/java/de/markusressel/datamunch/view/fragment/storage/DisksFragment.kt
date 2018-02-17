@@ -23,7 +23,9 @@ import javax.inject.Inject
 class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
 
     @Inject
-    lateinit var diskPersistenceManager: DiskPersistenceManager
+    lateinit var persistenceManager: DiskPersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<DiskEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -45,13 +47,9 @@ class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
                 .getDisks()
     }
 
-    override fun mapToPersistenceEntity(it: DiskModel): DiskEntity {
+    override fun mapToEntity(it: DiskModel): DiskEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<DiskEntity> {
-        return diskPersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<DiskEntity> {

@@ -23,7 +23,9 @@ import javax.inject.Inject
 class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
 
     @Inject
-    lateinit var pluginPersistenceManager: PluginPersistenceManager
+    lateinit var persistenceManager: PluginPersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<PluginEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -42,13 +44,9 @@ class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
                 .getPlugins()
     }
 
-    override fun mapToPersistenceEntity(it: PluginModel): PluginEntity {
+    override fun mapToEntity(it: PluginModel): PluginEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<PluginEntity> {
-        return pluginPersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<PluginEntity> {

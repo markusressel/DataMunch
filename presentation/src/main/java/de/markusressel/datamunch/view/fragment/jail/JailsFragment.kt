@@ -29,7 +29,9 @@ import javax.inject.Inject
 class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
 
     @Inject
-    lateinit var jailPersistenceManager: JailPersistenceManager
+    lateinit var persistenceManager: JailPersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<JailEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -51,13 +53,9 @@ class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
                 .getJails()
     }
 
-    override fun mapToPersistenceEntity(it: JailModel): JailEntity {
+    override fun mapToEntity(it: JailModel): JailEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<JailEntity> {
-        return jailPersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<JailEntity> {

@@ -23,7 +23,9 @@ import javax.inject.Inject
 class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
 
     @Inject
-    lateinit var alertPersistenceManager: AlertPersistenceManager
+    lateinit var persistenceManager: AlertPersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<AlertEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -45,13 +47,9 @@ class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
                 .getSystemAlerts()
     }
 
-    override fun mapToPersistenceEntity(it: AlertModel): AlertEntity {
+    override fun mapToEntity(it: AlertModel): AlertEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<AlertEntity> {
-        return alertPersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<AlertEntity> {

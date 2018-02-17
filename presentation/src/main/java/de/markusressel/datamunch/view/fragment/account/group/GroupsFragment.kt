@@ -9,6 +9,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.GroupEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemGroupBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.account.group.GroupModel
@@ -25,7 +26,9 @@ import javax.inject.Inject
 class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
 
     @Inject
-    lateinit var groupPersistenceManager: GroupPersistenceManager
+    lateinit var persistenceManager: GroupPersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<GroupEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -47,13 +50,9 @@ class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
                 .getGroups()
     }
 
-    override fun mapToPersistenceEntity(it: GroupModel): GroupEntity {
+    override fun mapToEntity(it: GroupModel): GroupEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<GroupEntity> {
-        return groupPersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<GroupEntity> {
@@ -77,7 +76,12 @@ class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
     }
 
     private fun openDetailView(group: GroupEntity) {
-
+        context
+                ?.let {
+                    val intent = DetailActivityBase
+                            .newInstanceIntent(GroupDetailActivity::class.java, it, group.entityId)
+                    startActivity(intent)
+                }
     }
 
 }

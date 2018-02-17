@@ -24,7 +24,9 @@ import javax.inject.Inject
  */
 class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
     @Inject
-    lateinit var afpSharePersistenceManager: AfpSharePersistenceManager
+    lateinit var persistenceManager: AfpSharePersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<AfpShareEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -46,13 +48,9 @@ class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
                 .getAfpShares()
     }
 
-    override fun mapToPersistenceEntity(it: AfpShareModel): AfpShareEntity {
+    override fun mapToEntity(it: AfpShareModel): AfpShareEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<AfpShareEntity> {
-        return afpSharePersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<AfpShareEntity> {

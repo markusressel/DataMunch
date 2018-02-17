@@ -25,7 +25,9 @@ import javax.inject.Inject
 class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
 
     @Inject
-    lateinit var snapshotPersistenceManager: SnapshotPersistenceManager
+    lateinit var persistenceManager: SnapshotPersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<SnapshotEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -47,13 +49,9 @@ class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
                 .getSnapshots(limit = 1000)
     }
 
-    override fun mapToPersistenceEntity(it: SnapshotModel): SnapshotEntity {
+    override fun mapToEntity(it: SnapshotModel): SnapshotEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<SnapshotEntity> {
-        return snapshotPersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<SnapshotEntity> {

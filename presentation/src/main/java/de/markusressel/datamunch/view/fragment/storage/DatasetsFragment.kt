@@ -25,7 +25,9 @@ import javax.inject.Inject
 class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
 
     @Inject
-    lateinit var datasetPersistenceManager: DatasetPersistenceManager
+    lateinit var persistenceManager: DatasetPersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<DatasetEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -47,13 +49,9 @@ class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
                 .getDatasets()
     }
 
-    override fun mapToPersistenceEntity(it: DatasetModel): DatasetEntity {
+    override fun mapToEntity(it: DatasetModel): DatasetEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<DatasetEntity> {
-        return datasetPersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<DatasetEntity> {

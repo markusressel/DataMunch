@@ -25,7 +25,9 @@ import javax.inject.Inject
 class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
 
     @Inject
-    lateinit var templatePersistenceManager: TemplatePersistenceManager
+    lateinit var persistenceManager: TemplatePersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<TemplateEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -47,13 +49,9 @@ class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
                 .getTemplates()
     }
 
-    override fun mapToPersistenceEntity(it: TemplateModel): TemplateEntity {
+    override fun mapToEntity(it: TemplateModel): TemplateEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<TemplateEntity> {
-        return templatePersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<TemplateEntity> {

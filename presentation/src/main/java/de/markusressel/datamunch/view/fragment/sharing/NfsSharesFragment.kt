@@ -25,7 +25,9 @@ import javax.inject.Inject
 class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
 
     @Inject
-    lateinit var nfsSharePersistenceManager: NfsSharePersistenceManager
+    lateinit var persistenceManager: NfsSharePersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<NfsShareEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -47,13 +49,9 @@ class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
                 .getNfsShares()
     }
 
-    override fun mapToPersistenceEntity(it: NfsShareModel): NfsShareEntity {
+    override fun mapToEntity(it: NfsShareModel): NfsShareEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<NfsShareEntity> {
-        return nfsSharePersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<NfsShareEntity> {

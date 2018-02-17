@@ -26,8 +26,11 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
+
     @Inject
-    lateinit var updatePersistenceManager: UpdatePersistenceManager
+    lateinit var persistenceManager: UpdatePersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<UpdateEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -49,15 +52,10 @@ class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
                 .getPendingUpdates()
     }
 
-    override fun mapToPersistenceEntity(it: UpdateModel): UpdateEntity {
+    override fun mapToEntity(it: UpdateModel): UpdateEntity {
         return it
                 .asEntity()
     }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<UpdateEntity> {
-        return updatePersistenceManager
-    }
-
 
     override fun loadListDataFromPersistence(): List<UpdateEntity> {
         return super

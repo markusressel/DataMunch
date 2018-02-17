@@ -26,7 +26,9 @@ import javax.inject.Inject
 class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
 
     @Inject
-    lateinit var userPersistenceManager: UserPersistenceManager
+    lateinit var persistenceManager: UserPersistenceManager
+
+    override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
@@ -48,13 +50,9 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
                 .getUsers()
     }
 
-    override fun mapToPersistenceEntity(it: UserModel): UserEntity {
+    override fun mapToEntity(it: UserModel): UserEntity {
         return it
                 .asEntity()
-    }
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> {
-        return userPersistenceManager
     }
 
     override fun loadListDataFromPersistence(): List<UserEntity> {
@@ -81,11 +79,7 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
         context
                 ?.let {
                     val intent = DetailActivityBase
-                            .newInstance(UserDetailActivity::class.java, it)
-                            .apply {
-                                putExtra(DetailActivityBase.KEY_ENTITY_ID, user.entityId)
-                            }
-
+                            .newInstanceIntent(UserDetailActivity::class.java, it, user.entityId)
                     startActivity(intent)
                 }
     }

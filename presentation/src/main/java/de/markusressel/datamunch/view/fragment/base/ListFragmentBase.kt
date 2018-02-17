@@ -271,7 +271,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                             .toObservable()
                             .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
                             .map {
-                                mapToPersistenceEntity(it)
+                                mapToEntity(it)
                             }
                             .toList()
                             .subscribeOn(Schedulers.io())
@@ -299,7 +299,10 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 })
     }
 
-    abstract fun mapToPersistenceEntity(it: K): T
+    /**
+     * Map the source object to the persistence object
+     */
+    abstract fun mapToEntity(it: K): T
 
     /**
      * Get the persistence handler for this list

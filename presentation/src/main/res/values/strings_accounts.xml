@@ -17,4 +17,6 @@
     <string name="locked">Locked</string>
     <string name="sudo_access">Superuser access</string>
 
+    <string name="built_in">Built-in</string>
+
 </resources>
