@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.v4.content.ContextCompat
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
@@ -44,6 +45,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
 
     val loadingPlugin = LoadingPlugin()
 
+    private var isTouchable = true
 
     init {
         addFragmentPlugins(loadingPlugin)
@@ -154,6 +156,11 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                     }
                 })
 
+        patternLockView
+                .setOnTouchListener { view: View, motionEvent: MotionEvent ->
+                    !isTouchable
+                }
+
         shimmerLayout
                 .startShimmerAnimation()
     }
@@ -168,6 +175,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                     .fromCallable {
                         patternLockView
                                 .setViewMode(PatternLockView.PatternViewMode.CORRECT)
+                        isTouchable = false
                     }
                     .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
                     .delay(250, TimeUnit.MILLISECONDS)
@@ -177,13 +185,14 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                         unlockScreen()
                         patternLockView
                                 .clearPattern()
+                        isTouchable = true
                     })
         } else {
             Single
                     .fromCallable {
                         patternLockView
                                 .setViewMode(PatternLockView.PatternViewMode.WRONG)
-                        // TODO: disable touch input
+                        isTouchable = false
                     }
                     .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
                     .delay(1, TimeUnit.SECONDS)
@@ -192,7 +201,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                     .subscribeBy(onSuccess = {
                         patternLockView
                                 .clearPattern()
-                        // TODO: enable touch input
+                        isTouchable = true
                     })
         }
     }
