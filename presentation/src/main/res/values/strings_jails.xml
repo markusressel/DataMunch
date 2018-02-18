@@ -13,5 +13,6 @@
     <string name="restart">Restart</string>
 
     <string name="jail" translatable="false">Jail</string>
+    <string name="services" translatable="false">Services</string>
 
 </resources>

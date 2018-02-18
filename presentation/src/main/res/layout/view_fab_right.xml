@@ -4,6 +4,5 @@
     android:id="@+id/fabButton"
     style="@style/fab_style"
     android:layout_gravity="bottom|end"
-    app:fabSize="normal"
     app:layout_anchor="@id/recyclerView"
     app:layout_anchorGravity="bottom|right|end" />

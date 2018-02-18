@@ -17,6 +17,7 @@ import de.markusressel.datamunch.view.fragment.jail.MountpointsFragment
 import de.markusressel.datamunch.view.fragment.jail.TemplatesFragment
 import de.markusressel.datamunch.view.fragment.jail.jail.JailDetailActivity
 import de.markusressel.datamunch.view.fragment.jail.jail.JailDetailContentFragment
+import de.markusressel.datamunch.view.fragment.jail.jail.JailServicesContentFragment
 import de.markusressel.datamunch.view.fragment.jail.jail.JailsFragment
 import de.markusressel.datamunch.view.fragment.pages.*
 import de.markusressel.datamunch.view.fragment.sharing.AfpSharesFragment
@@ -134,5 +135,8 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun JailDetailContentFragment(): JailDetailContentFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun JailServicesContentFragment(): JailServicesContentFragment
 
 }

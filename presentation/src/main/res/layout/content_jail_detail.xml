@@ -111,6 +111,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="end"
                 android:orientation="horizontal">
 
@@ -118,9 +119,6 @@
                     android:id="@+id/openShellButton"
                     style="@style/fab_style"
                     android:layout_gravity="end"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginTop="10dp"
-                    app:fabSize="normal"
                     app:layout_anchorGravity="top|right|end" />
 
                 <android.support.design.widget.FloatingActionButton
@@ -128,8 +126,6 @@
                     style="@style/fab_style"
                     android:layout_gravity="end"
                     android:layout_marginEnd="24dp"
-                    android:layout_marginTop="10dp"
-                    app:fabSize="normal"
                     app:layout_anchorGravity="top|right|end" />
 
             </LinearLayout>

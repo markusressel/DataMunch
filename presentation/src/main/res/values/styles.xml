@@ -19,6 +19,7 @@
         <item name="backgroundTint">?attr/colorAccent</item>
         <item name="borderWidth">0dp</item>
         <item name="elevation">8dp</item>
+        <item name="fabSize">normal</item>
     </style>
 
     <style name="sub_header">
