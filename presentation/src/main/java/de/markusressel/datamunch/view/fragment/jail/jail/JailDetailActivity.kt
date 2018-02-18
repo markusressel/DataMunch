@@ -24,7 +24,7 @@ class JailDetailActivity : DetailActivityBase<JailEntity>() {
 
     override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
         get() = listOf(R.string.details to ::JailDetailContentFragment,
-                       R.string.services to ::JailServicesContentFragment)
-
+                       R.string.services to ::JailServicesContentFragment,
+                       R.string.shell to ::JailShellContentFragment)
 
 }

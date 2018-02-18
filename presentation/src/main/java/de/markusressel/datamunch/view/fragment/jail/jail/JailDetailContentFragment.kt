@@ -9,29 +9,20 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.JailPersistenceManager
-import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.JailEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.data.persistence.entity.isRunning
 import de.markusressel.datamunch.data.persistence.entity.isStopped
-import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.content_jail_detail.*
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 /**
  * Created by Markus on 15.02.2018.
  */
-class JailDetailContentFragment : DetailContentFragmentBase<JailEntity>() {
-
-    @Inject
-    lateinit var persistenceManager: JailPersistenceManager
-
-    override fun getPersistenceHandler(): PersistenceManagerBase<JailEntity> = persistenceManager
+class JailDetailContentFragment : JailContentFragmentBase() {
 
     override val layoutRes: Int
         get() = R.layout.content_jail_detail

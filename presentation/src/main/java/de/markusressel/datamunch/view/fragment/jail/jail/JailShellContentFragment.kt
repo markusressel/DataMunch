@@ -7,10 +7,10 @@ import de.markusressel.datamunch.R
 /**
  * Created by Markus on 18.02.2018.
  */
-class JailServicesContentFragment : JailContentFragmentBase() {
+class JailShellContentFragment : JailContentFragmentBase() {
 
     override val layoutRes: Int
-        get() = R.layout.content_jail_services
+        get() = R.layout.content_jail_shell
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
