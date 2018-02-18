@@ -39,6 +39,8 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
 
     abstract val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
 
+    private val headerMap: MutableMap<Int, HeaderDesign> = mutableMapOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super
                 .onCreate(savedInstanceState)
@@ -54,12 +56,17 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
 
         materialViewPager
                 .setMaterialViewPagerListener {
-                    // select random header config
-                    val config = HEADER_CONFIGS[(0 until HEADER_CONFIGS.size).random()]
-                    // instantiate this header
-                    HeaderDesign
-                            .fromColorResAndDrawable(config.colorRes,
-                                                     getDrawable(config.drawableRes))
+                    // get header from map (if already instantiated)
+                    headerMap
+                            .getOrPut(it) {
+                                // get random header for page
+                                val config = HEADER_CONFIGS[(0 until HEADER_CONFIGS.size).random()]
+
+                                // instantiate this header
+                                HeaderDesign
+                                        .fromColorResAndDrawable(config.colorRes,
+                                                                 getDrawable(config.drawableRes))
+                            }
                 }
     }
 
