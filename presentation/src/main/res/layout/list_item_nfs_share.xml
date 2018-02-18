@@ -49,18 +49,6 @@
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/id" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="@{Long.toString(item.id)}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
-
-                <TextView
-                    style="@style/sub_header"
                     android:text="@string/comment" />
 
                 <TextView
