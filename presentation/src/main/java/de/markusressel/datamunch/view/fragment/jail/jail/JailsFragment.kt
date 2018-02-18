@@ -1,6 +1,5 @@
 package de.markusressel.datamunch.view.fragment.jail.jail
 
-import android.widget.Toast
 import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.BR
@@ -15,9 +14,6 @@ import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.jails.jail.JailModel
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
 
@@ -77,60 +73,6 @@ class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
 
     private fun openAddDialog() {
 
-    }
-
-    fun startJail(jail: JailEntity) {
-        freeNasWebApiClient
-                .startJail(jail.id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(onSuccess = {
-                    Toast
-                            .makeText(activity, "Success!", Toast.LENGTH_SHORT)
-                            .show()
-                    reloadDataFromSource()
-                }, onError = {
-                    Toast
-                            .makeText(activity, "Error!", Toast.LENGTH_LONG)
-                            .show()
-                    loadingPlugin
-                            .showError(it)
-                })
-    }
-
-    fun stopJail(jail: JailEntity) {
-        freeNasWebApiClient
-                .stopJail(jail.id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(onSuccess = {
-                    Toast
-                            .makeText(activity, "Success!", Toast.LENGTH_SHORT)
-                            .show()
-                    reloadDataFromSource()
-                }, onError = {
-                    Toast
-                            .makeText(activity, "Error!", Toast.LENGTH_LONG)
-                            .show()
-                    loadingPlugin
-                            .showError(it)
-                })
-    }
-
-    fun restartJail(jail: JailEntity) {
-        freeNasWebApiClient
-                .restartJail(jail.id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(onSuccess = {
-                    reloadDataFromSource()
-                }, onError = {
-                    Toast
-                            .makeText(activity, "Error!", Toast.LENGTH_LONG)
-                            .show()
-                    loadingPlugin
-                            .showError(it)
-                })
     }
 
     private fun openDetailView(jail: JailEntity) {

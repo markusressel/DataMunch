@@ -1,5 +1,7 @@
 package de.markusressel.datamunch.view.fragment.account.user
 
+import android.os.Bundle
+import android.view.View
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
@@ -24,6 +26,48 @@ class UserDetailContentFragment : DetailContentFragmentBase<UserEntity>() {
     override val layoutRes: Int
         get() = R.layout.content_user_detail
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super
+                .onViewCreated(view, savedInstanceState)
+
+        RxTextView
+                .textChanges(fullNameEditText)
+                .bindToLifecycle(fullNameEditText)
+                .subscribeBy(onNext = {
+                    val entityCopy = getEntityFromPersistence()
+                            .copy(bsdusr_full_name = it.toString())
+
+                    storeModifiedEntity(entityCopy)
+                })
+
+        RxTextView
+                .textChanges(passwordEditText)
+                .bindToLifecycle(passwordEditText)
+                .subscribeBy(onNext = {
+
+                })
+
+        RxTextView
+                .textChanges(emailEditText)
+                .bindToLifecycle(emailEditText)
+                .subscribeBy(onNext = {
+                    val entityCopy = getEntityFromPersistence()
+                            .copy(bsdusr_email = it.toString())
+
+                    storeModifiedEntity(entityCopy)
+                })
+
+        RxTextView
+                .textChanges(shellEditText)
+                .bindToLifecycle(shellEditText)
+                .subscribeBy(onNext = {
+                    val entityCopy = getEntityFromPersistence()
+                            .copy(bsdusr_email = it.toString())
+
+                    storeModifiedEntity(entityCopy)
+                })
+    }
+
 
     override fun onResume() {
         super
@@ -33,7 +77,6 @@ class UserDetailContentFragment : DetailContentFragmentBase<UserEntity>() {
 
     private fun updateUiFromEntity() {
         val entity = getEntityFromPersistence()
-                ?: return
 
         userIdTextView
                 .text = "${entity.bsdusr_uid}"
@@ -47,37 +90,13 @@ class UserDetailContentFragment : DetailContentFragmentBase<UserEntity>() {
 
         fullNameEditText
                 .setText(entity.bsdusr_full_name)
-        RxTextView
-                .textChanges(fullNameEditText)
-                .bindToLifecycle(fullNameEditText)
-                .subscribeBy(onNext = {
-                    val entityCopy = entity
-                            .copy(bsdusr_full_name = it.toString())
-
-                    storeModifiedEntity(entityCopy)
-                })
 
         passwordEditText
                 .setText("")
-        RxTextView
-                .textChanges(passwordEditText)
-                .bindToLifecycle(passwordEditText)
-                .subscribeBy(onNext = {
-
-                })
-
 
         emailEditText
                 .setText(entity.bsdusr_email)
-        RxTextView
-                .textChanges(emailEditText)
-                .bindToLifecycle(emailEditText)
-                .subscribeBy(onNext = {
-                    val entityCopy = entity
-                            .copy(bsdusr_email = it.toString())
 
-                    storeModifiedEntity(entityCopy)
-                })
 
         homeDirectoryTextView
                 .text = entity
@@ -85,15 +104,7 @@ class UserDetailContentFragment : DetailContentFragmentBase<UserEntity>() {
 
         shellEditText
                 .setText(entity.bsdusr_shell)
-        RxTextView
-                .textChanges(shellEditText)
-                .bindToLifecycle(shellEditText)
-                .subscribeBy(onNext = {
-                    val entityCopy = entity
-                            .copy(bsdusr_email = it.toString())
 
-                    storeModifiedEntity(entityCopy)
-                })
 
         lockedCheckBox
                 .isChecked = entity

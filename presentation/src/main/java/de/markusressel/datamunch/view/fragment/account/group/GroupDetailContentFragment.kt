@@ -30,7 +30,6 @@ class GroupDetailContentFragment : DetailContentFragmentBase<GroupEntity>() {
 
     private fun updateUiFromEntity() {
         val entity = getEntityFromPersistence()
-                ?: return
 
         idTextView
                 .text = "${entity.bsdgrp_gid}"

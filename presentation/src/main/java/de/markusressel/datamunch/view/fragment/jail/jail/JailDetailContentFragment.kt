@@ -1,11 +1,26 @@
 package de.markusressel.datamunch.view.fragment.jail.jail
 
+import android.arch.lifecycle.Lifecycle
+import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import com.jakewharton.rxbinding2.view.RxView
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.JailPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.JailEntity
+import de.markusressel.datamunch.data.persistence.entity.asEntity
+import de.markusressel.datamunch.data.persistence.entity.isRunning
+import de.markusressel.datamunch.data.persistence.entity.isStopped
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.content_jail_detail.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
@@ -21,6 +36,47 @@ class JailDetailContentFragment : DetailContentFragmentBase<JailEntity>() {
     override val layoutRes: Int
         get() = R.layout.content_jail_detail
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super
+                .onViewCreated(view, savedInstanceState)
+
+        RxView
+                .clicks(startStopButton)
+                .bindToLifecycle(startStopButton)
+                .subscribeBy(onNext = {
+                    val entity = getEntityFromPersistence()
+
+                    when {
+                        entity.isRunning() -> stopJail(entity)
+                        entity.isStopped() -> startJail(entity)
+                        else -> restartJail(entity)
+                    }
+
+                    (activity as JailDetailActivity)
+                })
+
+        RxView
+                .longClicks(startStopButton)
+                .bindToLifecycle(startStopButton)
+                .subscribeBy(onNext = {
+                    val entity = getEntityFromPersistence()
+
+                    restartJail(entity)
+                })
+
+        RxView
+                .clicks(openShellButton)
+                .bindToLifecycle(openShellButton)
+                .subscribeBy(onNext = {
+                    openShell()
+                })
+
+    }
+
+    private fun openShell() {
+        // TODO: Open a shell (as dialog?) for the user to be able to see what happens
+    }
+
 
     override fun onResume() {
         super
@@ -30,12 +86,129 @@ class JailDetailContentFragment : DetailContentFragmentBase<JailEntity>() {
 
     private fun updateUiFromEntity() {
         val entity = getEntityFromPersistence()
-                ?: return
+
+        if (entity.isRunning()) {
+            startStopButton
+                    .setImageDrawable(iconHandler.getFabIcon(MaterialDesignIconic.Icon.gmi_stop))
+        } else {
+            startStopButton
+                    .setImageDrawable(iconHandler.getFabIcon(MaterialDesignIconic.Icon.gmi_play))
+        }
+
+        idTextView
+                .text = "${entity.id}"
 
         nameTextView
                 .text = entity
                 .jail_host
 
+        statusTextView
+                .text = entity
+                .jail_status
+
+        ipv4TextView
+                .text = entity
+                .jail_ipv4
+
+        macTextView
+                .text = entity
+                .jail_mac
+    }
+
+    private fun startJail(jail: JailEntity) {
+        freeNasWebApiClient
+                .startJail(jail.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(onSuccess = {
+                    Toast
+                            .makeText(activity, "Success!", Toast.LENGTH_SHORT)
+                            .show()
+
+                    // TODO: Show response
+
+                    reloadJailsFromSource()
+                }, onError = {
+                    Toast
+                            .makeText(activity, "Error! " + it.message, Toast.LENGTH_LONG)
+                            .show()
+
+                    // TODO: Show error
+                    //                    loadingPlugin
+                    //                            .showError(it)
+                })
+    }
+
+    private fun stopJail(jail: JailEntity) {
+        freeNasWebApiClient
+                .stopJail(jail.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(onSuccess = {
+                    Toast
+                            .makeText(activity, "Success!", Toast.LENGTH_SHORT)
+                            .show()
+                    // TODO: Show response
+
+                    reloadJailsFromSource()
+                }, onError = {
+                    Toast
+                            .makeText(activity, "Error! " + it.message, Toast.LENGTH_LONG)
+                            .show()
+
+                    // TODO: Show error
+                    //                    loadingPlugin
+                    //                            .showError(it)
+                })
+    }
+
+    private fun restartJail(jail: JailEntity) {
+        freeNasWebApiClient
+                .restartJail(jail.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(onSuccess = {
+                    Toast
+                            .makeText(activity, "Success!", Toast.LENGTH_SHORT)
+                            .show()
+                    // TODO: Show response
+                    reloadJailsFromSource()
+                }, onError = {
+                    Toast
+                            .makeText(activity, "Error! " + it.message, Toast.LENGTH_LONG)
+                            .show()
+
+
+                    // TODO: Show error
+                    //                    loadingPlugin
+                    //                            .showError(it)
+                })
+    }
+
+    private fun reloadJailsFromSource() {
+        freeNasWebApiClient
+                .getJails()
+                .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
+                .delaySubscription(2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(onSuccess = {
+                    val entity = getEntityFromPersistence()
+                    for (jailModel in it) {
+                        if (jailModel.id == entity.id) {
+                            getPersistenceHandler()
+                                    .standardOperation()
+                                    .put(jailModel.asEntity(entity.entityId))
+                            break
+                        }
+                    }
+
+                    updateUiFromEntity()
+                }, onError = {
+                    Toast
+                            .makeText(activity, "Error! " + it.message, Toast.LENGTH_LONG)
+                            .show()
+                })
     }
 
 }

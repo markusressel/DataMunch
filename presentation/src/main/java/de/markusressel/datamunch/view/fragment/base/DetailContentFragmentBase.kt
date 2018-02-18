@@ -28,9 +28,9 @@ abstract class DetailContentFragmentBase<EntityType : Any> : DaggerSupportFragme
     /**
      * Get the entity to edit from persistence
      */
-    protected fun getEntityFromPersistence(): EntityType? {
+    protected fun getEntityFromPersistence(): EntityType {
         val args = arguments
-                ?: return null
+                ?: throw IllegalStateException("Entity must not be null!")
 
         val entityId: Long = args
                 .getLong(DetailActivityBase.KEY_ENTITY_ID)

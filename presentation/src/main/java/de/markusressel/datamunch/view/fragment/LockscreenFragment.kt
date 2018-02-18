@@ -115,6 +115,11 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                                                       ContextCompat.getColor(context as Context,
                                                                              R.color.md_grey_500),
                                                       48, 0))
+
+        patternLockView
+                .setOnTouchListener { _: View, _: MotionEvent ->
+                    !isTouchable
+                }
     }
 
     override fun onResume() {
@@ -155,11 +160,6 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                         }
                     }
                 })
-
-        patternLockView
-                .setOnTouchListener { view: View, motionEvent: MotionEvent ->
-                    !isTouchable
-                }
 
         shimmerLayout
                 .startShimmerAnimation()

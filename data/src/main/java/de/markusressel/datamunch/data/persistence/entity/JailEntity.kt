@@ -20,8 +20,8 @@ data class JailEntity(@Id var entityId: Long, val id: Long, val jail_alias_bridg
                       val jail_nat: Boolean, val jail_status: String?, val jail_type: String?,
                       val jail_vnet: Boolean)
 
-fun JailModel.asEntity(): JailEntity {
-    return JailEntity(0, this.id, this.jail_alias_bridge_ipv4, this.jail_alias_bridge_ipv6,
+fun JailModel.asEntity(entityId: Long = 0): JailEntity {
+    return JailEntity(entityId, this.id, this.jail_alias_bridge_ipv4, this.jail_alias_bridge_ipv6,
                       this.jail_alias_ipv4, this.jail_alias_ipv6, this.jail_autostart,
                       this.jail_bridge_ipv4, this.jail_bridge_ipv4_netmask, this.jail_bridge_ipv6,
                       this.jail_bridge_ipv6_prefix, this.jail_defaultrouter_ipv4,
@@ -29,4 +29,12 @@ fun JailModel.asEntity(): JailEntity {
                       this.jail_iface, this.jail_ipv4, this.jail_ipv4_netmask, this.jail_ipv6,
                       this.jail_ipv6_prefix, this.jail_mac, this.jail_nat, this.jail_status,
                       this.jail_type, this.jail_vnet)
+}
+
+fun JailEntity.isRunning(): Boolean {
+    return "Running" == this.jail_status
+}
+
+fun JailEntity.isStopped(): Boolean {
+    return "Stopped" == this.jail_status
 }
