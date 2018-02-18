@@ -11,4 +11,6 @@
 
     <dimen name="tab_bar_height">42dp</dimen>
 
+    <dimen name="detail_content_margin_top">18dp</dimen>
+
 </resources>

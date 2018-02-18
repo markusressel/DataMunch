@@ -55,19 +55,7 @@ class JailDetailContentFragment : JailContentFragmentBase() {
                     restartJail(entity)
                 })
 
-        RxView
-                .clicks(openShellButton)
-                .bindToLifecycle(openShellButton)
-                .subscribeBy(onNext = {
-                    openShell()
-                })
-
     }
-
-    private fun openShell() {
-        // TODO: Open a shell (as dialog?) for the user to be able to see what happens
-    }
-
 
     override fun onResume() {
         super

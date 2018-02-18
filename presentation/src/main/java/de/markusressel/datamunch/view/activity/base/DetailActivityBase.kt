@@ -40,6 +40,7 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
     abstract val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
 
     private val headerMap: MutableMap<Int, HeaderDesign> = mutableMapOf()
+    private val usedHeaders: MutableSet<HeaderConfig> = mutableSetOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super
@@ -56,16 +57,34 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
 
         materialViewPager
                 .setMaterialViewPagerListener {
+                    val pageIndex = it
+
                     // get header from map (if already instantiated)
                     headerMap
                             .getOrPut(it) {
                                 // get random header for page
-                                val config = HEADER_CONFIGS[(0 until HEADER_CONFIGS.size).random()]
+                                // filter out headers that are already in use
+                                val filteredHeaders = HEADER_CONFIGS
+                                        .filter {
+                                            !usedHeaders.contains(it)
+                                        }
+
+
+                                val config: HeaderConfig
+                                if (!filteredHeaders.isEmpty()) {
+                                    config = filteredHeaders[(0 until filteredHeaders.size).random()]
+                                    // remember that this header is now in use
+                                    usedHeaders
+                                            .add(config)
+                                } else {
+                                    // use random header if all headers are already in use
+                                    config = HEADER_CONFIGS[(0 until HEADER_CONFIGS.size).random()]
+                                }
+
 
                                 // instantiate this header
                                 HeaderDesign
-                                        .fromColorResAndDrawable(config.colorRes,
-                                                                 getDrawable(config.drawableRes))
+                                        .fromColorResAndDrawable(config.colorRes, getDrawable(config.drawableRes))
                             }
                 }
     }

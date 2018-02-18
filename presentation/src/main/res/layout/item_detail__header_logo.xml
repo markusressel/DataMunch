@@ -2,7 +2,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/headerText"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/materialviewpager_logoHeight"
+    android:layout_height="wrap_content"
     android:text="No Title"
     android:textColor="@android:color/white"
     android:textSize="30sp" />
