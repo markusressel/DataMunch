@@ -17,6 +17,7 @@ import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
+import de.markusressel.datamunch.data.persistence.LastUpdateFromSourcePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.view.plugin.LoadingPlugin
 import de.markusressel.datamunch.view.plugin.OptionsMenuPlugin
@@ -50,6 +51,9 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
 
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
+
+    @Inject
+    lateinit var lastUpdatedManager: LastUpdateFromSourcePersistenceManager
 
     private val persistenceLoaderId = loaderIdCounter
             .getAndIncrement()
@@ -112,7 +116,15 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         super
                 .onResume()
 
-        fillListFromPersistence()
+        if (System.currentTimeMillis() - (1000 * 60) > getLastUpdatedFromSource()) {
+            Timber
+                    .d { "Persisted list data is old, refreshing from source" }
+            reloadDataFromSource()
+        } else {
+            Timber
+                    .d { "Persisted list data is probably still valid, just loading from persistence" }
+            fillListFromPersistence()
+        }
     }
 
     private fun setupFabs() {
@@ -278,6 +290,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeBy(onSuccess = {
                                 persistListData(it)
+                                updateLastUpdatedFromSource()
                                 fillListFromPersistence()
                             }, onError = {
                                 if (it is CancellationException) {
@@ -316,6 +329,20 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         getPersistenceHandler()
                 .standardOperation()
                 .put(data)
+    }
+
+    private fun getLastUpdatedFromSource(): Long {
+        val entityModelId = getPersistenceHandler()
+                .getEntityModelId()
+        return lastUpdatedManager
+                .getLastUpdated(entityModelId.toLong())
+    }
+
+    private fun updateLastUpdatedFromSource() {
+        val entityModelId = getPersistenceHandler()
+                .getEntityModelId()
+        lastUpdatedManager
+                .setUpdatedNow(entityModelId.toLong())
     }
 
     private fun showEmpty() {

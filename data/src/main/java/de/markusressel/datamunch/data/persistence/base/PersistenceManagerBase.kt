@@ -22,6 +22,17 @@ open class PersistenceManagerBase<EntityType : Any>(val entityType: KClass<Entit
     }
 
     /**
+     * Get the model id for this entity type (same for all entities of equal class type without dependency on the class name)
+     */
+    fun getEntityModelId(): Int {
+        val entityClass: Class<EntityType> = entityType
+                .java
+
+        return boxStore
+                .getEntityTypeIdOrThrow(entityClass)
+    }
+
+    /**
      * Returns the BoxStore for this PersistenceManager to perform standard (ObjectBox) operations
      */
     fun standardOperation(): Box<EntityType> {
