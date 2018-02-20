@@ -167,7 +167,7 @@ class JailDetailContentFragment : JailContentFragmentBase() {
     private fun reloadJailsFromSource() {
         freeNasWebApiClient
                 .getJails()
-                .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
+                .bindUntilEvent(this, Lifecycle.Event.ON_STOP)
                 .delaySubscription(2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

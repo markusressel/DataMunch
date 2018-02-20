@@ -87,7 +87,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                     frittenbudeServerManager
                             .retrieveHostname()
                 }
-                .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
+                .bindUntilEvent(this, Lifecycle.Event.ON_STOP)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onSuccess = {
@@ -114,7 +114,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                     frittenbudeServerManager
                             .retrieveUptime()
                 }
-                .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
+                .bindUntilEvent(this, Lifecycle.Event.ON_STOP)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onSuccess = {

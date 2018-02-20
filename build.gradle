@@ -11,14 +11,14 @@ buildscript {
 
         compileSdkVersion = 26
         targetSdkVersion = 26
-        buildToolsVersion = "27.0.0"
+        buildToolsVersion = "27.0.3"
 
         supportLibVersion = "27.0.2"
         constraintLayoutVersion = "1.0.2"
         dagger2Version = "2.11"
-        aboutlibrariesVersion = "6.0.1"
-        materialdrawerVersion = "6.0.2"
-        iconicsVersion = "3.0.0"
+        aboutlibrariesVersion = "6.0.5"
+        materialdrawerVersion = "6.0.6"
+        iconicsVersion = "3.0.3"
 
         rxKotlinVersion = "2.2.0"
         javaxAnnotationVersion = "10.0-b28"
@@ -30,7 +30,7 @@ buildscript {
 
         objectboxVersion = "1.4.1"
 
-        fuelVersion = "1.12.0"
+        fuelVersion = "1.12.1"
 
         rxBindingVersion = "2.1.1"
         rxLifecycleVersion = "2.2.1"

@@ -64,11 +64,8 @@ abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFr
         val alternative = super
                 .onCreateView(inflater, newContainer, savedInstanceState)
 
-        if (alternative != null) {
-            return alternative
-        } else {
-            return newContainer
-        }
+        return alternative
+                ?: newContainer
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

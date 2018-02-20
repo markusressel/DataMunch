@@ -65,8 +65,6 @@ abstract class LifecycleActivityBase : CompositeActivity(), LifecycleProvider<Ac
 
     @CallSuper
     override fun onPause() {
-        Bus
-                .unregister(this)
         lifecycleSubject
                 .onNext(ActivityEvent.PAUSE)
         super
@@ -75,6 +73,8 @@ abstract class LifecycleActivityBase : CompositeActivity(), LifecycleProvider<Ac
 
     @CallSuper
     override fun onStop() {
+        Bus
+                .unregister(this)
         lifecycleSubject
                 .onNext(ActivityEvent.STOP)
         super

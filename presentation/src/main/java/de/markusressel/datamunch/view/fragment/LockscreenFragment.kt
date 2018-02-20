@@ -177,7 +177,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                                 .setViewMode(PatternLockView.PatternViewMode.CORRECT)
                         isTouchable = false
                     }
-                    .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
+                    .bindUntilEvent(this, Lifecycle.Event.ON_STOP)
                     .delay(250, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(AndroidSchedulers.mainThread())
@@ -194,7 +194,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                                 .setViewMode(PatternLockView.PatternViewMode.WRONG)
                         isTouchable = false
                     }
-                    .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
+                    .bindUntilEvent(this, Lifecycle.Event.ON_STOP)
                     .delay(1, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(AndroidSchedulers.mainThread())

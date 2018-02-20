@@ -227,7 +227,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
+                .bindUntilEvent(this, Lifecycle.Event.ON_STOP)
                 .subscribeBy(onSuccess = {
                     listValues
                             .clear()
@@ -265,11 +265,11 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         loadListDataFromSource()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
+                .bindUntilEvent(this, Lifecycle.Event.ON_STOP)
                 .subscribeBy(onSuccess = {
                     it
                             .toObservable()
-                            .bindUntilEvent(this, Lifecycle.Event.ON_PAUSE)
+                            .bindUntilEvent(this, Lifecycle.Event.ON_STOP)
                             .map {
                                 mapToEntity(it)
                             }

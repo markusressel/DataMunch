@@ -105,9 +105,9 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                 .navigateTo(this, currentPage)
     }
 
-    override fun onResume() {
+    override fun onStart() {
         super
-                .onResume()
+                .onStart()
 
         Bus
                 .observe<LockEvent>()
@@ -115,6 +115,11 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                     setDrawerLockState(it.lock)
                 }
                 .registerInBus(this)
+    }
+
+    override fun onResume() {
+        super
+                .onResume()
 
         setDrawerLockState(isLocked)
     }
@@ -162,6 +167,8 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
     private fun getProfiles(): MutableList<IProfile<*>> {
         val profiles: MutableList<IProfile<*>> = LinkedList()
+
+        // TODO: implement different servers as profiles
 
         profiles
                 .add(ProfileDrawerItem().withName("Markus Ressel").withEmail(
