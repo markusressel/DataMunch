@@ -3,6 +3,7 @@ package de.markusressel.datamunch.view.activity.base
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.CheckResult
+import com.eightbitlab.rxbus.Bus
 import com.pascalwelsch.compositeandroid.activity.CompositeActivity
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.LifecycleTransformer
@@ -64,6 +65,8 @@ abstract class LifecycleActivityBase : CompositeActivity(), LifecycleProvider<Ac
 
     @CallSuper
     override fun onPause() {
+        Bus
+                .unregister(this)
         lifecycleSubject
                 .onNext(ActivityEvent.PAUSE)
         super
