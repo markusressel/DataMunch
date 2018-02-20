@@ -6,6 +6,7 @@
         <item name="cardCornerRadius">@dimen/cardview_corner_radius</item>
         <item name="cardElevation">@dimen/cardview_elevation</item>
         <item name="cardUseCompatPadding">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="fab_style" parent="Widget.Design.FloatingActionButton">
