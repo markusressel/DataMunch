@@ -11,8 +11,11 @@ interface ServiceApi {
     fun getServices(limit: Int = DEFAULT_LIMIT,
                     offset: Int = DEFAULT_OFFSET): Single<List<ServiceModel>>
 
+
     /**
      * Update a service
      */
-    fun updateServices(): Single<ServiceModel>
+    fun updateService(serviceId: Int, srv_service: String,
+                      srv_enable: Boolean): Single<ServiceModel>
+
 }

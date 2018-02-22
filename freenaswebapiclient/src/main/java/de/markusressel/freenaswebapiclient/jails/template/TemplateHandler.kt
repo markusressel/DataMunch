@@ -13,9 +13,6 @@ import io.reactivex.Single
  */
 class TemplateHandler(private val requestManager: RequestManager) : TemplateApi {
 
-    /**
-     * Get a list of all templates
-     */
     override fun getTemplates(limit: Int, offset: Int): Single<List<TemplateModel>> {
         val params = requestManager
                 .createLimitOffsetParams(limit, offset)
@@ -24,9 +21,6 @@ class TemplateHandler(private val requestManager: RequestManager) : TemplateApi 
                            TemplateModel.ListDeserializer())
     }
 
-    /**
-     * Create a new template
-     */
     override fun createTemplate(jt_arch: String, jt_instances: Long, jt_name: String, jt_os: String,
                                 jt_url: String): Single<TemplateModel> {
         val data = TemplateModel(0, jt_arch, jt_instances, jt_name, jt_os, jt_url)
@@ -35,9 +29,6 @@ class TemplateHandler(private val requestManager: RequestManager) : TemplateApi 
                                TemplateModel.SingleDeserializer())
     }
 
-    /**
-     * Update an existing template
-     */
     override fun updateTemplate(id: Long, jt_arch: String, jt_instances: Long, jt_name: String,
                                 jt_os: String, jt_url: String): Single<MountpointModel> {
         val data = TemplateModel(id, jt_arch, jt_instances, jt_name, jt_os, jt_url)
@@ -46,9 +37,6 @@ class TemplateHandler(private val requestManager: RequestManager) : TemplateApi 
                                MountpointModel.SingleDeserializer())
     }
 
-    /**
-     * Delete a template
-     */
     override fun deleteTemplate(
             templateId: Long): Single<Pair<Response, Result<ByteArray, FuelError>>> {
         return requestManager

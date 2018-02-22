@@ -1007,9 +1007,61 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "21:8269981358123081690",
+      "lastPropertyId": "11:4179798302830002253",
+      "name": "ScrubEntity",
+      "properties": [
+        {
+          "id": "1:5343609363065683527",
+          "name": "entityId"
+        },
+        {
+          "id": "2:5896939978341630364",
+          "name": "id"
+        },
+        {
+          "id": "3:284757218491704412",
+          "name": "scrub_threshold"
+        },
+        {
+          "id": "4:3020548160636061859",
+          "name": "scrub_dayweek"
+        },
+        {
+          "id": "5:8837930114341742287",
+          "name": "scrub_enabled"
+        },
+        {
+          "id": "6:5548011096547965653",
+          "name": "scrub_minute"
+        },
+        {
+          "id": "7:1190304379931496474",
+          "name": "scrub_hour"
+        },
+        {
+          "id": "8:5366483879972816317",
+          "name": "scrub_month"
+        },
+        {
+          "id": "9:7805923777374080538",
+          "name": "scrub_daymonth"
+        },
+        {
+          "id": "10:7361686518846027884",
+          "name": "scrub_description"
+        },
+        {
+          "id": "11:4179798302830002253",
+          "name": "scrub_volume"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "20:3204636039823709720",
+  "lastEntityId": "21:8269981358123081690",
   "lastIndexId": "0:0",
   "lastRelationId": "1:9185694220009639810",
   "lastSequenceId": "0:0",

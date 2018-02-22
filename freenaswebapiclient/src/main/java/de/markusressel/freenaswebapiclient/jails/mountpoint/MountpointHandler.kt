@@ -12,9 +12,6 @@ import io.reactivex.Single
  */
 class MountpointHandler(private val requestManager: RequestManager) : MountpointApi {
 
-    /**
-     * Get a list of all jail mountpoints
-     */
     override fun getMountpoints(limit: Int, offset: Int): Single<List<MountpointModel>> {
         val params = requestManager
                 .createLimitOffsetParams(limit, offset)
@@ -23,27 +20,18 @@ class MountpointHandler(private val requestManager: RequestManager) : Mountpoint
                            MountpointModel.ListDeserializer())
     }
 
-    /**
-     * Create a new mountpoint
-     */
     override fun createMountpoint(data: MountpointModel): Single<MountpointModel> {
         return requestManager
                 .doJsonRequest("/jails/mountpoints/", Method.POST, data,
                                MountpointModel.SingleDeserializer())
     }
 
-    /**
-     * Update an existing mountpoint
-     */
     override fun updateMountpoint(data: MountpointModel): Single<MountpointModel> {
         return requestManager
                 .doJsonRequest("/jails/mountpoints/${data.id}/", Method.PUT, data,
                                MountpointModel.SingleDeserializer())
     }
 
-    /**
-     * Delete a mountpoint
-     */
     override fun deleteMountpoint(
             mountpoint: MountpointModel): Single<Pair<Response, Result<ByteArray, FuelError>>> {
         return requestManager

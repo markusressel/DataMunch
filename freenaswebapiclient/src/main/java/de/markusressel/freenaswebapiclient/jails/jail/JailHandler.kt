@@ -19,9 +19,9 @@ class JailHandler(private val requestManager: RequestManager) : JailApi {
                 .doRequest("/jails/jails/", params, Method.GET, JailModel.ListDeserializer())
     }
 
-    override fun createJail(
-            jailName: String): Single<Pair<Response, Result<ByteArray, FuelError>>> {
-        throw NotImplementedError()
+    override fun createJail(data: JailModel): Single<JailModel> {
+        return requestManager
+                .doJsonRequest("/jails/jails/", Method.POST, data, JailModel.SingleDeserializer())
     }
 
     override fun startJail(jailId: Long): Single<Pair<Response, Result<ByteArray, FuelError>>> {

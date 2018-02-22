@@ -4,6 +4,7 @@ import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import de.markusressel.datamunch.BuildConfig
+import de.markusressel.datamunch.dagger.DaggerAppComponent
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import timber.log.Timber
 import javax.inject.Inject

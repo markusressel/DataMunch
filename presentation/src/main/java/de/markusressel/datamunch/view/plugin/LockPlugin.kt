@@ -160,6 +160,6 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
          * Indicates whether the screen is locked
          */
         @Volatile
-        var isLocked = true
+        var isLocked = false
     }
 }

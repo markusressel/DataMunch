@@ -20,10 +20,7 @@ import de.markusressel.datamunch.view.fragment.pages.*
 import de.markusressel.datamunch.view.fragment.sharing.AfpSharesFragment
 import de.markusressel.datamunch.view.fragment.sharing.CifsSharesFragment
 import de.markusressel.datamunch.view.fragment.sharing.NfsSharesFragment
-import de.markusressel.datamunch.view.fragment.storage.DatasetsFragment
-import de.markusressel.datamunch.view.fragment.storage.DisksFragment
-import de.markusressel.datamunch.view.fragment.storage.SnapshotsFragment
-import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
+import de.markusressel.datamunch.view.fragment.storage.*
 import de.markusressel.datamunch.view.fragment.system.AlertsFragment
 import de.markusressel.datamunch.view.fragment.system.MaintenanceFragment
 import de.markusressel.datamunch.view.fragment.system.UpdatesFragment
@@ -57,6 +54,9 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun DisksFragment(): DisksFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun ScrubsFragment(): ScrubsFragment
 
     @ContributesAndroidInjector
     internal abstract fun SnapshotsFragment(): SnapshotsFragment

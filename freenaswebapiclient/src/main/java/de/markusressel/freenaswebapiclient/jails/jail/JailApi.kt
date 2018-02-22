@@ -16,7 +16,7 @@ interface JailApi {
     /**
      * Create a jail
      */
-    fun createJail(jailName: String): Single<Pair<Response, Result<ByteArray, FuelError>>>
+    fun createJail(data: JailModel): Single<JailModel>
 
     /**
      * Start a jail

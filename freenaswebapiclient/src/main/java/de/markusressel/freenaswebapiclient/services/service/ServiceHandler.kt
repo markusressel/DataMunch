@@ -1,6 +1,7 @@
 package de.markusressel.freenaswebapiclient.services.service
 
 import com.github.kittinunf.fuel.core.Method
+import com.github.salomonbrys.kotson.jsonObject
 import de.markusressel.freenaswebapiclient.RequestManager
 import io.reactivex.Single
 
@@ -9,21 +10,20 @@ import io.reactivex.Single
  */
 class ServiceHandler(private val requestManager: RequestManager) : ServiceApi {
 
-    /**
-     * Get a list of all services
-     */
     override fun getServices(limit: Int, offset: Int): Single<List<ServiceModel>> {
         val params = requestManager
                 .createLimitOffsetParams(limit, offset)
         return requestManager
-                .doRequest("/services/services/", params, Method.GET, ServiceModel.Deserializer())
+                .doRequest("/services/services/", params, Method.GET,
+                           ServiceModel.ListDeserializer())
     }
 
-    /**
-     * Update a service
-     */
-    override fun updateServices(): Single<ServiceModel> {
-        throw NotImplementedError()
+    override fun updateService(serviceId: Int, srv_service: String,
+                               srv_enable: Boolean): Single<ServiceModel> {
+        val data = jsonObject("srv_service" to srv_service, "srv_enable" to srv_enable)
+        return requestManager
+                .doJsonRequest("/services/services/$serviceId/", Method.PUT, data,
+                               ServiceModel.SingleDeserializer())
     }
 
 }
