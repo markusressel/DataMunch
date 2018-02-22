@@ -1,6 +1,8 @@
 package de.markusressel.datamunch.navigation
 
 import android.content.Context
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import com.mikepenz.aboutlibraries.Libs
@@ -34,15 +36,47 @@ class Navigator @Inject constructor() {
     /**
      * Navigate to a specific page
      */
-    fun navigateTo(activityContext: AppCompatActivity, page: NavigationPage) {
-        val fragment = page.fragment!!()
+    fun navigateTo(activityContext: AppCompatActivity, page: NavigationPage,
+                   lastPageTag: String?): String {
+        var newFragment: Fragment? = null
 
+        // page tag HAS to be set
+        page.tag!!
+
+        // try to find previous fragment
+        if (lastPageTag != null && lastPageTag == page.tag) {
+            newFragment = activityContext
+                    .supportFragmentManager
+                    .findFragmentById(R.id.contentLayout)
+        }
+
+        val transaction: FragmentTransaction
+        if (newFragment != null) {
+            transaction = activityContext
+                    .supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.contentLayout, newFragment, page.tag)
+        } else {
+            newFragment = page.fragment!!()
+
+            transaction = activityContext
+                    .supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.contentLayout, newFragment, page.tag)
+        }
+
+        //        if (!activityContext.isTablet()) {
+        //            transaction
+        //                    .addToBackStack(null)
+        //        }
+
+        transaction
+                .commitNow()
         activityContext
                 .supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.contentLayout, fragment)
-                //                .addToBackStack(preferencesFragment.tag)
-                .commit()
+                .executePendingTransactions()
+        return page
+                .tag
     }
 
     /**

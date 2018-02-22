@@ -11,15 +11,16 @@ import de.markusressel.datamunch.view.fragment.pages.*
  */
 object NavigationPageHolder {
 
-    val MainPage = NavigationPage(fragment = ::ServerStatusFragment)
-    val AccountsPage = NavigationPage(fragment = ::AccountFragment)
-    val ServicesPage = NavigationPage(fragment = ::ServicesFragment)
-    val SharingPage = NavigationPage(fragment = ::SharingFragment)
-    val StoragePage = NavigationPage(fragment = ::StorageFragment)
-    val SystemPage = NavigationPage(fragment = ::SystemFragment)
-    val JailsPage = NavigationPage(fragment = ::JailFragment)
-    val PluginsPage = NavigationPage(fragment = ::PluginFragment)
-    val FileUploaderPage = NavigationPage(fragment = ::FileUploaderFragment)
+    val MainPage = NavigationPage(fragment = ::ServerStatusFragment, tag = "ServerStatusFragment")
+    val AccountsPage = NavigationPage(fragment = ::AccountFragment, tag = "AccountFragment")
+    val ServicesPage = NavigationPage(fragment = ::ServicesFragment, tag = "ServicesFragment")
+    val SharingPage = NavigationPage(fragment = ::SharingFragment, tag = "SharingFragment")
+    val StoragePage = NavigationPage(fragment = ::StorageFragment, tag = "StorageFragment")
+    val SystemPage = NavigationPage(fragment = ::SystemFragment, tag = "SystemFragment")
+    val JailsPage = NavigationPage(fragment = ::JailFragment, tag = "JailFragment")
+    val PluginsPage = NavigationPage(fragment = ::PluginFragment, tag = "PluginFragment")
+    val FileUploaderPage = NavigationPage(fragment = ::FileUploaderFragment,
+                                          tag = "FileUploaderFragment")
     val PreferencesOverviewPage = NavigationPage(
             activityClass = PreferenceOverviewActivity::class.java)
     val AboutPage = NavigationPage()

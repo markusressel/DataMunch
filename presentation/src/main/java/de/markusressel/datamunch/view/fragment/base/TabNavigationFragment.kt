@@ -3,7 +3,7 @@ package de.markusressel.datamunch.view.fragment.base
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.View
 import com.gigamole.navigationtabstrip.NavigationTabStrip
@@ -26,6 +26,8 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
 
     private lateinit var viewPager: ViewPager
 
+    private var currentPage: Int by savedInstanceState(0)
+
     abstract val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,11 +38,15 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
         tabNavigation = view.findViewById(R.id.tabBar) as NavigationTabStrip
 
         setupViewPager()
+
+        // set initial page
+        viewPager
+                .currentItem = currentPage
     }
 
     private fun setupViewPager() {
         viewPager
-                .adapter = object : FragmentPagerAdapter(childFragmentManager) {
+                .adapter = object : FragmentStatePagerAdapter(childFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 // get fragment and create a new instance
                 return tabItems[position]
@@ -56,6 +62,21 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
         viewPager
                 .offscreenPageLimit = tabItems
                 .size
+
+        viewPager
+                .addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                    override fun onPageScrollStateChanged(state: Int) = Unit
+
+                    override fun onPageScrolled(position: Int, positionOffset: Float,
+                                                positionOffsetPixels: Int) = Unit
+
+                    override fun onPageSelected(position: Int) {
+                        Timber
+                                .d { "onPageSelected with position: $position" }
+                        currentPage = position
+                    }
+
+                })
     }
 
     override fun onResume() {

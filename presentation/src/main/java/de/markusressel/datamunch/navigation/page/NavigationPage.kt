@@ -3,9 +3,7 @@ package de.markusressel.datamunch.navigation.page
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
 import com.github.ajalt.timberkt.Timber
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.markusressel.datamunch.navigation.DrawerItemHolder.About
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Accounts
 import de.markusressel.datamunch.navigation.DrawerItemHolder.FileUploader
@@ -21,16 +19,16 @@ import de.markusressel.datamunch.navigation.Navigator
 /**
  * Created by Markus on 08.01.2018.
  */
-class NavigationPage(val activityClass: Class<*>? = null, val fragment: (() -> Fragment)? = null) {
+class NavigationPage(val activityClass: Class<*>? = null, val fragment: (() -> Fragment)? = null,
+                     val tag: String? = null) {
 
     fun createIntent(context: Context): Intent {
         return Intent(context, activityClass)
     }
 
     companion object {
-        fun fromDrawerItem(
-                drawerMenuItem: IDrawerItem<Any, RecyclerView.ViewHolder>): NavigationPage? {
-            return when (drawerMenuItem.identifier) {
+        fun fromDrawerItem(drawerItemIdentifier: Long): NavigationPage? {
+            return when (drawerItemIdentifier) {
                 Status.identifier -> Navigator.NavigationPages.MainPage
                 Accounts.identifier -> Navigator.NavigationPages.AccountsPage
                 Services.identifier -> Navigator.NavigationPages.ServicesPage
@@ -44,7 +42,7 @@ class NavigationPage(val activityClass: Class<*>? = null, val fragment: (() -> F
                 About.identifier -> Navigator.NavigationPages.AboutPage
                 else -> {
                     Timber
-                            .w { "Unknown menu item identifier: ${drawerMenuItem.identifier}" }
+                            .w { "Unknown menu item identifier: $drawerItemIdentifier" }
                     null
                 }
             }

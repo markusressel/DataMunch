@@ -31,7 +31,6 @@ import de.markusressel.datamunch.navigation.DrawerItemHolder.Sharing
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Status
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Storage
 import de.markusressel.datamunch.navigation.DrawerMenuItem
-import de.markusressel.datamunch.navigation.NavigationPageHolder
 import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.navigation.page.NavigationPage
 import de.markusressel.datamunch.view.plugin.LockPlugin.Companion.isLocked
@@ -49,13 +48,11 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
     override val layoutRes: Int
         get() = R.layout.activity_main
 
-    protected lateinit var navigationDrawer: Drawer
+    private lateinit var navigationDrawer: Drawer
 
-    protected var currentNavigationDrawerItem = DrawerItemHolder
-            .Status
-            .identifier
-    protected var currentPage: NavigationPage = NavigationPageHolder
-            .MainPage
+    private var currentDrawerItemIdentifier by savedInstanceState(
+            DrawerItemHolder.Status.identifier)
+    private var lastFragmentTag: String? by savedInstanceState()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super
@@ -101,8 +98,18 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         }
 
         // set initial page
-        navigator
-                .navigateTo(this, currentPage)
+        val initialPage = NavigationPage
+                .fromDrawerItem(currentDrawerItemIdentifier)
+        navigationDrawer
+                .setSelection(currentDrawerItemIdentifier, false)
+
+        if (savedInstanceState == null) {
+            initialPage
+                    ?.let {
+                        lastFragmentTag = navigator
+                                .navigateTo(this, initialPage, lastFragmentTag)
+                    }
+        }
     }
 
     override fun onStart() {
@@ -187,7 +194,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         val clickListener = Drawer
                 .OnDrawerItemClickListener { _, _, drawerItem ->
 
-                    if (drawerItem.identifier == currentNavigationDrawerItem) {
+                    if (drawerItem.identifier == currentDrawerItemIdentifier) {
                         Timber
                                 .d { "Closing navigationDrawer because the clicked item (${drawerItem.identifier}) is the currently active page" }
                         if (!isTablet()) {
@@ -199,21 +206,20 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                     }
 
                     val page: NavigationPage? = NavigationPage
-                            .fromDrawerItem(drawerItem)
+                            .fromDrawerItem(drawerItem.identifier)
 
                     page
                             ?.let {
                                 if (it.fragment != null) {
-                                    navigator
-                                            .navigateTo(this, it)
+                                    lastFragmentTag = navigator
+                                            .navigateTo(this, it, lastFragmentTag)
                                 } else {
                                     navigator
                                             .startActivity(this, it)
                                 }
 
                                 if (drawerItem.isSelectable) {
-                                    currentPage = it
-                                    currentNavigationDrawerItem = drawerItem
+                                    currentDrawerItemIdentifier = drawerItem
                                             .identifier
                                 }
 

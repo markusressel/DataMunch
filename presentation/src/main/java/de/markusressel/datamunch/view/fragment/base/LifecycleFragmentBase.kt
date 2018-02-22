@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.CheckResult
 import android.view.View
-import com.pascalwelsch.compositeandroid.fragment.CompositeFragment
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.LifecycleTransformer
 import com.trello.rxlifecycle2.RxLifecycle
@@ -18,7 +17,7 @@ import io.reactivex.subjects.BehaviorSubject
 /**
  * Created by Markus on 16.02.2018.
  */
-abstract class LifecycleFragmentBase : CompositeFragment(), LifecycleProvider<FragmentEvent> {
+abstract class LifecycleFragmentBase : StateFragmentBase(), LifecycleProvider<FragmentEvent> {
 
     private val lifecycleSubject: BehaviorSubject<FragmentEvent> = BehaviorSubject
             .create()

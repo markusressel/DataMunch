@@ -86,7 +86,7 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
     }
 
     init {
-        addActivityPlugins(LockPlugin({ preferenceHandler }))
+        // addActivityPlugins(LockPlugin({ preferenceHandler }))
     }
 
     @CallSuper
@@ -100,9 +100,6 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
         // set Theme before anything else in onCreate();
         initTheme()
 
-        super
-                .onCreate(savedInstanceState)
-
         if (style == FULLSCREEN) {
             supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
             requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -111,6 +108,9 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
             // Hide title on dialogs to use view_toolbar instead
             supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         }
+
+        super
+                .onCreate(savedInstanceState)
 
         // inflate view manually so it can be altered in plugins
         val contentView = layoutInflater

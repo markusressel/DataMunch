@@ -80,7 +80,7 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
                                Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
 
         navigator
-                .navigateTo(this, Navigator.NavigationPages.PreferencesOverviewPage)
+                .startActivity(this, Navigator.NavigationPages.PreferencesOverviewPage)
     }
 
     override fun onStop() {

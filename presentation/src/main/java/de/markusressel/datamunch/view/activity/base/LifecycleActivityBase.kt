@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.CheckResult
 import com.eightbitlab.rxbus.Bus
-import com.pascalwelsch.compositeandroid.activity.CompositeActivity
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.LifecycleTransformer
 import com.trello.rxlifecycle2.RxLifecycle
@@ -17,7 +16,7 @@ import io.reactivex.subjects.BehaviorSubject
 /**
  * Created by Markus on 16.02.2018.
  */
-abstract class LifecycleActivityBase : CompositeActivity(), LifecycleProvider<ActivityEvent> {
+abstract class LifecycleActivityBase : StateActivityBase(), LifecycleProvider<ActivityEvent> {
 
     private val lifecycleSubject: BehaviorSubject<ActivityEvent> = BehaviorSubject
             .create()
