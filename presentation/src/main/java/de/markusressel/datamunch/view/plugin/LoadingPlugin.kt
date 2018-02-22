@@ -17,6 +17,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.pascalwelsch.compositeandroid.fragment.FragmentPlugin
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.extensions.prettyPrint
 
 /**
  * Created by Markus on 15.02.2018.
@@ -204,12 +205,6 @@ class LoadingPlugin(val onShowContent: ((animated: Boolean) -> Unit)? = null,
                 ?.let {
                     it(message, throwable)
                 }
-    }
-
-    private fun Throwable.prettyPrint(): String {
-        val message = "${this.message}:\n" + "${this.stackTrace.joinToString(separator = "\n")}}"
-
-        return message
     }
 
     private fun setViewVisibility(view: View, visibility: Int) {

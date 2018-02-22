@@ -16,3 +16,9 @@ fun Context.isTablet(): Boolean {
     return resources
             .getBoolean(R.bool.is_tablet)
 }
+
+fun Throwable.prettyPrint(): String {
+    val message = "${this.message}:\n" + "${this.stackTrace.joinToString(separator = "\n")}}"
+
+    return message
+}

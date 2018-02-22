@@ -54,4 +54,6 @@
 
     <string name="plugins" translatable="false">Plugins</string>
 
+    <string name="close">Close</string>
+
 </resources>

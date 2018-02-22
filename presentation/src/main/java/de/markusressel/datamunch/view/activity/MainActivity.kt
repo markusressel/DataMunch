@@ -7,7 +7,7 @@ import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
 class MainActivity : NavigationDrawerActivity() {
 
     override val style: Int
-        get() = FULLSCREEN
+        get() = DEFAULT
 
     override fun getDrawerMenuItem(): DrawerMenuItem {
         return DrawerItemHolder

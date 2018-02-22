@@ -37,6 +37,18 @@
             android:windowSoftInputMode="stateHidden" />
 
         <service android:name=".service.FileUploadService" />
+
+        <activity
+            android:name=".view.activity.UnknownErrorDialog"
+            android:excludeFromRecents="true"
+            android:label="@string/unknown_error"
+            android:noHistory="true"
+            android:process=":UnknownErrorDialog"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            android:windowSoftInputMode="adjustPan">
+            <!-- Intents are sent explicitly to this class, no need to specify an intent filter -->
+        </activity>
+
     </application>
 
 </manifest>

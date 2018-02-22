@@ -3,7 +3,6 @@ package de.markusressel.datamunch.application
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import dagger.android.HasActivityInjector
 import de.markusressel.datamunch.BuildConfig
 import de.markusressel.datamunch.dagger.DaggerAppComponent
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
@@ -13,7 +12,7 @@ import javax.inject.Inject
 /**
  * Created by Markus on 20.12.2017.
  */
-class App : DaggerApplication(), HasActivityInjector {
+class App : ExceptionHandlerApplicationBase() {
 
     @Inject
     protected lateinit var preferenceHandler: PreferenceHandler
