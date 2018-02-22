@@ -10,6 +10,8 @@ import de.markusressel.freenaswebapiclient.storage.scrub.ScrubApi
 import de.markusressel.freenaswebapiclient.storage.scrub.ScrubHandler
 import de.markusressel.freenaswebapiclient.storage.snapshot.SnapshotApi
 import de.markusressel.freenaswebapiclient.storage.snapshot.SnapshotHandler
+import de.markusressel.freenaswebapiclient.storage.task.TaskApi
+import de.markusressel.freenaswebapiclient.storage.task.TaskHandler
 import de.markusressel.freenaswebapiclient.storage.volume.VolumeHandler
 
 /**
@@ -20,6 +22,7 @@ class StorageManager(private val requestManager: RequestManager,
                      diskApi: DiskApi = DiskHandler(requestManager),
                      scrubApi: ScrubApi = ScrubHandler(requestManager),
                      snapshotApi: SnapshotApi = SnapshotHandler(requestManager),
+                     taskApi: TaskApi = TaskHandler(requestManager),
                      volumeApi: VolumeApi = VolumeHandler(requestManager)) :
     DatasetApi by datasetApi, DiskApi by diskApi, ScrubApi by scrubApi, SnapshotApi by snapshotApi,
-    VolumeApi by volumeApi, StorageApi
+    TaskApi by taskApi, VolumeApi by volumeApi, StorageApi

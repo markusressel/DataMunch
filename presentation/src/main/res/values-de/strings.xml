@@ -47,6 +47,7 @@
 
     <string name="close">Schließen</string>
 
+    <string name="enabled">Aktiviert</string>
     <string name="description">Beschreibung</string>
 
 </resources>

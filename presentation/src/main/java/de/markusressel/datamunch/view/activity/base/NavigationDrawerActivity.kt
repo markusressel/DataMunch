@@ -58,8 +58,6 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         super
                 .onCreate(savedInstanceState)
 
-        setTitle(getDrawerMenuItem().title)
-
         val menuItemList = initDrawerMenuItems()
         val accountHeader = initAccountHeader()
 
@@ -70,7 +68,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                 .withCloseOnClick(false)
                 .withToolbar(toolbar)
                 .withSavedInstance(savedInstanceState)
-                .withSelectedItem(getDrawerMenuItem().identifier)
+                .withSelectedItem(currentDrawerItemIdentifier)
 
         if (isTablet()) {
             navigationDrawer = builder
@@ -97,17 +95,21 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                     .build()
         }
 
-        // set initial page
-        val initialPage = NavigationPage
-                .fromDrawerItem(currentDrawerItemIdentifier)
         navigationDrawer
                 .setSelection(currentDrawerItemIdentifier, false)
 
+        DrawerItemHolder
+                .fromId(currentDrawerItemIdentifier)
+                ?.let {
+                    setTitle(it.title)
+                }
+
         if (savedInstanceState == null) {
-            initialPage
+            NavigationPage
+                    .fromDrawerItem(currentDrawerItemIdentifier)
                     ?.let {
                         lastFragmentTag = navigator
-                                .navigateTo(this, initialPage, lastFragmentTag)
+                                .navigateTo(this, it, lastFragmentTag)
                     }
         }
     }
@@ -221,6 +223,14 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                                 if (drawerItem.isSelectable) {
                                     currentDrawerItemIdentifier = drawerItem
                                             .identifier
+
+                                    // set new title
+                                    val drawerMenuItem = DrawerItemHolder
+                                            .fromId(drawerItem.identifier)
+                                    drawerMenuItem
+                                            ?.let {
+                                                setTitle(it.title)
+                                            }
                                 }
 
                                 if (!isTablet()) {

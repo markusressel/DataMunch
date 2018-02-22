@@ -1059,9 +1059,65 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "22:6576900313118117000",
+      "lastPropertyId": "12:6279090285525260265",
+      "name": "TaskEntity",
+      "properties": [
+        {
+          "id": "1:6394661868729416015",
+          "name": "entityId"
+        },
+        {
+          "id": "2:9078592259766078113",
+          "name": "id"
+        },
+        {
+          "id": "3:3966354088478715090",
+          "name": "task_ret_count"
+        },
+        {
+          "id": "4:3478510071961573921",
+          "name": "task_repeat_unit"
+        },
+        {
+          "id": "5:1554620014026112729",
+          "name": "task_enabled"
+        },
+        {
+          "id": "6:4590044622899253824",
+          "name": "task_recursive"
+        },
+        {
+          "id": "7:5849370515753689663",
+          "name": "task_end"
+        },
+        {
+          "id": "8:316831717707093011",
+          "name": "task_interval"
+        },
+        {
+          "id": "9:5729117598061794293",
+          "name": "task_byweekday"
+        },
+        {
+          "id": "10:6329145546185201589",
+          "name": "task_begin"
+        },
+        {
+          "id": "11:8968305251976556867",
+          "name": "task_filesystem"
+        },
+        {
+          "id": "12:6279090285525260265",
+          "name": "task_ret_unit"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "21:8269981358123081690",
+  "lastEntityId": "22:6576900313118117000",
   "lastIndexId": "0:0",
   "lastRelationId": "1:9185694220009639810",
   "lastSequenceId": "0:0",

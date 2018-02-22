@@ -1,5 +1,6 @@
 package de.markusressel.datamunch.navigation
 
+import com.github.ajalt.timberkt.Timber
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
 
@@ -42,5 +43,26 @@ object DrawerItemHolder {
 
     val About = DrawerMenuItem(identifier = 1000, title = R.string.menu_item_about,
                                icon = MaterialDesignIconic.Icon.gmi_info, selectable = false)
+
+    fun fromId(drawerItemIdentifier: Long): DrawerMenuItem? {
+        return when (drawerItemIdentifier) {
+            Status.identifier -> Status
+            Accounts.identifier -> Accounts
+            Services.identifier -> Services
+            Sharing.identifier -> Sharing
+            Storage.identifier -> Storage
+            Jails.identifier -> Jails
+            Plugins.identifier -> Plugins
+            System.identifier -> System
+            FileUploader.identifier -> FileUploader
+            Settings.identifier -> Settings
+            About.identifier -> About
+            else -> {
+                Timber
+                        .w { "Unknown menu item identifier: $drawerItemIdentifier" }
+                null
+            }
+        }
+    }
 
 }

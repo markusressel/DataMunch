@@ -13,7 +13,8 @@ class StorageFragment : TabNavigationFragment() {
             return listOf(R.string.volumes to ::VolumesFragment,
                           R.string.datasets to ::DatasetsFragment,
                           R.string.disks to ::DisksFragment, R.string.scrubs to ::ScrubsFragment,
-                          R.string.snapshots to ::SnapshotsFragment)
+                          R.string.snapshots to ::SnapshotsFragment,
+                          R.string.tasks to ::TasksFragment)
         }
 
 }

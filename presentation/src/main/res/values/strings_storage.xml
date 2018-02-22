@@ -6,7 +6,9 @@
     <string name="disks" translatable="false">Disks</string>
     <string name="scrubs" translatable="false">Scrubs</string>
     <string name="snapshots" translatable="false">Snapshots</string>
+    <string name="tasks" translatable="false">Tasks</string>
 
     <string name="volume">Volume</string>
+    <string name="filesystem">Filesystem</string>
 
 </resources>
