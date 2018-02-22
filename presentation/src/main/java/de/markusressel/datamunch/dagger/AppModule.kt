@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import de.markusressel.datamunch.application.App
 import de.markusressel.datamunch.view.activity.MainActivity
+import de.markusressel.datamunch.view.activity.UnknownErrorDialog
 import de.markusressel.datamunch.view.activity.base.BottomNavigationActivity
 import de.markusressel.datamunch.view.activity.base.DaggerSupportActivityBase
 import de.markusressel.datamunch.view.activity.base.NavigationDrawerActivity
@@ -33,6 +34,9 @@ abstract class AppModule {
 
     @ContributesAndroidInjector
     internal abstract fun MainActivity(): MainActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun UnknownErrorDialog(): UnknownErrorDialog
 
     @Module
     companion object {
