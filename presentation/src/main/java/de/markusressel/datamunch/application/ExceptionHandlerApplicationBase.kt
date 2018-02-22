@@ -29,8 +29,9 @@ abstract class ExceptionHandlerApplicationBase : DaggerApplicationBase() {
                         //handle non UI thread throw uncaught exception
                         Handler(Looper.getMainLooper())
                                 .post {
-                                    UnknownErrorDialog
-                                            .getNewInstanceIntent(this, throwable, timeOfException)
+                                    startActivity(
+                                            UnknownErrorDialog.getNewInstanceIntent(this, throwable,
+                                                                                    timeOfException))
                                 }
                     } catch (e: Exception) {
                         Timber
