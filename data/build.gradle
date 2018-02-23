@@ -50,7 +50,7 @@ dependencies {
 
     implementation "com.google.code.gson:gson:${rootProject.ext.gsonVersion}"
     // Kotlin bindings for GSON
-    compile "com.github.salomonbrys.kotson:kotson:${rootProject.ext.kotsonVersion}"
+    implementation "com.github.salomonbrys.kotson:kotson:${rootProject.ext.kotsonVersion}"
     implementation "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}"
     implementation "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
 
@@ -65,7 +65,10 @@ dependencies {
     }
 
     // JSch (SSH client)
-    compile "com.jcraft:jsch:0.1.52"
+    api "com.jcraft:jsch:0.1.52"
+
+    // sshj (SSH client)
+    // implementation 'com.hierynomus:sshj:0.23.0'
 
     // ObjectBox
     api "io.objectbox:objectbox-android:$objectboxVersion"

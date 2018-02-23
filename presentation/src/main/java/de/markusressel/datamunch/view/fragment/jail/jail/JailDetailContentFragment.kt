@@ -16,7 +16,7 @@ import de.markusressel.datamunch.data.persistence.entity.isStopped
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.content_jail_detail.*
+import kotlinx.android.synthetic.main.content_jails_jail_detail.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit
 class JailDetailContentFragment : JailContentFragmentBase() {
 
     override val layoutRes: Int
-        get() = R.layout.content_jail_detail
+        get() = R.layout.content_jails_jail_detail
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super

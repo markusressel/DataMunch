@@ -50,6 +50,11 @@ abstract class ServerManager {
                 .executeCommand(*sshConnectionConfigList, command = command)
     }
 
+    protected fun runInShell(commands: List<String>): List<String> {
+        return sshClient
+                .runInShell(*sshConnectionConfigList, commands = commands)
+    }
+
     /**
      * Retrieve a list of all jails on this server
      */
@@ -73,7 +78,8 @@ abstract class ServerManager {
      */
     fun uploadFile(file: File, destinationPath: String) {
         sshClient
-                .uploadFile(*sshConnectionConfigList, file = file, destinationPath = destinationPath)
+                .uploadFile(*sshConnectionConfigList, file = file,
+                            destinationPath = destinationPath)
     }
 
 }

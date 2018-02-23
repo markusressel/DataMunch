@@ -5,7 +5,7 @@ import android.view.View
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
-import kotlinx.android.synthetic.main.content_user_detail.*
+import kotlinx.android.synthetic.main.content_accounts_user_detail.*
 
 /**
  * Created by Markus on 15.02.2018.

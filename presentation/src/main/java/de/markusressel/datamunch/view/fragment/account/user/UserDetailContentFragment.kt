@@ -10,7 +10,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.UserEntity
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.android.synthetic.main.content_user_detail.*
+import kotlinx.android.synthetic.main.content_accounts_user_detail.*
 import javax.inject.Inject
 
 /**
@@ -24,7 +24,7 @@ class UserDetailContentFragment : DetailContentFragmentBase<UserEntity>() {
     override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> = persistenceManager
 
     override val layoutRes: Int
-        get() = R.layout.content_user_detail
+        get() = R.layout.content_accounts_user_detail
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super

@@ -5,7 +5,7 @@ import de.markusressel.datamunch.data.persistence.GroupPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.GroupEntity
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_group_detail.*
+import kotlinx.android.synthetic.main.content_accounts_group_detail.*
 import javax.inject.Inject
 
 /**
@@ -19,7 +19,7 @@ class GroupDetailContentFragment : DetailContentFragmentBase<GroupEntity>() {
     override fun getPersistenceHandler(): PersistenceManagerBase<GroupEntity> = persistenceManager
 
     override val layoutRes: Int
-        get() = R.layout.content_group_detail
+        get() = R.layout.content_accounts_group_detail
 
 
     override fun onResume() {

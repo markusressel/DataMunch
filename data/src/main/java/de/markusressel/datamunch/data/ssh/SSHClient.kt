@@ -2,7 +2,10 @@ package de.markusressel.datamunch.data.ssh
 
 import com.github.ajalt.timberkt.Timber
 import com.jcraft.jsch.*
+import java.io.BufferedWriter
 import java.io.File
+import java.io.InputStream
+import java.io.OutputStreamWriter
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,31 +38,7 @@ class SSHClient @Inject constructor() {
             val inputStream = channel
                     .inputStream
 
-            var result = ""
-            val tmp = ByteArray(1024)
-            while (true) {
-
-                while (inputStream.available() > 0) {
-                    val i: Int = inputStream
-                            .read(tmp, 0, tmp.size)
-                    if (i < 0) break
-
-                    result += String(tmp, 0, i)
-                }
-
-                if (channel.isClosed) {
-                    if (inputStream.available() > 0) continue
-
-                    Timber
-                            .d { "Exit-Status: ${channel.exitStatus} Result: $result" }
-                    break
-                }
-                try {
-                    Thread
-                            .sleep(1000)
-                } catch (ee: Exception) {
-                }
-            }
+            val result = readResponse(channel, inputStream)
 
             channel
                     .disconnect()
@@ -70,10 +49,92 @@ class SSHClient @Inject constructor() {
         return result
     }
 
+    /**
+     * Get a shell
+     */
+    fun runInShell(vararg connectionConfig: SSHConnectionConfig,
+                   commands: List<String>): List<String> {
+        val results: List<String> = runOnSession(*connectionConfig) { session: Session ->
+
+            // connect the channel
+            val channel = createShellChannel(session)
+            channel
+                    .connect()
+
+            val inputStream = channel
+                    .inputStream
+            val out = BufferedWriter(OutputStreamWriter(channel.outputStream))
+
+            val results: MutableList<String> = mutableListOf()
+
+            val initialResponse = readResponse(channel, inputStream)
+
+            // process every command one after the other
+            commands
+                    .forEach {
+                        // enter next command
+                        out
+                                .write(it)
+                        out
+                                .newLine()
+                        out
+                                .flush()
+
+                        val response = readResponse(channel, inputStream)
+
+                        // cleanup output (because it also contains the input)
+                        val resultText = response
+                                .removePrefix(it)
+                                .trim()
+                        // add the result to the return list
+                        results
+                                .add(resultText)
+                    }
+
+            channel
+                    .disconnect()
+
+            results
+        }
+
+        return results
+    }
+
+    private fun readResponse(channel: Channel, inputStream: InputStream): String {
+        var result = ""
+        val tmp = ByteArray(1024)
+
+        while (result.isEmpty()) {
+            while (inputStream.available() > 0) {
+                val i: Int = inputStream
+                        .read(tmp, 0, tmp.size)
+                if (i < 0) break
+
+                result += String(tmp, 0, i)
+            }
+
+            if (channel.isClosed) {
+                if (inputStream.available() > 0) continue
+
+                Timber
+                        .e { "Exit-Status: ${channel.exitStatus} Result: $result" }
+                break
+            }
+            try {
+                Thread
+                        .sleep(100)
+            } catch (ee: Exception) {
+            }
+        }
+
+        return result
+    }
+
     private fun <T> runOnSession(vararg sshConnectionConfig: SSHConnectionConfig,
                                  run: (session: Session) -> T): T {
         if (sshConnectionConfig.isEmpty()) {
-            throw IllegalArgumentException("There must be at least one ssh conection configuration!")
+            throw IllegalArgumentException(
+                    "There must be at least one ssh connection configuration!")
         }
 
         val sessions: MutableList<Session> = ArrayList()
@@ -168,22 +229,25 @@ class SSHClient @Inject constructor() {
                 .setCommand(command)
 
         channel
-                .setInputStream(null)
+                .inputStream = null
         channel
                 .setErrStream(System.err)
 
         return channel
     }
 
+    private fun createShellChannel(session: Session): Channel {
+        return session.openChannel(TYPE_SHELL) as Channel
+    }
+
     private fun createSFTPChannel(session: Session): ChannelSftp {
-        // open channel to work with
-        val channel = session.openChannel(TYPE_SFTP) as ChannelSftp
-        return channel
+        return session.openChannel(TYPE_SFTP) as ChannelSftp
     }
 
     companion object {
-        val TYPE_EXEC = "exec"
-        val TYPE_SFTP = "sftp"
+        const val TYPE_EXEC = "exec"
+        const val TYPE_SHELL = "shell"
+        const val TYPE_SFTP = "sftp"
     }
 
     /**
