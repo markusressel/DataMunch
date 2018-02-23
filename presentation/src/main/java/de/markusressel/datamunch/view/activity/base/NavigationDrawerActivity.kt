@@ -30,9 +30,9 @@ import de.markusressel.datamunch.navigation.DrawerItemHolder.Settings
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Sharing
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Status
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Storage
+import de.markusressel.datamunch.navigation.DrawerItemHolder.Tasks
 import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.navigation.Navigator
-import de.markusressel.datamunch.navigation.page.NavigationPage
 import de.markusressel.datamunch.view.plugin.LockPlugin.Companion.isLocked
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -100,18 +100,14 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
         DrawerItemHolder
                 .fromId(currentDrawerItemIdentifier)
-                ?.let {
+                ?.also {
                     setTitle(it.title)
-                }
 
-        if (savedInstanceState == null) {
-            NavigationPage
-                    .fromDrawerItem(currentDrawerItemIdentifier)
-                    ?.let {
+                    if (savedInstanceState == null) {
                         lastFragmentTag = navigator
-                                .navigateTo(this, it, lastFragmentTag)
+                                .navigateTo(this, it.navigationPage, lastFragmentTag)
                     }
-        }
+                }
     }
 
     override fun onStart() {
@@ -139,22 +135,15 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
             return
         }
 
-        if (locked) {
-            navigationDrawer
-                    .drawerLayout
-                    .setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        } else {
-            navigationDrawer
-                    .drawerLayout
-                    .setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        val drawerLockMode = when (locked) {
+            true -> DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+            false -> DrawerLayout.LOCK_MODE_UNLOCKED
         }
-    }
 
-    /**
-     * Override this and define an identifier which should be selected when
-     * this activity is first created
-     */
-    abstract fun getDrawerMenuItem(): DrawerMenuItem
+        navigationDrawer
+                .drawerLayout
+                .setDrawerLockMode(drawerLockMode)
+    }
 
     private fun initAccountHeader(): AccountHeader {
         val profiles: MutableList<IProfile<*>> = getProfiles()
@@ -207,10 +196,11 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                         return@OnDrawerItemClickListener true
                     }
 
-                    val page: NavigationPage? = NavigationPage
-                            .fromDrawerItem(drawerItem.identifier)
+                    val drawerMenuItem = DrawerItemHolder
+                            .fromId(drawerItem.identifier)
 
-                    page
+                    drawerMenuItem
+                            ?.navigationPage
                             ?.let {
                                 if (it.fragment != null) {
                                     lastFragmentTag = navigator
@@ -225,10 +215,8 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                                             .identifier
 
                                     // set new title
-                                    val drawerMenuItem = DrawerItemHolder
-                                            .fromId(drawerItem.identifier)
                                     drawerMenuItem
-                                            ?.let {
+                                            .let {
                                                 setTitle(it.title)
                                             }
                                 }
@@ -245,11 +233,12 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
 
 
-        for (menuItem in listOf(Status, Accounts, Storage, Sharing, Services, Plugins, Jails,
-                                Navigator.DrawerItems.System)) {
-            menuItemList
-                    .add(createPrimaryMenuItem(menuItem, clickListener))
-        }
+        listOf(Status, Accounts, Storage, Sharing, Services, Plugins, Jails,
+               Navigator.DrawerItems.System, Tasks)
+                .forEach {
+                    menuItemList
+                            .add(createPrimaryMenuItem(it, clickListener))
+                }
 
         menuItemList
                 .add(DividerDrawerItem())

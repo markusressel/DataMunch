@@ -10,7 +10,7 @@ import io.reactivex.Single
 /**
  * Created by Markus on 09.02.2018.
  */
-class PluginHandler(private val requestManager: RequestManager) : PluginApi {
+class PluginManager(private val requestManager: RequestManager) : PluginApi {
 
     override fun getPlugins(limit: Int, offset: Int): Single<List<PluginModel>> {
         val params = requestManager

@@ -6,7 +6,7 @@ import de.markusressel.datamunch.view.fragment.base.TabNavigationFragment
 import de.markusressel.datamunch.view.fragment.storage.*
 
 
-class StorageFragment : TabNavigationFragment() {
+class StoragePage : TabNavigationFragment() {
 
     override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
         get() {

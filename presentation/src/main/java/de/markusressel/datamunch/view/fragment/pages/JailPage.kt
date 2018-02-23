@@ -8,7 +8,7 @@ import de.markusressel.datamunch.view.fragment.jail.TemplatesFragment
 import de.markusressel.datamunch.view.fragment.jail.jail.JailsFragment
 
 
-class JailFragment : TabNavigationFragment() {
+class JailPage : TabNavigationFragment() {
 
     override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
         get() {

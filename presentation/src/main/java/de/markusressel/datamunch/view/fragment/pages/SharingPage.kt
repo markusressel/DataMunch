@@ -8,7 +8,7 @@ import de.markusressel.datamunch.view.fragment.sharing.CifsSharesFragment
 import de.markusressel.datamunch.view.fragment.sharing.NfsSharesFragment
 
 
-class SharingFragment : TabNavigationFragment() {
+class SharingPage : TabNavigationFragment() {
 
     override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
         get() {

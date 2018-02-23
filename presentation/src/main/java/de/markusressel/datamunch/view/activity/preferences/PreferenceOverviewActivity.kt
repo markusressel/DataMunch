@@ -76,11 +76,11 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
         finish()
 
         navigator
-                .startActivity(this, Navigator.NavigationPages.MainPage,
+                .startActivity(this, Navigator.NavigationPages.Main,
                                Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
 
         navigator
-                .startActivity(this, Navigator.NavigationPages.PreferencesOverviewPage)
+                .startActivity(this, Navigator.NavigationPages.Settings)
     }
 
     override fun onStop() {

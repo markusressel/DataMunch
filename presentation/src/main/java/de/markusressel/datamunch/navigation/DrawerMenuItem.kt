@@ -6,6 +6,7 @@ import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
+import de.markusressel.datamunch.navigation.page.NavigationPage
 import de.markusressel.datamunch.view.IconHandler
 
 /**
@@ -13,7 +14,7 @@ import de.markusressel.datamunch.view.IconHandler
  */
 data class DrawerMenuItem(val identifier: Long, @StringRes val title: Int,
                           val icon: IIcon? = null, @DrawableRes val drawableRes: Int? = null,
-                          val selectable: Boolean) {
+                          val selectable: Boolean, val navigationPage: NavigationPage) {
 
 
     /**

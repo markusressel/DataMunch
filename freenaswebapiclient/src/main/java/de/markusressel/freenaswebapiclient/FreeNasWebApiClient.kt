@@ -5,7 +5,7 @@ import de.markusressel.freenaswebapiclient.account.AccountManager
 import de.markusressel.freenaswebapiclient.jails.JailsApi
 import de.markusressel.freenaswebapiclient.jails.JailsManager
 import de.markusressel.freenaswebapiclient.plugins.PluginApi
-import de.markusressel.freenaswebapiclient.plugins.PluginHandler
+import de.markusressel.freenaswebapiclient.plugins.PluginManager
 import de.markusressel.freenaswebapiclient.services.ServicesApi
 import de.markusressel.freenaswebapiclient.services.ServicesManager
 import de.markusressel.freenaswebapiclient.sharing.SharingApi
@@ -14,6 +14,8 @@ import de.markusressel.freenaswebapiclient.storage.StorageApi
 import de.markusressel.freenaswebapiclient.storage.StorageManager
 import de.markusressel.freenaswebapiclient.system.SystemApi
 import de.markusressel.freenaswebapiclient.system.SystemManager
+import de.markusressel.freenaswebapiclient.tasks.TasksApi
+import de.markusressel.freenaswebapiclient.tasks.TasksManager
 
 /**
  * Convenience delegation class for easy access to all api methods
@@ -27,10 +29,11 @@ class FreeNasWebApiClient(private val requestManager: RequestManager = RequestMa
                           sharingApi: SharingApi = SharingManager(requestManager),
                           storageApi: StorageApi = StorageManager(requestManager),
                           systemApi: SystemApi = SystemManager(requestManager),
-                          pluginApi: PluginApi = PluginHandler(requestManager)) :
+                          pluginApi: PluginApi = PluginManager(requestManager),
+                          tasksApi: TasksApi = TasksManager(requestManager)) :
     AccountApi by accountApi, JailsApi by jailsApi, ServicesApi by servicesApi,
     SharingApi by sharingApi, StorageApi by storageApi, SystemApi by systemApi,
-    PluginApi by pluginApi {
+    PluginApi by pluginApi, TasksApi by tasksApi {
 
     /**
      * Set the hostname for this client

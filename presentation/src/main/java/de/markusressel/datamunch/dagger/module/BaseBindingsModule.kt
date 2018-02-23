@@ -65,6 +65,9 @@ abstract class BaseBindingsModule {
     internal abstract fun TasksFragment(): TasksFragment
 
     @ContributesAndroidInjector
+    internal abstract fun TasksPage(): TasksPage
+
+    @ContributesAndroidInjector
     internal abstract fun JailsFragment(): JailsFragment
 
     @ContributesAndroidInjector
@@ -98,25 +101,25 @@ abstract class BaseBindingsModule {
     internal abstract fun LockscreenFragment(): LockscreenFragment
 
     @ContributesAndroidInjector
-    internal abstract fun AccountFragment(): AccountFragment
+    internal abstract fun AccountPage(): AccountPage
 
     @ContributesAndroidInjector
-    internal abstract fun FileUploaderFragment(): FileUploaderFragment
+    internal abstract fun FileUploaderPage(): FileUploaderPage
 
     @ContributesAndroidInjector
-    internal abstract fun JailFragment(): JailFragment
+    internal abstract fun JailPage(): JailPage
 
     @ContributesAndroidInjector
-    internal abstract fun PluginFragment(): PluginFragment
+    internal abstract fun PluginPage(): PluginPage
 
     @ContributesAndroidInjector
-    internal abstract fun StorageFragment(): StorageFragment
+    internal abstract fun StoragePage(): StoragePage
 
     @ContributesAndroidInjector
-    internal abstract fun SharingFragment(): SharingFragment
+    internal abstract fun SharingPage(): SharingPage
 
     @ContributesAndroidInjector
-    internal abstract fun SystemFragment(): SystemFragment
+    internal abstract fun SystemPage(): SystemPage
 
     @ContributesAndroidInjector
     internal abstract fun UserDetailActivity(): UserDetailActivity

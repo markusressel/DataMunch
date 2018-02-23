@@ -11,7 +11,7 @@ import de.markusressel.datamunch.view.fragment.system.UpdatesFragment
 import javax.inject.Inject
 
 
-class FileUploaderFragment : TabNavigationFragment() {
+class FileUploaderPage : TabNavigationFragment() {
 
     override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
         get() {

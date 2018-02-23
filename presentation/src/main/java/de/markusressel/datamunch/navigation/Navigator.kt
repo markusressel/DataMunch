@@ -87,7 +87,7 @@ class Navigator @Inject constructor() {
      * @param flags Intent flags
      */
     fun startActivity(activityContext: Context, page: NavigationPage, flags: Int?) {
-        if (page == NavigationPages.AboutPage) {
+        if (page == NavigationPages.About) {
             navigateToAbout(activityContext)
             return
         }

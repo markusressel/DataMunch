@@ -2,14 +2,15 @@
     <string name="app_name">DataMunch</string>
 
     <string name="menu_item_status">Status</string>
-    <string name="menu_item_accounts">Accounts</string>
-    <string name="menu_item_services">Services</string>
-    <string name="menu_item_sharing">Sharing</string>
-    <string name="menu_item_storage">Storage</string>
+    <string name="menu_item_accounts">Konten</string>
+    <string name="menu_item_services">Dienste</string>
+    <string name="menu_item_sharing">Freigaben</string>
+    <string name="menu_item_storage">Speicher</string>
     <string name="menu_item_jails">Jails</string>
     <string name="menu_item_plugins">Plugins</string>
     <string name="menu_item_file_uploader">File Uploader</string>
     <string name="menu_item_system">System</string>
+    <string name="menu_item_tasks">Aufgaben</string>
     <string name="menu_item_settings">Einstellungen</string>
     <string name="menu_item_about">Über</string>
 
