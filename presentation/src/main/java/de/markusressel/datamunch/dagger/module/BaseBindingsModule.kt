@@ -24,6 +24,7 @@ import de.markusressel.datamunch.view.fragment.storage.*
 import de.markusressel.datamunch.view.fragment.system.AlertsFragment
 import de.markusressel.datamunch.view.fragment.system.MaintenanceFragment
 import de.markusressel.datamunch.view.fragment.system.UpdatesFragment
+import de.markusressel.datamunch.view.fragment.tasks.SMARTTasksFragment
 
 /**
  * Created by Markus on 07.01.2018.
@@ -144,5 +145,8 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun JailShellContentFragment(): JailShellContentFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun SMARTTasksFragment(): SMARTTasksFragment
 
 }

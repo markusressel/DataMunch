@@ -1115,9 +1115,49 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "23:3095895049919661870",
+      "lastPropertyId": "8:2444183847534853831",
+      "name": "SMARTTaskEntity",
+      "properties": [
+        {
+          "id": "1:6439262330771928067",
+          "name": "entityId"
+        },
+        {
+          "id": "2:1757893286065961851",
+          "name": "id"
+        },
+        {
+          "id": "3:647956487601904268",
+          "name": "smarttest_dayweek"
+        },
+        {
+          "id": "4:7093009152512452410",
+          "name": "smarttest_daymonth"
+        },
+        {
+          "id": "5:8992634357345185648",
+          "name": "smarttest_month"
+        },
+        {
+          "id": "6:1862966710203816442",
+          "name": "smarttest_type"
+        },
+        {
+          "id": "7:2565401349389947084",
+          "name": "smarttest_hour"
+        },
+        {
+          "id": "8:2444183847534853831",
+          "name": "smarttest_desc"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "22:6576900313118117000",
+  "lastEntityId": "23:3095895049919661870",
   "lastIndexId": "0:0",
   "lastRelationId": "1:9185694220009639810",
   "lastSequenceId": "0:0",

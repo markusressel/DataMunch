@@ -71,8 +71,6 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
                                                 positionOffsetPixels: Int) = Unit
 
                     override fun onPageSelected(position: Int) {
-                        Timber
-                                .d { "onPageSelected with position: $position" }
                         currentPage = position
                     }
 

@@ -22,11 +22,11 @@
 
         <variable
             name="item"
-            type="de.markusressel.datamunch.data.persistence.entity.AlertEntity" />
+            type="de.markusressel.datamunch.data.persistence.entity.SMARTTaskEntity" />
 
         <variable
             name="presenter"
-            type="de.markusressel.datamunch.view.fragment.system.AlertsFragment" />
+            type="de.markusressel.datamunch.view.fragment.tasks.SMARTTasksFragment" />
     </data>
 
     <LinearLayout
@@ -49,25 +49,25 @@
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/level" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="@{item.level}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
-
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/message" />
+                    android:text="@string/type" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@{item.message}"
+                    android:text="@{item.smarttest_type}"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/description" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="@{item.smarttest_desc}"
                     android:textColor="?android:textColorPrimary"
                     android:textSize="18sp" />
 

@@ -51,4 +51,6 @@
     <string name="enabled">Aktiviert</string>
     <string name="description">Beschreibung</string>
 
+    <string name="type">Typ</string>
+
 </resources>

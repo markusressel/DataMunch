@@ -62,4 +62,9 @@
 
     <string name="smart" translatable="false">S.M.A.R.T.</string>
 
+    <string name="type">Type</string>
+
+    <string name="level">Level</string>
+    <string name="message">Message</string>
+
 </resources>
