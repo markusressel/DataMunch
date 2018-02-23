@@ -11,6 +11,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.content_jails_jail_services.*
 import javax.inject.Inject
 
 /**
@@ -56,15 +57,24 @@ class JailServicesContentFragment : JailContentFragmentBase() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onSuccess = {
+                    val services = it
+                            .last()
+                            .split(Regex.fromLiteral("\r\n"))
+                            .dropLast(1)
+
                     Timber
                             .d {
-                                val services = it
-                                        .last()
-                                        .split(Regex.fromLiteral("\\r?\\n"))
-
                                 services
-                                        .joinToString(separator = ",")
+                                        .joinToString(",")
                             }
+
+                    servicesText
+                            .text = services
+                            .sortedBy {
+                                it
+                                        .toLowerCase()
+                            }
+                            .joinToString(separator = "\n")
                 }, onError = {
                     Timber
                             .e(it)

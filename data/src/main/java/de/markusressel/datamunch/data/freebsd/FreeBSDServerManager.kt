@@ -81,8 +81,8 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
         return emptyList()
     }
 
-    fun executeInJail(jailName: String, command: String): List<String> {
-        return runInShell(listOf("jexec $jailName /bin/tcsh", command))
+    fun executeInJail(jailName: String, vararg commands: String): List<String> {
+        return runInShell("jexec $jailName /bin/tcsh", *commands)
                 .drop(1)
     }
 

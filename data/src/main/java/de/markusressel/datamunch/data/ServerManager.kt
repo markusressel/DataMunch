@@ -50,9 +50,9 @@ abstract class ServerManager {
                 .executeCommand(*sshConnectionConfigList, command = command)
     }
 
-    protected fun runInShell(commands: List<String>): List<String> {
+    protected fun runInShell(vararg commands: String): List<String> {
         return sshClient
-                .runInShell(*sshConnectionConfigList, commands = commands)
+                .runInShell(*sshConnectionConfigList, commands = commands.asList())
     }
 
     /**
