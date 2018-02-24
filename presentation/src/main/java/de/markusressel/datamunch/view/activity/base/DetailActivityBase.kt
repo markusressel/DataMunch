@@ -8,10 +8,13 @@ import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.view.KeyEvent
 import android.view.MenuItem
+import com.eightbitlab.rxbus.Bus
 import com.github.florent37.materialviewpager.header.HeaderDesign
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.event.KeyDownEvent
 import de.markusressel.datamunch.extensions.random
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import kotlinx.android.synthetic.main.activity_item_detail.*
@@ -84,7 +87,8 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
 
                                 // instantiate this header
                                 HeaderDesign
-                                        .fromColorResAndDrawable(config.colorRes, getDrawable(config.drawableRes))
+                                        .fromColorResAndDrawable(config.colorRes,
+                                                                 getDrawable(config.drawableRes))
                             }
                 }
     }
@@ -201,6 +205,14 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
                 false
             }
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        Bus
+                .send(KeyDownEvent(keyCode, event))
+
+        return super
+                .onKeyDown(keyCode, event)
     }
 
     companion object {
