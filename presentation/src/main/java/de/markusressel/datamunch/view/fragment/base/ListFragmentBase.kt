@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_list.*
 import java.util.*
 import java.util.concurrent.CancellationException
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
@@ -116,7 +117,8 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         super
                 .onResume()
 
-        if (System.currentTimeMillis() - (1000 * 60) > getLastUpdatedFromSource()) {
+        if (System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(
+                        5) > getLastUpdatedFromSource()) {
             Timber
                     .d { "Persisted list data is old, refreshing from source" }
             reloadDataFromSource()
