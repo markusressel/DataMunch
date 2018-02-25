@@ -78,18 +78,25 @@ class JailShellContentFragment : JailContentFragmentBase() {
                     // clear content text
                     appendToShellOutput("")
 
+                    val entity = getEntityFromPersistence()
+                    // enter jail
+                    shellInstance
+                            ?.writeToShell("jexec ${entity.jail_host} /bin/tcsh", NEW_LINE)
+
                     shellInstance
                             ?.let {
                                 while (it.isConnected()) {
                                     readInput(inputStream)
+
+                                    try {
+                                        Thread
+                                                .sleep(100)
+                                    } catch (ee: Exception) {
+                                        Timber
+                                                .e(ee)
+                                    }
                                 }
                             }
-
-                    val entity = getEntityFromPersistence()
-
-                    // enter jail
-                    shellInstance
-                            ?.writeToShell("jexec ${entity.jail_host} /bin/tcsh")
                 }, onError = {
                     appendToShellOutput("\n\n${it.prettyPrint()}")
                 })
@@ -97,26 +104,29 @@ class JailShellContentFragment : JailContentFragmentBase() {
         Bus
                 .observe<KeyEvent>()
                 .subscribe {
-
-                    // only react to key down events
-                    if (it.action == KeyEvent.ACTION_DOWN) {
-                        when (it.keyCode) {
-                            KeyEvent.KEYCODE_DEL -> {
-                                shellInstance
-                                        ?.backspace()
-                            }
-                            KeyEvent.KEYCODE_ENTER -> {
-                                shellInstance
-                                        ?.writeToShell("\r\n")
-                            }
-                            else -> {
-                                shellInstance
-                                        ?.writeToShell(it.stringRepresentation())
-                            }
-                        }
-                    }
+                    handleKeybordInput(it)
                 }
                 .registerInBus(this)
+    }
+
+    private fun handleKeybordInput(keyEvent: KeyEvent) {
+        // only react to key down events
+        if (keyEvent.action == KeyEvent.ACTION_DOWN) {
+            when (keyEvent.keyCode) {
+                KeyEvent.KEYCODE_DEL -> {
+                    shellInstance
+                            ?.backspace()
+                }
+                KeyEvent.KEYCODE_ENTER -> {
+                    shellInstance
+                            ?.writeToShell(NEW_LINE)
+                }
+                else -> {
+                    shellInstance
+                            ?.writeToShell(keyEvent.stringRepresentation())
+                }
+            }
+        }
     }
 
     private fun readInput(inputStream: InputStream) {
@@ -141,14 +151,6 @@ class JailShellContentFragment : JailContentFragmentBase() {
                         .replace("\b", "")
                 appendToShellOutput(string)
             }
-        }
-
-        try {
-            Thread
-                    .sleep(100)
-        } catch (ee: Exception) {
-            Timber
-                    .e(ee)
         }
     }
 
@@ -194,6 +196,10 @@ class JailShellContentFragment : JailContentFragmentBase() {
                 .getUnicodeChar(this.metaState)
                 .toChar()
                 .toString()
+    }
+
+    companion object {
+        const val NEW_LINE = "\r\n"
     }
 
 }

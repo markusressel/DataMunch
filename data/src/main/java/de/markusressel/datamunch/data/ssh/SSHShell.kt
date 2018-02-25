@@ -48,11 +48,14 @@ class SSHShell(private vararg val sshConnectionConfig: SSHConnectionConfig,
     /**
      * Write something to the shell
      */
-    fun writeToShell(text: String) {
+    fun writeToShell(vararg text: String) {
         outputStream
                 ?.let {
 
-                    val substrings = text
+                    val combinedText = text
+                            .joinToString(separator = "")
+
+                    val substrings = combinedText
                             .split(Regex.fromLiteral("\r\n"))
 
                     substrings
