@@ -34,7 +34,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".view.fragment.jail.jail.JailDetailActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <service android:name=".service.FileUploadService" />
 

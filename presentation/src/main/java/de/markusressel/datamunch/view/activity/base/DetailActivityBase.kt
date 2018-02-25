@@ -14,7 +14,6 @@ import com.eightbitlab.rxbus.Bus
 import com.github.florent37.materialviewpager.header.HeaderDesign
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.event.KeyDownEvent
 import de.markusressel.datamunch.extensions.random
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import kotlinx.android.synthetic.main.activity_item_detail.*
@@ -207,12 +206,15 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
         }
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        Bus
-                .send(KeyDownEvent(keyCode, event))
+    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+        event
+                ?.let {
+                    Bus
+                            .send(event)
+                }
 
         return super
-                .onKeyDown(keyCode, event)
+                .dispatchKeyEvent(event)
     }
 
     companion object {

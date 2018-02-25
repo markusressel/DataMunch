@@ -3,6 +3,7 @@ package de.markusressel.datamunch.data
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
 import de.markusressel.datamunch.data.ssh.SSHClient
 import de.markusressel.datamunch.data.ssh.SSHConnectionConfig
+import de.markusressel.datamunch.data.ssh.SSHShell
 import java.io.File
 import javax.inject.Inject
 
@@ -80,6 +81,13 @@ abstract class ServerManager {
         sshClient
                 .uploadFile(*sshConnectionConfigList, file = file,
                             destinationPath = destinationPath)
+    }
+
+    /**
+     * Get an interactive shell for this server
+     */
+    fun getShell(): SSHShell {
+        return SSHShell(*sshConnectionConfigList, sshClient = sshClient)
     }
 
 }

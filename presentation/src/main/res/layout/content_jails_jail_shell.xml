@@ -33,6 +33,7 @@
                     android:id="@+id/shellContentTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/md_black_1000"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:maxLines="300" />

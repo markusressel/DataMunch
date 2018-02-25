@@ -67,6 +67,7 @@ class SSHClient @Inject constructor() {
 
             val results: MutableList<String> = mutableListOf()
 
+            // initial response can be ignored as it's just the "welcome" message and initial prompt
             val initialResponse = readResponse(channel, inputStream)
 
             // process every command one after the other
@@ -100,41 +101,26 @@ class SSHClient @Inject constructor() {
         return results
     }
 
-    private fun readResponse(channel: Channel, inputStream: InputStream): String {
-        var result = ""
-        val tmp = ByteArray(1024)
+    private fun <T> runOnSession(vararg sshConnectionConfig: SSHConnectionConfig,
+                                 run: (session: Session) -> T): T {
 
-        while (result.isEmpty()) {
-            while (inputStream.available() > 0) {
-                val i: Int = inputStream
-                        .read(tmp, 0, tmp.size)
-                if (i < 0) break
+        // create session
+        val sessions = createAndConnectSession(*sshConnectionConfig)
 
-                result += String(tmp, 0, i)
-            }
+        // run commands
+        val result = run
+                .invoke(sessions.last())
 
-            if (channel.isClosed) {
-                if (inputStream.available() > 0) continue
-
-                Timber
-                        .e { "Exit-Status: ${channel.exitStatus} Result: $result" }
-                break
-            }
-            try {
-                Thread
-                        .sleep(100)
-            } catch (ee: Exception) {
-            }
-        }
+        // disconnect session
+        disconnectSession(sessions)
 
         return result
     }
 
-    private fun <T> runOnSession(vararg sshConnectionConfig: SSHConnectionConfig,
-                                 run: (session: Session) -> T): T {
+    internal fun createAndConnectSession(
+            vararg sshConnectionConfig: SSHConnectionConfig): List<Session> {
         if (sshConnectionConfig.isEmpty()) {
-            throw IllegalArgumentException(
-                    "There must be at least one ssh connection configuration!")
+            throw IllegalArgumentException("There must be at least one ssh connection configuration!")
         }
 
         val sessions: MutableList<Session> = ArrayList()
@@ -183,12 +169,43 @@ class SSHClient @Inject constructor() {
                     .add(currentSession)
         }
 
-        val result = run
-                .invoke(currentSession)
+        return sessions
+    }
 
+    internal fun disconnectSession(sessions: List<Session>) {
         for (session in sessions.reversed()) {
             session
                     .disconnect()
+        }
+    }
+
+    private fun readResponse(channel: Channel, inputStream: InputStream): String {
+        var result = ""
+        val tmp = ByteArray(1024)
+
+        while (result.isEmpty()) {
+            while (inputStream.available() > 0) {
+                val i: Int = inputStream
+                        .read(tmp, 0, tmp.size)
+                if (i < 0) break
+
+                result += String(tmp, 0, i)
+            }
+
+            if (channel.isClosed) {
+                if (inputStream.available() > 0) continue
+
+                Timber
+                        .e { "Exit-Status: ${channel.exitStatus} Result: $result" }
+                break
+            }
+            try {
+                Thread
+                        .sleep(100)
+            } catch (ee: Exception) {
+                Timber
+                        .e(ee)
+            }
         }
 
         return result
@@ -236,7 +253,7 @@ class SSHClient @Inject constructor() {
         return channel
     }
 
-    private fun createShellChannel(session: Session): Channel {
+    internal fun createShellChannel(session: Session): Channel {
         return session.openChannel(TYPE_SHELL) as Channel
     }
 
@@ -247,7 +264,9 @@ class SSHClient @Inject constructor() {
     companion object {
         const val TYPE_EXEC = "exec"
         const val TYPE_SHELL = "shell"
+
         const val TYPE_SFTP = "sftp"
+
     }
 
     /**
