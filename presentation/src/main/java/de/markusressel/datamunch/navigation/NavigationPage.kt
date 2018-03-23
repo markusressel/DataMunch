@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.navigation.page
+package de.markusressel.datamunch.navigation
 
 import android.content.Context
 import android.content.Intent

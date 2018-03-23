@@ -9,6 +9,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.TaskEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemTaskBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.storage.task.TaskModel
@@ -75,6 +76,12 @@ class TasksFragment : ListFragmentBase<TaskModel, TaskEntity>() {
     }
 
     private fun openDetailView(task: TaskEntity) {
+        context
+                ?.let {
+                    val intent = DetailActivityBase
+                            .newInstanceIntent(TaskDetailActivity::class.java, it, task.entityId)
+                    startActivity(intent)
+                }
     }
 
 }

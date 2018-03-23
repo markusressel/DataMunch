@@ -9,6 +9,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.ScrubEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemScrubBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.storage.scrub.ScrubModel
@@ -75,6 +76,12 @@ class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
     }
 
     private fun openDetailView(scrub: ScrubEntity) {
+        context
+                ?.let {
+                    val intent = DetailActivityBase
+                            .newInstanceIntent(ScrubDetailActivity::class.java, it, scrub.entityId)
+                    startActivity(intent)
+                }
     }
 
 }

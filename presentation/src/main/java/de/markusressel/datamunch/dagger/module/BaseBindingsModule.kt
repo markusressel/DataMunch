@@ -25,10 +25,14 @@ import de.markusressel.datamunch.view.fragment.storage.dataset.DatasetsFragment
 import de.markusressel.datamunch.view.fragment.storage.disk.DiskDetailActivity
 import de.markusressel.datamunch.view.fragment.storage.disk.DiskDetailContentFragment
 import de.markusressel.datamunch.view.fragment.storage.disk.DisksFragment
+import de.markusressel.datamunch.view.fragment.storage.scrubs.ScrubDetailActivity
+import de.markusressel.datamunch.view.fragment.storage.scrubs.ScrubDetailContentFragment
 import de.markusressel.datamunch.view.fragment.storage.scrubs.ScrubsFragment
 import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotDetailActivity
 import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotDetailContentFragment
 import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotsFragment
+import de.markusressel.datamunch.view.fragment.storage.task.TaskDetailActivity
+import de.markusressel.datamunch.view.fragment.storage.task.TaskDetailContentFragment
 import de.markusressel.datamunch.view.fragment.storage.task.TasksFragment
 import de.markusressel.datamunch.view.fragment.system.MaintenanceFragment
 import de.markusressel.datamunch.view.fragment.system.alert.AlertsFragment
@@ -153,10 +157,22 @@ abstract class BaseBindingsModule {
     internal abstract fun DiskDetailContentFragment(): DiskDetailContentFragment
 
     @ContributesAndroidInjector
+    internal abstract fun TaskDetailActivity(): TaskDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun TaskDetailContentFragment(): TaskDetailContentFragment
+
+    @ContributesAndroidInjector
     internal abstract fun SnapshotDetailActivity(): SnapshotDetailActivity
 
     @ContributesAndroidInjector
     internal abstract fun SnapshotDetailContentFragment(): SnapshotDetailContentFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun ScrubDetailActivity(): ScrubDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun ScrubDetailContentFragment(): ScrubDetailContentFragment
 
     @ContributesAndroidInjector
     internal abstract fun JailDetailContentFragment(): JailDetailContentFragment

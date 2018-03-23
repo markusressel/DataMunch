@@ -6,7 +6,6 @@ import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
-import de.markusressel.datamunch.navigation.page.NavigationPage
 import de.markusressel.datamunch.view.IconHandler
 import java.util.concurrent.atomic.AtomicLong
 

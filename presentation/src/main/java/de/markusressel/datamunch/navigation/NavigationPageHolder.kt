@@ -1,6 +1,5 @@
 package de.markusressel.datamunch.navigation
 
-import de.markusressel.datamunch.navigation.page.NavigationPage
 import de.markusressel.datamunch.view.activity.preferences.PreferenceOverviewActivity
 import de.markusressel.datamunch.view.fragment.ServerStatusFragment
 import de.markusressel.datamunch.view.fragment.ServicesFragment

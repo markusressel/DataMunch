@@ -10,7 +10,6 @@ import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mikepenz.aboutlibraries.util.Colors
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
-import de.markusressel.datamunch.navigation.page.NavigationPage
 import javax.inject.Inject
 import javax.inject.Singleton
 
