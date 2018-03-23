@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment
+package de.markusressel.datamunch.view.fragment.plugins
 
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR

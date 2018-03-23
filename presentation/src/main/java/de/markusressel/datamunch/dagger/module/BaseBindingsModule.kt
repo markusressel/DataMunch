@@ -3,7 +3,6 @@ package de.markusressel.datamunch.dagger.module
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import de.markusressel.datamunch.view.fragment.LockscreenFragment
-import de.markusressel.datamunch.view.fragment.PluginsFragment
 import de.markusressel.datamunch.view.fragment.ServerStatusFragment
 import de.markusressel.datamunch.view.fragment.ServicesFragment
 import de.markusressel.datamunch.view.fragment.account.group.GroupDetailActivity
@@ -17,6 +16,9 @@ import de.markusressel.datamunch.view.fragment.jail.jail.*
 import de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointsFragment
 import de.markusressel.datamunch.view.fragment.jail.template.TemplatesFragment
 import de.markusressel.datamunch.view.fragment.pages.*
+import de.markusressel.datamunch.view.fragment.plugins.PluginDetailActivity
+import de.markusressel.datamunch.view.fragment.plugins.PluginDetailContentFragment
+import de.markusressel.datamunch.view.fragment.plugins.PluginsFragment
 import de.markusressel.datamunch.view.fragment.sharing.afp.AfpShareDetailActivity
 import de.markusressel.datamunch.view.fragment.sharing.afp.AfpShareDetailContentFragment
 import de.markusressel.datamunch.view.fragment.sharing.afp.AfpSharesFragment
@@ -219,5 +221,12 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun NfsShareDetailContentFragment(): NfsShareDetailContentFragment
+
+
+    @ContributesAndroidInjector
+    internal abstract fun PluginDetailActivity(): PluginDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun PluginDetailContentFragment(): PluginDetailContentFragment
 
 }
