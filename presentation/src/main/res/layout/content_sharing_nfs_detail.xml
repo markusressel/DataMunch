@@ -52,66 +52,6 @@
                     android:textColor="?android:textColorPrimary"
                     android:textSize="18sp" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/full_name" />
-
-                <TextView
-                    android:id="@+id/fullNameTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
-
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/filesystem" />
-
-                <TextView
-                    android:id="@+id/filesystemTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
-
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/parentType" />
-
-                <TextView
-                    android:id="@+id/parentTypeTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
-
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/refer" />
-
-                <TextView
-                    android:id="@+id/referTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
-
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/used" />
-
-                <TextView
-                    android:id="@+id/usedTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
-
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
