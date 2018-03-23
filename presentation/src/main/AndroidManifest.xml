@@ -53,6 +53,9 @@
         <activity android:name=".view.fragment.storage.scrubs.ScrubDetailActivity" />
         <activity android:name=".view.fragment.storage.task.TaskDetailActivity" />
         <activity android:name=".view.fragment.system.alert.AlertDetailActivity" />
+        <activity android:name=".view.fragment.sharing.afp.AfpShareDetailActivity" />
+        <activity android:name=".view.fragment.sharing.cifs.CifsShareDetailActivity" />
+        <activity android:name=".view.fragment.sharing.nfs.NfsShareDetailActivity" />
 
 
     </application>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/material_view_pager_placeholder" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/cardMarginVertical"
+            android:layout_marginLeft="@dimen/cardMarginHorizontal"
+            android:layout_marginRight="@dimen/cardMarginHorizontal"
+            android:layout_marginTop="@dimen/cardMarginVertical"
+            android:background="@android:color/white"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/id" />
+
+                <TextView
+                    android:id="@+id/idTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/name" />
+
+                <TextView
+                    android:id="@+id/nameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/full_name" />
+
+                <TextView
+                    android:id="@+id/fullNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/filesystem" />
+
+                <TextView
+                    android:id="@+id/filesystemTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/parentType" />
+
+                <TextView
+                    android:id="@+id/parentTypeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/refer" />
+
+                <TextView
+                    android:id="@+id/referTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/used" />
+
+                <TextView
+                    android:id="@+id/usedTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
