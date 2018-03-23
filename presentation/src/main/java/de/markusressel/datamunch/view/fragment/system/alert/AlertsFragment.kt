@@ -8,6 +8,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.AlertEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemAlertBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.system.alert.AlertModel
 import io.reactivex.Single
@@ -36,7 +37,7 @@ class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
                                 .setVariable(BR.presenter, this@AlertsFragment)
                     }
                     onClick {
-
+                        openDetailView(listValues[it.adapterPosition])
                     }
                 }
                 .into(recyclerView)
@@ -65,6 +66,15 @@ class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
                                           it
                                                   .message
                                       }))
+    }
+
+    private fun openDetailView(alert: AlertEntity) {
+        context
+                ?.let {
+                    val intent = DetailActivityBase
+                            .newInstanceIntent(AlertDetailActivity::class.java, it, alert.entityId)
+                    startActivity(intent)
+                }
     }
 
 }

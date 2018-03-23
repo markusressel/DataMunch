@@ -35,6 +35,8 @@ import de.markusressel.datamunch.view.fragment.storage.task.TaskDetailActivity
 import de.markusressel.datamunch.view.fragment.storage.task.TaskDetailContentFragment
 import de.markusressel.datamunch.view.fragment.storage.task.TasksFragment
 import de.markusressel.datamunch.view.fragment.system.MaintenanceFragment
+import de.markusressel.datamunch.view.fragment.system.alert.AlertDetailActivity
+import de.markusressel.datamunch.view.fragment.system.alert.AlertDetailContentFragment
 import de.markusressel.datamunch.view.fragment.system.alert.AlertsFragment
 import de.markusressel.datamunch.view.fragment.system.update.UpdatesFragment
 import de.markusressel.datamunch.view.fragment.tasks.SMARTTasksFragment
@@ -170,6 +172,12 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun ScrubDetailActivity(): ScrubDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun AlertDetailActivity(): AlertDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun AlertDetailContentFragment(): AlertDetailContentFragment
 
     @ContributesAndroidInjector
     internal abstract fun ScrubDetailContentFragment(): ScrubDetailContentFragment

@@ -52,6 +52,7 @@
         </activity>
         <activity android:name=".view.fragment.storage.scrubs.ScrubDetailActivity" />
         <activity android:name=".view.fragment.storage.task.TaskDetailActivity" />
+        <activity android:name=".view.fragment.system.alert.AlertDetailActivity" />
 
 
     </application>
