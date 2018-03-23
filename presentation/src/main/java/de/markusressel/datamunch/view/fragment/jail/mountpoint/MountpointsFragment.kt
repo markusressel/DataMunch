@@ -9,6 +9,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.MountpointEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemMountpointBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.jails.mountpoint.MountpointModel
@@ -73,7 +74,13 @@ class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>(
     }
 
     private fun openDetailView(mountpoint: MountpointEntity) {
-
+        context
+                ?.let {
+                    val intent = DetailActivityBase
+                            .newInstanceIntent(MountpointDetailActivity::class.java, it,
+                                               mountpoint.entityId)
+                    startActivity(intent)
+                }
     }
 
 }

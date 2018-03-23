@@ -113,6 +113,9 @@ class JailShellContentFragment : JailContentFragmentBase() {
         // only react to key down events
         if (keyEvent.action == KeyEvent.ACTION_DOWN) {
             when (keyEvent.keyCode) {
+                KeyEvent.KEYCODE_BACK -> {
+                    return
+                }
                 KeyEvent.KEYCODE_DEL -> {
                     shellInstance
                             ?.backspace()

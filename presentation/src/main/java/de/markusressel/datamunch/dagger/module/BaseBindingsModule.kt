@@ -13,6 +13,8 @@ import de.markusressel.datamunch.view.fragment.account.user.UserDetailContentFra
 import de.markusressel.datamunch.view.fragment.account.user.UsersFragment
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.jail.jail.*
+import de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointDetailActivity
+import de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointDetailContentFragment
 import de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointsFragment
 import de.markusressel.datamunch.view.fragment.jail.template.TemplatesFragment
 import de.markusressel.datamunch.view.fragment.pages.*
@@ -228,5 +230,11 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun PluginDetailContentFragment(): PluginDetailContentFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun MountpointDetailActivity(): MountpointDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun MountpointDetailContentFragment(): MountpointDetailContentFragment
 
 }

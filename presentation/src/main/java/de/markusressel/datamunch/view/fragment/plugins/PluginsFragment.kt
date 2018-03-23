@@ -8,6 +8,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.PluginEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemPluginBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.plugins.PluginModel
 import io.reactivex.Single
@@ -35,6 +36,9 @@ class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
                                 .binding
                                 .presenter = this@PluginsFragment
                     }
+                    onClick {
+                        openDetailView(listValues[it.adapterPosition])
+                    }
                 }
                 .into(recyclerView)
     }
@@ -56,6 +60,16 @@ class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
                     it
                             .plugin_name
                             .toLowerCase()
+                }
+    }
+
+    private fun openDetailView(plugin: PluginEntity) {
+        context
+                ?.let {
+                    val intent = DetailActivityBase
+                            .newInstanceIntent(PluginDetailActivity::class.java, it,
+                                               plugin.entityId)
+                    startActivity(intent)
                 }
     }
 

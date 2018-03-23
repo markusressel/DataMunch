@@ -57,6 +57,7 @@
         <activity android:name=".view.fragment.sharing.cifs.CifsShareDetailActivity" />
         <activity android:name=".view.fragment.sharing.nfs.NfsShareDetailActivity" />
         <activity android:name=".view.fragment.plugins.PluginDetailActivity" />
+        <activity android:name=".view.fragment.jail.mountpoint.MountpointDetailActivity" />
 
 
     </application>
