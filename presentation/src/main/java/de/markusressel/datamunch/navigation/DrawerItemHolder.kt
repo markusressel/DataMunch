@@ -41,11 +41,11 @@ object DrawerItemHolder {
                                       icon = MaterialDesignIconic.Icon.gmi_file, selectable = true,
                                       navigationPage = NavigationPageHolder.FileUploader)
 
-    val System = DrawerMenuItem(identifier = 50, title = R.string.menu_item_system,
+    val System = DrawerMenuItem(identifier = 60, title = R.string.menu_item_system,
                                 icon = MaterialDesignIconic.Icon.gmi_settings, selectable = true,
                                 navigationPage = NavigationPageHolder.System)
 
-    val Tasks = DrawerMenuItem(identifier = 500, title = R.string.menu_item_tasks,
+    val Tasks = DrawerMenuItem(identifier = 70, title = R.string.menu_item_tasks,
                                icon = MaterialDesignIconic.Icon.gmi_assignment_check,
                                selectable = true, navigationPage = NavigationPageHolder.Tasks)
 
