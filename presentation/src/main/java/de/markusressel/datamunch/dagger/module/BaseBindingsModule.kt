@@ -17,8 +17,14 @@ import de.markusressel.datamunch.view.fragment.jail.jail.*
 import de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointsFragment
 import de.markusressel.datamunch.view.fragment.jail.template.TemplatesFragment
 import de.markusressel.datamunch.view.fragment.pages.*
+import de.markusressel.datamunch.view.fragment.sharing.afp.AfpShareDetailActivity
+import de.markusressel.datamunch.view.fragment.sharing.afp.AfpShareDetailContentFragment
 import de.markusressel.datamunch.view.fragment.sharing.afp.AfpSharesFragment
+import de.markusressel.datamunch.view.fragment.sharing.cifs.CifsShareDetailActivity
+import de.markusressel.datamunch.view.fragment.sharing.cifs.CifsShareDetailContentFragment
 import de.markusressel.datamunch.view.fragment.sharing.cifs.CifsSharesFragment
+import de.markusressel.datamunch.view.fragment.sharing.nfs.NfsShareDetailActivity
+import de.markusressel.datamunch.view.fragment.sharing.nfs.NfsShareDetailContentFragment
 import de.markusressel.datamunch.view.fragment.sharing.nfs.NfsSharesFragment
 import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
 import de.markusressel.datamunch.view.fragment.storage.dataset.DatasetsFragment
@@ -193,5 +199,25 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun SMARTTasksFragment(): SMARTTasksFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun AfpShareDetailActivity(): AfpShareDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun AfpShareDetailContentFragment(): AfpShareDetailContentFragment
+
+
+    @ContributesAndroidInjector
+    internal abstract fun CifsShareDetailActivity(): CifsShareDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun CifsShareDetailContentFragment(): CifsShareDetailContentFragment
+
+
+    @ContributesAndroidInjector
+    internal abstract fun NfsShareDetailActivity(): NfsShareDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun NfsShareDetailContentFragment(): NfsShareDetailContentFragment
 
 }

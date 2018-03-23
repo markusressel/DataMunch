@@ -9,6 +9,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.NfsShareEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemNfsShareBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.sharing.nfs.NfsShareModel
@@ -38,7 +39,7 @@ class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
                                 .setVariable(BR.presenter, this@NfsSharesFragment)
                     }
                     onClick {
-
+                        openDetailView(listValues[it.adapterPosition])
                     }
                 }
                 .into(recyclerView)
@@ -71,6 +72,16 @@ class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
 
     private fun openAddDialog() {
 
+    }
+
+    private fun openDetailView(share: NfsShareEntity) {
+        context
+                ?.let {
+                    val intent = DetailActivityBase
+                            .newInstanceIntent(NfsShareDetailActivity::class.java, it,
+                                               share.entityId)
+                    startActivity(intent)
+                }
     }
 
 }
