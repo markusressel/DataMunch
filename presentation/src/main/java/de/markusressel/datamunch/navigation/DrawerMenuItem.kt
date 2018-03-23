@@ -8,14 +8,18 @@ import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import de.markusressel.datamunch.navigation.page.NavigationPage
 import de.markusressel.datamunch.view.IconHandler
+import java.util.concurrent.atomic.AtomicLong
 
 /**
  * Created by Markus on 08.01.2018.
  */
-data class DrawerMenuItem(val identifier: Long, @StringRes val title: Int,
+data class DrawerMenuItem(@StringRes val title: Int,
                           val icon: IIcon? = null, @DrawableRes val drawableRes: Int? = null,
                           val selectable: Boolean, val navigationPage: NavigationPage) {
 
+    val identifier: Long = DrawerMenuItem
+            .identifier
+            .getAndAdd(1)
 
     /**
      * Get the icon for this DrawerMenuItem
@@ -42,5 +46,9 @@ data class DrawerMenuItem(val identifier: Long, @StringRes val title: Int,
                 }
 
         return IconicsDrawable(iconHandler.context)
+    }
+
+    companion object {
+        val identifier: AtomicLong = AtomicLong(1)
     }
 }
