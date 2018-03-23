@@ -20,7 +20,16 @@ import de.markusressel.datamunch.view.fragment.pages.*
 import de.markusressel.datamunch.view.fragment.sharing.AfpSharesFragment
 import de.markusressel.datamunch.view.fragment.sharing.CifsSharesFragment
 import de.markusressel.datamunch.view.fragment.sharing.NfsSharesFragment
-import de.markusressel.datamunch.view.fragment.storage.*
+import de.markusressel.datamunch.view.fragment.storage.DatasetsFragment
+import de.markusressel.datamunch.view.fragment.storage.ScrubsFragment
+import de.markusressel.datamunch.view.fragment.storage.TasksFragment
+import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
+import de.markusressel.datamunch.view.fragment.storage.disk.DiskDetailActivity
+import de.markusressel.datamunch.view.fragment.storage.disk.DiskDetailContentFragment
+import de.markusressel.datamunch.view.fragment.storage.disk.DisksFragment
+import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotDetailActivity
+import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotDetailContentFragment
+import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotsFragment
 import de.markusressel.datamunch.view.fragment.system.AlertsFragment
 import de.markusressel.datamunch.view.fragment.system.MaintenanceFragment
 import de.markusressel.datamunch.view.fragment.system.UpdatesFragment
@@ -136,6 +145,18 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun JailDetailActivity(): JailDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun DiskDetailActivity(): DiskDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun DiskDetailContentFragment(): DiskDetailContentFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun SnapshotDetailActivity(): SnapshotDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun SnapshotDetailContentFragment(): SnapshotDetailContentFragment
 
     @ContributesAndroidInjector
     internal abstract fun JailDetailContentFragment(): JailDetailContentFragment

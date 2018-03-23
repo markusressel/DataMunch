@@ -26,7 +26,7 @@
 
         <variable
             name="presenter"
-            type="de.markusressel.datamunch.view.fragment.storage.SnapshotsFragment" />
+            type="de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotsFragment" />
     </data>
 
     <LinearLayout

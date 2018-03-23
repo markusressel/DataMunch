@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment.storage
+package de.markusressel.datamunch.view.fragment.storage.snapshot
 
 import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
@@ -9,6 +9,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.SnapshotEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemSnapshotBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.storage.snapshot.SnapshotModel
@@ -75,6 +76,13 @@ class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
     }
 
     private fun openDetailView(volume: SnapshotEntity) {
+        context
+                ?.let {
+                    val intent = DetailActivityBase
+                            .newInstanceIntent(SnapshotDetailActivity::class.java, it,
+                                               volume.entityId)
+                    startActivity(intent)
+                }
     }
 
 }

@@ -35,6 +35,8 @@
         <activity
             android:name=".view.fragment.jail.jail.JailDetailActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".view.fragment.storage.disk.DiskDetailActivity" />
+        <activity android:name=".view.fragment.storage.snapshot.SnapshotDetailActivity" />
 
         <service android:name=".service.FileUploadService" />
 
@@ -48,6 +50,7 @@
             android:windowSoftInputMode="adjustPan">
             <!-- Intents are sent explicitly to this class, no need to specify an intent filter -->
         </activity>
+
 
     </application>
 

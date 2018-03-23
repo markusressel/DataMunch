@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment.storage
+package de.markusressel.datamunch.view.fragment.storage.disk
 
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
@@ -8,6 +8,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.DiskEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemDiskBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.storage.disk.DiskModel
 import io.reactivex.Single
@@ -63,6 +64,12 @@ class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
     }
 
     private fun openDetailView(disk: DiskEntity) {
+        context
+                ?.let {
+                    val intent = DetailActivityBase
+                            .newInstanceIntent(DiskDetailActivity::class.java, it, disk.entityId)
+                    startActivity(intent)
+                }
     }
 
 }

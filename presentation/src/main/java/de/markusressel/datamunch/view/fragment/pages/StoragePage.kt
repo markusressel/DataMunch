@@ -3,7 +3,12 @@ package de.markusressel.datamunch.view.fragment.pages
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabNavigationFragment
-import de.markusressel.datamunch.view.fragment.storage.*
+import de.markusressel.datamunch.view.fragment.storage.DatasetsFragment
+import de.markusressel.datamunch.view.fragment.storage.ScrubsFragment
+import de.markusressel.datamunch.view.fragment.storage.TasksFragment
+import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
+import de.markusressel.datamunch.view.fragment.storage.disk.DisksFragment
+import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotsFragment
 
 
 class StoragePage : TabNavigationFragment() {

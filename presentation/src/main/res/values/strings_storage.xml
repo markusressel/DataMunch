@@ -10,5 +10,8 @@
 
     <string name="volume">Volume</string>
     <string name="filesystem">Filesystem</string>
+    <string name="parentType">Parent type</string>
+    <string name="refer">Refer</string>
+    <string name="used">Used</string>
 
 </resources>
