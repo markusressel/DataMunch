@@ -26,7 +26,7 @@
 
         <variable
             name="presenter"
-            type="de.markusressel.datamunch.view.fragment.sharing.AfpSharesFragment" />
+            type="de.markusressel.datamunch.view.fragment.sharing.afp.AfpSharesFragment" />
     </data>
 
     <LinearLayout

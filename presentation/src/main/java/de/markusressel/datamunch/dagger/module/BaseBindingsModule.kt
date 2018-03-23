@@ -13,26 +13,26 @@ import de.markusressel.datamunch.view.fragment.account.user.UserDetailActivity
 import de.markusressel.datamunch.view.fragment.account.user.UserDetailContentFragment
 import de.markusressel.datamunch.view.fragment.account.user.UsersFragment
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
-import de.markusressel.datamunch.view.fragment.jail.MountpointsFragment
-import de.markusressel.datamunch.view.fragment.jail.TemplatesFragment
 import de.markusressel.datamunch.view.fragment.jail.jail.*
+import de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointsFragment
+import de.markusressel.datamunch.view.fragment.jail.template.TemplatesFragment
 import de.markusressel.datamunch.view.fragment.pages.*
-import de.markusressel.datamunch.view.fragment.sharing.AfpSharesFragment
-import de.markusressel.datamunch.view.fragment.sharing.CifsSharesFragment
-import de.markusressel.datamunch.view.fragment.sharing.NfsSharesFragment
-import de.markusressel.datamunch.view.fragment.storage.DatasetsFragment
-import de.markusressel.datamunch.view.fragment.storage.ScrubsFragment
-import de.markusressel.datamunch.view.fragment.storage.TasksFragment
+import de.markusressel.datamunch.view.fragment.sharing.afp.AfpSharesFragment
+import de.markusressel.datamunch.view.fragment.sharing.cifs.CifsSharesFragment
+import de.markusressel.datamunch.view.fragment.sharing.nfs.NfsSharesFragment
 import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
+import de.markusressel.datamunch.view.fragment.storage.dataset.DatasetsFragment
 import de.markusressel.datamunch.view.fragment.storage.disk.DiskDetailActivity
 import de.markusressel.datamunch.view.fragment.storage.disk.DiskDetailContentFragment
 import de.markusressel.datamunch.view.fragment.storage.disk.DisksFragment
+import de.markusressel.datamunch.view.fragment.storage.scrubs.ScrubsFragment
 import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotDetailActivity
 import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotDetailContentFragment
 import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotsFragment
-import de.markusressel.datamunch.view.fragment.system.AlertsFragment
+import de.markusressel.datamunch.view.fragment.storage.task.TasksFragment
 import de.markusressel.datamunch.view.fragment.system.MaintenanceFragment
-import de.markusressel.datamunch.view.fragment.system.UpdatesFragment
+import de.markusressel.datamunch.view.fragment.system.alert.AlertsFragment
+import de.markusressel.datamunch.view.fragment.system.update.UpdatesFragment
 import de.markusressel.datamunch.view.fragment.tasks.SMARTTasksFragment
 
 /**

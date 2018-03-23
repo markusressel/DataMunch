@@ -1,19 +1,19 @@
-package de.markusressel.datamunch.view.fragment.storage
+package de.markusressel.datamunch.view.fragment.sharing.afp
 
 import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.DatasetPersistenceManager
+import de.markusressel.datamunch.data.persistence.AfpSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.DatasetEntity
+import de.markusressel.datamunch.data.persistence.entity.AfpShareEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemDatasetBinding
+import de.markusressel.datamunch.databinding.ListItemAfpShareBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import de.markusressel.freenaswebapiclient.storage.dataset.DatasetModel
+import de.markusressel.freenaswebapiclient.sharing.afp.AfpShareModel
 import io.reactivex.Single
-import kotlinx.android.synthetic.main.fragment_jails.*
+import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
 
@@ -22,59 +22,54 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
-
+class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
     @Inject
-    lateinit var persistenceManager: DatasetPersistenceManager
+    lateinit var persistenceManager: AfpSharePersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<DatasetEntity> = persistenceManager
+    override fun getPersistenceHandler(): PersistenceManagerBase<AfpShareEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<DatasetEntity, ListItemDatasetBinding>(R.layout.list_item_dataset) {
+                .map<AfpShareEntity, ListItemAfpShareBinding>(R.layout.list_item_afp_share) {
                     onCreate {
                         it
                                 .binding
-                                .presenter = this@DatasetsFragment
+                                .setVariable(BR.presenter, this@AfpSharesFragment)
                     }
                     onClick {
-                        openDetailView(listValues[it.adapterPosition])
+
                     }
                 }
                 .into(recyclerView)
     }
 
-    override fun loadListDataFromSource(): Single<List<DatasetModel>> {
+    override fun loadListDataFromSource(): Single<List<AfpShareModel>> {
         return freeNasWebApiClient
-                .getDatasets()
+                .getAfpShares()
     }
 
-    override fun mapToEntity(it: DatasetModel): DatasetEntity {
+    override fun mapToEntity(it: AfpShareModel): AfpShareEntity {
         return it
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<DatasetEntity> {
+    override fun loadListDataFromPersistence(): List<AfpShareEntity> {
         return super
                 .loadListDataFromPersistence()
                 .sortedBy {
                     it
-                            .name
+                            .afp_name
                             .toLowerCase()
                 }
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(icon = MaterialDesignIconic.Icon.gmi_plus, onClick = {
-            openAddDialog()
+            openAddView()
         }))
     }
 
-    private fun openAddDialog() {
-
-    }
-
-    private fun openDetailView(dataset: DatasetEntity) {
+    private fun openAddView() {
     }
 
 }

@@ -26,7 +26,7 @@
 
         <variable
             name="presenter"
-            type="de.markusressel.datamunch.view.fragment.jail.MountpointsFragment" />
+            type="de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointsFragment" />
     </data>
 
     <LinearLayout

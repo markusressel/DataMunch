@@ -5,9 +5,9 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.FileUploadManager
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabNavigationFragment
-import de.markusressel.datamunch.view.fragment.system.AlertsFragment
 import de.markusressel.datamunch.view.fragment.system.MaintenanceFragment
-import de.markusressel.datamunch.view.fragment.system.UpdatesFragment
+import de.markusressel.datamunch.view.fragment.system.alert.AlertsFragment
+import de.markusressel.datamunch.view.fragment.system.update.UpdatesFragment
 import javax.inject.Inject
 
 

@@ -1,17 +1,17 @@
-package de.markusressel.datamunch.view.fragment.storage
+package de.markusressel.datamunch.view.fragment.storage.task
 
 import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.ScrubPersistenceManager
+import de.markusressel.datamunch.data.persistence.TaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.ScrubEntity
+import de.markusressel.datamunch.data.persistence.entity.TaskEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemScrubBinding
+import de.markusressel.datamunch.databinding.ListItemTaskBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import de.markusressel.freenaswebapiclient.storage.scrub.ScrubModel
+import de.markusressel.freenaswebapiclient.storage.task.TaskModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
@@ -22,20 +22,20 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
+class TasksFragment : ListFragmentBase<TaskModel, TaskEntity>() {
 
     @Inject
-    lateinit var persistenceManager: ScrubPersistenceManager
+    lateinit var persistenceManager: TaskPersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<ScrubEntity> = persistenceManager
+    override fun getPersistenceHandler(): PersistenceManagerBase<TaskEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<ScrubEntity, ListItemScrubBinding>(R.layout.list_item_scrub) {
+                .map<TaskEntity, ListItemTaskBinding>(R.layout.list_item_task) {
                     onCreate {
                         it
                                 .binding
-                                .presenter = this@ScrubsFragment
+                                .presenter = this@TasksFragment
                     }
                     onClick {
                         openDetailView(listValues[it.adapterPosition])
@@ -44,22 +44,22 @@ class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
                 .into(recyclerView)
     }
 
-    override fun loadListDataFromSource(): Single<List<ScrubModel>> {
+    override fun loadListDataFromSource(): Single<List<TaskModel>> {
         return freeNasWebApiClient
-                .getScrubs()
+                .getTasks()
     }
 
-    override fun mapToEntity(it: ScrubModel): ScrubEntity {
+    override fun mapToEntity(it: TaskModel): TaskEntity {
         return it
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<ScrubEntity> {
+    override fun loadListDataFromPersistence(): List<TaskEntity> {
         return super
                 .loadListDataFromPersistence()
                 .sortedBy {
                     it
-                            .scrub_volume
+                            .task_filesystem
                             .toLowerCase()
                 }
     }
@@ -74,7 +74,7 @@ class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
 
     }
 
-    private fun openDetailView(scrub: ScrubEntity) {
+    private fun openDetailView(task: TaskEntity) {
     }
 
 }

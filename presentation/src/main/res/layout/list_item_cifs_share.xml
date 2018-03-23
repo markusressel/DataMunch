@@ -26,7 +26,7 @@
 
         <variable
             name="presenter"
-            type="de.markusressel.datamunch.view.fragment.sharing.CifsSharesFragment" />
+            type="de.markusressel.datamunch.view.fragment.sharing.cifs.CifsSharesFragment" />
     </data>
 
     <LinearLayout

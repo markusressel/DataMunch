@@ -1,19 +1,19 @@
-package de.markusressel.datamunch.view.fragment.sharing
+package de.markusressel.datamunch.view.fragment.jail.mountpoint
 
 import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.NfsSharePersistenceManager
+import de.markusressel.datamunch.data.persistence.MountpointPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.NfsShareEntity
+import de.markusressel.datamunch.data.persistence.entity.MountpointEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemNfsShareBinding
+import de.markusressel.datamunch.databinding.ListItemMountpointBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import de.markusressel.freenaswebapiclient.sharing.nfs.NfsShareModel
+import de.markusressel.freenaswebapiclient.jails.mountpoint.MountpointModel
 import io.reactivex.Single
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
 
 
@@ -22,39 +22,39 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
+class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>() {
 
     @Inject
-    lateinit var persistenceManager: NfsSharePersistenceManager
+    lateinit var persistenceManager: MountpointPersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<NfsShareEntity> = persistenceManager
+    override fun getPersistenceHandler(): PersistenceManagerBase<MountpointEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<NfsShareEntity, ListItemNfsShareBinding>(R.layout.list_item_nfs_share) {
+                .map<MountpointEntity, ListItemMountpointBinding>(R.layout.list_item_mountpoint) {
                     onCreate {
                         it
                                 .binding
-                                .setVariable(BR.presenter, this@NfsSharesFragment)
+                                .presenter = this@MountpointsFragment
                     }
                     onClick {
-
+                        openDetailView(listValues[it.adapterPosition])
                     }
                 }
                 .into(recyclerView)
     }
 
-    override fun loadListDataFromSource(): Single<List<NfsShareModel>> {
+    override fun loadListDataFromSource(): Single<List<MountpointModel>> {
         return freeNasWebApiClient
-                .getNfsShares()
+                .getMountpoints()
     }
 
-    override fun mapToEntity(it: NfsShareModel): NfsShareEntity {
+    override fun mapToEntity(it: MountpointModel): MountpointEntity {
         return it
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<NfsShareEntity> {
+    override fun loadListDataFromPersistence(): List<MountpointEntity> {
         return super
                 .loadListDataFromPersistence()
                 .sortedBy {
@@ -65,11 +65,14 @@ class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(icon = MaterialDesignIconic.Icon.gmi_plus, onClick = {
-            openAddDialog()
+            openAddView()
         }))
     }
 
-    private fun openAddDialog() {
+    private fun openAddView() {
+    }
+
+    private fun openDetailView(mountpoint: MountpointEntity) {
 
     }
 

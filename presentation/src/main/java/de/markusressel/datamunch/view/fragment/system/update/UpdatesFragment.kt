@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment.system
+package de.markusressel.datamunch.view.fragment.system.update
 
 import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic

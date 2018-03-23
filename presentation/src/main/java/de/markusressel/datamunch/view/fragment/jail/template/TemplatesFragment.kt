@@ -1,19 +1,19 @@
-package de.markusressel.datamunch.view.fragment.sharing
+package de.markusressel.datamunch.view.fragment.jail.template
 
 import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.CifsSharePersistenceManager
+import de.markusressel.datamunch.data.persistence.TemplatePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.CifsShareEntity
+import de.markusressel.datamunch.data.persistence.entity.TemplateEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemCifsShareBinding
+import de.markusressel.datamunch.databinding.ListItemTemplateBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import de.markusressel.freenaswebapiclient.sharing.cifs.CifsShareModel
+import de.markusressel.freenaswebapiclient.jails.template.TemplateModel
 import io.reactivex.Single
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
 
 
@@ -22,45 +22,44 @@ import javax.inject.Inject
  *
  * Created by Markus on 07.01.2018.
  */
-class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
+class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
 
     @Inject
-    lateinit var persistenceManager: CifsSharePersistenceManager
+    lateinit var persistenceManager: TemplatePersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<CifsShareEntity> = persistenceManager
+    override fun getPersistenceHandler(): PersistenceManagerBase<TemplateEntity> = persistenceManager
 
     override fun createAdapter(): LastAdapter {
         return LastAdapter(listValues, BR.item)
-                .map<CifsShareEntity, ListItemCifsShareBinding>(R.layout.list_item_cifs_share) {
+                .map<TemplateEntity, ListItemTemplateBinding>(R.layout.list_item_template) {
                     onCreate {
                         it
                                 .binding
-                                .setVariable(BR.presenter, this@CifsSharesFragment)
+                                .presenter = this@TemplatesFragment
                     }
                     onClick {
-
+                        openDetailView(listValues[it.adapterPosition])
                     }
                 }
                 .into(recyclerView)
     }
 
-    override fun loadListDataFromSource(): Single<List<CifsShareModel>> {
+    override fun loadListDataFromSource(): Single<List<TemplateModel>> {
         return freeNasWebApiClient
-                .getCifsShares()
+                .getTemplates()
     }
 
-    override fun mapToEntity(it: CifsShareModel): CifsShareEntity {
+    override fun mapToEntity(it: TemplateModel): TemplateEntity {
         return it
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<CifsShareEntity> {
+    override fun loadListDataFromPersistence(): List<TemplateEntity> {
         return super
                 .loadListDataFromPersistence()
                 .sortedBy {
                     it
-                            .cifs_name
-                            .toLowerCase()
+                            .id
                 }
     }
 
@@ -68,6 +67,10 @@ class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
         return listOf(FabConfig.Fab(icon = MaterialDesignIconic.Icon.gmi_plus, onClick = {
             openAddView()
         }))
+    }
+
+    private fun openDetailView(template: TemplateEntity) {
+
     }
 
     private fun openAddView() {

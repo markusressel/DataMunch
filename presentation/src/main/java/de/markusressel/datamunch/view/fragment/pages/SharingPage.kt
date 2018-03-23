@@ -3,9 +3,9 @@ package de.markusressel.datamunch.view.fragment.pages
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabNavigationFragment
-import de.markusressel.datamunch.view.fragment.sharing.AfpSharesFragment
-import de.markusressel.datamunch.view.fragment.sharing.CifsSharesFragment
-import de.markusressel.datamunch.view.fragment.sharing.NfsSharesFragment
+import de.markusressel.datamunch.view.fragment.sharing.afp.AfpSharesFragment
+import de.markusressel.datamunch.view.fragment.sharing.cifs.CifsSharesFragment
+import de.markusressel.datamunch.view.fragment.sharing.nfs.NfsSharesFragment
 
 
 class SharingPage : TabNavigationFragment() {

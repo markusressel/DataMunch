@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment.system
+package de.markusressel.datamunch.view.fragment.system.alert
 
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
