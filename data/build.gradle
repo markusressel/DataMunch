@@ -41,7 +41,7 @@ dependencies {
     // Dagger 2
     implementation "com.google.dagger:dagger:${rootProject.ext.dagger2Version}"
     kapt "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}"
-    kapt "com.android.databinding:compiler:$gradle_plugin_version"
+    // kapt "com.android.databinding:compiler:$gradle_plugin_version"
 
     // if you use the support libraries
     kapt "com.google.dagger:dagger-android-processor:${rootProject.ext.dagger2Version}"
