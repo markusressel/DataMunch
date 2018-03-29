@@ -58,6 +58,10 @@
         <activity android:name=".view.fragment.sharing.nfs.NfsShareDetailActivity" />
         <activity android:name=".view.fragment.plugins.PluginDetailActivity" />
         <activity android:name=".view.fragment.jail.mountpoint.MountpointDetailActivity" />
+        <activity android:name=".view.fragment.jail.template.TemplateDetailActivity" />
+        <activity android:name=".view.fragment.storage.dataset.DatasetDetailActivity" />
+        <activity android:name=".view.fragment.services.ServiceDetailActivity" />
+        <activity android:name=".view.fragment.tasks.SMARTTaskDetailActivity" />
 
 
     </application>

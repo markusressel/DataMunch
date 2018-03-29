@@ -66,9 +66,10 @@ class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {
-        return listOf(FabConfig.Fab(icon = MaterialDesignIconic.Icon.gmi_plus, onClick = {
-            openAddDialog()
-        }))
+        return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
+                                    onClick = {
+                                        openAddDialog()
+                                    }))
     }
 
     private fun openAddDialog() {

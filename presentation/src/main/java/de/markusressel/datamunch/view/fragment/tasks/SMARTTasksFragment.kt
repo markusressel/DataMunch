@@ -8,6 +8,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.SMARTTaskEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemSmartTaskBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.tasks.smart.SMARTTaskModel
 import io.reactivex.Single
@@ -36,7 +37,7 @@ class SMARTTasksFragment : ListFragmentBase<SMARTTaskModel, SMARTTaskEntity>() {
                                 .setVariable(BR.presenter, this@SMARTTasksFragment)
                     }
                     onClick {
-
+                        openDetailView(listValues[it.adapterPosition])
                     }
                 }
                 .into(recyclerView)
@@ -62,6 +63,16 @@ class SMARTTasksFragment : ListFragmentBase<SMARTTaskModel, SMARTTaskEntity>() {
                                           it
                                                   .smarttest_desc
                                       }))
+    }
+
+    private fun openDetailView(smartTask: SMARTTaskEntity) {
+        context
+                ?.let {
+                    val intent = DetailActivityBase
+                            .newInstanceIntent(SMARTTaskDetailActivity::class.java, it,
+                                               smartTask.entityId)
+                    startActivity(intent)
+                }
     }
 
 }

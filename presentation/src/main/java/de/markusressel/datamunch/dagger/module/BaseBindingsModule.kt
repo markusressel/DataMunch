@@ -4,7 +4,6 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import de.markusressel.datamunch.view.fragment.LockscreenFragment
 import de.markusressel.datamunch.view.fragment.ServerStatusFragment
-import de.markusressel.datamunch.view.fragment.ServicesFragment
 import de.markusressel.datamunch.view.fragment.account.group.GroupDetailActivity
 import de.markusressel.datamunch.view.fragment.account.group.GroupDetailContentFragment
 import de.markusressel.datamunch.view.fragment.account.group.GroupsFragment
@@ -16,11 +15,16 @@ import de.markusressel.datamunch.view.fragment.jail.jail.*
 import de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointDetailActivity
 import de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointDetailContentFragment
 import de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointsFragment
+import de.markusressel.datamunch.view.fragment.jail.template.TemplateDetailActivity
+import de.markusressel.datamunch.view.fragment.jail.template.TemplateDetailContentFragment
 import de.markusressel.datamunch.view.fragment.jail.template.TemplatesFragment
 import de.markusressel.datamunch.view.fragment.pages.*
 import de.markusressel.datamunch.view.fragment.plugins.PluginDetailActivity
 import de.markusressel.datamunch.view.fragment.plugins.PluginDetailContentFragment
 import de.markusressel.datamunch.view.fragment.plugins.PluginsFragment
+import de.markusressel.datamunch.view.fragment.services.ServiceDetailActivity
+import de.markusressel.datamunch.view.fragment.services.ServiceDetailContentFragment
+import de.markusressel.datamunch.view.fragment.services.ServicesFragment
 import de.markusressel.datamunch.view.fragment.sharing.afp.AfpShareDetailActivity
 import de.markusressel.datamunch.view.fragment.sharing.afp.AfpShareDetailContentFragment
 import de.markusressel.datamunch.view.fragment.sharing.afp.AfpSharesFragment
@@ -31,6 +35,8 @@ import de.markusressel.datamunch.view.fragment.sharing.nfs.NfsShareDetailActivit
 import de.markusressel.datamunch.view.fragment.sharing.nfs.NfsShareDetailContentFragment
 import de.markusressel.datamunch.view.fragment.sharing.nfs.NfsSharesFragment
 import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
+import de.markusressel.datamunch.view.fragment.storage.dataset.DatasetDetailActivity
+import de.markusressel.datamunch.view.fragment.storage.dataset.DatasetDetailContentFragment
 import de.markusressel.datamunch.view.fragment.storage.dataset.DatasetsFragment
 import de.markusressel.datamunch.view.fragment.storage.disk.DiskDetailActivity
 import de.markusressel.datamunch.view.fragment.storage.disk.DiskDetailContentFragment
@@ -49,6 +55,8 @@ import de.markusressel.datamunch.view.fragment.system.alert.AlertDetailActivity
 import de.markusressel.datamunch.view.fragment.system.alert.AlertDetailContentFragment
 import de.markusressel.datamunch.view.fragment.system.alert.AlertsFragment
 import de.markusressel.datamunch.view.fragment.system.update.UpdatesFragment
+import de.markusressel.datamunch.view.fragment.tasks.SMARTTaskDetailActivity
+import de.markusressel.datamunch.view.fragment.tasks.SMARTTaskDetailContentFragment
 import de.markusressel.datamunch.view.fragment.tasks.SMARTTasksFragment
 
 /**
@@ -236,5 +244,29 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun MountpointDetailContentFragment(): MountpointDetailContentFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun TemplateDetailActivity(): TemplateDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun TemplateDetailContentFragment(): TemplateDetailContentFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun DatasetDetailActivity(): DatasetDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun DatasetDetailContentFragment(): DatasetDetailContentFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun ServiceDetailActivity(): ServiceDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun ServiceDetailContentFragment(): ServiceDetailContentFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun SMARTTaskDetailActivity(): SMARTTaskDetailActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun SMARTTaskDetailContentFragment(): SMARTTaskDetailContentFragment
 
 }

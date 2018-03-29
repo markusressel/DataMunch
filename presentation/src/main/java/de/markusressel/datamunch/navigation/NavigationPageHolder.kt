@@ -2,8 +2,8 @@ package de.markusressel.datamunch.navigation
 
 import de.markusressel.datamunch.view.activity.preferences.PreferenceOverviewActivity
 import de.markusressel.datamunch.view.fragment.ServerStatusFragment
-import de.markusressel.datamunch.view.fragment.ServicesFragment
 import de.markusressel.datamunch.view.fragment.pages.*
+import de.markusressel.datamunch.view.fragment.services.ServicesFragment
 
 /**
  * Created by Markus on 08.01.2018.

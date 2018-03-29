@@ -66,7 +66,8 @@ class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {
-        return listOf(FabConfig.Fab(icon = MaterialDesignIconic.Icon.gmi_plus, onClick = {
+        return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
+                                    onClick = {
             openAddDialog()
         }))
     }

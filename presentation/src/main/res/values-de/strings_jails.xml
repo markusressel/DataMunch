@@ -9,4 +9,7 @@
     <string name="stop">Stoppen</string>
     <string name="restart">Neu starten</string>
 
+    <string name="operating_system">Betriebssystem</string>
+    <string name="instances">Instanzen</string>
+
 </resources>

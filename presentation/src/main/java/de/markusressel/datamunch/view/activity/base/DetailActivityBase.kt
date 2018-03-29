@@ -44,6 +44,8 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
     private val headerMap: MutableMap<Int, HeaderDesign> = mutableMapOf()
     private val usedHeaders: MutableSet<HeaderConfig> = mutableSetOf()
 
+    private var currentEntityState: StateHolder<EntityType>? by savedInstanceState()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super
                 .onCreate(savedInstanceState)
@@ -51,6 +53,7 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
         setToolbar()
         setAdapter()
         setHeader()
+        initEntityState()
     }
 
     private fun setHeader() {
@@ -170,18 +173,43 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
         }
     }
 
+    private fun initEntityState() {
+        val entity = when (getEntityId()) {
+            ENTITY_ID_MISSING_VALUE -> {
+                throw IllegalStateException("Missing Entity ID!")
+            }
+            else -> {
+                getEntityFromPersistence()!!
+            }
+        }
+
+        currentEntityState = StateHolder(entity)
+    }
+
     private fun getEntityId(): Long {
         return intent
-                .getLongExtra(KEY_ENTITY_ID, -1)
+                .getLongExtra(KEY_ENTITY_ID, ENTITY_ID_MISSING_VALUE)
     }
 
     /**
      * Get the entity from persistence
      */
-    protected fun getEntity(): EntityType {
+    private fun getEntityFromPersistence(): EntityType? {
         return getPersistenceHandler()
                 .standardOperation()
                 .get(getEntityId())
+    }
+
+    /**
+     * Get the entity from current state holder
+     */
+    protected fun getEntity(): EntityType {
+        if (currentEntityState == null) {
+            initEntityState()
+        }
+
+        return currentEntityState!!
+                .entity
     }
 
     /**
@@ -220,11 +248,18 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
     companion object {
 
         const val KEY_ENTITY_ID = "entity_id"
-        fun <T : Class<*>> newInstanceIntent(clazz: T, context: Context, entityId: Long): Intent {
-            return Intent(context, clazz)
-                    .apply {
-                        putExtra(KEY_ENTITY_ID, entityId)
+        const val ENTITY_ID_MISSING_VALUE = -1L
+        fun <T : Class<*>> newInstanceIntent(clazz: T, context: Context, entityId: Long?): Intent {
+            val intent = Intent(context, clazz)
+            entityId
+                    ?.let {
+                        intent
+                                .apply {
+                                    putExtra(KEY_ENTITY_ID, entityId)
+                                }
                     }
+
+            return intent
         }
 
         private val HEADER_CONFIGS = listOf(

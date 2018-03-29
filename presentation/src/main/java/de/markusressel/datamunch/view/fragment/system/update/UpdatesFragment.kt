@@ -68,7 +68,8 @@ class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {
-        return listOf(FabConfig.Fab(icon = MaterialDesignIconic.Icon.gmi_check, onClick = {
+        return listOf(FabConfig.Fab(description = "Apply Updates",
+                                    icon = MaterialDesignIconic.Icon.gmi_check, onClick = {
             applyPendingUpdates()
         }))
     }

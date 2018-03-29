@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/detail_content_margin_top">
+
+            <include layout="@layout/material_view_pager_placeholder" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/cardMarginVertical"
+                android:layout_marginEnd="@dimen/cardMarginHorizontal"
+                android:layout_marginStart="@dimen/cardMarginHorizontal"
+                android:layout_marginTop="@dimen/cardMarginVertical"
+                android:background="@android:color/white"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/id" />
+
+                    <TextView
+                        android:id="@+id/idTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/name" />
+
+                    <TextView
+                        android:id="@+id/nameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/operating_system" />
+
+                    <TextView
+                        android:id="@+id/osTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/instances" />
+
+                    <TextView
+                        android:id="@+id/instancesTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/arch" />
+
+                    <TextView
+                        android:id="@+id/archTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/url" />
+
+                    <TextView
+                        android:id="@+id/urlTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</android.support.v4.widget.NestedScrollView>

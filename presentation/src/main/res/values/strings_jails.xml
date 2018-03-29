@@ -18,4 +18,9 @@
     <string name="source">Source</string>
     <string name="destination">Destination</string>
 
+    <string name="operating_system">Operating System</string>
+    <string name="instances">Instances</string>
+    <string name="arch">arch</string>
+    <string name="url" translatable="false">URL</string>
+
 </resources>

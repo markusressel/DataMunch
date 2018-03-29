@@ -30,7 +30,13 @@ abstract class DetailContentFragmentBase<EntityType : Any> : DaggerSupportFragme
      */
     protected fun getEntityFromPersistence(): EntityType {
         val args = arguments
-                ?: throw IllegalStateException("Entity must not be null!")
+                ?: throw IllegalStateException("Arguments must not be null!")
+
+        if (args.containsKey(DetailActivityBase.KEY_ENTITY_ID)) {
+
+        } else {
+
+        }
 
         val entityId: Long = args
                 .getLong(DetailActivityBase.KEY_ENTITY_ID)

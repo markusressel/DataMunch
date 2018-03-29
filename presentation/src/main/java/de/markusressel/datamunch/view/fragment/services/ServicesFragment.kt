@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment
+package de.markusressel.datamunch.view.fragment.services
 
 import com.github.nitrico.lastadapter.LastAdapter
 import de.markusressel.datamunch.BR
@@ -8,6 +8,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.ServiceEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemServiceBinding
+import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.freenaswebapiclient.services.service.ServiceModel
 import io.reactivex.Single
@@ -36,7 +37,7 @@ class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
                                 .setVariable(BR.presenter, this@ServicesFragment)
                     }
                     onClick {
-
+                        openDetailView(listValues[it.adapterPosition])
                     }
                 }
                 .into(recyclerView)
@@ -59,6 +60,16 @@ class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
                     it
                             .srv_service
                             .toLowerCase()
+                }
+    }
+
+    private fun openDetailView(service: ServiceEntity) {
+        context
+                ?.let {
+                    val intent = DetailActivityBase
+                            .newInstanceIntent(ServiceDetailActivity::class.java, it,
+                                               service.entityId)
+                    startActivity(intent)
                 }
     }
 

@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
+import android.widget.Toast
 import com.github.ajalt.timberkt.Timber
 import com.github.nitrico.lastadapter.LastAdapter
 import com.jakewharton.rxbinding2.view.RxView
@@ -192,29 +193,40 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 .behavior = fabBehavior
 
         // listeners
-        fab
-                .onClick
-                ?.let {
-                    val listener = it
-                    RxView
-                            .clicks(fabView)
-                            .bindToLifecycle(fabView)
-                            .subscribe {
-                                listener()
+        RxView
+                .clicks(fabView)
+                .bindToLifecycle(fabView)
+                .subscribe {
+                    Toast
+                            .makeText(context as Context, "Fab '${fab.description}' clicked",
+                                      Toast.LENGTH_LONG)
+                            .show()
+
+                    // execute defined action if it exists
+                    fab
+                            .onClick
+                            ?.let {
+                                it()
                             }
                 }
 
-        fab
-                .onLongClick
-                ?.let {
-                    val listener = it
-                    RxView
-                            .longClicks(fabView)
-                            .bindToLifecycle(fabView)
-                            .subscribe {
-                                listener()
+        RxView
+                .longClicks(fabView)
+                .bindToLifecycle(fabView)
+                .subscribe {
+                    Toast
+                            .makeText(context as Context, "Fab '${fab.description}' long clicked",
+                                      Toast.LENGTH_LONG)
+                            .show()
+
+                    // execute defined action if it exists
+                    fab
+                            .onLongClick
+                            ?.let {
+                                it()
                             }
                 }
+
 
         fabButtonViews
                 .add(fabView)
