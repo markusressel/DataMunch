@@ -14,8 +14,8 @@ import dagger.android.support.HasSupportFragmentInjector
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.data.ssh.ConnectionManager
 import de.markusressel.datamunch.view.IconHandler
-import de.markusressel.freenaswebapiclient.BasicAuthConfig
-import de.markusressel.freenaswebapiclient.FreeNasWebApiClient
+import de.markusressel.freenasrestapiclient.library.BasicAuthConfig
+import de.markusressel.freenasrestapiclient.library.FreeNasWebApiClient
 import javax.inject.Inject
 
 

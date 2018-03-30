@@ -12,7 +12,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemVolumeBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import de.markusressel.freenaswebapiclient.storage.volume.VolumeModel
+import de.markusressel.freenasrestapiclient.library.storage.volume.VolumeModel
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable

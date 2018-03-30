@@ -10,7 +10,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemPluginBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import de.markusressel.freenaswebapiclient.plugins.PluginModel
+import de.markusressel.freenasrestapiclient.library.plugins.PluginModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_services.*
 import javax.inject.Inject

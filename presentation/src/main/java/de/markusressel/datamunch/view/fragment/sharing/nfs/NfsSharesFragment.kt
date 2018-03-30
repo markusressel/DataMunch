@@ -12,7 +12,7 @@ import de.markusressel.datamunch.databinding.ListItemNfsShareBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import de.markusressel.freenaswebapiclient.sharing.nfs.NfsShareModel
+import de.markusressel.freenasrestapiclient.library.sharing.nfs.NfsShareModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject

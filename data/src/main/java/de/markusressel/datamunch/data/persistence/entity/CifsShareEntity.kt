@@ -1,6 +1,6 @@
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.freenaswebapiclient.sharing.cifs.CifsShareModel
+import de.markusressel.freenasrestapiclient.library.sharing.cifs.CifsShareModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 

@@ -10,7 +10,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemDiskBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import de.markusressel.freenaswebapiclient.storage.disk.DiskModel
+import de.markusressel.freenasrestapiclient.library.storage.disk.DiskModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject

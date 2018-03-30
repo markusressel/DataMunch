@@ -1,1 +1,1 @@
-include ':presentation', ':data', ':freenaswebapiclient'
+include ':presentation', ':data'

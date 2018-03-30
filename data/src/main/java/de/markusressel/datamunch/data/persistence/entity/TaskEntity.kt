@@ -1,6 +1,6 @@
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.freenaswebapiclient.storage.task.TaskModel
+import de.markusressel.freenasrestapiclient.library.storage.task.TaskModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 

@@ -1,6 +1,6 @@
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.freenaswebapiclient.sharing.afp.AfpShareModel
+import de.markusressel.freenasrestapiclient.library.sharing.afp.AfpShareModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 

@@ -1,6 +1,6 @@
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.freenaswebapiclient.storage.volume.VolumeModel
+import de.markusressel.freenasrestapiclient.library.storage.volume.VolumeModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 

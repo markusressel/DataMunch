@@ -12,7 +12,7 @@ import de.markusressel.datamunch.databinding.ListItemDatasetBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import de.markusressel.freenaswebapiclient.storage.dataset.DatasetModel
+import de.markusressel.freenasrestapiclient.library.storage.dataset.DatasetModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject

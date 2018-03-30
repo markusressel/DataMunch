@@ -36,8 +36,6 @@ android {
 }
 
 dependencies {
-    api project(':freenaswebapiclient')
-
     // Dagger 2
     implementation "com.google.dagger:dagger:${rootProject.ext.dagger2Version}"
     kapt "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}"
@@ -61,7 +59,7 @@ dependencies {
     api('com.github.markusressel:TypedPreferences:dev-SNAPSHOT') {
         exclude module: 'app'
         transitive = true
-        changing = true
+        changing = false
     }
 
     // JSch (SSH client)
@@ -69,6 +67,12 @@ dependencies {
 
     // sshj (SSH client)
     // implementation 'com.hierynomus:sshj:0.23.0'
+
+    api('com.github.markusressel:Freenas_REST_ApiClient:dev-SNAPSHOT') {
+        exclude module: 'app'
+        transitive = true
+        changing = true
+    }
 
     // ObjectBox
     api "io.objectbox:objectbox-android:$objectboxVersion"

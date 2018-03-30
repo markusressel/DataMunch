@@ -91,12 +91,6 @@ dependencies {
 
     implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
 
-//    androidTestImplementation presentationTestDependencies.mockito
-//    androidTestImplementation presentationTestDependencies.dexmaker
-//    androidTestImplementation presentationTestDependencies.dexmakerMockito
-//    androidTestImplementation presentationTestDependencies.espresso
-//    androidTestImplementation presentationTestDependencies.testingSupportLib
-
     //Development
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'

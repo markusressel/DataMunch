@@ -1,6 +1,6 @@
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.freenaswebapiclient.storage.disk.DiskModel
+import de.markusressel.freenasrestapiclient.library.storage.disk.DiskModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 

@@ -12,7 +12,7 @@ import de.markusressel.datamunch.databinding.ListItemSnapshotBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
-import de.markusressel.freenaswebapiclient.storage.snapshot.SnapshotModel
+import de.markusressel.freenasrestapiclient.library.storage.snapshot.SnapshotModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject

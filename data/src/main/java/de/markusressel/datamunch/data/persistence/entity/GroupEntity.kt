@@ -1,6 +1,6 @@
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.freenaswebapiclient.account.group.GroupModel
+import de.markusressel.freenasrestapiclient.library.account.group.GroupModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 

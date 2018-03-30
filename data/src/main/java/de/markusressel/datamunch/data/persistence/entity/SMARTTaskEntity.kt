@@ -1,6 +1,6 @@
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.freenaswebapiclient.tasks.smart.SMARTTaskModel
+import de.markusressel.freenasrestapiclient.library.tasks.smart.SMARTTaskModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
