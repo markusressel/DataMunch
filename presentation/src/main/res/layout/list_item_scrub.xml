@@ -52,24 +52,16 @@
                     android:text="@string/volume" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@{item.scrub_volume}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
+                    style="@style/sub_header_content_textview"
+                    android:text="@{item.scrub_volume}" />
 
                 <TextView
                     style="@style/sub_header"
                     android:text="@string/description" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@{item.scrub_description}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
+                    style="@style/sub_header_content_textview"
+                    android:text="@{item.scrub_description}" />
 
             </LinearLayout>
 

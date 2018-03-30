@@ -37,6 +37,10 @@ class DatasetDetailContentFragment : DetailContentFragmentBase<DatasetEntity>() 
         nameTextView
                 .text = entity
                 .name
+
+        compressionTextView
+                .text = entity
+                .compression
     }
 
 }

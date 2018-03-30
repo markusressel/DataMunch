@@ -52,24 +52,16 @@
                     android:text="@string/id" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="@{Long.toString(item.bsdgrp_gid)}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
+                    style="@style/sub_header_content_textview"
+                    android:text="@{Long.toString(item.bsdgrp_gid)}" />
 
                 <TextView
                     style="@style/sub_header"
                     android:text="@string/name" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@{item.bsdgrp_group}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
+                    style="@style/sub_header_content_textview"
+                    android:text="@{item.bsdgrp_group}" />
 
             </LinearLayout>
 

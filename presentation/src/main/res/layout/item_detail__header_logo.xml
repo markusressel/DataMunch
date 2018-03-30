@@ -3,6 +3,6 @@
     android:id="@+id/headerText"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="No Title"
+    android:text="@string/no_title"
     android:textColor="@android:color/white"
     android:textSize="30sp" />

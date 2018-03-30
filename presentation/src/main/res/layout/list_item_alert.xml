@@ -52,24 +52,16 @@
                     android:text="@string/level" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="@{item.level}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
+                    style="@style/sub_header_content_textview"
+                    android:text="@{item.level}" />
 
                 <TextView
                     style="@style/sub_header"
                     android:text="@string/message" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@{item.message}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
+                    style="@style/sub_header_content_textview"
+                    android:text="@{item.message}" />
 
             </LinearLayout>
 

@@ -52,24 +52,16 @@
                     android:text="@string/id" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="@{Long.toString(item.bsdusr_uid)}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
+                    style="@style/sub_header_content_textview"
+                    android:text="@{Long.toString(item.bsdusr_uid)}" />
 
                 <TextView
                     style="@style/sub_header"
                     android:text="@string/username" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@{item.bsdusr_username}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
+                    style="@style/sub_header_content_textview"
+                    android:text="@{item.bsdusr_username}" />
 
             </LinearLayout>
 

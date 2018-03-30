@@ -52,24 +52,16 @@
                     android:text="@string/jail" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@{item.jail}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
+                    style="@style/sub_header_content_textview"
+                    android:text="@{item.jail}" />
 
                 <TextView
                     style="@style/sub_header"
                     android:text="@string/mounted" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="@{Boolean.toString(item.mounted)}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp" />
+                    style="@style/sub_header_content_textview"
+                    android:text="@{Boolean.toString(item.mounted)}" />
 
             </LinearLayout>
 
