@@ -48,15 +48,12 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
     override val layoutRes: Int
         get() = R.layout.activity_main
 
-    private lateinit var navigationDrawer: Drawer
-
-    private var currentDrawerItemIdentifier by savedInstanceState(
-            DrawerItemHolder.Status.identifier)
-    private var lastFragmentTag: String? by savedInstanceState()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super
                 .onCreate(savedInstanceState)
+
+        navigator
+                .activity = this
 
         val menuItemList = initDrawerMenuItems()
         val accountHeader = initAccountHeader()
@@ -68,8 +65,8 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                 .withCloseOnClick(false)
                 .withToolbar(toolbar)
                 .withSavedInstance(savedInstanceState)
-                .withSelectedItem(currentDrawerItemIdentifier)
 
+        val navigationDrawer: Drawer
         if (isTablet()) {
             navigationDrawer = builder
                     .buildView()
@@ -95,19 +92,13 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                     .build()
         }
 
-        navigationDrawer
-                .setSelection(currentDrawerItemIdentifier, false)
+        navigator
+                .drawer = navigationDrawer
 
-        DrawerItemHolder
-                .fromId(currentDrawerItemIdentifier)
-                ?.also {
-                    setTitle(it.title)
-
-                    if (savedInstanceState == null) {
-                        lastFragmentTag = navigator
-                                .navigateTo(this, it.navigationPage, lastFragmentTag)
-                    }
-                }
+        if (savedInstanceState == null) {
+            navigator
+                    .initDrawer()
+        }
     }
 
     override fun onStart() {
@@ -140,7 +131,8 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
             false -> DrawerLayout.LOCK_MODE_UNLOCKED
         }
 
-        navigationDrawer
+        navigator
+                .drawer
                 .drawerLayout
                 .setDrawerLockMode(drawerLockMode)
     }
@@ -185,12 +177,13 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         val clickListener = Drawer
                 .OnDrawerItemClickListener { _, _, drawerItem ->
 
-                    if (drawerItem.identifier == currentDrawerItemIdentifier) {
+                    if (drawerItem.identifier == navigator.currentState.drawerMenuItem.identifier) {
                         Timber
                                 .d { "Closing navigationDrawer because the clicked item (${drawerItem.identifier}) is the currently active page" }
                         if (!isTablet()) {
 
-                            navigationDrawer
+                            navigator
+                                    .drawer
                                     .closeDrawer()
                         }
                         return@OnDrawerItemClickListener true
@@ -203,26 +196,21 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                             ?.navigationPage
                             ?.let {
                                 if (it.fragment != null) {
-                                    lastFragmentTag = navigator
-                                            .navigateTo(this, it, lastFragmentTag)
+                                    navigator
+                                            .navigateTo(drawerMenuItem)
                                 } else {
                                     navigator
                                             .startActivity(this, it)
                                 }
 
                                 if (drawerItem.isSelectable) {
-                                    currentDrawerItemIdentifier = drawerItem
-                                            .identifier
-
                                     // set new title
-                                    drawerMenuItem
-                                            .let {
-                                                setTitle(it.title)
-                                            }
+                                    setTitle(drawerMenuItem.title)
                                 }
 
                                 if (!isTablet()) {
-                                    navigationDrawer
+                                    navigator
+                                            .drawer
                                             .closeDrawer()
                                 }
                                 return@OnDrawerItemClickListener true
@@ -279,9 +267,20 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
     }
 
     override fun onBackPressed() {
-        if (navigationDrawer.isDrawerOpen) {
-            navigationDrawer
+        if (navigator
+                        .drawer.isDrawerOpen) {
+            navigator
+                    .drawer
                     .closeDrawer()
+            return
+        }
+
+        val previousPage = navigator
+                .navigateBack()
+        if (previousPage != null) {
+            navigator
+                    .drawer
+                    .setSelection(previousPage.drawerMenuItem.identifier, false)
             return
         }
 
