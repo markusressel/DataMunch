@@ -34,10 +34,10 @@
 
                     <TextView
                         style="@style/sub_header"
-                        android:text="@string/source" />
+                        android:text="@string/description" />
 
                     <TextView
-                        android:id="@+id/sourceTextView"
+                        android:id="@+id/descriptionTextView"
                         style="@style/sub_header_content_textview" />
 
                     <TextView
@@ -45,7 +45,37 @@
                         android:text="@string/destination" />
 
                     <TextView
-                        android:id="@+id/destinationTextView"
+                        android:id="@+id/daymonthTextView"
+                        style="@style/sub_header_content_textview" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/destination" />
+
+                    <TextView
+                        android:id="@+id/dayweekTextView"
+                        style="@style/sub_header_content_textview" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/destination" />
+
+                    <TextView
+                        android:id="@+id/hourTextView"
+                        style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/destination" />
+
+                    <TextView
+                        android:id="@+id/monthTextView"
+                        style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/destination" />
+
+                    <TextView
+                        android:id="@+id/typeTextView"
                         style="@style/sub_header_content_textview" />
 
                 </LinearLayout>

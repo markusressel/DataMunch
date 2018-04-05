@@ -5,7 +5,7 @@ import de.markusressel.datamunch.data.persistence.AlertPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.AlertEntity
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_storage_disk_detail.*
+import kotlinx.android.synthetic.main.content_storage_alert_detail.*
 import javax.inject.Inject
 
 /**
@@ -35,13 +35,18 @@ class AlertDetailContentFragment : DetailContentFragmentBase<AlertEntity>() {
                 .text = entity
                 .id
 
-        nameTextView
+        levelTextView
                 .text = entity
                 .level
 
-        parentTypeTextView
+        messageTextView
                 .text = entity
                 .message
+
+        dismissedTextView
+                .text = entity
+                .dismissed
+                .toString()
 
     }
 

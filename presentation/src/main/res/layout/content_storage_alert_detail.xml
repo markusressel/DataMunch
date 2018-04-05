@@ -29,50 +29,26 @@
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/name" />
+                    android:text="@string/level" />
 
                 <TextView
-                    android:id="@+id/nameTextView"
+                    android:id="@+id/levelTextView"
                     style="@style/sub_header_content_textview" />
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/full_name" />
+                    android:text="@string/message" />
 
                 <TextView
-                    android:id="@+id/fullNameTextView"
+                    android:id="@+id/messageTextView"
                     style="@style/sub_header_content_textview" />
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/filesystem" />
+                    android:text="@string/message" />
 
                 <TextView
-                    android:id="@+id/filesystemTextView"
-                    style="@style/sub_header_content_textview" />
-
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/parentType" />
-
-                <TextView
-                    android:id="@+id/parentTypeTextView"
-                    style="@style/sub_header_content_textview" />
-
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/refer" />
-
-                <TextView
-                    android:id="@+id/referTextView"
-                    style="@style/sub_header_content_textview" />
-
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/used" />
-
-                <TextView
-                    android:id="@+id/usedTextView"
+                    android:id="@+id/dismissedTextView"
                     style="@style/sub_header_content_textview" />
 
             </LinearLayout>

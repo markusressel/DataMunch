@@ -5,7 +5,7 @@ import de.markusressel.datamunch.data.persistence.SMARTTaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.SMARTTaskEntity
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_services_service_detail.*
+import kotlinx.android.synthetic.main.content_tasks_smart_detail.*
 import javax.inject.Inject
 
 /**
@@ -34,12 +34,24 @@ class SMARTTaskDetailContentFragment : DetailContentFragmentBase<SMARTTaskEntity
         idTextView
                 .text = "${entity.id}"
 
-        sourceTextView
+        descriptionTextView
                 .text = entity
                 .smarttest_desc
-
-        destinationTextView
-                .text = "Enabled: ${entity.smarttest_type}"
+        daymonthTextView
+                .text = entity
+                .smarttest_daymonth
+        dayweekTextView
+                .text = entity
+                .smarttest_dayweek
+        hourTextView
+                .text = entity
+                .smarttest_hour
+        monthTextView
+                .text = entity
+                .smarttest_month
+        typeTextView
+                .text = entity
+                .smarttest_type
     }
 
 }
