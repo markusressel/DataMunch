@@ -45,7 +45,7 @@
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/message" />
+                    android:text="@string/dismissed" />
 
                 <TextView
                     android:id="@+id/dismissedTextView"
