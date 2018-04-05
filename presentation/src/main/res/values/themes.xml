@@ -1,5 +1,9 @@
 <resources>
 
+    <style name="SplashThemeDark" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splashscreen_background</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
