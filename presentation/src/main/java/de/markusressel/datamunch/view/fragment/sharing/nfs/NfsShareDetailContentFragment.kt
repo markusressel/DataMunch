@@ -5,7 +5,7 @@ import de.markusressel.datamunch.data.persistence.NfsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.NfsShareEntity
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_storage_disk_detail.*
+import kotlinx.android.synthetic.main.content_sharing_nfs_detail.*
 import javax.inject.Inject
 
 /**

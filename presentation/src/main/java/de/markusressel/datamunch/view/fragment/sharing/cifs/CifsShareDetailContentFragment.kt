@@ -5,7 +5,7 @@ import de.markusressel.datamunch.data.persistence.CifsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.CifsShareEntity
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_storage_disk_detail.*
+import kotlinx.android.synthetic.main.content_sharing_cifs_detail.*
 import javax.inject.Inject
 
 /**

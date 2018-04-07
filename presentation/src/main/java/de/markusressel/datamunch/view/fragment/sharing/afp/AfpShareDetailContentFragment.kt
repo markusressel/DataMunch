@@ -5,7 +5,7 @@ import de.markusressel.datamunch.data.persistence.AfpSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.AfpShareEntity
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_storage_disk_detail.*
+import kotlinx.android.synthetic.main.content_sharing_afp_detail.*
 import javax.inject.Inject
 
 /**
