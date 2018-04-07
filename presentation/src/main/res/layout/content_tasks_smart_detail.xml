@@ -72,7 +72,7 @@
                         style="@style/sub_header_content_textview" />
                     <TextView
                         style="@style/sub_header"
-                        android:text="@string/destination" />
+                        android:text="@string/dismissed" />
 
                     <TextView
                         android:id="@+id/typeTextView"

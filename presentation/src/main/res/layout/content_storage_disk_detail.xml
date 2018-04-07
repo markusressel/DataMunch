@@ -37,42 +37,99 @@
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/full_name" />
+                    android:text="@string/description" />
 
                 <TextView
-                    android:id="@+id/fullNameTextView"
+                    android:id="@+id/descriptionTextView"
                     style="@style/sub_header_content_textview" />
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/filesystem" />
+                    android:text="@string/acoustic_level" />
 
                 <TextView
-                    android:id="@+id/filesystemTextView"
+                    android:id="@+id/acousticLevelTextView"
                     style="@style/sub_header_content_textview" />
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/parentType" />
+                    android:text="@string/advanced_powermanagement" />
 
                 <TextView
-                    android:id="@+id/parentTypeTextView"
+                    android:id="@+id/advPowermgmtTextView"
                     style="@style/sub_header_content_textview" />
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/refer" />
+                    android:text="@string/hdd_standby" />
 
                 <TextView
-                    android:id="@+id/referTextView"
+                    android:id="@+id/hddStandbyTextView"
                     style="@style/sub_header_content_textview" />
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/used" />
+                    android:text="@string/multipath_member" />
 
                 <TextView
-                    android:id="@+id/usedTextView"
+                    android:id="@+id/multipathMemberTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/multipath_name" />
+
+                <TextView
+                    android:id="@+id/multipathNameTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/serial" />
+
+                <TextView
+                    android:id="@+id/serialTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/smart_options" />
+
+                <TextView
+                    android:id="@+id/smartoptionsTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/toggle_smart" />
+
+                <TextView
+                    android:id="@+id/toggleSmartTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/transfer_mode" />
+
+                <TextView
+                    android:id="@+id/transfermodeTextView"
+                    style="@style/sub_header_content_textview" />
+
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/expire_time" />
+
+                <TextView
+                    android:id="@+id/expiretimeTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/size" />
+
+                <TextView
+                    android:id="@+id/sizeTextView"
                     style="@style/sub_header_content_textview" />
 
             </LinearLayout>

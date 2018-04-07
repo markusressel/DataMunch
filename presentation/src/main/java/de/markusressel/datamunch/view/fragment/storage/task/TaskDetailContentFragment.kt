@@ -34,7 +34,28 @@ class TaskDetailContentFragment : DetailContentFragmentBase<TaskEntity>() {
         nameTextView
                 .text = entity
                 .task_ret_unit
-
+        enabledCheckBox
+                .isChecked = entity
+                .task_enabled
+        recursiveCheckBox
+                .isChecked = entity
+                .task_recursive
+        intervalTextView
+                .text = "${entity.task_interval}"
+        retCountTextView
+                .text = "${entity.task_ret_count}"
+        repeatUnitTextView
+                .text = entity
+                .task_repeat_unit
+        beginTextView
+                .text = entity
+                .task_begin
+        endTextView
+                .text = entity
+                .task_end
+        byWeekDayTextView
+                .text = entity
+                .task_byweekday
         filesystemTextView
                 .text = entity
                 .task_filesystem

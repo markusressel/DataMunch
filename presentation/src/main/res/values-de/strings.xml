@@ -54,6 +54,8 @@
     <string name="type">Typ</string>
     <string name="dismissed">Verworfen</string>
 
+    <string name="recursive">Rekursiv</string>
+
     <string name="no_title">Kein Titel</string>
 
 </resources>

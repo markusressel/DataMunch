@@ -14,4 +14,17 @@
     <string name="refer">Refer</string>
     <string name="used">Used</string>
 
+
+    <string name="acoustic_level">Acoustic Level</string>
+    <string name="advanced_powermanagement">Advanced Powermanagement</string>
+    <string name="hdd_standby">HDD Standby</string>
+    <string name="multipath_member">Multipath Member</string>
+    <string name="multipath_name">Multipath Name</string>
+    <string name="serial">Serial</string>
+    <string name="smart_options">SMART Options</string>
+    <string name="toggle_smart">Toggle SMART</string>
+    <string name="transfer_mode">Transfer Mode</string>
+    <string name="expire_time">Expire Time</string>
+    <string name="size">Size</string>
+
 </resources>

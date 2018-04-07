@@ -68,6 +68,14 @@
     <string name="message">Message</string>
     <string name="dismissed">Dismissed</string>
 
+    <string name="interval">Interval</string>
+    <string name="retCount">Ret Count</string>
+    <string name="repeat_unit">Repeat Unit</string>
+    <string name="begin">Begin</string>
+    <string name="end">End</string>
+    <string name="by_weekday">By Weekday</string>
+    <string name="recursive">Recursive</string>
+
     <string name="no_title">No Title</string>
 
 </resources>

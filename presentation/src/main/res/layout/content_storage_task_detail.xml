@@ -19,6 +19,11 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
+                <CheckBox
+                    android:id="@+id/enabledCheckBox"
+                    style="@style/sub_header_content_textview"
+                    android:text="@string/enabled" />
+
                 <TextView
                     style="@style/sub_header"
                     android:text="@string/name" />
@@ -27,12 +32,57 @@
                     android:id="@+id/nameTextView"
                     style="@style/sub_header_content_textview" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/full_name" />
+                <CheckBox
+                    android:id="@+id/recursiveCheckBox"
+                    style="@style/sub_header_content_textview"
+                    android:text="@string/recursive" />
 
                 <TextView
-                    android:id="@+id/fullNameTextView"
+                    style="@style/sub_header"
+                    android:text="@string/interval" />
+
+                <TextView
+                    android:id="@+id/intervalTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/retCount" />
+
+                <TextView
+                    android:id="@+id/retCountTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/repeat_unit" />
+
+                <TextView
+                    android:id="@+id/repeatUnitTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/begin" />
+
+                <TextView
+                    android:id="@+id/beginTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/end" />
+
+                <TextView
+                    android:id="@+id/endTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/by_weekday" />
+
+                <TextView
+                    android:id="@+id/byWeekDayTextView"
                     style="@style/sub_header_content_textview" />
 
                 <TextView
@@ -41,30 +91,6 @@
 
                 <TextView
                     android:id="@+id/filesystemTextView"
-                    style="@style/sub_header_content_textview" />
-
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/parentType" />
-
-                <TextView
-                    android:id="@+id/parentTypeTextView"
-                    style="@style/sub_header_content_textview" />
-
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/refer" />
-
-                <TextView
-                    android:id="@+id/referTextView"
-                    style="@style/sub_header_content_textview" />
-
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/used" />
-
-                <TextView
-                    android:id="@+id/usedTextView"
                     style="@style/sub_header_content_textview" />
 
             </LinearLayout>

@@ -39,49 +39,49 @@ class DiskDetailContentFragment : DetailContentFragmentBase<DiskEntity>() {
                 .text = entity
                 .disk_name
 
-        parentTypeTextView
+        descriptionTextView
                 .text = entity
                 .disk_description
 
-        fullNameTextView
+        acousticLevelTextView
                 .text = entity
                 .disk_acousticlevel
 
-        filesystemTextView
+        advPowermgmtTextView
                 .text = entity
                 .disk_advpowermgmt
 
-        filesystemTextView
+        hddStandbyTextView
                 .text = entity
                 .disk_hddstandby
 
-        filesystemTextView
+        multipathMemberTextView
                 .text = entity
                 .disk_multipath_member
 
-        filesystemTextView
+        multipathNameTextView
                 .text = entity
                 .disk_multipath_name
 
-        filesystemTextView
+        serialTextView
                 .text = entity
                 .disk_serial
 
-        filesystemTextView
+        smartoptionsTextView
                 .text = entity
                 .disk_smartoptions
 
-        filesystemTextView
+        toggleSmartTextView
                 .text = "${entity.disk_togglesmart}"
 
-        filesystemTextView
+        transfermodeTextView
                 .text = entity
                 .disk_transfermode
 
-        filesystemTextView
+        expiretimeTextView
                 .text = "${entity.disk_expiretime}"
 
-        filesystemTextView
+        sizeTextView
                 .text = "${entity.disk_size}"
 
     }
