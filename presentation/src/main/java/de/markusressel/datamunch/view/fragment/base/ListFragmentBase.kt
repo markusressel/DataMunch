@@ -20,8 +20,8 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.LastUpdateFromSourcePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.view.component.LoadingComponent
 import de.markusressel.datamunch.view.component.OptionsMenuComponent
-import de.markusressel.datamunch.view.plugin.LoadingPlugin
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -45,7 +45,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         get() = R.layout.fragment_recyclerview
 
     protected open val fabConfig: FabConfig = FabConfig(left = mutableListOf(),
-                                                        right = mutableListOf())
+            right = mutableListOf())
     private val fabButtonViews = mutableListOf<FloatingActionButton>()
 
     protected val listValues: MutableList<T> = ArrayList()
@@ -60,19 +60,19 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
     private val persistenceLoaderId = loaderIdCounter
             .getAndIncrement()
 
-    protected val loadingPlugin = LoadingPlugin(onShowContent = {
-        updateFabVisibility(View.VISIBLE)
-    }, onShowError = { message: String, throwable: Throwable? ->
-        layoutEmpty
-                .visibility = View
-                .GONE
-        updateFabVisibility(View.INVISIBLE)
-    })
+    protected val loadingComponent by lazy {
+        LoadingComponent(this, onShowContent = {
+            updateFabVisibility(View.VISIBLE)
+        }, onShowError = { message: String, throwable: Throwable? ->
+            layoutEmpty
+                    .visibility = View
+                    .GONE
+            updateFabVisibility(View.INVISIBLE)
+        })
+    }
 
-    private val optionsMenuComponent: OptionsMenuComponent
-
-    init {
-        optionsMenuComponent = OptionsMenuComponent(
+    private val optionsMenuComponent: OptionsMenuComponent by lazy {
+        OptionsMenuComponent(
                 hostFragment = this,
                 optionsMenuRes = R.menu.options_menu_list,
                 onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
@@ -92,8 +92,12 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 else -> false
             }
         })
+    }
 
-        addFragmentPlugins(loadingPlugin)
+    override fun initComponents(context: Context) {
+        super.initComponents(context)
+        loadingComponent
+        optionsMenuComponent
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -109,6 +113,11 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         }
         return optionsMenuComponent
                 .onOptionsItemSelected(item)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val parent = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
+        return loadingComponent.onCreateView(inflater, parent, savedInstanceState)
     }
 
     @CallSuper
@@ -130,7 +139,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
 
         frittenbudeServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy(),
-                                        connectionManager.getMainSSHConnection())
+                        connectionManager.getMainSSHConnection())
     }
 
     override fun onResume() {
@@ -192,8 +201,8 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         }
 
         val fabView: FloatingActionButton = inflater.inflate(layout,
-                                                             recyclerView.parent as ViewGroup,
-                                                             false) as FloatingActionButton
+                recyclerView.parent as ViewGroup,
+                false) as FloatingActionButton
 
         // icon
         fabView
@@ -220,7 +229,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 .subscribe {
                     Toast
                             .makeText(context as Context, "Fab '${fab.description}' clicked",
-                                      Toast.LENGTH_LONG)
+                                    Toast.LENGTH_LONG)
                             .show()
 
                     // execute defined action if it exists
@@ -237,7 +246,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 .subscribe {
                     Toast
                             .makeText(context as Context, "Fab '${fab.description}' long clicked",
-                                      Toast.LENGTH_LONG)
+                                    Toast.LENGTH_LONG)
                             .show()
 
                     // execute defined action if it exists
@@ -265,7 +274,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
      * Loads the data using {@link loadListDataFromPersistence()}
      */
     private fun fillListFromPersistence() {
-        loadingPlugin
+        loadingComponent
                 .showLoading()
 
         Single
@@ -286,7 +295,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                         listValues
                                 .addAll(it)
                     }
-                    loadingPlugin
+                    loadingComponent
                             .showContent()
 
                     recyclerViewAdapter
@@ -296,7 +305,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                         Timber
                                 .d { "reload from persistence cancelled" }
                     } else {
-                        loadingPlugin
+                        loadingComponent
                                 .showError(it)
                     }
                 })
@@ -306,7 +315,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
      * Reload list data asEntity it's original source, persist it and display it to the user afterwards
      */
     protected fun reloadDataFromSource() {
-        loadingPlugin
+        loadingComponent
                 .showLoading()
 
         loadListDataFromSource()
@@ -332,7 +341,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                                     Timber
                                             .d { "persisting reload from source cancelled" }
                                 } else {
-                                    loadingPlugin
+                                    loadingComponent
                                             .showError(it)
                                 }
                             })
@@ -341,7 +350,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                         Timber
                                 .d { "reload from source cancelled" }
                     } else {
-                        loadingPlugin
+                        loadingComponent
                                 .showError(it)
                     }
                 })

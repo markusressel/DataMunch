@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.support.annotation.StringRes
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.afollestad.materialdialogs.MaterialDialog
 import com.jakewharton.rxbinding2.view.RxView
 import com.ncorti.slidetoact.SlideToActView
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.view.component.LoadingComponent
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
-import de.markusressel.datamunch.view.plugin.LoadingPlugin
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_maintenance.*
@@ -27,17 +28,25 @@ class MaintenanceFragment : DaggerSupportFragmentBase() {
     override val layoutRes: Int
         get() = R.layout.fragment_maintenance
 
-    val loadingPlugin = LoadingPlugin()
+    val loadingComponent by lazy {
+        LoadingComponent(this)
+    }
 
-    init {
-        addPlugin(loadingPlugin)
+    override fun initComponents(context: Context) {
+        super.initComponents(context)
+        loadingComponent
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val parent = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
+        return loadingComponent.onCreateView(inflater, parent, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
                 .onViewCreated(view, savedInstanceState)
 
-        loadingPlugin
+        loadingComponent
                 .showContent()
     }
 
@@ -90,19 +99,19 @@ class MaintenanceFragment : DaggerSupportFragmentBase() {
                 dialog
                         .dismiss()
 
-                loadingPlugin
+                loadingComponent
                         .showLoading()
 
                 Single
                         .fromCallable { function() }
                         .bindToLifecycle(button)
                         .subscribeBy(onSuccess = {
-                            loadingPlugin
+                            loadingComponent
                                     .showContent()
                             dialog
                                     .dismiss()
                         }, onError = {
-                            loadingPlugin
+                            loadingComponent
                                     .showError(it)
                         })
             }

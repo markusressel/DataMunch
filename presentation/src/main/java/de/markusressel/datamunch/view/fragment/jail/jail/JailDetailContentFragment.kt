@@ -113,7 +113,7 @@ class JailDetailContentFragment : JailContentFragmentBase() {
                             .show()
 
                     // TODO: Show error
-                    //                    loadingPlugin
+                    //                    loadingComponent
                     //                            .showError(it)
                 })
     }
@@ -136,7 +136,7 @@ class JailDetailContentFragment : JailContentFragmentBase() {
                             .show()
 
                     // TODO: Show error
-                    //                    loadingPlugin
+                    //                    loadingComponent
                     //                            .showError(it)
                 })
     }
@@ -159,7 +159,7 @@ class JailDetailContentFragment : JailContentFragmentBase() {
 
 
                     // TODO: Show error
-                    //                    loadingPlugin
+                    //                    loadingComponent
                     //                            .showError(it)
                 })
     }

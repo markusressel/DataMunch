@@ -85,10 +85,6 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
         return frameworkFragmentInjector
     }
 
-    init {
-        // addActivityPlugins(LockPlugin({ preferenceHandler }))
-    }
-
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection

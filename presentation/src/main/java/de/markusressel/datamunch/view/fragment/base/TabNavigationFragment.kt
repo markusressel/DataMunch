@@ -109,7 +109,7 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
 
         tabNavigation
                 .onTabStripSelectedIndexListener = object :
-            NavigationTabStrip.OnTabStripSelectedIndexListener {
+                NavigationTabStrip.OnTabStripSelectedIndexListener {
             override fun onStartTabSelected(title: String?, index: Int) {
                 onTabItemSelected(index, false)
             }

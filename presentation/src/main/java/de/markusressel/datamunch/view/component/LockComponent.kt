@@ -7,33 +7,33 @@ import android.widget.FrameLayout
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
+import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.android.ActivityEvent
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.event.LockEvent
-import de.markusressel.datamunch.view.activity.base.LifecycleActivityBase
 import de.markusressel.datamunch.view.fragment.LockscreenFragment
 import io.reactivex.rxkotlin.subscribeBy
 
 /**
  * Created by Markus on 15.02.2018.
  */
-class LockComponent(hostActivity: LifecycleActivityBase,
+class LockComponent(hostActivity: LifecycleProvider<ActivityEvent>,
                     val preferenceHandler: () -> PreferenceHandler) :
-    ActivityComponent(hostActivity) {
+        ActivityComponent(hostActivity) {
 
     private lateinit var lockLayout: ViewGroup
     private lateinit var originalLayout: View
 
     init {
-        hostActivity
+        lifecycleProvider
                 .lifecycle()
                 .filter {
                     setOf(ActivityEvent.CREATE, ActivityEvent.RESUME, ActivityEvent.DESTROY)
                             .contains(it)
                 }
-                .bindUntilEvent(hostActivity, Lifecycle.Event.ON_DESTROY)
+                .bindUntilEvent(lifecycleOwner, Lifecycle.Event.ON_DESTROY)
                 .subscribeBy(onNext = {
                     when (it) {
                         ActivityEvent.CREATE -> {
@@ -76,6 +76,9 @@ class LockComponent(hostActivity: LifecycleActivityBase,
         if (view != null) {
             val wrapperLayout = createWrapperLayout(view)
             contentView = wrapperLayout
+//            view.parent?.let {
+//                (it as ViewGroup).addView(contentView)
+//            }
         } else {
             Timber
                     .e { "LockPlugin couldn't attach to the parent view as it was NULL" }
@@ -86,7 +89,13 @@ class LockComponent(hostActivity: LifecycleActivityBase,
     }
 
     private fun createWrapperLayout(view: View): ViewGroup {
-        val baseLayout = FrameLayout(hostActivity)
+        val baseLayout = FrameLayout(activity)
+
+        // remove original parent if it exists
+        view.parent?.let {
+            val childParent = view.parent as ViewGroup
+            childParent.removeView(view)
+        }
 
         originalLayout = view
         // hide initially to unlock it later
@@ -97,18 +106,18 @@ class LockComponent(hostActivity: LifecycleActivityBase,
         // attach the original content view
         baseLayout
                 .addView(view, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                                                        FrameLayout.LayoutParams.MATCH_PARENT))
+                        FrameLayout.LayoutParams.MATCH_PARENT))
         // create content container
-        lockLayout = FrameLayout(hostActivity)
+        lockLayout = FrameLayout(activity)
         lockLayout
                 .id = R
                 .id
                 .lockContentLayout
         baseLayout
                 .addView(lockLayout, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                                                              FrameLayout.LayoutParams.MATCH_PARENT))
+                        FrameLayout.LayoutParams.MATCH_PARENT))
 
-        hostActivity
+        activity
                 .supportFragmentManager
                 .beginTransaction()
                 .replace(lockLayout.id, LockscreenFragment())
@@ -135,7 +144,7 @@ class LockComponent(hostActivity: LifecycleActivityBase,
      * Otherwise this is a no-op
      */
     private fun lockScreen() {
-        hostActivity
+        activity
                 .runOnUiThread {
                     originalLayout
                             .visibility = View
@@ -152,7 +161,7 @@ class LockComponent(hostActivity: LifecycleActivityBase,
      * Unlocks the screen
      */
     private fun unlockScreen() {
-        hostActivity
+        activity
                 .runOnUiThread {
                     originalLayout
                             .visibility = View

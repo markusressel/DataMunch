@@ -141,15 +141,6 @@ dependencies {
     // MaterialViewPager
     implementation 'com.github.florent37:materialviewpager:1.2.3'
 
-    // CompositeAndroid
-    // contains CompositeActivity
-    def compositeAndroidVersion = rootProject.ext.supportLibVersion
-    compositeAndroidVersion = compositeAndroidVersion[0..-2] + "0"
-
-    implementation "com.pascalwelsch.compositeandroid:activity:$compositeAndroidVersion"
-    // contains CompositeFragment and CompositeDialogFragment
-    implementation "com.pascalwelsch.compositeandroid:fragment:$compositeAndroidVersion"
-
     // RxLifecycle to prevent memory leaks
     def rxLifecycleVersion = rootProject.ext.rxLifecycleVersion
     implementation "com.trello.rxlifecycle2:rxlifecycle:$rxLifecycleVersion"

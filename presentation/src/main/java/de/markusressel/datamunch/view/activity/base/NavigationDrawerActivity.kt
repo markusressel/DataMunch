@@ -33,6 +33,7 @@ import de.markusressel.datamunch.navigation.DrawerItemHolder.Storage
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Tasks
 import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.navigation.Navigator
+import de.markusressel.datamunch.view.component.LockComponent
 import de.markusressel.datamunch.view.component.LockComponent.Companion.isScreenLocked
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -47,6 +48,22 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
     override val layoutRes: Int
         get() = R.layout.activity_main
+
+    private val lockComponent: LockComponent = LockComponent(this, { preferenceHandler })
+
+    override fun setContentView(view: View?) {
+        val contentView = lockComponent
+                .setContentView(view)
+        super
+                .setContentView(contentView)
+    }
+
+    override fun onDestroy() {
+        lockComponent
+                .onDestroy()
+        super
+                .onDestroy()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super
@@ -222,7 +239,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
 
         listOf(Status, Accounts, Storage, Sharing, Services, Plugins, Jails,
-               Navigator.DrawerItems.System, Tasks)
+                Navigator.DrawerItems.System, Tasks)
                 .forEach {
                     menuItemList
                             .add(createPrimaryMenuItem(it, clickListener))

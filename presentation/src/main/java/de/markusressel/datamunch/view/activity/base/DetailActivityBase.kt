@@ -10,11 +10,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.view.KeyEvent
 import android.view.MenuItem
+import android.view.View
 import com.eightbitlab.rxbus.Bus
 import com.github.florent37.materialviewpager.header.HeaderDesign
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.extensions.random
+import de.markusressel.datamunch.view.component.LockComponent
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import kotlinx.android.synthetic.main.activity_item_detail.*
 import kotlinx.android.synthetic.main.item_detail__header_logo.*
@@ -45,6 +47,22 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
     private val usedHeaders: MutableSet<HeaderConfig> = mutableSetOf()
 
     private var currentEntityState: StateHolder<EntityType>? by savedInstanceState()
+
+    private val lockComponent: LockComponent = LockComponent(this, { preferenceHandler })
+
+    override fun setContentView(view: View?) {
+        val contentView = lockComponent
+                .setContentView(view)
+        super
+                .setContentView(contentView)
+    }
+
+    override fun onDestroy() {
+        lockComponent
+                .onDestroy()
+        super
+                .onDestroy()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super

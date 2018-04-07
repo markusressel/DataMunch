@@ -41,6 +41,8 @@ abstract class LifecycleFragmentBase : StateFragmentBase(), LifecycleProvider<Fr
     }
 
     override fun onAttach(context: Context) {
+        initComponents(context)
+
         super
                 .onAttach(context)
         lifecycleSubject
@@ -114,6 +116,13 @@ abstract class LifecycleFragmentBase : StateFragmentBase(), LifecycleProvider<Fr
                 .onNext(FragmentEvent.DETACH)
         super
                 .onDetach()
+    }
+
+    /**
+     * Add a simple reference to your components in this method so lazy initializers trigger
+     */
+    @CallSuper
+    open fun initComponents(context: Context) {
     }
 
 }

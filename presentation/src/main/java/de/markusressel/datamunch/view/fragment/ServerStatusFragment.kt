@@ -1,20 +1,18 @@
 package de.markusressel.datamunch.view.fragment
 
 import android.arch.lifecycle.Lifecycle
+import android.content.Context
 import android.os.Bundle
 import android.support.annotation.CallSuper
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import com.github.ajalt.timberkt.Timber
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
+import de.markusressel.datamunch.view.component.LoadingComponent
 import de.markusressel.datamunch.view.component.OptionsMenuComponent
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
-import de.markusressel.datamunch.view.plugin.LoadingPlugin
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -40,22 +38,20 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
     override val layoutRes: Int
         get() = R.layout.fragment_server_status
 
-    val loadingPlugin = LoadingPlugin()
+    private val loadingComponent by lazy { LoadingComponent(this) }
 
-    private val optionsMenuComponent: OptionsMenuComponent
-
-    init {
-        optionsMenuComponent = OptionsMenuComponent(this,
-                                                    optionsMenuRes = R.menu.options_menu_server_status,
-                                                    onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
-                                                        // set refresh icon
-                                                        val refreshIcon = iconHandler
-                                                                .getOptionsMenuIcon(
-                                                                        MaterialDesignIconic.Icon.gmi_refresh)
-                                                        menu
-                                                                ?.findItem(R.id.refresh)
-                                                                ?.icon = refreshIcon
-                                                    }, onOptionsMenuItemClicked = {
+    private val optionsMenuComponent: OptionsMenuComponent by lazy {
+        OptionsMenuComponent(this,
+                optionsMenuRes = R.menu.options_menu_server_status,
+                onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
+                    // set refresh icon
+                    val refreshIcon = iconHandler
+                            .getOptionsMenuIcon(
+                                    MaterialDesignIconic.Icon.gmi_refresh)
+                    menu
+                            ?.findItem(R.id.refresh)
+                            ?.icon = refreshIcon
+                }, onOptionsMenuItemClicked = {
             when {
                 it.itemId == R.id.refresh -> {
                     reload()
@@ -64,8 +60,12 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                 else -> false
             }
         })
+    }
 
-        addFragmentPlugins(loadingPlugin)
+    override fun initComponents(context: Context) {
+        super.initComponents(context)
+        loadingComponent
+        optionsMenuComponent
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -83,6 +83,11 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                 .onOptionsItemSelected(item)
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val parent = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
+        return loadingComponent.onCreateView(inflater, parent, savedInstanceState)
+    }
+
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
@@ -90,7 +95,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
 
         frittenbudeServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy(),
-                                        connectionManager.getMainSSHConnection())
+                        connectionManager.getMainSSHConnection())
 
         openWrtServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy())
@@ -99,7 +104,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
     }
 
     private fun reload() {
-        loadingPlugin
+        loadingComponent
                 .showLoading()
 
         Single
@@ -114,7 +119,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                     serverName
                             .text = it
 
-                    loadingPlugin
+                    loadingComponent
                             .showContent()
                 }, onError = {
                     if (it is CancellationException) {
@@ -124,7 +129,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                         serverName
                                 .text = it
                                 .message
-                        loadingPlugin
+                        loadingComponent
                                 .showError(it)
                     }
                 })
@@ -143,7 +148,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                     serverStatus
                             .text = text
 
-                    loadingPlugin
+                    loadingComponent
                             .showContent()
                 }, onError = {
                     if (it is CancellationException) {
@@ -153,10 +158,9 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                         serverStatus
                                 .text = it
                                 .message
-                        loadingPlugin
+                        loadingComponent
                                 .showError(it)
                     }
                 })
     }
-
 }

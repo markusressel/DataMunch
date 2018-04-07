@@ -1,13 +1,13 @@
 package de.markusressel.datamunch.view.fragment.base
 
 import android.os.Bundle
-import com.pascalwelsch.compositeandroid.fragment.CompositeFragment
+import android.support.v4.app.Fragment
 import de.markusressel.datamunch.view.InstanceStateProvider
 
 /**
  * Created by Markus on 21.02.2018.
  */
-abstract class StateFragmentBase : CompositeFragment() {
+abstract class StateFragmentBase : Fragment() {
 
     private val stateBundle = Bundle()
 

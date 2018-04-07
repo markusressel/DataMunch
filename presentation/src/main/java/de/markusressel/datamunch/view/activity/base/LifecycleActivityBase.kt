@@ -40,6 +40,8 @@ abstract class LifecycleActivityBase : StateActivityBase(), LifecycleProvider<Ac
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        initComponents()
+
         super
                 .onCreate(savedInstanceState)
         lifecycleSubject
@@ -86,6 +88,13 @@ abstract class LifecycleActivityBase : StateActivityBase(), LifecycleProvider<Ac
                 .onNext(ActivityEvent.DESTROY)
         super
                 .onDestroy()
+    }
+
+    /**
+     * Add a simple reference to your components in this method so lazy initializers trigger
+     */
+    @CallSuper
+    open fun initComponents() {
     }
 
 }

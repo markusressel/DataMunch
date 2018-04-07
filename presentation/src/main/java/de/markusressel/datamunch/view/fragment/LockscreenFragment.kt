@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.v4.content.ContextCompat
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import com.andrognito.patternlockview.PatternLockView
@@ -24,8 +26,8 @@ import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.event.LockEvent
+import de.markusressel.datamunch.view.component.LoadingComponent
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
-import de.markusressel.datamunch.view.plugin.LoadingPlugin
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -43,12 +45,20 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
     override val layoutRes: Int
         get() = R.layout.fragment_lockscreen
 
-    val loadingPlugin = LoadingPlugin()
-
     private var isTouchable = true
 
-    init {
-        addFragmentPlugins(loadingPlugin)
+    private val loadingComponent by lazy {
+        LoadingComponent(this)
+    }
+
+    override fun initComponents(context: Context) {
+        super.initComponents(context)
+        loadingComponent
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val parent = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
+        return loadingComponent.onCreateView(inflater, parent, savedInstanceState)
     }
 
     @CallSuper
@@ -56,7 +66,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
         super
                 .onViewCreated(view, savedInstanceState)
 
-        loadingPlugin
+        loadingComponent
                 .showLoading()
 
         backgroundImageView
@@ -64,7 +74,7 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
         backgroundImageView
                 .setOnImageEventListener(object : SubsamplingScaleImageView.OnImageEventListener {
                     override fun onImageLoaded() {
-                        loadingPlugin
+                        loadingComponent
                                 .showContent(true)
 
                         fadeView(rootLayout, 0f, 1f)
@@ -75,10 +85,10 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
 
                     override fun onTileLoadError(p0: java.lang.Exception?) {
                         if (p0 != null) {
-                            loadingPlugin
+                            loadingComponent
                                     .showError(p0)
                         } else {
-                            loadingPlugin
+                            loadingComponent
                                     .showError("Error loading tile")
                         }
                     }
@@ -88,20 +98,20 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
 
                     override fun onImageLoadError(p0: java.lang.Exception?) {
                         if (p0 != null) {
-                            loadingPlugin
+                            loadingComponent
                                     .showError(p0)
                         } else {
-                            loadingPlugin
+                            loadingComponent
                                     .showError("Error loading image")
                         }
                     }
 
                     override fun onPreviewLoadError(p0: java.lang.Exception?) {
                         if (p0 != null) {
-                            loadingPlugin
+                            loadingComponent
                                     .showError(p0)
                         } else {
-                            loadingPlugin
+                            loadingComponent
                                     .showError("Error loading preview")
                         }
                     }
@@ -112,9 +122,9 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
 
         profileImage
                 .setImageDrawable(iconHandler.getIcon(MaterialDesignIconic.Icon.gmi_lock,
-                                                      ContextCompat.getColor(context as Context,
-                                                                             R.color.md_grey_500),
-                                                      48, 0))
+                        ContextCompat.getColor(context as Context,
+                                R.color.md_grey_500),
+                        48, 0))
 
         patternLockView
                 .setOnTouchListener { _: View, _: MotionEvent ->
@@ -142,13 +152,13 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                         } else if (event.eventType == PatternLockCompoundEvent.EventType.PATTERN_PROGRESS) {
                             Log
                                     .d(javaClass.name,
-                                       "Pattern progress: " + PatternLockUtils.patternToString(
-                                               patternLockView, event.pattern))
+                                            "Pattern progress: " + PatternLockUtils.patternToString(
+                                                    patternLockView, event.pattern))
                         } else if (event.eventType == PatternLockCompoundEvent.EventType.PATTERN_COMPLETE) {
                             Log
                                     .d(javaClass.name,
-                                       "Pattern complete: " + PatternLockUtils.patternToString(
-                                               patternLockView, event.pattern))
+                                            "Pattern complete: " + PatternLockUtils.patternToString(
+                                                    patternLockView, event.pattern))
 
                             checkPattern(event.pattern)
                         } else if (event.eventType == PatternLockCompoundEvent.EventType.PATTERN_CLEARED) {
@@ -218,9 +228,9 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
         }
 
         val duration = when {
-            toAlpha >= 1 -> LoadingPlugin.FADE_IN_DURATION_MS
-            toAlpha <= 0 -> LoadingPlugin.FADE_OUT_DURATION_MS
-            else -> LoadingPlugin.FADE_DURATION_MS
+            toAlpha >= 1 -> LoadingComponent.FADE_IN_DURATION_MS
+            toAlpha <= 0 -> LoadingComponent.FADE_OUT_DURATION_MS
+            else -> LoadingComponent.FADE_DURATION_MS
         }
 
         view

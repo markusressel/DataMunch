@@ -75,17 +75,17 @@ class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
     }
 
     private fun applyPendingUpdates() {
-        loadingPlugin
+        loadingComponent
                 .showLoading()
         freeNasWebApiClient
                 .applyPendingUpdates()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onSuccess = {
-                    loadingPlugin
+                    loadingComponent
                             .showContent()
                 }, onError = {
-                    loadingPlugin
+                    loadingComponent
                             .showError(it)
                 })
     }

@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.plugin
+package de.markusressel.datamunch.view.component
 
 import android.content.Context
 import android.os.Bundle
@@ -14,25 +14,27 @@ import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.github.ajalt.timberkt.Timber
 import com.jakewharton.rxbinding2.view.RxView
-import com.pascalwelsch.compositeandroid.fragment.FragmentPlugin
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.extensions.prettyPrint
+import de.markusressel.datamunch.view.fragment.base.LifecycleFragmentBase
 
 /**
  * Created by Markus on 15.02.2018.
  */
-class LoadingPlugin(val onShowContent: ((animated: Boolean) -> Unit)? = null,
-                    /**
-                     * Called when the error screen is shown
-                     */
-                    val onShowError: ((message: String, t: Throwable?) -> Unit)? = null,
-                    /**
-                     * Called when the error is clicked
-                     * Show a sophisticated error screen here
-                     */
-                    val onErrorClicked: ((message: String, t: Throwable?) -> Unit)? = null) :
-    FragmentPlugin() {
+class LoadingComponent(
+        hostFragment: LifecycleFragmentBase,
+        val onShowContent: ((animated: Boolean) -> Unit)? = null,
+        /**
+         * Called when the error screen is shown
+         */
+        val onShowError: ((message: String, t: Throwable?) -> Unit)? = null,
+        /**
+         * Called when the error is clicked
+         * Show a sophisticated error screen here
+         */
+        val onErrorClicked: ((message: String, t: Throwable?) -> Unit)? = null) :
+        FragmentComponent(hostFragment) {
 
     protected lateinit var loadingLayout: ViewGroup
 
@@ -42,8 +44,8 @@ class LoadingPlugin(val onShowContent: ((animated: Boolean) -> Unit)? = null,
     lateinit var errorDescription: TextView
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                     savedInstanceState: Bundle?): View? {
         contentView = container
 
         val rootView = createWrapperLayout()
@@ -58,7 +60,7 @@ class LoadingPlugin(val onShowContent: ((animated: Boolean) -> Unit)? = null,
     }
 
     private fun createWrapperLayout(): ViewGroup {
-        val baseLayout = FrameLayout(original.context)
+        val baseLayout = FrameLayout(context)
 
         // attach the original content view
         contentView
@@ -69,7 +71,7 @@ class LoadingPlugin(val onShowContent: ((animated: Boolean) -> Unit)? = null,
 
         // inflate "layout_loading" and "layout_error" layouts and attach it to a newly created layout
         val layoutInflater = LayoutInflater
-                .from(original.context)
+                .from(context)
         layoutInflater.inflate(R.layout.layout_error, baseLayout, true) as ViewGroup
         layoutInflater.inflate(R.layout.layout_loading, baseLayout, true) as ViewGroup
 
@@ -187,7 +189,7 @@ class LoadingPlugin(val onShowContent: ((animated: Boolean) -> Unit)? = null,
                             ?: message
 
                     MaterialDialog
-                            .Builder(original.context as Context)
+                            .Builder(context as Context)
                             .title(R.string.error)
                             .content(contentText)
                             .positiveText(android.R.string.ok)
