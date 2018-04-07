@@ -37,7 +37,39 @@
 
                 <TextView
                     style="@style/sub_header"
-                    android:text="@string/name" />
+                    android:text="@string/comments" />
+
+                <TextView
+                    android:id="@+id/commentsTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/pool" />
+
+                <TextView
+                    android:id="@+id/poolTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/mountpoint" />
+
+                <TextView
+                    android:id="@+id/mountpointTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/used" />
+
+                <TextView
+                    android:id="@+id/usedTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/compression" />
 
                 <TextView
                     android:id="@+id/compressionTextView"

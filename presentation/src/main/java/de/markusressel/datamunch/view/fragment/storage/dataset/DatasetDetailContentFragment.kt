@@ -38,9 +38,24 @@ class DatasetDetailContentFragment : DetailContentFragmentBase<DatasetEntity>() 
                 .text = entity
                 .name
 
+        commentsTextView
+                .text = entity
+                .comments
+
         compressionTextView
                 .text = entity
                 .compression
+
+        poolTextView
+                .text = entity
+                .pool
+
+        mountpointTextView
+                .text = entity
+                .mountpoint
+
+        usedTextView
+                .text = "${entity.used}"
     }
 
 }

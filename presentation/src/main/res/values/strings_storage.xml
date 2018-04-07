@@ -27,4 +27,9 @@
     <string name="expire_time">Expire Time</string>
     <string name="size">Size</string>
 
+    <string name="compression">Compression</string>
+    <string name="mountpoint">Mountpont</string>
+    <string name="pool">Pool</string>
+    <string name="comments">Comments</string>
+
 </resources>
