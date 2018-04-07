@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.eightbitlab.rxbus.Bus
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.event.LockEvent
-import de.markusressel.datamunch.view.plugin.LockPlugin
+import de.markusressel.datamunch.view.component.LockComponent
 
 class AppLifecycleTracker(val preferenceHandler: PreferenceHandler) :
     Application.ActivityLifecycleCallbacks {
@@ -49,7 +49,7 @@ class AppLifecycleTracker(val preferenceHandler: PreferenceHandler) :
         val useLock = preferenceHandler
                 .getValue(PreferenceHandler.USE_PATTERN_LOCK)
         if (useLock) {
-            LockPlugin
+            LockComponent
                     .isLocked = true
             // in case anyone is still listening
             Bus

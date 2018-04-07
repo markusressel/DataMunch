@@ -1,14 +1,13 @@
-package de.markusressel.datamunch.view.plugin
+package de.markusressel.datamunch.view.component
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
-import com.pascalwelsch.compositeandroid.activity.ActivityPlugin
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.event.LockEvent
@@ -17,33 +16,29 @@ import de.markusressel.datamunch.view.fragment.LockscreenFragment
 /**
  * Created by Markus on 15.02.2018.
  */
-class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugin() {
-
-    @SuppressLint("MissingSuperCall")
-    override fun onSaveInstanceState(outState: Bundle) {
-    }
-
-    override fun setContentView(view: View?) {
-        if (view != null) {
-            val wrapperLayout = createWrapperLayout(view)
-            original
-                    .delegate
-                    .setContentView(wrapperLayout)
-        } else {
-            Timber
-                    .e { "LockPlugin couldn't attach to the parent view as it was NULL" }
-            original
-                    .delegate
-                    .setContentView(view)
-        }
-    }
+class LockComponent(hostActivity: AppCompatActivity,
+                    val preferenceHandler: () -> PreferenceHandler) :
+    ActivityComponent(hostActivity) {
 
     private lateinit var lockLayout: ViewGroup
     private lateinit var originalLayout: View
 
+    fun setContentView(view: View?): View? {
+        val contentView: View?
+        if (view != null) {
+            val wrapperLayout = createWrapperLayout(view)
+            contentView = wrapperLayout
+        } else {
+            Timber
+                    .e { "LockPlugin couldn't attach to the parent view as it was NULL" }
+            contentView = view
+        }
+
+        return contentView
+    }
 
     private fun createWrapperLayout(view: View): ViewGroup {
-        val baseLayout = FrameLayout(original)
+        val baseLayout = FrameLayout(hostActivity)
 
         originalLayout = view
         // hide initially to unlock it later
@@ -56,7 +51,7 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
                 .addView(view, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                                                         FrameLayout.LayoutParams.MATCH_PARENT))
         // create content container
-        lockLayout = FrameLayout(original)
+        lockLayout = FrameLayout(hostActivity)
         lockLayout
                 .id = R
                 .id
@@ -65,7 +60,7 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
                 .addView(lockLayout, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                                                               FrameLayout.LayoutParams.MATCH_PARENT))
 
-        original
+        hostActivity
                 .supportFragmentManager
                 .beginTransaction()
                 .replace(lockLayout.id, LockscreenFragment())
@@ -75,10 +70,7 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
         return baseLayout
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super
-                .onCreate(savedInstanceState)
-
+    fun onCreate(savedInstanceState: Bundle?) {
         Bus
                 .observe<LockEvent>()
                 .subscribe {
@@ -87,10 +79,7 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
                 .registerInBus(this)
     }
 
-    override fun onResume() {
-        super
-                .onResume()
-
+    fun onResume() {
         val useLock = preferenceHandler()
                 .getValue(PreferenceHandler.USE_PATTERN_LOCK)
         val pattern = preferenceHandler()
@@ -116,7 +105,7 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
      * Otherwise this is a no-op
      */
     private fun lockScreen() {
-        original
+        hostActivity
                 .runOnUiThread {
                     originalLayout
                             .visibility = View
@@ -133,7 +122,7 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
      * Unlocks the screen
      */
     private fun unlockScreen() {
-        original
+        hostActivity
                 .runOnUiThread {
                     originalLayout
                             .visibility = View
@@ -146,13 +135,10 @@ class LockPlugin(val preferenceHandler: () -> PreferenceHandler) : ActivityPlugi
         isLocked = false
     }
 
-    override fun onDestroy() {
+    fun onDestroy() {
         //unsubscribe from events
         Bus
                 .unregister(this)
-
-        super
-                .onDestroy()
     }
 
     companion object {

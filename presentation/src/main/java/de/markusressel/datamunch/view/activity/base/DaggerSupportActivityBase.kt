@@ -37,7 +37,7 @@ import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.view.IconHandler
 import de.markusressel.datamunch.view.ThemeHelper
-import de.markusressel.datamunch.view.plugin.LockPlugin
+import de.markusressel.datamunch.view.component.LockComponent
 import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
 import javax.inject.Inject
@@ -115,8 +115,7 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
         // inflate view manually so it can be altered in plugins
         val contentView = layoutInflater
                 .inflate(layoutRes, null)
-        super
-                .setContentView(contentView)
+        setContentView(contentView)
 
         setSupportActionBar(toolbar)
 
@@ -124,7 +123,7 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
                 ?.setDisplayHomeAsUpEnabled(true)
 
         Bus
-                .observe<LockPlugin.SetStatusBarStateEvent>()
+                .observe<LockComponent.SetStatusBarStateEvent>()
                 .subscribe {
                     if (it.visible) {
                         showStatusBar()

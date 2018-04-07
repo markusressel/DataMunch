@@ -1,36 +1,31 @@
-package de.markusressel.datamunch.view.plugin
+package de.markusressel.datamunch.view.component
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.annotation.CallSuper
 import android.support.annotation.MenuRes
+import android.support.v4.app.Fragment
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import com.pascalwelsch.compositeandroid.fragment.FragmentPlugin
 
 /**
  * Created by Markus on 15.02.2018.
  */
-class OptionsMenuPlugin(
+class OptionsMenuComponent(
+        hostFragment: Fragment,
         /**
          * The layout resource for this Activity
          */
         @get:MenuRes val optionsMenuRes: Int,
         val onOptionsMenuItemClicked: ((item: MenuItem) -> Boolean)? = null,
         val onCreateOptionsMenu: ((menu: Menu?, inflater: MenuInflater?) -> Unit)? = null) :
-    FragmentPlugin() {
+    FragmentComponent(hostFragment) {
 
-    @SuppressLint("MissingSuperCall")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super
-                .onCreate(savedInstanceState)
-        original
+    fun afterOnCreate(savedInstanceState: Bundle?) {
+        hostFragment
                 .setHasOptionsMenu(true)
     }
 
-    @CallSuper
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater
                 ?.inflate(optionsMenuRes, menu)
 
@@ -40,13 +35,9 @@ class OptionsMenuPlugin(
                 }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item == null) {
             return false
-        }
-
-        if (super.onOptionsItemSelected(item)) {
-            return true
         }
 
         onOptionsMenuItemClicked

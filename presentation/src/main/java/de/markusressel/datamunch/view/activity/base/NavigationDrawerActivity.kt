@@ -33,7 +33,7 @@ import de.markusressel.datamunch.navigation.DrawerItemHolder.Storage
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Tasks
 import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.navigation.Navigator
-import de.markusressel.datamunch.view.plugin.LockPlugin.Companion.isLocked
+import de.markusressel.datamunch.view.component.LockComponent.Companion.isLocked
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*

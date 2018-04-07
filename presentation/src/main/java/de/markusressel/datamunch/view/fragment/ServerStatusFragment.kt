@@ -5,15 +5,16 @@ import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import com.github.ajalt.timberkt.Timber
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
+import de.markusressel.datamunch.view.component.OptionsMenuComponent
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.plugin.LoadingPlugin
-import de.markusressel.datamunch.view.plugin.OptionsMenuPlugin
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -41,26 +42,52 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
 
     val loadingPlugin = LoadingPlugin()
 
+    private val optionsMenuComponent: OptionsMenuComponent
+
     init {
-        addFragmentPlugins(loadingPlugin,
-                           OptionsMenuPlugin(optionsMenuRes = R.menu.options_menu_server_status,
-                                             onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
-                                                 // set refresh icon
-                                                 val refreshIcon = iconHandler
-                                                         .getOptionsMenuIcon(
-                                                                 MaterialDesignIconic.Icon.gmi_refresh)
-                                                 menu
-                                                         ?.findItem(R.id.refresh)
-                                                         ?.icon = refreshIcon
-                                             }, onOptionsMenuItemClicked = {
-                               when {
-                                   it.itemId == R.id.refresh -> {
-                                       reload()
-                                       true
-                                   }
-                                   else -> false
-                               }
-                           }))
+        optionsMenuComponent = OptionsMenuComponent(this,
+                                                    optionsMenuRes = R.menu.options_menu_server_status,
+                                                    onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
+                                                        // set refresh icon
+                                                        val refreshIcon = iconHandler
+                                                                .getOptionsMenuIcon(
+                                                                        MaterialDesignIconic.Icon.gmi_refresh)
+                                                        menu
+                                                                ?.findItem(R.id.refresh)
+                                                                ?.icon = refreshIcon
+                                                    }, onOptionsMenuItemClicked = {
+            when {
+                it.itemId == R.id.refresh -> {
+                    reload()
+                    true
+                }
+                else -> false
+            }
+        })
+
+        addFragmentPlugins(loadingPlugin)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super
+                .onCreate(savedInstanceState)
+        optionsMenuComponent
+                .afterOnCreate(savedInstanceState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super
+                .onCreateOptionsMenu(menu, inflater)
+        optionsMenuComponent
+                .onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (super.onOptionsItemSelected(item)) {
+            return true
+        }
+        return optionsMenuComponent
+                .onOptionsItemSelected(item)
     }
 
     @CallSuper

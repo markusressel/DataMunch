@@ -20,8 +20,8 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.LastUpdateFromSourcePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.view.component.OptionsMenuComponent
 import de.markusressel.datamunch.view.plugin.LoadingPlugin
-import de.markusressel.datamunch.view.plugin.OptionsMenuPlugin
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -69,17 +69,21 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         updateFabVisibility(View.INVISIBLE)
     })
 
+    private val optionsMenuComponent: OptionsMenuComponent
+
     init {
-        val optionsMenuPlugin = OptionsMenuPlugin(R.menu.options_menu_list,
-                                                  onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
-                                                      // set refresh icon
-                                                      val refreshIcon = iconHandler
-                                                              .getOptionsMenuIcon(
-                                                                      MaterialDesignIconic.Icon.gmi_refresh)
-                                                      menu
-                                                              ?.findItem(R.id.refresh)
-                                                              ?.icon = refreshIcon
-                                                  }, onOptionsMenuItemClicked = {
+        optionsMenuComponent = OptionsMenuComponent(
+                hostFragment = this,
+                optionsMenuRes = R.menu.options_menu_list,
+                onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
+                    // set refresh icon
+                    val refreshIcon = iconHandler
+                            .getOptionsMenuIcon(
+                                    MaterialDesignIconic.Icon.gmi_refresh)
+                    menu
+                            ?.findItem(R.id.refresh)
+                            ?.icon = refreshIcon
+                }, onOptionsMenuItemClicked = {
             when {
                 it.itemId == R.id.refresh -> {
                     reloadDataFromSource()
@@ -89,7 +93,29 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
             }
         })
 
-        addFragmentPlugins(loadingPlugin, optionsMenuPlugin)
+        addFragmentPlugins(loadingPlugin)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super
+                .onCreate(savedInstanceState)
+        optionsMenuComponent
+                .afterOnCreate(savedInstanceState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super
+                .onCreateOptionsMenu(menu, inflater)
+        optionsMenuComponent
+                .onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (super.onOptionsItemSelected(item)) {
+            return true
+        }
+        return optionsMenuComponent
+                .onOptionsItemSelected(item)
     }
 
     @CallSuper
@@ -122,12 +148,14 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                         5) > getLastUpdatedFromSource()) {
             Timber
                     .d { "Persisted list data is old, refreshing from source" }
-            reloadDataFromSource()
+            //            reloadDataFromSource()
         } else {
             Timber
                     .d { "Persisted list data is probably still valid, just loading from persistence" }
             fillListFromPersistence()
         }
+
+        fillListFromPersistence()
     }
 
     private fun setupFabs() {
