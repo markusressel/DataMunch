@@ -16,7 +16,7 @@ import javax.inject.Inject
  * Created by Markus on 15.07.2017.
  */
 abstract class DaggerPreferenceFragment : LifecyclePreferenceFragmentBase(), HasFragmentInjector,
-    SharedPreferences.OnSharedPreferenceChangeListener {
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
     lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
@@ -64,19 +64,19 @@ abstract class DaggerPreferenceFragment : LifecyclePreferenceFragmentBase(), Has
     /**
      * Use this method to get a reference to Preference instances of this page
      */
-    abstract protected fun findPreferences()
+    protected abstract fun findPreferences()
 
     /**
      * Use this method to update the summary of preferences that need to change
      * depending on it's current value
      */
-    abstract protected fun updateSummaries()
+    protected abstract fun updateSummaries()
 
     /**
      * Return the xml resource for this preference screen
      */
     @XmlRes
-    abstract protected fun getPreferencesResource(): Int
+    protected abstract fun getPreferencesResource(): Int
 
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
         updateSummaries()
@@ -89,6 +89,8 @@ abstract class DaggerPreferenceFragment : LifecyclePreferenceFragmentBase(), Has
         preferenceManager
                 .sharedPreferences
                 .unregisterOnSharedPreferenceChangeListener(this)
+
+
     }
 
 }

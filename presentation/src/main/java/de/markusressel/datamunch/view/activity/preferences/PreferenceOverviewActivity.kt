@@ -73,8 +73,6 @@ class PreferenceOverviewActivity : PreferenceActivityBase() {
     }
 
     private fun restartActivity() {
-        finish()
-
         navigator
                 .startActivity(this, Navigator.NavigationPages.Main,
                                Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)

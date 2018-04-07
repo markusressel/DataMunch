@@ -3,13 +3,19 @@ package de.markusressel.datamunch.view.fragment.preferences
 import android.preference.Preference
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
+import de.markusressel.datamunch.data.ssh.ConnectionManager
 import de.mrapp.android.preference.activity.PreferenceFragment
 import de.mrapp.android.preference.activity.RestoreDefaultsListener
+import javax.inject.Inject
+
 
 /**
  * Created by Markus on 06.01.2018.
  */
 class ConnectionPreferences : DaggerPreferenceFragment(), RestoreDefaultsListener {
+
+    @Inject
+    protected lateinit var connectionManager: ConnectionManager
 
     private lateinit var sshPassword: Preference
     private lateinit var sshProxyPassword: Preference

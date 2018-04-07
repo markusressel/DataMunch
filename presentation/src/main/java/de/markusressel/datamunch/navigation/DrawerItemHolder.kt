@@ -11,7 +11,7 @@ object DrawerItemHolder {
 
     val Status = DrawerMenuItem(title = R.string.menu_item_status,
                                 icon = MaterialDesignIconic.Icon.gmi_home, selectable = true,
-                                navigationPage = NavigationPageHolder.Main)
+            navigationPage = NavigationPageHolder.Status)
 
     val Accounts = DrawerMenuItem(title = R.string.menu_item_accounts,
                                   icon = MaterialDesignIconic.Icon.gmi_account, selectable = true,

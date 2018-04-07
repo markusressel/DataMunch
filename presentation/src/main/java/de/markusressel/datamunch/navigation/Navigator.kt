@@ -29,7 +29,7 @@ class Navigator @Inject constructor() {
     val currentState: NavigationState
         get() {
             return if (stateStack.isEmpty()) {
-                NavigationState(INITIAL_PAGE, NavigationPageHolder.Main)
+                NavigationState(INITIAL_PAGE, NavigationPageHolder.Status)
             } else {
                 stateStack
                         .peek()
