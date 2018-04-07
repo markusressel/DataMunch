@@ -68,13 +68,6 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
         addFragmentPlugins(loadingPlugin)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super
-                .onCreate(savedInstanceState)
-        optionsMenuComponent
-                .afterOnCreate(savedInstanceState)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super
                 .onCreateOptionsMenu(menu, inflater)

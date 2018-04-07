@@ -1,17 +1,20 @@
 package de.markusressel.datamunch.view.component
 
-import android.os.Bundle
+import android.arch.lifecycle.Lifecycle
 import android.support.annotation.MenuRes
-import android.support.v4.app.Fragment
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import com.trello.rxlifecycle2.android.FragmentEvent
+import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
+import de.markusressel.datamunch.view.fragment.base.LifecycleFragmentBase
+import io.reactivex.rxkotlin.subscribeBy
 
 /**
  * Created by Markus on 15.02.2018.
  */
 class OptionsMenuComponent(
-        hostFragment: Fragment,
+        hostFragment: LifecycleFragmentBase,
         /**
          * The layout resource for this Activity
          */
@@ -20,9 +23,22 @@ class OptionsMenuComponent(
         val onCreateOptionsMenu: ((menu: Menu?, inflater: MenuInflater?) -> Unit)? = null) :
     FragmentComponent(hostFragment) {
 
-    fun afterOnCreate(savedInstanceState: Bundle?) {
+    init {
         hostFragment
-                .setHasOptionsMenu(true)
+                .lifecycle()
+                .filter {
+                    setOf(FragmentEvent.CREATE, FragmentEvent.RESUME, FragmentEvent.DESTROY)
+                            .contains(it)
+                }
+                .bindUntilEvent(hostFragment, Lifecycle.Event.ON_DESTROY)
+                .subscribeBy(onNext = {
+                    when (it) {
+                        FragmentEvent.CREATE -> {
+                            hostFragment
+                                    .setHasOptionsMenu(true)
+                        }
+                    }
+                })
     }
 
     fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

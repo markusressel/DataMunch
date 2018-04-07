@@ -1,5 +1,5 @@
 package de.markusressel.datamunch.view.component
 
-import android.support.v4.app.Fragment
+import de.markusressel.datamunch.view.fragment.base.LifecycleFragmentBase
 
-abstract class FragmentComponent(protected val hostFragment: Fragment)
+abstract class FragmentComponent(protected val hostFragment: LifecycleFragmentBase)
