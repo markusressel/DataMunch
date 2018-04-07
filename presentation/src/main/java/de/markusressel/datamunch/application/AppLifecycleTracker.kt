@@ -50,7 +50,7 @@ class AppLifecycleTracker(val preferenceHandler: PreferenceHandler) :
                 .getValue(PreferenceHandler.USE_PATTERN_LOCK)
         if (useLock) {
             LockComponent
-                    .isLocked = true
+                    .isScreenLocked = true
             // in case anyone is still listening
             Bus
                     .send(LockEvent(true))

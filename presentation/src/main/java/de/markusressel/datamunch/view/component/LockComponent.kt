@@ -1,27 +1,75 @@
 package de.markusressel.datamunch.view.component
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.arch.lifecycle.Lifecycle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
+import com.trello.rxlifecycle2.android.ActivityEvent
+import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.event.LockEvent
+import de.markusressel.datamunch.view.activity.base.LifecycleActivityBase
 import de.markusressel.datamunch.view.fragment.LockscreenFragment
+import io.reactivex.rxkotlin.subscribeBy
 
 /**
  * Created by Markus on 15.02.2018.
  */
-class LockComponent(hostActivity: AppCompatActivity,
+class LockComponent(hostActivity: LifecycleActivityBase,
                     val preferenceHandler: () -> PreferenceHandler) :
     ActivityComponent(hostActivity) {
 
     private lateinit var lockLayout: ViewGroup
     private lateinit var originalLayout: View
+
+    init {
+        hostActivity
+                .lifecycle()
+                .filter {
+                    setOf(ActivityEvent.CREATE, ActivityEvent.RESUME, ActivityEvent.DESTROY)
+                            .contains(it)
+                }
+                .bindUntilEvent(hostActivity, Lifecycle.Event.ON_DESTROY)
+                .subscribeBy(onNext = {
+                    when (it) {
+                        ActivityEvent.CREATE -> {
+                            if (!lockInitialized) {
+                                isScreenLocked = isLockEnabled()
+                                lockInitialized = true
+                            }
+
+                            Bus
+                                    .observe<LockEvent>()
+                                    .subscribe {
+                                        setScreenLock(it.lock)
+                                    }
+                                    .registerInBus(this)
+                        }
+
+                        ActivityEvent.RESUME -> {
+                            setScreenLock(isLockEnabled() && isScreenLocked)
+                        }
+
+                        ActivityEvent.DESTROY -> {
+                            Timber
+                                    .d { "DESTROY EVENT IN LOCK COMPONENT" }
+                        }
+                    }
+                })
+    }
+
+    private fun isLockEnabled(): Boolean {
+        val useLock = preferenceHandler()
+                .getValue(PreferenceHandler.USE_PATTERN_LOCK)
+        val pattern = preferenceHandler()
+                .getValue(PreferenceHandler.LOCK_PATTERN)
+
+        return useLock && pattern.isNotEmpty()
+    }
 
     fun setContentView(view: View?): View? {
         val contentView: View?
@@ -70,24 +118,6 @@ class LockComponent(hostActivity: AppCompatActivity,
         return baseLayout
     }
 
-    fun onCreate(savedInstanceState: Bundle?) {
-        Bus
-                .observe<LockEvent>()
-                .subscribe {
-                    setScreenLock(it.lock)
-                }
-                .registerInBus(this)
-    }
-
-    fun onResume() {
-        val useLock = preferenceHandler()
-                .getValue(PreferenceHandler.USE_PATTERN_LOCK)
-        val pattern = preferenceHandler()
-                .getValue(PreferenceHandler.LOCK_PATTERN)
-
-        setScreenLock(useLock && pattern.isNotEmpty() && isLocked)
-    }
-
     private fun setScreenLock(locked: Boolean) {
         Bus
                 .send(SetStatusBarStateEvent(!locked))
@@ -115,7 +145,7 @@ class LockComponent(hostActivity: AppCompatActivity,
                             .VISIBLE
                 }
 
-        isLocked = true
+        isScreenLocked = true
     }
 
     /**
@@ -132,7 +162,7 @@ class LockComponent(hostActivity: AppCompatActivity,
                             .GONE
                 }
 
-        isLocked = false
+        isScreenLocked = false
     }
 
     fun onDestroy() {
@@ -142,10 +172,17 @@ class LockComponent(hostActivity: AppCompatActivity,
     }
 
     companion object {
+
+        /**
+         * Indicates whether the screen lock's initial state has been initialized
+         */
+        @Volatile
+        var lockInitialized = false
+
         /**
          * Indicates whether the screen is locked
          */
         @Volatile
-        var isLocked = false
+        var isScreenLocked = false
     }
 }

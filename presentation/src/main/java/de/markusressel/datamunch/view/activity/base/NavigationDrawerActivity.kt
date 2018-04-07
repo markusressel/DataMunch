@@ -33,7 +33,7 @@ import de.markusressel.datamunch.navigation.DrawerItemHolder.Storage
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Tasks
 import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.navigation.Navigator
-import de.markusressel.datamunch.view.component.LockComponent.Companion.isLocked
+import de.markusressel.datamunch.view.component.LockComponent.Companion.isScreenLocked
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
@@ -117,7 +117,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         super
                 .onResume()
 
-        setDrawerLockState(isLocked)
+        setDrawerLockState(isScreenLocked)
     }
 
     private fun setDrawerLockState(locked: Boolean) {
