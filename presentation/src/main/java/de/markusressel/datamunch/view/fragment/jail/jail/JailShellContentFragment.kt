@@ -13,6 +13,7 @@ import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.ssh.SSHShell
+import de.markusressel.datamunch.extensions.doAsync
 import de.markusressel.datamunch.extensions.prettyPrint
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
@@ -81,7 +82,7 @@ class JailShellContentFragment : JailContentFragmentBase() {
                     val entity = getEntityFromPersistence()
                     // enter jail
                     shellInstance
-                            ?.writeToShell("jexec ${entity.jail_host} /bin/tcsh", NEW_LINE)
+                            ?.writeToShell("jexec ${entity.jail_host} /bin/tcsh; exit", NEW_LINE)
 
                     shellInstance
                             ?.let {
@@ -104,7 +105,9 @@ class JailShellContentFragment : JailContentFragmentBase() {
         Bus
                 .observe<KeyEvent>()
                 .subscribe {
-                    handleKeybordInput(it)
+                    doAsync {
+                        handleKeybordInput(it)
+                    }
                 }
                 .registerInBus(this)
     }

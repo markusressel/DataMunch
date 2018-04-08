@@ -1,6 +1,7 @@
 package de.markusressel.datamunch.extensions
 
 import android.content.Context
+import android.os.AsyncTask
 import de.markusressel.datamunch.R
 import java.util.*
 
@@ -15,6 +16,15 @@ fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) + start
 fun Context.isTablet(): Boolean {
     return resources
             .getBoolean(R.bool.is_tablet)
+}
+
+fun Any.doAsync(handler: () -> Unit) {
+    object : AsyncTask<Void, Void, Void?>() {
+        override fun doInBackground(vararg p0: Void?): Void? {
+            handler()
+            return null
+        }
+    }.execute()
 }
 
 fun Throwable.prettyPrint(): String {
