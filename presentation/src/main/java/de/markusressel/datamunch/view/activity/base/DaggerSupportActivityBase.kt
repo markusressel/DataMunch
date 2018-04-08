@@ -46,7 +46,7 @@ import javax.inject.Inject
  * Created by Markus on 20.12.2017.
  */
 abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentInjector,
-    HasSupportFragmentInjector {
+        HasSupportFragmentInjector {
 
     @Inject
     internal lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
@@ -144,7 +144,7 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
     protected fun hideStatusBar() {
         window
                 .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                          WindowManager.LayoutParams.FLAG_FULLSCREEN)
+                        WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
     fun initLocale() {
@@ -185,7 +185,7 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
         }
     }
 
-    @IntDef(DEFAULT.toLong(), DIALOG.toLong())
+    @IntDef(DEFAULT, DIALOG)
     @kotlin.annotation.Retention
     annotation class Style
 
