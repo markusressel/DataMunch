@@ -13,7 +13,7 @@ buildscript {
         targetSdkVersion = 26
         buildToolsVersion = "27.0.3"
 
-        supportLibVersion = "27.0.2"
+        supportLibVersion = "27.1.1"
         constraintLayoutVersion = "1.0.2"
         dagger2Version = "2.11"
         aboutlibrariesVersion = "6.0.5"
