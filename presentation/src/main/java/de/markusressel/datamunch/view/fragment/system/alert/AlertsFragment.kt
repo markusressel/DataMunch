@@ -10,6 +10,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemAlertBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.system.alert.AlertModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -53,19 +54,28 @@ class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<AlertEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedWith(compareBy({
-                                          it
-                                                  .dismissed
-                                      }, {
-                                          it
-                                                  .level
-                                      }, {
-                                          it
-                                                  .message
-                                      }))
+    override fun getAllSortCriteria(): List<SortOption<AlertEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.dismissed,
+                        {
+                            it
+                                    .dismissed
+                        }),
+                createSortOption(
+                        R.string.level,
+                        {
+                            it
+                                    .level
+                                    .toLowerCase()
+                        }),
+                createSortOption(
+                        R.string.message,
+                        {
+                            it
+                                    .message
+                                    .toLowerCase()
+                        }))
     }
 
     private fun openDetailView(alert: AlertEntity) {

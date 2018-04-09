@@ -42,16 +42,16 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
 
     private val optionsMenuComponent: OptionsMenuComponent by lazy {
         OptionsMenuComponent(this,
-                optionsMenuRes = R.menu.options_menu_server_status,
-                onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
-                    // set refresh icon
-                    val refreshIcon = iconHandler
-                            .getOptionsMenuIcon(
-                                    MaterialDesignIconic.Icon.gmi_refresh)
-                    menu
-                            ?.findItem(R.id.refresh)
-                            ?.icon = refreshIcon
-                }, onOptionsMenuItemClicked = {
+                             optionsMenuRes = R.menu.options_menu_server_status,
+                             onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
+                                 // set refresh icon
+                                 val refreshIcon = iconHandler
+                                         .getOptionsMenuIcon(
+                                                 MaterialDesignIconic.Icon.gmi_refresh)
+                                 menu
+                                         ?.findItem(R.id.refresh)
+                                         ?.icon = refreshIcon
+                             }, onOptionsMenuItemClicked = {
             when {
                 it.itemId == R.id.refresh -> {
                     reload()
@@ -63,7 +63,8 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
     }
 
     override fun initComponents(context: Context) {
-        super.initComponents(context)
+        super
+                .initComponents(context)
         loadingComponent
         optionsMenuComponent
     }
@@ -83,9 +84,11 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
                 .onOptionsItemSelected(item)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val parent = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
-        return loadingComponent.onCreateView(inflater, parent, savedInstanceState)
+        return loadingComponent
+                .onCreateView(inflater, parent, savedInstanceState)
     }
 
     @CallSuper
@@ -95,7 +98,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
 
         frittenbudeServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy(),
-                        connectionManager.getMainSSHConnection())
+                                        connectionManager.getMainSSHConnection())
 
         openWrtServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy())

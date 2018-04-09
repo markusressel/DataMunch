@@ -33,13 +33,16 @@ class MaintenanceFragment : DaggerSupportFragmentBase() {
     }
 
     override fun initComponents(context: Context) {
-        super.initComponents(context)
+        super
+                .initComponents(context)
         loadingComponent
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val parent = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
-        return loadingComponent.onCreateView(inflater, parent, savedInstanceState)
+        return loadingComponent
+                .onCreateView(inflater, parent, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

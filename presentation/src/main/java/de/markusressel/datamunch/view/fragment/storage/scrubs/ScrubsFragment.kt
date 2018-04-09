@@ -12,6 +12,7 @@ import de.markusressel.datamunch.databinding.ListItemScrubBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.storage.scrub.ScrubModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
@@ -55,21 +56,22 @@ class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<ScrubEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .scrub_volume
-                            .toLowerCase()
-                }
+    override fun getAllSortCriteria(): List<SortOption<ScrubEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.volume,
+                        {
+                            it
+                                    .scrub_volume
+                                    .toLowerCase()
+                        }))
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
                                     onClick = {
-            openAddDialog()
-        }))
+                                        openAddDialog()
+                                    }))
     }
 
     private fun openAddDialog() {

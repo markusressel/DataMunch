@@ -12,6 +12,7 @@ import de.markusressel.datamunch.databinding.ListItemTemplateBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.jails.template.TemplateModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
@@ -55,20 +56,21 @@ class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<TemplateEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .id
-                }
+    override fun getAllSortCriteria(): List<SortOption<TemplateEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.id,
+                        {
+                            it
+                                    .id
+                        }))
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
                                     onClick = {
-            openAddView()
-        }))
+                                        openAddView()
+                                    }))
     }
 
     private fun openDetailView(template: TemplateEntity) {

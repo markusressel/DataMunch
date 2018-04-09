@@ -10,6 +10,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemPluginBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.plugins.PluginModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_services.*
@@ -53,14 +54,15 @@ class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<PluginEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .plugin_name
-                            .toLowerCase()
-                }
+    override fun getAllSortCriteria(): List<SortOption<PluginEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.name,
+                        {
+                            it
+                                    .plugin_name
+                                    .toLowerCase()
+                        }))
     }
 
     private fun openDetailView(plugin: PluginEntity) {

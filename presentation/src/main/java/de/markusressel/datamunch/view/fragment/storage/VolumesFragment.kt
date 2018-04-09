@@ -12,6 +12,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemVolumeBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.storage.volume.VolumeModel
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
@@ -56,21 +57,22 @@ class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<VolumeEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .name
-                            .toLowerCase()
-                }
+    override fun getAllSortCriteria(): List<SortOption<VolumeEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.name,
+                        {
+                            it
+                                    .name
+                                    .toLowerCase()
+                        }))
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
                                     onClick = {
-            openAddDialog()
-        }))
+                                        openAddDialog()
+                                    }))
     }
 
     private fun openAddDialog() {

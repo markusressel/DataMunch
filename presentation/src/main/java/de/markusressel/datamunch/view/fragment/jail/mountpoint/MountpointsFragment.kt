@@ -12,6 +12,7 @@ import de.markusressel.datamunch.databinding.ListItemMountpointBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.jails.mountpoint.MountpointModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
@@ -55,20 +56,21 @@ class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>(
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<MountpointEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .id
-                }
+    override fun getAllSortCriteria(): List<SortOption<MountpointEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.id,
+                        {
+                            it
+                                    .id
+                        }))
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
                                     onClick = {
-            openAddView()
-        }))
+                                        openAddView()
+                                    }))
     }
 
     private fun openAddView() {

@@ -12,6 +12,7 @@ import de.markusressel.datamunch.databinding.ListItemUserBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.account.user.UserModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
@@ -55,21 +56,22 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<UserEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .bsdusr_username
-                            .toLowerCase()
-                }
+    override fun getAllSortCriteria(): List<SortOption<UserEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.name,
+                        {
+                            it
+                                    .bsdusr_username
+                                    .toLowerCase()
+                        }))
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
                                     onClick = {
-            openAddDialog()
-        }))
+                                        openAddDialog()
+                                    }))
     }
 
     private fun openAddDialog() {

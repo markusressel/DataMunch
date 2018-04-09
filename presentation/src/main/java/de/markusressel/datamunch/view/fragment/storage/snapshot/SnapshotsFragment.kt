@@ -12,6 +12,7 @@ import de.markusressel.datamunch.databinding.ListItemSnapshotBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.storage.snapshot.SnapshotModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
@@ -55,21 +56,22 @@ class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<SnapshotEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .name
-                            .toLowerCase()
-                }
+    override fun getAllSortCriteria(): List<SortOption<SnapshotEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.name,
+                        {
+                            it
+                                    .name
+                                    .toLowerCase()
+                        }))
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
                                     onClick = {
-            openAddDialog()
-        }))
+                                        openAddDialog()
+                                    }))
     }
 
     private fun openAddDialog() {

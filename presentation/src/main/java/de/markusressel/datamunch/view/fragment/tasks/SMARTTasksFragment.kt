@@ -10,6 +10,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemSmartTaskBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.tasks.smart.SMARTTaskModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -53,16 +54,22 @@ class SMARTTasksFragment : ListFragmentBase<SMARTTaskModel, SMARTTaskEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<SMARTTaskEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedWith(compareBy({
-                                          it
-                                                  .smarttest_type
-                                      }, {
-                                          it
-                                                  .smarttest_desc
-                                      }))
+    override fun getAllSortCriteria(): List<SortOption<SMARTTaskEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.type,
+                        {
+                            it
+                                    .smarttest_type
+                                    .toLowerCase()
+                        }),
+                createSortOption(
+                        R.string.description,
+                        {
+                            it
+                                    .smarttest_desc
+                                    .toLowerCase()
+                        }))
     }
 
     private fun openDetailView(smartTask: SMARTTaskEntity) {

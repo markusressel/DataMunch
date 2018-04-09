@@ -12,6 +12,7 @@ import de.markusressel.datamunch.databinding.ListItemAfpShareBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.sharing.afp.AfpShareModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -54,21 +55,22 @@ class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<AfpShareEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .afp_name
-                            .toLowerCase()
-                }
+    override fun getAllSortCriteria(): List<SortOption<AfpShareEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.name,
+                        {
+                            it
+                                    .afp_name
+                                    .toLowerCase()
+                        }))
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
                                     onClick = {
-            openAddView()
-        }))
+                                        openAddView()
+                                    }))
     }
 
     private fun openAddView() {

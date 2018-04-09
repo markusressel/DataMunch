@@ -52,13 +52,16 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
     }
 
     override fun initComponents(context: Context) {
-        super.initComponents(context)
+        super
+                .initComponents(context)
         loadingComponent
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val parent = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
-        return loadingComponent.onCreateView(inflater, parent, savedInstanceState)
+        return loadingComponent
+                .onCreateView(inflater, parent, savedInstanceState)
     }
 
     @CallSuper
@@ -122,9 +125,9 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
 
         profileImage
                 .setImageDrawable(iconHandler.getIcon(MaterialDesignIconic.Icon.gmi_lock,
-                        ContextCompat.getColor(context as Context,
-                                R.color.md_grey_500),
-                        48, 0))
+                                                      ContextCompat.getColor(context as Context,
+                                                                             R.color.md_grey_500),
+                                                      48, 0))
 
         patternLockView
                 .setOnTouchListener { _: View, _: MotionEvent ->
@@ -152,13 +155,13 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
                         } else if (event.eventType == PatternLockCompoundEvent.EventType.PATTERN_PROGRESS) {
                             Log
                                     .d(javaClass.name,
-                                            "Pattern progress: " + PatternLockUtils.patternToString(
-                                                    patternLockView, event.pattern))
+                                       "Pattern progress: " + PatternLockUtils.patternToString(
+                                               patternLockView, event.pattern))
                         } else if (event.eventType == PatternLockCompoundEvent.EventType.PATTERN_COMPLETE) {
                             Log
                                     .d(javaClass.name,
-                                            "Pattern complete: " + PatternLockUtils.patternToString(
-                                                    patternLockView, event.pattern))
+                                       "Pattern complete: " + PatternLockUtils.patternToString(
+                                               patternLockView, event.pattern))
 
                             checkPattern(event.pattern)
                         } else if (event.eventType == PatternLockCompoundEvent.EventType.PATTERN_CLEARED) {

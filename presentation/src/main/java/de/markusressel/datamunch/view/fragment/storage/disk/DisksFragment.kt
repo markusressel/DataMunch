@@ -10,6 +10,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemDiskBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.storage.disk.DiskModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
@@ -53,14 +54,15 @@ class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<DiskEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .disk_name
-                            .toLowerCase()
-                }
+    override fun getAllSortCriteria(): List<SortOption<DiskEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.name,
+                        {
+                            it
+                                    .disk_name
+                                    .toLowerCase()
+                        }))
     }
 
     private fun openDetailView(disk: DiskEntity) {

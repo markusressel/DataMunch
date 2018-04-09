@@ -12,6 +12,7 @@ import de.markusressel.datamunch.databinding.ListItemCifsShareBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.sharing.cifs.CifsShareModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -55,21 +56,22 @@ class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<CifsShareEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .cifs_name
-                            .toLowerCase()
-                }
+    override fun getAllSortCriteria(): List<SortOption<CifsShareEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.name,
+                        {
+                            it
+                                    .cifs_name
+                                    .toLowerCase()
+                        }))
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
                                     onClick = {
-            openAddView()
-        }))
+                                        openAddView()
+                                    }))
     }
 
     private fun openAddView() {

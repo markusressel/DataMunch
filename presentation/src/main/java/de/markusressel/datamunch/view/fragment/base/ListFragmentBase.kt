@@ -299,8 +299,13 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
                     // sort list data according to current selection
                     getCurrentSortOptions()
                             .forEach { criteria ->
+
+                                if (criteria.reversed) {
+                                } else {
+                                }
+
                                 listData = listData
-                                        .sortedWith(criteria.comparator)
+                                        .sortedWith(compareBy(criteria.selector))
                             }
 
                     listData
@@ -339,8 +344,8 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
      * Helper method to easily create a type safe SortOption
      */
     protected fun createSortOption(@StringRes name: Int,
-                                   comparator: Comparator<EntityType>): SortOption<EntityType> {
-        return SortOption(name, comparator)
+                                   selector: (EntityType) -> Comparable<*>?): SortOption<EntityType> {
+        return SortOption(name, selector)
     }
 
     /**

@@ -16,7 +16,7 @@ import javax.inject.Inject
  * Created by Markus on 15.07.2017.
  */
 abstract class DaggerPreferenceFragment : LifecyclePreferenceFragmentBase(), HasFragmentInjector,
-        SharedPreferences.OnSharedPreferenceChangeListener {
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
     lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>

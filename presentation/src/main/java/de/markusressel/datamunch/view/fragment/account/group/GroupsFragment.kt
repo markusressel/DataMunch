@@ -56,17 +56,15 @@ class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
                 .asEntity()
     }
 
-
     override fun getAllSortCriteria(): List<SortOption<GroupEntity>> {
         return listOf(
                 createSortOption(
                         R.string.name,
-                        compareBy(
-                                {
-                                    it
-                                            .bsdgrp_group
-                                            .toLowerCase()
-                                })))
+                        {
+                            it
+                                    .bsdgrp_group
+                                    .toLowerCase()
+                        }))
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

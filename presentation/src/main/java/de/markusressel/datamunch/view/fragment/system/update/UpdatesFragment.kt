@@ -11,6 +11,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemUpdateBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.system.update.UpdateModel
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -57,14 +58,15 @@ class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<UpdateEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .name
-                            .toLowerCase()
-                }
+    override fun getAllSortCriteria(): List<SortOption<UpdateEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.name,
+                        {
+                            it
+                                    .name
+                                    .toLowerCase()
+                        }))
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

@@ -10,6 +10,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemServiceBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.services.service.ServiceModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -53,14 +54,15 @@ class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<ServiceEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .srv_service
-                            .toLowerCase()
-                }
+    override fun getAllSortCriteria(): List<SortOption<ServiceEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.name,
+                        {
+                            it
+                                    .srv_service
+                                    .toLowerCase()
+                        }))
     }
 
     private fun openDetailView(service: ServiceEntity) {

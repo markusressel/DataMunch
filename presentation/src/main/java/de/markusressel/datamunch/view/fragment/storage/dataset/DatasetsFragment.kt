@@ -12,6 +12,7 @@ import de.markusressel.datamunch.databinding.ListItemDatasetBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.storage.dataset.DatasetModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
@@ -55,14 +56,15 @@ class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<DatasetEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .name
-                            .toLowerCase()
-                }
+    override fun getAllSortCriteria(): List<SortOption<DatasetEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.name,
+                        {
+                            it
+                                    .name
+                                    .toLowerCase()
+                        }))
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

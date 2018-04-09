@@ -5,4 +5,5 @@ import android.support.annotation.StringRes
 /**
  * Class specifying a single SortOption for a list view
  */
-data class SortOption<T : Any>(@StringRes val int: Int, val comparator: Comparator<T>)
+data class SortOption<T : Any>(@StringRes val name: Int, val selector: (T) -> Comparable<*>?,
+                               var reversed: Boolean = false)
