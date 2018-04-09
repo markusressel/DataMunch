@@ -12,6 +12,7 @@ import de.markusressel.datamunch.databinding.ListItemGroupBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.account.group.GroupModel
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_jails.*
@@ -55,14 +56,17 @@ class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
                 .asEntity()
     }
 
-    override fun loadListDataFromPersistence(): List<GroupEntity> {
-        return super
-                .loadListDataFromPersistence()
-                .sortedBy {
-                    it
-                            .bsdgrp_group
-                            .toLowerCase()
-                }
+
+    override fun getAllSortCriteria(): List<SortOption<GroupEntity>> {
+        return listOf(
+                createSortOption(
+                        R.string.name,
+                        compareBy(
+                                {
+                                    it
+                                            .bsdgrp_group
+                                            .toLowerCase()
+                                })))
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

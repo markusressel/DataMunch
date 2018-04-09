@@ -7,4 +7,4 @@ import io.objectbox.annotation.Id
  * Created by Markus on 31.01.2018.
  */
 @Entity
-data class HostEntity(@Id var id: Long, val hostname: String, val isActive: Boolean)
+data class HostEntity(@Id var id: Long, val hostname: String)

@@ -135,10 +135,6 @@
         {
           "id": "2:3844125289713609510",
           "name": "hostname"
-        },
-        {
-          "id": "3:3616050892219352998",
-          "name": "isActive"
         }
       ],
       "relations": []
@@ -1167,7 +1163,8 @@
   "retiredIndexUids": [],
   "retiredPropertyUids": [
     4369752129617665470,
-    6897566155839383609
+    6897566155839383609,
+    3616050892219352998
   ],
   "retiredRelationUids": [],
   "version": 1

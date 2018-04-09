@@ -7,4 +7,9 @@
         android:title="@string/refresh"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/sortOrder"
+        android:title="@string/sort_order"
+        app:showAsAction="ifRoom" />
+
 </menu>

@@ -4,6 +4,7 @@ import android.arch.lifecycle.Lifecycle
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.CallSuper
+import android.support.annotation.StringRes
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
@@ -39,16 +40,16 @@ import javax.inject.Inject
 /**
  * Created by Markus on 29.01.2018.
  */
-abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() {
+abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSupportFragmentBase() {
 
     override val layoutRes: Int
         get() = R.layout.fragment_recyclerview
 
     protected open val fabConfig: FabConfig = FabConfig(left = mutableListOf(),
-            right = mutableListOf())
+                                                        right = mutableListOf())
     private val fabButtonViews = mutableListOf<FloatingActionButton>()
 
-    protected val listValues: MutableList<T> = ArrayList()
+    protected val listValues: MutableList<EntityType> = ArrayList()
     private lateinit var recyclerViewAdapter: LastAdapter
 
     @Inject
@@ -83,10 +84,21 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                     menu
                             ?.findItem(R.id.refresh)
                             ?.icon = refreshIcon
+
+                    val sortIcon = iconHandler
+                            .getOptionsMenuIcon(
+                                    MaterialDesignIconic.Icon.gmi_sort)
+                    menu
+                            ?.findItem(R.id.sortOrder)
+                            ?.icon = sortIcon
                 }, onOptionsMenuItemClicked = {
             when {
                 it.itemId == R.id.refresh -> {
                     reloadDataFromSource()
+                    true
+                }
+                it.itemId == R.id.sortOrder -> {
+                    openSortSelection()
                     true
                 }
                 else -> false
@@ -95,7 +107,8 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
     }
 
     override fun initComponents(context: Context) {
-        super.initComponents(context)
+        super
+                .initComponents(context)
         loadingComponent
         optionsMenuComponent
     }
@@ -115,9 +128,11 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 .onOptionsItemSelected(item)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val parent = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
-        return loadingComponent.onCreateView(inflater, parent, savedInstanceState)
+        return loadingComponent
+                .onCreateView(inflater, parent, savedInstanceState)
     }
 
     @CallSuper
@@ -139,7 +154,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
 
         frittenbudeServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy(),
-                        connectionManager.getMainSSHConnection())
+                                        connectionManager.getMainSSHConnection())
     }
 
     override fun onResume() {
@@ -201,8 +216,8 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
         }
 
         val fabView: FloatingActionButton = inflater.inflate(layout,
-                recyclerView.parent as ViewGroup,
-                false) as FloatingActionButton
+                                                             recyclerView.parent as ViewGroup,
+                                                             false) as FloatingActionButton
 
         // icon
         fabView
@@ -229,7 +244,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 .subscribe {
                     Toast
                             .makeText(context as Context, "Fab '${fab.description}' clicked",
-                                    Toast.LENGTH_LONG)
+                                      Toast.LENGTH_LONG)
                             .show()
 
                     // execute defined action if it exists
@@ -246,7 +261,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                 .subscribe {
                     Toast
                             .makeText(context as Context, "Fab '${fab.description}' long clicked",
-                                    Toast.LENGTH_LONG)
+                                      Toast.LENGTH_LONG)
                             .show()
 
                     // execute defined action if it exists
@@ -279,7 +294,16 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
 
         Single
                 .fromCallable {
-                    loadListDataFromPersistence()
+                    var listData = loadListDataFromPersistence()
+
+                    // sort list data according to current selection
+                    getCurrentSortOptions()
+                            .forEach { criteria ->
+                                listData = listData
+                                        .sortedWith(criteria.comparator)
+                            }
+
+                    listData
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -309,6 +333,34 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
                                 .showError(it)
                     }
                 })
+    }
+
+    /**
+     * Helper method to easily create a type safe SortOption
+     */
+    protected fun createSortOption(@StringRes name: Int,
+                                   comparator: Comparator<EntityType>): SortOption<EntityType> {
+        return SortOption(name, comparator)
+    }
+
+    /**
+     * Returns a list of all available sort criteria
+     * Override this method in child classes
+     */
+    open fun getAllSortCriteria(): List<SortOption<EntityType>> {
+        return emptyList()
+    }
+
+    /**
+     * Get a list of the currently selected (active) sort criteria
+     */
+    open fun getCurrentSortOptions(): List<SortOption<EntityType>> {
+        return getAllSortCriteria()
+    }
+
+    private fun openSortSelection() {
+        SortOptionSelectionDialog()
+                .show(childFragmentManager, null)
     }
 
     /**
@@ -359,14 +411,14 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
     /**
      * Map the source object to the persistence object
      */
-    abstract fun mapToEntity(it: K): T
+    abstract fun mapToEntity(it: ModelType): EntityType
 
     /**
      * Get the persistence handler for this list
      */
-    protected abstract fun getPersistenceHandler(): PersistenceManagerBase<T>
+    protected abstract fun getPersistenceHandler(): PersistenceManagerBase<EntityType>
 
-    private fun persistListData(data: List<T>) {
+    private fun persistListData(data: List<EntityType>) {
         getPersistenceHandler()
                 .standardOperation()
                 .removeAll()
@@ -410,7 +462,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
     /**
      * Load the data to be displayed in the list asEntity the persistence
      */
-    open fun loadListDataFromPersistence(): List<T> {
+    open fun loadListDataFromPersistence(): List<EntityType> {
         val persistenceHandler = getPersistenceHandler()
         return persistenceHandler
                 .standardOperation()
@@ -420,7 +472,7 @@ abstract class ListFragmentBase<K : Any, T : Any> : DaggerSupportFragmentBase() 
     /**
      * Load the data to be displayed in the list asEntity it's original source
      */
-    abstract fun loadListDataFromSource(): Single<List<K>>
+    abstract fun loadListDataFromSource(): Single<List<ModelType>>
 
     private fun updateFabVisibility(visible: Int) {
         if (visible == View.VISIBLE) {

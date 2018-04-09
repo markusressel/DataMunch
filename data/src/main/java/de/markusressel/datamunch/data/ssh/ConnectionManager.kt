@@ -1,5 +1,7 @@
 package de.markusressel.datamunch.data.ssh
 
+import de.markusressel.datamunch.data.persistence.AuthenticationPersistenceManager
+import de.markusressel.datamunch.data.persistence.HostPersistenceManager
 import de.markusressel.datamunch.data.persistence.entity.AuthenticationEntity
 import de.markusressel.datamunch.data.persistence.entity.HostEntity
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
@@ -13,19 +15,25 @@ import javax.inject.Singleton
 class ConnectionManager @Inject constructor() {
 
     @Inject
-    protected lateinit var preferenceHandler: PreferenceHandler
+    lateinit var preferenceHandler: PreferenceHandler
+
+    @Inject
+    lateinit var hostPersistenceManager: HostPersistenceManager
+    @Inject
+    lateinit var authenticationPersistenceManager: AuthenticationPersistenceManager
 
     /**
-     * Get an SSHConnectionConfig from the given parameters
+     * Create an SSHConnectionConfig from the given parameters
      */
     private fun createSSHConnectionConfig(host: HostEntity, port: Int = 22,
                                           auth: AuthenticationEntity): SSHConnectionConfig {
         return SSHConnectionConfig(host = host.hostname, port = port, username = auth.username,
-                password = auth.password)
+                                   password = auth.password)
     }
 
     fun getSSHProxy(): SSHConnectionConfig {
-        return SSHConnectionConfig(host = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_HOST),
+        return SSHConnectionConfig(
+                host = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_HOST),
                 port = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_PORT),
                 username = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_USER),
                 password = preferenceHandler.getValue(
@@ -33,13 +41,27 @@ class ConnectionManager @Inject constructor() {
     }
 
     fun getMainSSHConnection(): SSHConnectionConfig {
-        return createSSHConnectionConfig(
-                host = HostEntity(0, preferenceHandler.getValue(PreferenceHandler.CONNECTION_HOST),
-                        isActive = true), auth = AuthenticationEntity(0,
-                username = preferenceHandler.getValue(
-                        PreferenceHandler.SSH_USER),
-                password = preferenceHandler.getValue(
-                        PreferenceHandler.SSH_PASS)))
+        var host = hostPersistenceManager
+                .getActive()
+
+        if (host == null) {
+            host = HostEntity(0, preferenceHandler.getValue(PreferenceHandler.CONNECTION_HOST))
+        }
+
+        var auth = authenticationPersistenceManager
+                .standardOperation()
+                .all
+                .firstOrNull()
+
+        if (auth == null) {
+            auth = AuthenticationEntity(0,
+                                        username = preferenceHandler.getValue(
+                                                PreferenceHandler.SSH_USER),
+                                        password = preferenceHandler.getValue(
+                                                PreferenceHandler.SSH_PASS))
+        }
+
+        return createSSHConnectionConfig(host = host, auth = auth)
     }
 
 }

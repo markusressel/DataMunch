@@ -18,10 +18,10 @@ class HostPersistenceManager @Inject constructor() :
     fun getActive(): HostEntity? {
         return standardOperation()
                 .query()
-                .filter {
-                    it
-                            .isActive
-                }
+                //                .filter {
+                //                    it
+                //                            .isActive
+                //                }
                 .build()
                 .findFirst()
     }
