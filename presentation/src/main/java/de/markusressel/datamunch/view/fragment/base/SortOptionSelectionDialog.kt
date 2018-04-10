@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.LinearLayout
 import com.eightbitlab.rxbus.Bus
 import de.markusressel.datamunch.R
@@ -38,8 +39,15 @@ class SortOptionSelectionDialog : DaggerBottomSheetFragmentBase() {
 
                     val name: CheckBox = sortOptionLayout
                             .findViewById(R.id.sortOptionName)
+                    val orderSelector: ImageView = sortOptionLayout
+                            .findViewById(R.id.orderSelector)
                     name
                             .text = getString(it.name)
+
+                    orderSelector
+                            .setOnClickListener {
+
+                            }
 
                     containerLayout
                             .addView(sortOptionLayout)

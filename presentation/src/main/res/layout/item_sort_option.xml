@@ -20,7 +20,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
     <CheckBox
         android:id="@+id/sortOptionName"
@@ -28,8 +29,11 @@
         android:layout_height="wrap_content" />
 
     <com.mikepenz.iconics.view.IconicsImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:iiv_icon="gmd-favorite" />
+        android:id="@+id/orderSelector"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:paddingStart="16dp"
+        app:iiv_color="?android:attr/textColorPrimary"
+        app:iiv_icon="@string/gmd_arrow_upward" />
 
 </LinearLayout>
