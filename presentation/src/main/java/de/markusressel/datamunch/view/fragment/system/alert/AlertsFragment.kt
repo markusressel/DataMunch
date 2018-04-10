@@ -6,6 +6,7 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.AlertPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.AlertEntity
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemAlertBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
@@ -26,6 +27,9 @@ class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
 
     @Inject
     lateinit var persistenceManager: AlertPersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Alert.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<AlertEntity> = persistenceManager
 
@@ -55,27 +59,10 @@ class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<AlertEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.dismissed,
-                        {
-                            it
-                                    .dismissed
-                        }),
-                createSortOption(
-                        R.string.level,
-                        {
-                            it
-                                    .level
-                                    .toLowerCase()
-                        }),
-                createSortOption(
-                        R.string.message,
-                        {
-                            it
-                                    .message
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.ALERT_ENTITY_DISMISSED,
+                      SortOption.ALERT_ENTITY_LEVEL,
+                      SortOption.ALERT_ENTITY_MESSAGE
+        )
     }
 
     private fun openDetailView(alert: AlertEntity) {

@@ -5,6 +5,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.PluginPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.PluginEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemPluginBinding
@@ -26,6 +27,9 @@ class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
 
     @Inject
     lateinit var persistenceManager: PluginPersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Plugin.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<PluginEntity> = persistenceManager
 
@@ -55,14 +59,7 @@ class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<PluginEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.name,
-                        {
-                            it
-                                    .plugin_name
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.PLUGIN_NAME)
     }
 
     private fun openDetailView(plugin: PluginEntity) {

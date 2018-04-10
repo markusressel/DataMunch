@@ -5,6 +5,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.SMARTTaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.SMARTTaskEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemSmartTaskBinding
@@ -26,6 +27,9 @@ class SMARTTasksFragment : ListFragmentBase<SMARTTaskModel, SMARTTaskEntity>() {
 
     @Inject
     lateinit var persistenceManager: SMARTTaskPersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.SMARTTask.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<SMARTTaskEntity> = persistenceManager
 
@@ -55,21 +59,8 @@ class SMARTTasksFragment : ListFragmentBase<SMARTTaskModel, SMARTTaskEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<SMARTTaskEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.type,
-                        {
-                            it
-                                    .smarttest_type
-                                    .toLowerCase()
-                        }),
-                createSortOption(
-                        R.string.description,
-                        {
-                            it
-                                    .smarttest_desc
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.SMART_TASK_TYPE,
+                      SortOption.SMART_TASK_DESCRIPTION)
     }
 
     private fun openDetailView(smartTask: SMARTTaskEntity) {

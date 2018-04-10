@@ -6,6 +6,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.JailPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.JailEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemJailBinding
@@ -28,6 +29,9 @@ class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
 
     @Inject
     lateinit var persistenceManager: JailPersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Jail.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<JailEntity> = persistenceManager
 
@@ -57,14 +61,7 @@ class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<JailEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.name,
-                        {
-                            it
-                                    .jail_host
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.JAIL_NAME)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

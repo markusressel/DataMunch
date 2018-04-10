@@ -6,6 +6,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.NfsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.NfsShareEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemNfsShareBinding
@@ -28,6 +29,9 @@ class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
 
     @Inject
     lateinit var persistenceManager: NfsSharePersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.NfsShare.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<NfsShareEntity> = persistenceManager
 
@@ -57,13 +61,7 @@ class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<NfsShareEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.id,
-                        {
-                            it
-                                    .id
-                        }))
+        return listOf(SortOption.NFS_SHARE_ID)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

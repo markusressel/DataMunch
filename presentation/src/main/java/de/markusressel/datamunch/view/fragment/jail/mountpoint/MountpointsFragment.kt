@@ -6,6 +6,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.MountpointPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.MountpointEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemMountpointBinding
@@ -28,6 +29,9 @@ class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>(
 
     @Inject
     lateinit var persistenceManager: MountpointPersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Jail.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<MountpointEntity> = persistenceManager
 
@@ -57,13 +61,7 @@ class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>(
     }
 
     override fun getAllSortCriteria(): List<SortOption<MountpointEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.id,
-                        {
-                            it
-                                    .id
-                        }))
+        return listOf(SortOption.MOUNTPOINT_ID)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

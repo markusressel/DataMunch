@@ -6,6 +6,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.SnapshotPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.SnapshotEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemSnapshotBinding
@@ -28,6 +29,9 @@ class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
 
     @Inject
     lateinit var persistenceManager: SnapshotPersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Snapshot.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<SnapshotEntity> = persistenceManager
 
@@ -57,14 +61,7 @@ class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<SnapshotEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.name,
-                        {
-                            it
-                                    .name
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.SNAPSHOT_NAME)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

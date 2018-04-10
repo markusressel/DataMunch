@@ -6,6 +6,7 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.DiskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.DiskEntity
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemDiskBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
@@ -26,6 +27,9 @@ class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
 
     @Inject
     lateinit var persistenceManager: DiskPersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Disk.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<DiskEntity> = persistenceManager
 
@@ -55,14 +59,7 @@ class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<DiskEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.name,
-                        {
-                            it
-                                    .disk_name
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.DISK_ENTITY_NAME)
     }
 
     private fun openDetailView(disk: DiskEntity) {

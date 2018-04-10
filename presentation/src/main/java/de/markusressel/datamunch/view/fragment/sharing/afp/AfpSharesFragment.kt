@@ -7,6 +7,7 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.AfpSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.AfpShareEntity
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemAfpShareBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
@@ -27,6 +28,9 @@ import javax.inject.Inject
 class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
     @Inject
     lateinit var persistenceManager: AfpSharePersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.AfpShare.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<AfpShareEntity> = persistenceManager
 
@@ -56,14 +60,7 @@ class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<AfpShareEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.name,
-                        {
-                            it
-                                    .afp_name
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.AFP_SHARE_NAME)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

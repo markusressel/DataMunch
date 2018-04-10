@@ -6,6 +6,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.UserPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.UserEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemUserBinding
@@ -28,6 +29,9 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
 
     @Inject
     lateinit var persistenceManager: UserPersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.User.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> = persistenceManager
 
@@ -57,14 +61,7 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<UserEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.name,
-                        {
-                            it
-                                    .bsdusr_username
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.USER_NAME)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

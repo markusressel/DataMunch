@@ -11,6 +11,7 @@ import de.markusressel.datamunch.view.fragment.account.user.UserDetailActivity
 import de.markusressel.datamunch.view.fragment.account.user.UserDetailContentFragment
 import de.markusressel.datamunch.view.fragment.account.user.UsersFragment
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
+import de.markusressel.datamunch.view.fragment.base.SortOptionSelectionDialog
 import de.markusressel.datamunch.view.fragment.jail.jail.*
 import de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointDetailActivity
 import de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointDetailContentFragment
@@ -268,5 +269,8 @@ abstract class BaseBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun SMARTTaskDetailContentFragment(): SMARTTaskDetailContentFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun SortOptionSelectionDialog(): SortOptionSelectionDialog
 
 }

@@ -7,6 +7,7 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.CifsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.CifsShareEntity
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemCifsShareBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
@@ -28,6 +29,9 @@ class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
 
     @Inject
     lateinit var persistenceManager: CifsSharePersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.CifsShare.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<CifsShareEntity> = persistenceManager
 
@@ -57,14 +61,7 @@ class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<CifsShareEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.name,
-                        {
-                            it
-                                    .cifs_name
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.CIFS_SHARE_NAME)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

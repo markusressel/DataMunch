@@ -7,6 +7,7 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.DatasetPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.DatasetEntity
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemDatasetBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
@@ -28,6 +29,9 @@ class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
 
     @Inject
     lateinit var persistenceManager: DatasetPersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Dataset.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<DatasetEntity> = persistenceManager
 
@@ -57,14 +61,7 @@ class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<DatasetEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.name,
-                        {
-                            it
-                                    .name
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.DATASET_NAME)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

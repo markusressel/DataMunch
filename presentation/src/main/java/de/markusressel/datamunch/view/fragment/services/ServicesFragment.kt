@@ -5,6 +5,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.ServicePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.ServiceEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemServiceBinding
@@ -26,6 +27,9 @@ class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
 
     @Inject
     lateinit var persistenceManager: ServicePersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Service.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<ServiceEntity> = persistenceManager
 
@@ -55,14 +59,7 @@ class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<ServiceEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.name,
-                        {
-                            it
-                                    .srv_service
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.SERVICE_ENTITY_NAME)
     }
 
     private fun openDetailView(service: ServiceEntity) {

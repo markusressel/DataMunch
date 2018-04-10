@@ -7,6 +7,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.VolumePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.VolumeEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemVolumeBinding
@@ -27,8 +28,12 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
+
     @Inject
     lateinit var persistenceManager: VolumePersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Volume.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<VolumeEntity> = persistenceManager
 
@@ -58,14 +63,7 @@ class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<VolumeEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.name,
-                        {
-                            it
-                                    .name
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.VOLUME_NAME)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

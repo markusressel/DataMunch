@@ -6,6 +6,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.GroupPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.GroupEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemGroupBinding
@@ -28,6 +29,9 @@ class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
 
     @Inject
     lateinit var persistenceManager: GroupPersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Group.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<GroupEntity> = persistenceManager
 
@@ -57,14 +61,7 @@ class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<GroupEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.name,
-                        {
-                            it
-                                    .bsdgrp_group
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.GROUP_NAME)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

@@ -6,6 +6,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.TemplatePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.TemplateEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemTemplateBinding
@@ -28,6 +29,9 @@ class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
 
     @Inject
     lateinit var persistenceManager: TemplatePersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Template.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<TemplateEntity> = persistenceManager
 
@@ -57,13 +61,7 @@ class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<TemplateEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.id,
-                        {
-                            it
-                                    .id
-                        }))
+        return listOf(SortOption.TEMPLATE_ID)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

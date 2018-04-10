@@ -6,6 +6,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.UpdatePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.UpdateEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemUpdateBinding
@@ -30,6 +31,9 @@ class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
 
     @Inject
     lateinit var persistenceManager: UpdatePersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Update.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<UpdateEntity> = persistenceManager
 
@@ -59,14 +63,7 @@ class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<UpdateEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.name,
-                        {
-                            it
-                                    .name
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.UPDATE_NAME)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

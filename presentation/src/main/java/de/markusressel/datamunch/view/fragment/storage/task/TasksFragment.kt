@@ -6,6 +6,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.TaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.TaskEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemTaskBinding
@@ -28,6 +29,9 @@ class TasksFragment : ListFragmentBase<TaskModel, TaskEntity>() {
 
     @Inject
     lateinit var persistenceManager: TaskPersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Task.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<TaskEntity> = persistenceManager
 
@@ -57,14 +61,7 @@ class TasksFragment : ListFragmentBase<TaskModel, TaskEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<TaskEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.filesystem,
-                        {
-                            it
-                                    .task_filesystem
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.TASK_FILESYSTEM)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

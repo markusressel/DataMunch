@@ -6,6 +6,7 @@ import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.ScrubPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.ScrubEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.databinding.ListItemScrubBinding
@@ -28,6 +29,9 @@ class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
 
     @Inject
     lateinit var persistenceManager: ScrubPersistenceManager
+
+    override val entityTypeId: Long
+        get() = EntityTypeId.Scrub.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<ScrubEntity> = persistenceManager
 
@@ -57,14 +61,7 @@ class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<ScrubEntity>> {
-        return listOf(
-                createSortOption(
-                        R.string.volume,
-                        {
-                            it
-                                    .scrub_volume
-                                    .toLowerCase()
-                        }))
+        return listOf(SortOption.SCRUB_VOLUME)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

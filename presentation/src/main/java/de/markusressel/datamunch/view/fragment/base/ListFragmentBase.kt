@@ -4,13 +4,14 @@ import android.arch.lifecycle.Lifecycle
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.CallSuper
-import android.support.annotation.StringRes
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
 import android.widget.Toast
+import com.eightbitlab.rxbus.Bus
+import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
 import com.github.nitrico.lastadapter.LastAdapter
 import com.jakewharton.rxbinding2.view.RxView
@@ -20,7 +21,9 @@ import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.LastUpdateFromSourcePersistenceManager
+import de.markusressel.datamunch.data.persistence.SortOptionPersistenceHandler
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
+import de.markusressel.datamunch.event.SortOptionSelectionDialogDismissedEvent
 import de.markusressel.datamunch.view.component.LoadingComponent
 import de.markusressel.datamunch.view.component.OptionsMenuComponent
 import io.reactivex.Single
@@ -60,6 +63,11 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
 
     private val persistenceLoaderId = loaderIdCounter
             .getAndIncrement()
+
+    @Inject
+    lateinit var sortOptionPersistenceHandler: SortOptionPersistenceHandler
+
+    protected abstract val entityTypeId: Long
 
     protected val loadingComponent by lazy {
         LoadingComponent(this, onShowContent = {
@@ -155,6 +163,19 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
         frittenbudeServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy(),
                                         connectionManager.getMainSSHConnection())
+    }
+
+    override fun onStart() {
+        super
+                .onStart()
+
+        Bus
+                .observe<SortOptionSelectionDialogDismissedEvent>()
+                .subscribe {
+                    // reload list with current sort options
+                    fillListFromPersistence()
+                }
+                .registerInBus(this)
     }
 
     override fun onResume() {
@@ -297,16 +318,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
                     var listData = loadListDataFromPersistence()
 
                     // sort list data according to current selection
-                    getCurrentSortOptions()
-                            .forEach { criteria ->
-
-                                if (criteria.reversed) {
-                                } else {
-                                }
-
-                                listData = listData
-                                        .sortedWith(compareBy(criteria.selector))
-                            }
+                    listData = sortByCurrentOptions(listData)
 
                     listData
                 }
@@ -341,11 +353,30 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
     }
 
     /**
-     * Helper method to easily create a type safe SortOption
+     * Sorts a list by the currently selected SortOptions
      */
-    protected fun createSortOption(@StringRes name: Int,
-                                   selector: (EntityType) -> Comparable<*>?): SortOption<EntityType> {
-        return SortOption(name, selector)
+    private fun sortByCurrentOptions(listData: List<EntityType>): List<EntityType> {
+        val sortOptions = getCurrentSortOptions()
+
+        if (sortOptions.isEmpty()) {
+            return listData
+        }
+
+        val comparator: Comparator<EntityType> = compareBy(sortOptions.first().selector)
+        getCurrentSortOptions()
+                .drop(1)
+                .forEach { criteria ->
+                    if (criteria.reversed) {
+                        comparator
+                                .thenByDescending(criteria.selector)
+                    } else {
+                        comparator
+                                .thenBy(criteria.selector)
+                    }
+                }
+
+        return listData
+                .sortedWith(comparator)
     }
 
     /**
@@ -357,14 +388,57 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
     }
 
     /**
+     * Store the currently selected sort options
+     */
+    fun persistCurrentSortOptions() {
+        // remove currently stored options
+        sortOptionPersistenceHandler
+                .standardOperation()
+                .query()
+                .filter {
+                    it.type == entityTypeId
+                }
+                .build()
+                .find()
+                .forEach {
+                    sortOptionPersistenceHandler
+                            .standardOperation()
+                            .remove(it.entityId)
+                }
+
+        getCurrentSortOptions()
+                .forEach {
+                    sortOptionPersistenceHandler
+                            .standardOperation()
+                            .put(it.toEntity(entityTypeId))
+                }
+    }
+
+    /**
      * Get a list of the currently selected (active) sort criteria
      */
     open fun getCurrentSortOptions(): List<SortOption<EntityType>> {
-        return getAllSortCriteria()
+        val sortOptionEntities = sortOptionPersistenceHandler
+                .standardOperation()
+                .query()
+                .filter {
+                    it.type == entityTypeId
+                }
+                .build()
+                .find()
+
+        val sortOptions = sortOptionEntities
+                .map {
+                    SortOption
+                            .from(it.id)
+                }
+
+        return sortOptions as List<SortOption<EntityType>>
     }
 
     private fun openSortSelection() {
-        SortOptionSelectionDialog()
+        SortOptionSelectionDialog
+                .newInstance(getAllSortCriteria())
                 .show(childFragmentManager, null)
     }
 
