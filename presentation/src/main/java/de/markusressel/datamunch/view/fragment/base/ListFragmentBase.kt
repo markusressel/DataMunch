@@ -39,7 +39,7 @@ import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.LastUpdateFromSourcePersistenceManager
-import de.markusressel.datamunch.data.persistence.SortOptionPersistenceHandler
+import de.markusressel.datamunch.data.persistence.SortOptionPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.event.SortOptionSelectionDialogDismissedEvent
 import de.markusressel.datamunch.view.component.LoadingComponent
@@ -83,7 +83,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
             .getAndIncrement()
 
     @Inject
-    lateinit var sortOptionPersistenceHandler: SortOptionPersistenceHandler
+    lateinit var sortOptionPersistenceHandler: SortOptionPersistenceManager
 
     protected abstract val entityTypeId: Long
 
@@ -114,9 +114,20 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
                     val sortIcon = iconHandler
                             .getOptionsMenuIcon(
                                     MaterialDesignIconic.Icon.gmi_sort)
-                    menu
+
+                    val sortOptionMenuItem = menu
                             ?.findItem(R.id.sortOrder)
-                            ?.icon = sortIcon
+
+                    sortOptionMenuItem
+                            ?.let {
+                                it
+                                        .icon = sortIcon
+                                if (getAllSortCriteria().isEmpty()) {
+                                    sortOptionMenuItem
+                                            .isVisible = false
+                                }
+                            }
+
                 }, onOptionsMenuItemClicked = {
             when {
                 it.itemId == R.id.refresh -> {
@@ -381,7 +392,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
         }
 
         val comparator: Comparator<EntityType> = compareBy(sortOptions.first().selector)
-        getCurrentSortOptions()
+        sortOptions
                 .drop(1)
                 .forEach { criteria ->
                     if (criteria.reversed) {
@@ -403,33 +414,6 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
      */
     open fun getAllSortCriteria(): List<SortOption<EntityType>> {
         return emptyList()
-    }
-
-    /**
-     * Store the currently selected sort options
-     */
-    fun persistCurrentSortOptions() {
-        // remove currently stored options
-        sortOptionPersistenceHandler
-                .standardOperation()
-                .query()
-                .filter {
-                    it.type == entityTypeId
-                }
-                .build()
-                .find()
-                .forEach {
-                    sortOptionPersistenceHandler
-                            .standardOperation()
-                            .remove(it.entityId)
-                }
-
-        getCurrentSortOptions()
-                .forEach {
-                    sortOptionPersistenceHandler
-                            .standardOperation()
-                            .put(it.toEntity(entityTypeId))
-                }
     }
 
     /**
@@ -456,7 +440,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
 
     private fun openSortSelection() {
         SortOptionSelectionDialog
-                .newInstance(getAllSortCriteria())
+                .newInstance(getAllSortCriteria(), entityTypeId)
                 .show(childFragmentManager, null)
     }
 
