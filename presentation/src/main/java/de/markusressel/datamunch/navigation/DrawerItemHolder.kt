@@ -1,3 +1,21 @@
+/*
+ * DataMunch by Markus Ressel
+ * Copyright (c) 2018.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.markusressel.datamunch.navigation
 
 import com.github.ajalt.timberkt.Timber
@@ -11,7 +29,7 @@ object DrawerItemHolder {
 
     val Status = DrawerMenuItem(title = R.string.menu_item_status,
                                 icon = MaterialDesignIconic.Icon.gmi_home, selectable = true,
-            navigationPage = NavigationPageHolder.Status)
+                                navigationPage = NavigationPageHolder.Status)
 
     val Accounts = DrawerMenuItem(title = R.string.menu_item_accounts,
                                   icon = MaterialDesignIconic.Icon.gmi_account, selectable = true,

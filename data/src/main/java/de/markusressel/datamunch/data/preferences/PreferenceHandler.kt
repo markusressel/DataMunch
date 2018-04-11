@@ -1,3 +1,21 @@
+/*
+ * DataMunch by Markus Ressel
+ * Copyright (c) 2018.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.markusressel.datamunch.data.preferences
 
 import android.content.Context
@@ -33,17 +51,17 @@ class PreferenceHandler @Inject constructor(context: Context) : PreferencesHandl
 
         val SSH_USER = PreferenceItem(R.string.connection_ssh_user_key, "root")
         val SSH_PASS = PreferenceItem(R.string.connection_ssh_password_key,
-                "")
+                                      "")
         val SSH_PROXY_HOST = PreferenceItem(R.string.connection_ssh_proxy_host_key,
-                "")
+                                            "")
         val SSH_PROXY_PORT = PreferenceItem(R.string.connection_ssh_proxy_port_key, 48123)
         val SSH_PROXY_USER = PreferenceItem(R.string.connection_ssh_proxy_user_key, "root")
         val SSH_PROXY_PASSWORD = PreferenceItem(R.string.connection_ssh_proxy_password_key,
-                "")
+                                                "")
 
         val USE_PATTERN_LOCK = PreferenceItem(R.string.use_pattern_lock_key, false)
         val LOCK_PATTERN = PreferenceItem(R.string.lock_pattern_key,
-                "")
+                                          "")
     }
 
 }
