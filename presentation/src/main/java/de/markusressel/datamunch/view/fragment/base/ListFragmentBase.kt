@@ -391,11 +391,18 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
             return listData
         }
 
-        val comparator: Comparator<EntityType> = compareBy(sortOptions.first().selector)
+        // create initial comparator
+        var comparator: Comparator<EntityType> = if (sortOptions.first().reversed) {
+            compareByDescending(sortOptions.first().selector)
+        } else {
+            compareBy(sortOptions.first().selector)
+        }
+
+        // extend it with other criteria
         sortOptions
                 .drop(1)
                 .forEach { criteria ->
-                    if (criteria.reversed) {
+                    comparator = if (criteria.reversed) {
                         comparator
                                 .thenByDescending(criteria.selector)
                     } else {
