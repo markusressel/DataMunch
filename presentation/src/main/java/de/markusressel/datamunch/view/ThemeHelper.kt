@@ -24,6 +24,7 @@ import android.content.Context
 import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
 import android.support.annotation.StyleRes
+import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import de.markusressel.datamunch.R
@@ -46,12 +47,24 @@ class ThemeHelper @Inject constructor() {
     @Inject
     lateinit var preferenceHandler: PreferenceHandler
 
+    private val darkThemeValue: Int by lazy {
+        context
+                .getString(R.string.theme_dark_value)
+                .toInt()
+    }
+
+    private val lightThemeValue: Int by lazy {
+        context
+                .getString(R.string.theme_light_value)
+                .toInt()
+    }
+
     fun applyPreferencesTheme(target: Activity) {
         val theme = preferenceHandler
                 .getValue(THEME)
         when (theme) {
-            context.getString(R.string.theme_light_value).toInt() -> setTheme(target, R.style.PreferenceActivityThemeLight)
-            context.getString(R.string.theme_dark_value).toInt() -> setTheme(target, R.style.PreferenceActivityThemeDark)
+            darkThemeValue -> setTheme(target, R.style.PreferenceActivityThemeLight)
+            lightThemeValue -> setTheme(target, R.style.PreferenceActivityThemeDark)
         }
     }
 
@@ -64,8 +77,10 @@ class ThemeHelper @Inject constructor() {
         val theme = preferenceHandler
                 .getValue(THEME)
         when (theme) {
-            context.getString(R.string.theme_light_value).toInt() -> setTheme(activity, R.style.AppThemeLight)
-            context.getString(R.string.theme_dark_value).toInt() -> setTheme(activity, R.style.AppThemeDark)
+            lightThemeValue -> setTheme(activity,
+                                        R.style.AppThemeLight)
+            darkThemeValue -> setTheme(activity,
+                                       R.style.AppThemeDark)
             else -> setTheme(activity, R.style.AppThemeDark)
         }
     }
@@ -79,8 +94,10 @@ class ThemeHelper @Inject constructor() {
         val theme = preferenceHandler
                 .getValue(THEME)
         when (theme) {
-            context.getString(R.string.theme_light_value).toInt() -> setTheme(activity, R.style.AppDialogThemeLight)
-            context.getString(R.string.theme_dark_value).toInt() -> setTheme(activity, R.style.AppDialogThemeDark)
+            lightThemeValue -> setTheme(activity,
+                                        R.style.AppDialogThemeLight)
+            darkThemeValue -> setTheme(activity,
+                                       R.style.AppDialogThemeDark)
             else -> setTheme(activity, R.style.AppDialogThemeDark)
         }
     }
@@ -95,8 +112,10 @@ class ThemeHelper @Inject constructor() {
         val theme = preferenceHandler
                 .getValue(THEME)
         when (theme) {
-            context.getString(R.string.theme_light_value).toInt() -> dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppDialogThemeLight)
-            context.getString(R.string.theme_dark_value).toInt() -> dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppDialogThemeDark)
+            lightThemeValue -> dialogFragment.setStyle(
+                    DialogFragment.STYLE_NORMAL, R.style.AppDialogThemeLight)
+            darkThemeValue -> dialogFragment.setStyle(
+                    DialogFragment.STYLE_NORMAL, R.style.AppDialogThemeDark)
             else -> dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppDialogThemeDark)
         }
     }
@@ -131,6 +150,23 @@ class ThemeHelper @Inject constructor() {
         }
 
         return 0
+    }
+
+    /**
+     * Apply a Theme to a BottomSheetFragment
+     *
+     * @param fragment Fragment to apply theme on
+     */
+    fun applyTheme(fragment: BottomSheetDialogFragment) {
+        val theme = preferenceHandler
+                .getValue(THEME)
+        when (theme) {
+            lightThemeValue -> fragment.setStyle(
+                    BottomSheetDialogFragment.STYLE_NORMAL, R.style.BottomSheetThemeLight)
+            darkThemeValue -> fragment.setStyle(
+                    BottomSheetDialogFragment.STYLE_NORMAL, R.style.BottomSheetThemeDark)
+            else -> fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetThemeDark)
+        }
     }
 
 }

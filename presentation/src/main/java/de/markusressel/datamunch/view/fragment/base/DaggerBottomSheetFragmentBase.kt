@@ -32,6 +32,7 @@ import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.view.IconHandler
+import de.markusressel.datamunch.view.ThemeHelper
 import javax.inject.Inject
 
 abstract class DaggerBottomSheetFragmentBase : BottomSheetDialogFragment(),
@@ -40,9 +41,16 @@ abstract class DaggerBottomSheetFragmentBase : BottomSheetDialogFragment(),
     @Inject
     lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
 
+    @Inject
+    lateinit var themeHelper: ThemeHelper
+
     override fun onAttach(context: Context) {
         AndroidSupportInjection
                 .inject(this)
+
+        themeHelper
+                .applyTheme(this)
+
         super
                 .onAttach(context)
     }

@@ -61,17 +61,17 @@ class SortOptionSelectionDialog : DaggerBottomSheetFragmentBase() {
         val containerLayout: LinearLayout = view
                 .findViewById(R.id.sortOptionsContainerLayout)
 
-        inflateVIews(containerLayout, inflater)
+        inflateViews(containerLayout, inflater)
 
         return view
     }
 
     @SuppressLint("InflateParams")
-    private fun inflateVIews(containerLayout: ViewGroup, inflater: LayoutInflater) {
+    private fun inflateViews(containerLayout: ViewGroup, inflater: LayoutInflater) {
         sortOptions
                 .forEach { sortOption ->
                     val sortOptionLayout = inflater
-                            .inflate(R.layout.item_sort_option, null, false)
+                            .inflate(R.layout.item_sort_option, containerLayout, false)
 
                     val name: CheckBox = sortOptionLayout
                             .findViewById(R.id.sortOptionName)

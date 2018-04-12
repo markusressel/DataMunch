@@ -72,8 +72,8 @@
     <!-- Base application theme. -->
     <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimaryDark">@color/primaryColor_dark</item>
         <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColor_dark</item>
         <item name="colorAccent">@color/colorAccentDark</item>
 
         <item name="windowActionBar">false</item>
@@ -189,6 +189,35 @@
         <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse</item>
         <item name="textColorError">@color/md_red_A700</item>
 
+    </style>
+
+    <!-- Bottom Sheet Dialogs -->
+    <style name="BottomSheetThemeLight" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColor_dark</item>
+        <item name="colorAccent">@color/colorAccentLight</item>
+
+        <item name="android:textColorPrimary">@color/textColorPrimaryInverse</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryInverse</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimary</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondary</item>
+
+        <!--<item name="android:windowIsFloating">true</item>-->
+    </style>
+
+    <style name="BottomSheetThemeDark" parent="Theme.Design.BottomSheetDialog">
+        <item name="colorPrimaryDark">@color/primaryColor_dark</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
+        <!--<item name="android:windowBackground">@color/windowBackgroundColor</item>-->
+        <item name="android:colorBackground">@color/windowBackgroundColor</item>
+
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse</item>
+
+        <!--<item name="android:windowIsFloating">true</item>-->
     </style>
 
     <!-- Preferences -->
