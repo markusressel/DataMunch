@@ -79,7 +79,7 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
     }
 
     override fun getAllSortCriteria(): List<SortOption<UserEntity>> {
-        return listOf(SortOption.USER_NAME)
+        return listOf(SortOption.USER_UID, SortOption.USER_NAME)
     }
 
     override fun getRightFabs(): List<FabConfig.Fab> {

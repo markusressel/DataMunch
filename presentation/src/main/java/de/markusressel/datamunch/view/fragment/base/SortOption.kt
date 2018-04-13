@@ -144,8 +144,16 @@ data class SortOption<in T : Any>(val id: Long, @StringRes val name: Int,
                             .id
                 })
 
-        val USER_NAME = createSortOption<UserEntity>(
+        val USER_UID = createSortOption<UserEntity>(
                 14,
+                R.string.user_id,
+                {
+                    it
+                            .bsdusr_uid
+                })
+
+        val USER_NAME = createSortOption<UserEntity>(
+                23,
                 R.string.name,
                 {
                     it
@@ -246,7 +254,8 @@ data class SortOption<in T : Any>(val id: Long, @StringRes val name: Int,
                     SCRUB_VOLUME,
                     CIFS_SHARE_NAME,
                     NFS_SHARE_ID,
-                    DATASET_NAME
+                    DATASET_NAME,
+                    USER_UID
             )
                     .first { it.id == id }
         }
