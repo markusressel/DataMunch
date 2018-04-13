@@ -63,8 +63,9 @@ class ThemeHelper @Inject constructor() {
         val theme = preferenceHandler
                 .getValue(THEME)
         when (theme) {
-            darkThemeValue -> setTheme(target, R.style.PreferenceActivityThemeLight)
-            lightThemeValue -> setTheme(target, R.style.PreferenceActivityThemeDark)
+            darkThemeValue -> setTheme(target, R.style.PreferenceActivityThemeDark)
+            lightThemeValue -> setTheme(target, R.style.PreferenceActivityThemeLight)
+            else -> setTheme(target, R.style.PreferenceActivityThemeDark)
         }
     }
 
@@ -78,9 +79,9 @@ class ThemeHelper @Inject constructor() {
                 .getValue(THEME)
         when (theme) {
             lightThemeValue -> setTheme(activity,
-                                        R.style.AppThemeLight)
+                    R.style.AppThemeLight)
             darkThemeValue -> setTheme(activity,
-                                       R.style.AppThemeDark)
+                    R.style.AppThemeDark)
             else -> setTheme(activity, R.style.AppThemeDark)
         }
     }
@@ -95,9 +96,9 @@ class ThemeHelper @Inject constructor() {
                 .getValue(THEME)
         when (theme) {
             lightThemeValue -> setTheme(activity,
-                                        R.style.AppDialogThemeLight)
+                    R.style.AppDialogThemeLight)
             darkThemeValue -> setTheme(activity,
-                                       R.style.AppDialogThemeDark)
+                    R.style.AppDialogThemeDark)
             else -> setTheme(activity, R.style.AppDialogThemeDark)
         }
     }
