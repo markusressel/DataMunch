@@ -35,6 +35,7 @@ import dagger.android.support.HasSupportFragmentInjector
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.navigation.Navigator
+import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import de.markusressel.datamunch.view.IconHandler
 import de.markusressel.datamunch.view.ThemeHelper
 import de.markusressel.datamunch.view.component.LockComponent
@@ -58,6 +59,9 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
 
     @Inject
     protected lateinit var preferenceHandler: PreferenceHandler
+
+    @Inject
+    protected lateinit var kutePreferencesHolder: KutePreferencesHolder
 
     @Inject
     protected lateinit var themeHelper: ThemeHelper
@@ -148,12 +152,13 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
     }
 
     fun initLocale() {
-        val localeValue = preferenceHandler
-                .getValue(PreferenceHandler.LOCALE)
+        val localeValue = kutePreferencesHolder
+                .localePreference
+                .persistedValue
 
         when (localeValue) {
-            getString(R.string.locale_EN_value).toInt() -> setLocale(Locale.ENGLISH)
-            getString(R.string.locale_DE_value).toInt() -> setLocale(Locale.GERMAN)
+            getString(R.string.locale_EN_value) -> setLocale(Locale.ENGLISH)
+            getString(R.string.locale_DE_value) -> setLocale(Locale.GERMAN)
         }
     }
 
@@ -172,16 +177,20 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
         res
                 .updateConfiguration(conf, dm)
 
-        onConfigurationChanged(conf)
+        //        onConfigurationChanged(conf)
     }
 
     private fun initTheme() {
+        val theme = kutePreferencesHolder
+                .themePreference
+                .persistedValue
+
         if (style == DIALOG) {
             themeHelper
-                    .applyDialogTheme(this) //set up notitle
+                    .applyDialogTheme(this, theme) //set up notitle
         } else {
             themeHelper
-                    .applyTheme(this)
+                    .applyTheme(this, theme)
         }
     }
 

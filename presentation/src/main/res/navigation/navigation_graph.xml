@@ -16,18 +16,16 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:key="category_fileUplaoder"
-        android:title="@string/category_fileUploader">
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/statusFragment">
 
-        <!--<CheckBoxPreference-->
-        <!--android:defaultValue="@string/override_navigation_icon_preference_default_value"-->
-        <!--android:key="@string/override_navigation_icon_preference_key"-->
-        <!--android:summary="@string/override_navigation_icon_preference_summary"-->
-        <!--android:title="@string/override_navigation_icon_preference_title" />-->
+    <fragment
+        android:id="@+id/statusFragment"
+        android:name="de.markusressel.datamunch.view.fragment.ServerStatusFragment"
+        android:label="Status"
+        tools:layout="@layout/fragment_blank" />
 
-    </PreferenceCategory>
-
-</PreferenceScreen>
+</navigation>

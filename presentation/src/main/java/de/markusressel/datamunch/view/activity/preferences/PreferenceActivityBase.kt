@@ -70,8 +70,10 @@ abstract class PreferenceActivityBase : de.mrapp.android.preference.activity.Pre
         AndroidInjection
                 .inject(this)
 
-        themeHelper
-                .applyPreferencesTheme(this)
+        //        themeHelper
+        //                .applyPreferencesTheme(this, kutePreferencesHolder
+        //                        .themePreference
+        //                        .persistedValue)
 
         super
                 .onCreate(savedInstanceState)

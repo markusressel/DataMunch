@@ -28,7 +28,7 @@ import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mikepenz.aboutlibraries.util.Colors
 import com.mikepenz.materialdrawer.Drawer
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.preferences.PreferenceHandler
+import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,10 +37,10 @@ import javax.inject.Singleton
  * Created by Markus on 07.01.2018.
  */
 @Singleton
-class Navigator @Inject constructor() {
+class Navigator @Inject constructor(
+        private val kutePreferencesHolder: KutePreferencesHolder
 
-    @Inject
-    lateinit var preferenceHandler: PreferenceHandler
+) {
 
     private val stateStack: Stack<NavigationState> = Stack()
 
@@ -56,6 +56,7 @@ class Navigator @Inject constructor() {
 
     lateinit var activity: AppCompatActivity
     lateinit var drawer: Drawer
+    lateinit var currentFragment: Fragment
 
     /**
      * Navigate to a specific page
@@ -111,6 +112,7 @@ class Navigator @Inject constructor() {
         val newState = NavigationState(drawerMenuItem, drawerMenuItem.navigationPage)
         stateStack
                 .push(newState)
+        currentFragment = newFragment
 
         return drawerMenuItem
                 .navigationPage
@@ -143,16 +145,17 @@ class Navigator @Inject constructor() {
     }
 
     private fun navigateToAbout(activityContext: Context) {
-        val themeVal = preferenceHandler
-                .getValue(PreferenceHandler.THEME)
+        val themeVal = kutePreferencesHolder
+                .themePreference
+                .persistedValue
 
         val aboutLibTheme: Libs.ActivityStyle
-        if (themeVal == activityContext.getString(R.string.theme_light_value).toInt()) {
-            aboutLibTheme = Libs
+        aboutLibTheme = if (themeVal == activityContext.getString(R.string.theme_light_value)) {
+            Libs
                     .ActivityStyle
                     .LIGHT_DARK_TOOLBAR
         } else {
-            aboutLibTheme = Libs
+            Libs
                     .ActivityStyle
                     .DARK
         }
@@ -168,10 +171,8 @@ class Navigator @Inject constructor() {
 
     /**
      * Navigate back to the previous page
-     * @param activityContext activity context
      *
      * @return the page that is navigated back to, null if backstack is empty
-     *
      */
     fun navigateBack(): NavigationState? {
         if (stateStack.isEmpty()) {

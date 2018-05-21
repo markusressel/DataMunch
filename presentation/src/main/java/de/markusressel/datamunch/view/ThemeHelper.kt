@@ -28,8 +28,6 @@ import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.preferences.PreferenceHandler
-import de.markusressel.datamunch.data.preferences.PreferenceHandler.Companion.THEME
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -39,29 +37,21 @@ import javax.inject.Singleton
  * Created by Markus on 20.12.2017.
  */
 @Singleton
-class ThemeHelper @Inject constructor() {
+class ThemeHelper @Inject constructor(
+        private var context: Context
+) {
 
-    @Inject
-    lateinit var context: Context
-
-    @Inject
-    lateinit var preferenceHandler: PreferenceHandler
-
-    private val darkThemeValue: Int by lazy {
+    private val darkThemeValue: String by lazy {
         context
                 .getString(R.string.theme_dark_value)
-                .toInt()
     }
 
-    private val lightThemeValue: Int by lazy {
+    private val lightThemeValue: String by lazy {
         context
                 .getString(R.string.theme_light_value)
-                .toInt()
     }
 
-    fun applyPreferencesTheme(target: Activity) {
-        val theme = preferenceHandler
-                .getValue(THEME)
+    fun applyPreferencesTheme(target: Activity, theme: String) {
         when (theme) {
             darkThemeValue -> setTheme(target, R.style.PreferenceActivityThemeDark)
             lightThemeValue -> setTheme(target, R.style.PreferenceActivityThemeLight)
@@ -74,14 +64,12 @@ class ThemeHelper @Inject constructor() {
      *
      * @param activity Activity to apply theme on
      */
-    fun applyTheme(activity: Activity) {
-        val theme = preferenceHandler
-                .getValue(THEME)
+    fun applyTheme(activity: Activity, theme: String) {
         when (theme) {
             lightThemeValue -> setTheme(activity,
-                    R.style.AppThemeLight)
+                                        R.style.AppThemeLight)
             darkThemeValue -> setTheme(activity,
-                    R.style.AppThemeDark)
+                                       R.style.AppThemeDark)
             else -> setTheme(activity, R.style.AppThemeDark)
         }
     }
@@ -91,14 +79,12 @@ class ThemeHelper @Inject constructor() {
      *
      * @param activity Activity to apply theme on
      */
-    fun applyDialogTheme(activity: Activity) {
-        val theme = preferenceHandler
-                .getValue(THEME)
+    fun applyDialogTheme(activity: Activity, theme: String) {
         when (theme) {
             lightThemeValue -> setTheme(activity,
-                    R.style.AppDialogThemeLight)
+                                        R.style.AppDialogThemeLight)
             darkThemeValue -> setTheme(activity,
-                    R.style.AppDialogThemeDark)
+                                       R.style.AppDialogThemeDark)
             else -> setTheme(activity, R.style.AppDialogThemeDark)
         }
     }
@@ -109,9 +95,7 @@ class ThemeHelper @Inject constructor() {
      *
      * @param dialogFragment Fragment to apply theme on
      */
-    fun applyDialogTheme(dialogFragment: DialogFragment) {
-        val theme = preferenceHandler
-                .getValue(THEME)
+    fun applyDialogTheme(dialogFragment: DialogFragment, theme: String) {
         when (theme) {
             lightThemeValue -> dialogFragment.setStyle(
                     DialogFragment.STYLE_NORMAL, R.style.AppDialogThemeLight)
@@ -158,9 +142,7 @@ class ThemeHelper @Inject constructor() {
      *
      * @param fragment Fragment to apply theme on
      */
-    fun applyTheme(fragment: BottomSheetDialogFragment) {
-        val theme = preferenceHandler
-                .getValue(THEME)
+    fun applyTheme(fragment: BottomSheetDialogFragment, theme: String) {
         when (theme) {
             lightThemeValue -> fragment.setStyle(
                     BottomSheetDialogFragment.STYLE_NORMAL, R.style.BottomSheetThemeLight)

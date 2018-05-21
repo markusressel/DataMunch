@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.preferences
+package de.markusressel.datamunch.view.fragment.base
 
 import android.content.Context
 import android.support.v4.app.Fragment
@@ -27,10 +27,13 @@ import dagger.android.support.HasSupportFragmentInjector
 import de.markusressel.kutepreferences.library.view.KutePreferencesMainFragment
 import javax.inject.Inject
 
+
 /**
- * Created by Markus on 15.07.2017.
+ * Dagger 2 (dependency injection) enabled base class for a KutePreferencesMainFragment
+ *
+ * Created by Markus on 07.01.2018.
  */
-abstract class DaggerPreferenceFragment : KutePreferencesMainFragment(),
+abstract class DaggerKutePreferenceFragmentBase : KutePreferencesMainFragment(),
     HasSupportFragmentInjector {
 
     @Inject

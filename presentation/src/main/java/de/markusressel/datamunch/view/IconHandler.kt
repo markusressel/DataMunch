@@ -20,6 +20,7 @@ package de.markusressel.datamunch.view
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.support.annotation.ColorInt
 import android.support.v4.content.ContextCompat
 import com.mikepenz.iconics.IconicsDrawable
@@ -130,6 +131,15 @@ class IconHandler @Inject constructor() {
         }
 
         return getIcon(icon, color, 24, padding)
+    }
+
+    /**
+     * @return an icon for a preference
+     */
+    fun getPreferenceIcon(icon: IIcon): Drawable {
+        val color = ContextCompat
+                .getColor(context, R.color.white)
+        return getIcon(icon, color = color, sizeDp = 36)
     }
 
     fun getIcon(icon: IIcon, @ColorInt color: Int, sizeDp: Int,

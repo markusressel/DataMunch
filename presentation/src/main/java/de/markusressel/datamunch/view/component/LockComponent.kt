@@ -37,8 +37,9 @@ import io.reactivex.rxkotlin.subscribeBy
 /**
  * Created by Markus on 15.02.2018.
  */
-class LockComponent(hostActivity: LifecycleProvider<ActivityEvent>,
-                    val preferenceHandler: () -> PreferenceHandler) :
+class LockComponent(
+        hostActivity: () -> LifecycleProvider<ActivityEvent>,
+        val preferenceHandler: () -> PreferenceHandler) :
     ActivityComponent(hostActivity) {
 
     private lateinit var lockLayout: ViewGroup
@@ -76,6 +77,8 @@ class LockComponent(hostActivity: LifecycleProvider<ActivityEvent>,
                             Timber
                                     .d { "DESTROY EVENT IN LOCK COMPONENT" }
                         }
+                        else -> {
+                        }
                     }
                 })
     }
@@ -94,9 +97,9 @@ class LockComponent(hostActivity: LifecycleProvider<ActivityEvent>,
         if (view != null) {
             val wrapperLayout = createWrapperLayout(view)
             contentView = wrapperLayout
-//            view.parent?.let {
-//                (it as ViewGroup).addView(contentView)
-//            }
+            //            view.parent?.let {
+            //                (it as ViewGroup).addView(contentView)
+            //            }
         } else {
             Timber
                     .e { "LockPlugin couldn't attach to the parent view as it was NULL" }
@@ -110,10 +113,13 @@ class LockComponent(hostActivity: LifecycleProvider<ActivityEvent>,
         val baseLayout = FrameLayout(activity)
 
         // remove original parent if it exists
-        view.parent?.let {
-            val childParent = view.parent as ViewGroup
-            childParent.removeView(view)
-        }
+        view
+                .parent
+                ?.let {
+                    val childParent = view.parent as ViewGroup
+                    childParent
+                            .removeView(view)
+                }
 
         originalLayout = view
         // hide initially to unlock it later

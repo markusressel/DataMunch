@@ -28,7 +28,7 @@ import com.trello.rxlifecycle2.LifecycleTransformer
 import com.trello.rxlifecycle2.RxLifecycle
 import com.trello.rxlifecycle2.android.FragmentEvent
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid
-import de.mrapp.android.preference.activity.PreferenceFragment
+import de.markusressel.datamunch.view.fragment.base.DaggerKutePreferenceFragmentBase
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
@@ -36,7 +36,7 @@ import io.reactivex.subjects.BehaviorSubject
 /**
  * Created by Markus on 16.02.2018.
  */
-abstract class LifecyclePreferenceFragmentBase : PreferenceFragment(),
+abstract class LifecyclePreferenceFragmentBase : DaggerKutePreferenceFragmentBase(),
     LifecycleProvider<FragmentEvent> {
 
     private val lifecycleSubject: BehaviorSubject<FragmentEvent> = BehaviorSubject
@@ -60,12 +60,11 @@ abstract class LifecyclePreferenceFragmentBase : PreferenceFragment(),
                 .bindFragment(lifecycleSubject)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super
                 .onAttach(context)
         lifecycleSubject
                 .onNext(FragmentEvent.ATTACH)
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

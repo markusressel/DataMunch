@@ -2,8 +2,8 @@
 
 buildscript {
     ext {
-        kotlin_version = '1.2.31'
-        gradle_plugin_version = '3.1.1'
+        kotlin_version = '1.2.41'
+        gradle_plugin_version = '3.1.2'
 
         minSdkVersion = 22
         versionName = "0.0.1"
@@ -14,7 +14,12 @@ buildscript {
         buildToolsVersion = "27.0.3"
 
         supportLibVersion = "27.1.1"
-        constraintLayoutVersion = "1.0.2"
+        constraintLayoutVersion = "1.1.0"
+
+        // Android Architecture Components
+        aacNavigationVersion = "1.0.0-alpha01"
+        aacAndroidKtxVersion = "0.3"
+
         dagger2Version = "2.11"
         aboutlibrariesVersion = "6.0.5"
         materialdrawerVersion = "6.0.6"
@@ -34,7 +39,6 @@ buildscript {
 
         rxBindingVersion = "2.1.1"
         rxLifecycleVersion = "2.2.1"
-
     }
 
     repositories {
@@ -57,9 +61,7 @@ allprojects {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
-        maven {
-            url 'https://oss.sonatype.org/content/repositories/snapshots/'
-        }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         maven { url "http://objectbox.net/beta-repo/" }
     }
 }

@@ -18,7 +18,7 @@
 
 <resources>
 
-    <string name="category_connection">Verbindung</string>
+    <string name="category_connection_title">Verbindung</string>
 
     <string name="connection_host_title">Host</string>
     <string name="connection_host_summary">Host Adresse des Servers</string>

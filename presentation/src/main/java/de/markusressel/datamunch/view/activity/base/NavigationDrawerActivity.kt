@@ -18,6 +18,7 @@
 
 package de.markusressel.datamunch.view.activity.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.view.View
@@ -35,7 +36,9 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IProfile
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.event.LocaleChangedEvent
 import de.markusressel.datamunch.event.LockEvent
+import de.markusressel.datamunch.event.ThemeChangedEvent
 import de.markusressel.datamunch.extensions.isTablet
 import de.markusressel.datamunch.navigation.DrawerItemHolder
 import de.markusressel.datamunch.navigation.DrawerItemHolder.About
@@ -53,6 +56,7 @@ import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.view.component.LockComponent
 import de.markusressel.datamunch.view.component.LockComponent.Companion.isScreenLocked
+import de.markusressel.datamunch.view.fragment.preferences.MainPreferenceFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
@@ -67,7 +71,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
     override val layoutRes: Int
         get() = R.layout.activity_main
 
-    private val lockComponent: LockComponent = LockComponent(this, { preferenceHandler })
+    private val lockComponent: LockComponent = LockComponent({ this }, { preferenceHandler })
 
     override fun setContentView(view: View?) {
         val contentView = lockComponent
@@ -146,6 +150,29 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                     setDrawerLockState(it.lock)
                 }
                 .registerInBus(this)
+
+        Bus
+                .observe<LocaleChangedEvent>()
+                .subscribe {
+                    restartActivity()
+                    recreate()
+                }
+                .registerInBus(this)
+
+        Bus
+                .observe<ThemeChangedEvent>()
+                .subscribe {
+                    restartActivity()
+                }
+                .registerInBus(this)
+    }
+
+    private fun restartActivity() {
+        navigator
+                .startActivity(this, Navigator.NavigationPages.Main,
+                               Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        navigator
+                .navigateTo(DrawerItemHolder.Settings)
     }
 
     override fun onResume() {
@@ -313,6 +340,15 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         val previousPage = navigator
                 .navigateBack()
         if (previousPage != null) {
+
+            // special case for preferences
+            if (navigator.currentFragment is MainPreferenceFragment) {
+                val preferenceFragment = navigator.currentFragment as MainPreferenceFragment
+                if (preferenceFragment.onBackPressed()) {
+                    return
+                }
+            }
+
             navigator
                     .drawer
                     .setSelection(previousPage.drawerMenuItem.identifier, false)

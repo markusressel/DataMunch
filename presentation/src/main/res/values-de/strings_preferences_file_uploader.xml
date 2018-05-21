@@ -18,7 +18,7 @@
 
 <resources>
 
-    <string name="category_fileUploader">Datei Uploader</string>
-    <string name="category_security">Sicherheit</string>
+    <string name="category_security_title">Sicherheit</string>
+    <string name="category_security_description">Beschreibung</string>
 
 </resources>

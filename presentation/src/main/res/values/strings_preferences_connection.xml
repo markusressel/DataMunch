@@ -18,7 +18,9 @@
 
 <resources>
 
-    <string name="category_connection">Connection</string>
+    <string name="category_connection_description">Connection Desctiption</string>
+
+    <string name="category_connection_title">Connection</string>
 
     <string name="category_connection_ssh" translatable="false">SSH</string>
 

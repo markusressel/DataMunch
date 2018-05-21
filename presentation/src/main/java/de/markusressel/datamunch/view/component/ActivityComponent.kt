@@ -23,7 +23,7 @@ import android.support.v7.app.AppCompatActivity
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.android.ActivityEvent
 
-abstract class ActivityComponent(private val hostActivity: LifecycleProvider<ActivityEvent>) {
+abstract class ActivityComponent(private val hostActivity: () -> LifecycleProvider<ActivityEvent>) {
 
     init {
         // check if both casts are successful
@@ -33,12 +33,12 @@ abstract class ActivityComponent(private val hostActivity: LifecycleProvider<Act
     }
 
     protected val activity: AppCompatActivity
-        get() = hostActivity as AppCompatActivity
+        get() = hostActivity() as AppCompatActivity
 
     protected val lifecycleOwner: LifecycleOwner
-        get() = hostActivity as LifecycleOwner
+        get() = hostActivity() as LifecycleOwner
 
     protected val lifecycleProvider: LifecycleProvider<ActivityEvent>
-        get() = hostActivity
+        get() = hostActivity()
 
 }

@@ -16,26 +16,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.activity.preferences
-
-import android.preference.PreferenceFragment
-import de.markusressel.datamunch.R
+package de.markusressel.datamunch.event
 
 /**
- * Created by Markus on 15.07.2017.
+ * Created by Markus on 21.05.2018.
  */
-class PreferenceOverviewActivity : PreferenceActivityBase() {
-
-    override fun getPreferencesResource(): Int {
-        return R
-                .xml
-                .abstract_color_picker_preference
-    }
-
-    override fun findPreferences(fragment: PreferenceFragment) {
-    }
-
-    override fun updateSummaries() {
-    }
-
-}
+data class LocaleChangedEvent(val locale: String)

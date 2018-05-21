@@ -66,7 +66,7 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
 
     private var currentEntityState: StateHolder<EntityType>? by savedInstanceState()
 
-    private val lockComponent: LockComponent = LockComponent(this, { preferenceHandler })
+    private val lockComponent: LockComponent = LockComponent({ this }, { preferenceHandler })
 
     override fun setContentView(view: View?) {
         val contentView = lockComponent

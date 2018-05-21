@@ -34,8 +34,7 @@ class PreferenceHandler @Inject constructor(context: Context) : PreferencesHandl
     // be sure to override the get() method
     override var sharedPreferencesName: String? = null
 
-    override val allPreferenceItems: Set<PreferenceItem<*>> = hashSetOf(THEME, LOCALE,
-                                                                        CONNECTION_HOST, SSH_USER,
+    override val allPreferenceItems: Set<PreferenceItem<*>> = hashSetOf(CONNECTION_HOST, SSH_USER,
                                                                         SSH_PASS, SSH_PROXY_HOST,
                                                                         SSH_PROXY_PORT,
                                                                         SSH_PROXY_USER,
@@ -44,9 +43,6 @@ class PreferenceHandler @Inject constructor(context: Context) : PreferencesHandl
                                                                         LOCK_PATTERN)
 
     companion object {
-        val THEME = PreferenceItem(R.string.theme_key, 0)
-        val LOCALE = PreferenceItem(R.string.locale_key, 0)
-
         val CONNECTION_HOST = PreferenceItem(R.string.connection_host_key, "")
 
         val SSH_USER = PreferenceItem(R.string.connection_ssh_user_key, "root")

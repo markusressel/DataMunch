@@ -22,10 +22,10 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import de.markusressel.datamunch.view.activity.preferences.PreferenceActivityBase
 import de.markusressel.datamunch.view.activity.preferences.PreferenceOverviewActivity
-import de.markusressel.datamunch.view.fragment.preferences.ConnectionPreferences
+import de.markusressel.datamunch.view.fragment.base.DaggerKutePreferenceFragmentBase
 import de.markusressel.datamunch.view.fragment.preferences.DaggerPreferenceFragment
-import de.markusressel.datamunch.view.fragment.preferences.FileUploaderPreferences
-import de.markusressel.datamunch.view.fragment.preferences.SecurityPreferences
+import de.markusressel.datamunch.view.fragment.preferences.LifecyclePreferenceFragmentBase
+import de.markusressel.datamunch.view.fragment.preferences.MainPreferenceFragment
 
 /**
  * Created by Markus on 20.12.2017.
@@ -43,12 +43,12 @@ abstract class PreferencesBindingsModule {
     internal abstract fun DaggerPreferenceFragment(): DaggerPreferenceFragment
 
     @ContributesAndroidInjector
-    internal abstract fun ConnectionPreferences(): ConnectionPreferences
+    internal abstract fun DaggerKutePreferenceFragmentBase(): DaggerKutePreferenceFragmentBase
 
     @ContributesAndroidInjector
-    internal abstract fun FileUploaderPreferences(): FileUploaderPreferences
+    internal abstract fun LifecyclePreferenceFragmentBase(): LifecyclePreferenceFragmentBase
 
     @ContributesAndroidInjector
-    internal abstract fun SecurityPreferences(): SecurityPreferences
+    internal abstract fun MainPreferenceFragment(): MainPreferenceFragment
 
 }

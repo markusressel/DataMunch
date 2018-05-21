@@ -48,9 +48,9 @@
     <string name="locale_EN_value_name">English</string>
     <string name="locale_DE_value_name">German</string>
     <string-array name="locale_names">
-        <item>@string/locale_SYSTEM_value_name</item>
-        <item>@string/locale_EN_value_name</item>
-        <item>@string/locale_DE_value_name</item>
+        <item>@string/locale_SYSTEM_value</item>
+        <item>@string/locale_EN_value</item>
+        <item>@string/locale_DE_value</item>
     </string-array>
 
 </resources>

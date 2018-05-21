@@ -16,17 +16,9 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<resources>
 
-    <PreferenceCategory
-        android:key="category_security"
-        android:title="@string/category_security">
+    <string name="category_connection_key">category_connection_key</string>
+    <string name="category_security_key">category_security_key</string>
 
-        <CheckBoxPreference
-            android:key="@string/use_pattern_lock_key"
-            android:summary="@string/use_pattern_lock_summary"
-            android:title="@string/use_pattern_lock_title" />
-
-    </PreferenceCategory>
-
-</PreferenceScreen>
+</resources>

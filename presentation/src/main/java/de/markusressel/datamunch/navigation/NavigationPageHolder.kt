@@ -19,9 +19,9 @@
 package de.markusressel.datamunch.navigation
 
 import de.markusressel.datamunch.view.activity.MainActivity
-import de.markusressel.datamunch.view.activity.preferences.PreferenceOverviewActivity
 import de.markusressel.datamunch.view.fragment.ServerStatusFragment
 import de.markusressel.datamunch.view.fragment.pages.*
+import de.markusressel.datamunch.view.fragment.preferences.MainPreferenceFragment
 import de.markusressel.datamunch.view.fragment.services.ServicesFragment
 
 /**
@@ -45,8 +45,9 @@ object NavigationPageHolder {
                                                       tag = "FileUploaderPage")
     val Tasks: NavigationPage = NavigationPage(fragment = ::TasksPage, tag = "TasksPage")
 
+    val Settings = NavigationPage(fragment = ::MainPreferenceFragment, tag = "Settings")
+    //    val Settings = NavigationPage(activityClass = PreferenceOverviewActivity::class.java)
 
-    val Settings = NavigationPage(activityClass = PreferenceOverviewActivity::class.java)
     val About = NavigationPage()
 
 }

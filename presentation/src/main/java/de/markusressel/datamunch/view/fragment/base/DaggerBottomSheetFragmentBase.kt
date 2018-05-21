@@ -31,6 +31,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
+import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import de.markusressel.datamunch.view.IconHandler
 import de.markusressel.datamunch.view.ThemeHelper
 import javax.inject.Inject
@@ -44,12 +45,17 @@ abstract class DaggerBottomSheetFragmentBase : BottomSheetDialogFragment(),
     @Inject
     lateinit var themeHelper: ThemeHelper
 
+    @Inject
+    lateinit var kutePreferencesHolder: KutePreferencesHolder
+
     override fun onAttach(context: Context) {
         AndroidSupportInjection
                 .inject(this)
 
         themeHelper
-                .applyTheme(this)
+                .applyTheme(this, kutePreferencesHolder
+                        .themePreference
+                        .persistedValue)
 
         super
                 .onAttach(context)

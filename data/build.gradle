@@ -68,6 +68,9 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}"
     implementation "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
 
+    // Android Architecture Components
+    implementation "androidx.core:core-ktx:$aacAndroidKtxVersion"
+
     // Logging
     api "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}"
 
@@ -96,8 +99,8 @@ dependencies {
 
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
 configurations.all {
