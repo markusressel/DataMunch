@@ -16,24 +16,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.preferences
+package de.markusressel.datamunch.data.preferences
 
-import de.markusressel.datamunch.preferences.KutePreferencesHolder
-import de.markusressel.kutepreferences.library.preference.KutePreferencesTree
-import javax.inject.Inject
+import android.content.Context
+import de.markusressel.kutepreferences.library.persistence.DefaultKutePreferenceDataProvider
+import javax.inject.Singleton
 
-class MainPreferenceFragment : LifecyclePreferenceFragmentBase() {
+@Singleton
+class PreferenceDataProviderHolder(private val context: Context) {
 
-    @Inject
-    lateinit var preferenceHolder: KutePreferencesHolder
-
-    override fun initPreferenceTree(): KutePreferencesTree {
-        return KutePreferencesTree(
-                preferenceHolder.securityCategory,
-                preferenceHolder.connectionCategory,
-                preferenceHolder.themePreference,
-                preferenceHolder.languagePreference
-        )
+    val dataProvider by lazy {
+        DefaultKutePreferenceDataProvider(context)
     }
 
 }

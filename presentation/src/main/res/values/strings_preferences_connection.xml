@@ -18,11 +18,11 @@
 
 <resources>
 
+    <string name="category_connection_title">Connection</string>
     <string name="category_connection_description">Connection Desctiption</string>
 
-    <string name="category_connection_title">Connection</string>
-
-    <string name="category_connection_ssh" translatable="false">SSH</string>
+    <string name="divider_ssh_title" translatable="false">SSH</string>
+    <string name="divider_proxy_title" translatable="false">Proxy</string>
 
     <string name="connection_host_title">Host</string>
     <string name="connection_host_summary">Host address of the server</string>
@@ -32,8 +32,6 @@
 
     <string name="connection_ssh_password_summary">Password</string>
     <string name="connection_ssh_password_title">Password</string>
-
-    <string name="category_connection_ssh_proxy" translatable="false">Proxy</string>
 
     <string name="connection_ssh_proxy_host_summary">SSH proxy host address</string>
     <string name="connection_ssh_proxy_host_title">Host</string>

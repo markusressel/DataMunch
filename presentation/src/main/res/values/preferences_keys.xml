@@ -21,4 +21,7 @@
     <string name="category_connection_key">category_connection_key</string>
     <string name="category_security_key">category_security_key</string>
 
+    <string name="divider_ssh_key">divider_ssh_key</string>
+    <string name="divider_proxy_key">divider_proxy_key</string>
+
 </resources>

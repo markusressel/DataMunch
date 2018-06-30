@@ -157,9 +157,6 @@ abstract class BaseBindingsModule {
     internal abstract fun AccountPage(): AccountPage
 
     @ContributesAndroidInjector
-    internal abstract fun FileUploaderPage(): FileUploaderPage
-
-    @ContributesAndroidInjector
     internal abstract fun JailPage(): JailPage
 
     @ContributesAndroidInjector

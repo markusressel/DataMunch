@@ -18,14 +18,18 @@
 
 package de.markusressel.datamunch.dagger.module
 
+import android.content.Context
 import dagger.Module
+import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import de.markusressel.datamunch.data.preferences.PreferenceDataProviderHolder
 import de.markusressel.datamunch.view.activity.preferences.PreferenceActivityBase
 import de.markusressel.datamunch.view.activity.preferences.PreferenceOverviewActivity
 import de.markusressel.datamunch.view.fragment.base.DaggerKutePreferenceFragmentBase
 import de.markusressel.datamunch.view.fragment.preferences.DaggerPreferenceFragment
 import de.markusressel.datamunch.view.fragment.preferences.LifecyclePreferenceFragmentBase
 import de.markusressel.datamunch.view.fragment.preferences.MainPreferenceFragment
+import javax.inject.Singleton
 
 /**
  * Created by Markus on 20.12.2017.
@@ -50,5 +54,18 @@ abstract class PreferencesBindingsModule {
 
     @ContributesAndroidInjector
     internal abstract fun MainPreferenceFragment(): MainPreferenceFragment
+
+    @Module
+    companion object {
+
+        @Provides
+        @Singleton
+        @JvmStatic
+        internal fun providePreferenceDataProviderHolder(
+                context: Context): PreferenceDataProviderHolder {
+            return PreferenceDataProviderHolder(context)
+        }
+
+    }
 
 }

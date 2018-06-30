@@ -54,10 +54,6 @@ object DrawerItemHolder {
                                  icon = MaterialDesignIconic.Icon.gmi_puzzle_piece,
                                  selectable = true, navigationPage = NavigationPageHolder.Plugins)
 
-    val FileUploader = DrawerMenuItem(title = R.string.menu_item_file_uploader,
-                                      icon = MaterialDesignIconic.Icon.gmi_file, selectable = true,
-                                      navigationPage = NavigationPageHolder.FileUploader)
-
     val System = DrawerMenuItem(title = R.string.menu_item_system,
                                 icon = MaterialDesignIconic.Icon.gmi_settings, selectable = true,
                                 navigationPage = NavigationPageHolder.System)
@@ -85,7 +81,6 @@ object DrawerItemHolder {
             Plugins.identifier -> Plugins
             System.identifier -> System
             Tasks.identifier -> Tasks
-            FileUploader.identifier -> FileUploader
             Settings.identifier -> Settings
             About.identifier -> About
             else -> {

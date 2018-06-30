@@ -22,6 +22,7 @@ import de.markusressel.datamunch.data.persistence.AuthenticationPersistenceManag
 import de.markusressel.datamunch.data.persistence.HostPersistenceManager
 import de.markusressel.datamunch.data.persistence.entity.AuthenticationEntity
 import de.markusressel.datamunch.data.persistence.entity.HostEntity
+import de.markusressel.datamunch.data.preferences.PreferenceDataProviderHolder
 import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -34,6 +35,9 @@ class ConnectionManager @Inject constructor() {
 
     @Inject
     lateinit var preferenceHandler: PreferenceHandler
+
+    @Inject
+    lateinit var preferenceDataProviderHolder: PreferenceDataProviderHolder
 
     @Inject
     lateinit var hostPersistenceManager: HostPersistenceManager

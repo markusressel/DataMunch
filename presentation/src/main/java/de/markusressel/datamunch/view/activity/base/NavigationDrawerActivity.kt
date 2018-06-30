@@ -43,7 +43,6 @@ import de.markusressel.datamunch.extensions.isTablet
 import de.markusressel.datamunch.navigation.DrawerItemHolder
 import de.markusressel.datamunch.navigation.DrawerItemHolder.About
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Accounts
-import de.markusressel.datamunch.navigation.DrawerItemHolder.FileUploader
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Jails
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Plugins
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Services
@@ -294,12 +293,6 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                 .add(DividerDrawerItem())
 
         menuItemList
-                .add(createPrimaryMenuItem(FileUploader, clickListener))
-
-        menuItemList
-                .add(DividerDrawerItem())
-
-        menuItemList
                 .add(createPrimaryMenuItem(Settings, clickListener))
 
         menuItemList
@@ -337,18 +330,18 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
             return
         }
 
+        // special case for preferences
+        val preferenceFragment = navigator
+                .currentFragment
+        if (preferenceFragment is MainPreferenceFragment) {
+            if (preferenceFragment.onBackPressed()) {
+                return
+            }
+        }
+
         val previousPage = navigator
                 .navigateBack()
         if (previousPage != null) {
-
-            // special case for preferences
-            if (navigator.currentFragment is MainPreferenceFragment) {
-                val preferenceFragment = navigator.currentFragment as MainPreferenceFragment
-                if (preferenceFragment.onBackPressed()) {
-                    return
-                }
-            }
-
             navigator
                     .drawer
                     .setSelection(previousPage.drawerMenuItem.identifier, false)

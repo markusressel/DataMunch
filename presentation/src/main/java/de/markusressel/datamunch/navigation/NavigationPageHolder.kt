@@ -41,8 +41,6 @@ object NavigationPageHolder {
     val System: NavigationPage = NavigationPage(fragment = ::SystemPage, tag = "SystemPage")
     val Jails: NavigationPage = NavigationPage(fragment = ::JailPage, tag = "JailPage")
     val Plugins: NavigationPage = NavigationPage(fragment = ::PluginPage, tag = "PluginPage")
-    val FileUploader: NavigationPage = NavigationPage(fragment = ::FileUploaderPage,
-                                                      tag = "FileUploaderPage")
     val Tasks: NavigationPage = NavigationPage(fragment = ::TasksPage, tag = "TasksPage")
 
     val Settings = NavigationPage(fragment = ::MainPreferenceFragment, tag = "Settings")

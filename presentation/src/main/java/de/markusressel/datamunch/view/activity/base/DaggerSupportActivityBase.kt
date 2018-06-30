@@ -153,7 +153,7 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
 
     fun initLocale() {
         val localeValue = kutePreferencesHolder
-                .localePreference
+                .languagePreference
                 .persistedValue
 
         when (localeValue) {
