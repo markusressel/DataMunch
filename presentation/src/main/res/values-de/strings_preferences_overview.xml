@@ -23,9 +23,6 @@
     <string name="connection_title">Verbindung</string>
     <string name="connection_summary">Server Verbindungskonfiguration</string>
 
-    <string name="fileUploader_title">Datei Uploader</string>
-    <string name="fileUploader_summary">Einstellungen bezüglich Datei Uploads</string>
-
     <string name="security_title">Sicherheit</string>
     <string name="security_summary">Einstellungen bezüglich der Sicherheit App</string>
 
