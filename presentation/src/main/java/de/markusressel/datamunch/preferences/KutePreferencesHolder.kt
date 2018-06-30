@@ -30,6 +30,7 @@ import de.markusressel.kutepreferences.library.preference.category.KuteCategory
 import de.markusressel.kutepreferences.library.preference.category.KuteDivider
 import de.markusressel.kutepreferences.library.preference.number.KuteNumberPreference
 import de.markusressel.kutepreferences.library.preference.select.KuteSingleSelectPreference
+import de.markusressel.kutepreferences.library.preference.text.KutePasswordPreference
 import de.markusressel.kutepreferences.library.preference.text.KuteTextPreference
 import de.markusressel.kutepreferences.library.preference.toggle.KuteTogglePreference
 import javax.inject.Inject
@@ -111,10 +112,10 @@ class KutePreferencesHolder @Inject constructor(
     }
 
     val sshPasswordPreference by lazy {
-        KuteTextPreference(key = R.string.connection_ssh_password_key,
-                           title = context.getString(R.string.connection_ssh_password_summary),
-                           defaultValue = "",
-                           dataProvider = dataProviderHolder.dataProvider)
+        KutePasswordPreference(key = R.string.connection_ssh_password_key,
+                               title = context.getString(R.string.connection_ssh_password_summary),
+                               defaultValue = "",
+                               dataProvider = dataProviderHolder.dataProvider)
 
     }
 
@@ -143,11 +144,13 @@ class KutePreferencesHolder @Inject constructor(
     }
 
     val sshProxyPasswordPreference by lazy {
-        KuteTextPreference(key = R.string.connection_ssh_proxy_password_key,
-                           icon = iconHelper.getPreferenceIcon(MaterialDesignIconic.Icon.gmi_lock),
-                           title = context.getString(R.string.connection_ssh_proxy_password_title),
-                           defaultValue = "",
-                           dataProvider = dataProviderHolder.dataProvider)
+        KutePasswordPreference(key = R.string.connection_ssh_proxy_password_key,
+                               icon = iconHelper.getPreferenceIcon(
+                                       MaterialDesignIconic.Icon.gmi_lock),
+                               title = context.getString(
+                                       R.string.connection_ssh_proxy_password_title),
+                               defaultValue = "",
+                               dataProvider = dataProviderHolder.dataProvider)
 
     }
 

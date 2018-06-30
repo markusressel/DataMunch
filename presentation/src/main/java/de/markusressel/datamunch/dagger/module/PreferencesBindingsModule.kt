@@ -23,8 +23,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import de.markusressel.datamunch.data.preferences.PreferenceDataProviderHolder
-import de.markusressel.datamunch.view.activity.preferences.PreferenceActivityBase
-import de.markusressel.datamunch.view.activity.preferences.PreferenceOverviewActivity
 import de.markusressel.datamunch.view.fragment.base.DaggerKutePreferenceFragmentBase
 import de.markusressel.datamunch.view.fragment.preferences.DaggerPreferenceFragment
 import de.markusressel.datamunch.view.fragment.preferences.LifecyclePreferenceFragmentBase
@@ -36,12 +34,6 @@ import javax.inject.Singleton
  */
 @Module
 abstract class PreferencesBindingsModule {
-
-    @ContributesAndroidInjector
-    internal abstract fun PreferenceActivityBase(): PreferenceActivityBase
-
-    @ContributesAndroidInjector
-    internal abstract fun preferenceOverviewActivity(): PreferenceOverviewActivity
 
     @ContributesAndroidInjector
     internal abstract fun DaggerPreferenceFragment(): DaggerPreferenceFragment

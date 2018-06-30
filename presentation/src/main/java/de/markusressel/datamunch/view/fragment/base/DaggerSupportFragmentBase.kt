@@ -29,8 +29,8 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
-import de.markusressel.datamunch.data.preferences.PreferenceHandler
-import de.markusressel.datamunch.data.ssh.ConnectionManager
+import de.markusressel.datamunch.preferences.KutePreferencesHolder
+import de.markusressel.datamunch.ssh.ConnectionManager
 import de.markusressel.datamunch.view.IconHandler
 import de.markusressel.freenasrestapiclient.library.BasicAuthConfig
 import de.markusressel.freenasrestapiclient.library.FreeNasWebApiClient
@@ -62,7 +62,7 @@ abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFr
     protected lateinit var connectionManager: ConnectionManager
 
     @Inject
-    protected lateinit var preferenceHandler: PreferenceHandler
+    protected lateinit var preferencesHolder: KutePreferencesHolder
 
     @Inject
     protected lateinit var iconHandler: IconHandler

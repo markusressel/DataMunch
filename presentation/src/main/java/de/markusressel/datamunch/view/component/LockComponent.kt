@@ -29,8 +29,8 @@ import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.android.ActivityEvent
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.event.LockEvent
+import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import de.markusressel.datamunch.view.fragment.LockscreenFragment
 import io.reactivex.rxkotlin.subscribeBy
 
@@ -39,7 +39,7 @@ import io.reactivex.rxkotlin.subscribeBy
  */
 class LockComponent(
         hostActivity: () -> LifecycleProvider<ActivityEvent>,
-        val preferenceHandler: () -> PreferenceHandler) :
+        val preferencesHolder: () -> KutePreferencesHolder) :
     ActivityComponent(hostActivity) {
 
     private lateinit var lockLayout: ViewGroup
@@ -84,12 +84,16 @@ class LockComponent(
     }
 
     private fun isLockEnabled(): Boolean {
-        val useLock = preferenceHandler()
-                .getValue(PreferenceHandler.USE_PATTERN_LOCK)
-        val pattern = preferenceHandler()
-                .getValue(PreferenceHandler.LOCK_PATTERN)
+        val useLock = preferencesHolder()
+                .useAppLockPreference
+                .persistedValue
 
-        return useLock && pattern.isNotEmpty()
+        // TODO:
+        //        val pattern = preferenceHandler()
+        //                .getValue(PreferenceHandler.LOCK_PATTERN)
+
+        //        return useLock && pattern.isNotEmpty()
+        return false
     }
 
     fun setContentView(view: View?): View? {

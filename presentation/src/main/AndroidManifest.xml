@@ -42,10 +42,6 @@
         </activity>
 
         <activity
-            android:name=".view.activity.preferences.PreferenceOverviewActivity"
-            android:parentActivityName=".view.activity.MainActivity" />
-
-        <activity
             android:name=".view.fragment.account.user.UserDetailActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -56,8 +52,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".view.fragment.storage.disk.DiskDetailActivity" />
         <activity android:name=".view.fragment.storage.snapshot.SnapshotDetailActivity" />
-
-        <service android:name=".service.FileUploadService" />
 
         <activity
             android:name=".view.activity.UnknownErrorDialog"

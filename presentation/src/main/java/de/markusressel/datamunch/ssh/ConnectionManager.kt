@@ -16,14 +16,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.data.ssh
+package de.markusressel.datamunch.ssh
 
 import de.markusressel.datamunch.data.persistence.AuthenticationPersistenceManager
 import de.markusressel.datamunch.data.persistence.HostPersistenceManager
 import de.markusressel.datamunch.data.persistence.entity.AuthenticationEntity
 import de.markusressel.datamunch.data.persistence.entity.HostEntity
-import de.markusressel.datamunch.data.preferences.PreferenceDataProviderHolder
-import de.markusressel.datamunch.data.preferences.PreferenceHandler
+import de.markusressel.datamunch.data.ssh.SSHConnectionConfig
+import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,13 +34,11 @@ import javax.inject.Singleton
 class ConnectionManager @Inject constructor() {
 
     @Inject
-    lateinit var preferenceHandler: PreferenceHandler
-
-    @Inject
-    lateinit var preferenceDataProviderHolder: PreferenceDataProviderHolder
+    lateinit var preferencesHolder: KutePreferencesHolder
 
     @Inject
     lateinit var hostPersistenceManager: HostPersistenceManager
+
     @Inject
     lateinit var authenticationPersistenceManager: AuthenticationPersistenceManager
 
@@ -53,21 +51,26 @@ class ConnectionManager @Inject constructor() {
                                    password = auth.password)
     }
 
+    /**
+     * @return the SSH Proxy configuration
+     */
     fun getSSHProxy(): SSHConnectionConfig {
         return SSHConnectionConfig(
-                host = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_HOST),
-                port = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_PORT),
-                username = preferenceHandler.getValue(PreferenceHandler.SSH_PROXY_USER),
-                password = preferenceHandler.getValue(
-                        PreferenceHandler.SSH_PROXY_PASSWORD))
+                host = preferencesHolder.sshProxyHostPreference.persistedValue,
+                port = preferencesHolder.sshProxyPortPreference.persistedValue.toInt(),
+                username = preferencesHolder.sshProxyUserPreference.persistedValue,
+                password = preferencesHolder.sshProxyPasswordPreference.persistedValue)
     }
 
+    /**
+     * @return the main SSH connection
+     */
     fun getMainSSHConnection(): SSHConnectionConfig {
         var host = hostPersistenceManager
                 .getActive()
 
         if (host == null) {
-            host = HostEntity(0, preferenceHandler.getValue(PreferenceHandler.CONNECTION_HOST))
+            host = HostEntity(0, preferencesHolder.connectionUriPreference.persistedValue)
         }
 
         var auth = authenticationPersistenceManager
@@ -77,10 +80,8 @@ class ConnectionManager @Inject constructor() {
 
         if (auth == null) {
             auth = AuthenticationEntity(0,
-                                        username = preferenceHandler.getValue(
-                                                PreferenceHandler.SSH_USER),
-                                        password = preferenceHandler.getValue(
-                                                PreferenceHandler.SSH_PASS))
+                                        username = preferencesHolder.sshUserPreference.persistedValue,
+                                        password = preferencesHolder.sshPasswordPreference.persistedValue)
         }
 
         return createSSHConnectionConfig(host = host, auth = auth)

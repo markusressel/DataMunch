@@ -22,11 +22,11 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import com.eightbitlab.rxbus.Bus
-import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.event.LockEvent
+import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import de.markusressel.datamunch.view.component.LockComponent
 
-class AppLifecycleTracker(val preferenceHandler: PreferenceHandler) :
+class AppLifecycleTracker(val preferencesHolder: KutePreferencesHolder) :
     Application.ActivityLifecycleCallbacks {
 
     private var numStarted = 0
@@ -64,8 +64,9 @@ class AppLifecycleTracker(val preferenceHandler: PreferenceHandler) :
     }
 
     private fun onAppBackground() {
-        val useLock = preferenceHandler
-                .getValue(PreferenceHandler.USE_PATTERN_LOCK)
+        val useLock = preferencesHolder
+                .useAppLockPreference
+                .persistedValue
         if (useLock) {
             LockComponent
                     .isScreenLocked = true

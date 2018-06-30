@@ -33,7 +33,6 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasFragmentInjector
 import dagger.android.support.HasSupportFragmentInjector
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import de.markusressel.datamunch.view.IconHandler
@@ -58,7 +57,7 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
     protected lateinit var navigator: Navigator
 
     @Inject
-    protected lateinit var preferenceHandler: PreferenceHandler
+    protected lateinit var preferencesHolder: KutePreferencesHolder
 
     @Inject
     protected lateinit var kutePreferencesHolder: KutePreferencesHolder

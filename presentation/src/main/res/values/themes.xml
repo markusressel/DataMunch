@@ -220,29 +220,4 @@
         <!--<item name="android:windowIsFloating">true</item>-->
     </style>
 
-    <!-- Preferences -->
-
-    <style name="PreferenceActivityThemeLight" parent="@style/PreferenceActivity.Light">
-        <item name="colorPrimaryDark">@color/primaryColor_dark</item>
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorAccent">@color/colorAccentLight</item>
-
-        <item name="windowActionBar">false</item>
-
-        <item name="android:windowBackground">@color/windowBackgroundColorInverse</item>
-        <item name="android:colorBackground">@color/windowBackgroundColorInverse</item>
-    </style>
-
-    <style name="PreferenceActivityThemeDark" parent="@style/PreferenceActivity">
-        <item name="colorPrimaryDark">@color/primaryColor_dark</item>
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorAccent">@color/colorAccentDark</item>
-
-        <item name="windowActionBar">false</item>
-
-        <item name="android:windowBackground">@color/windowBackgroundColor</item>
-        <item name="android:colorBackground">@color/windowBackgroundColor</item>
-    </style>
-
-
 </resources>

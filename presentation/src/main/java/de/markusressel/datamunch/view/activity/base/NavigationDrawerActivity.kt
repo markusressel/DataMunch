@@ -70,7 +70,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
     override val layoutRes: Int
         get() = R.layout.activity_main
 
-    private val lockComponent: LockComponent = LockComponent({ this }, { preferenceHandler })
+    private val lockComponent: LockComponent = LockComponent({ this }, { preferencesHolder })
 
     override fun setContentView(view: View?) {
         val contentView = lockComponent

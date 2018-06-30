@@ -51,14 +51,6 @@ class ThemeHelper @Inject constructor(
                 .getString(R.string.theme_light_value)
     }
 
-    fun applyPreferencesTheme(target: Activity, theme: String) {
-        when (theme) {
-            darkThemeValue -> setTheme(target, R.style.PreferenceActivityThemeDark)
-            lightThemeValue -> setTheme(target, R.style.PreferenceActivityThemeLight)
-            else -> setTheme(target, R.style.PreferenceActivityThemeDark)
-        }
-    }
-
     /**
      * Apply a Theme to an Activity
      *

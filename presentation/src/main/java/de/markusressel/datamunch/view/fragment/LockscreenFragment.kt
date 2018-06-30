@@ -42,7 +42,6 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.preferences.PreferenceHandler
 import de.markusressel.datamunch.event.LockEvent
 import de.markusressel.datamunch.view.component.LoadingComponent
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
@@ -197,8 +196,9 @@ class LockscreenFragment : DaggerSupportFragmentBase() {
     }
 
     private fun checkPattern(pattern: List<PatternLockView.Dot>?) {
-        val correctPattern = preferenceHandler
-                .getValue(PreferenceHandler.LOCK_PATTERN)
+        // TODO:
+        //        val correctPattern = preferencesHolder.lockPattern.persistedValue
+        val correctPattern = "bla"
         val patternAsString = patternToSha1(patternLockView, pattern)
 
         if (patternAsString == correctPattern) {

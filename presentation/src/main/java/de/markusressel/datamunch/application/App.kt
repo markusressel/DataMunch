@@ -23,7 +23,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import de.markusressel.datamunch.BuildConfig
 import de.markusressel.datamunch.dagger.DaggerAppComponent
-import de.markusressel.datamunch.data.preferences.PreferenceHandler
+import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ import javax.inject.Inject
 class App : ExceptionHandlerApplicationBase() {
 
     @Inject
-    protected lateinit var preferenceHandler: PreferenceHandler
+    protected lateinit var preferenceHolder: KutePreferencesHolder
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerAppComponent
@@ -45,17 +45,18 @@ class App : ExceptionHandlerApplicationBase() {
         super
                 .onCreate()
         // register app lifecycle
-        registerActivityLifecycleCallbacks(AppLifecycleTracker(preferenceHandler))
+        registerActivityLifecycleCallbacks(AppLifecycleTracker(preferenceHolder))
 
         // Clear DB entirely
         //        BoxStore
         //                .deleteAllFiles(applicationContext, null)
 
         // TODO: Remove when preference is implemented
-        // set default pattern
-        preferenceHandler
-                .setValue(PreferenceHandler.LOCK_PATTERN,
-                          "cb69e3a54154e27cad0c566f520742c2645847c1")
+        //        // set default pattern
+        // TODO: implement KutePatternPreference
+        //        preferenceHolder.lockPattern.persis
+        //                .setValue(PreferenceHandler.LOCK_PATTERN,
+        //                          "cb69e3a54154e27cad0c566f520742c2645847c1")
 
         plantTimberTrees()
         initMemoryLeakDetection()
