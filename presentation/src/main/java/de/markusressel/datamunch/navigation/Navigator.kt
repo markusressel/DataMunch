@@ -56,7 +56,6 @@ class Navigator @Inject constructor(
 
     lateinit var activity: AppCompatActivity
     lateinit var drawer: Drawer
-    lateinit var currentFragment: Fragment
 
     /**
      * Navigate to a specific page
@@ -112,7 +111,6 @@ class Navigator @Inject constructor(
         val newState = NavigationState(drawerMenuItem, drawerMenuItem.navigationPage)
         stateStack
                 .push(newState)
-        currentFragment = newFragment
 
         return drawerMenuItem
                 .navigationPage

@@ -20,6 +20,7 @@ package de.markusressel.datamunch.view.activity.base
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.widget.DrawerLayout
 import android.view.View
 import com.eightbitlab.rxbus.Bus
@@ -331,9 +332,9 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         }
 
         // special case for preferences
-        val preferenceFragment = navigator
-                .currentFragment
-        if (preferenceFragment is MainPreferenceFragment) {
+        val preferenceFragment: Fragment? = supportFragmentManager
+                .findFragmentByTag(navigator.currentState.drawerMenuItem.navigationPage.tag)
+        if (preferenceFragment is MainPreferenceFragment && preferenceFragment.isVisible) {
             if (preferenceFragment.onBackPressed()) {
                 return
             }
