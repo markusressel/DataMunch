@@ -23,19 +23,19 @@ buildscript {
         dagger2Version = "2.11"
         aboutlibrariesVersion = "6.0.5"
         materialdrawerVersion = "6.0.6"
-        iconicsVersion = "3.0.3"
+        iconicsVersion = "3.0.4"
 
         rxKotlinVersion = "2.2.0"
         javaxAnnotationVersion = "10.0-b28"
 
-        timberKtVersion = "1.3.0"
+        timberKtVersion = "1.5.1"
 
-        gsonVersion = "2.8.2"
+        gsonVersion = "2.8.5"
         kotsonVersion = "2.5.0"
 
-        objectboxVersion = "1.4.1"
+        objectboxVersion = "1.5.0"
 
-        fuelVersion = "1.12.1"
+        fuelVersion = "1.13.0"
 
         rxBindingVersion = "2.1.1"
         rxLifecycleVersion = "2.2.1"
