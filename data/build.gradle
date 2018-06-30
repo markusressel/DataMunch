@@ -74,13 +74,6 @@ dependencies {
     // Logging
     api "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}"
 
-    // Preferences
-    api('com.github.markusressel:TypedPreferences:v2.1.1') {
-        exclude module: 'app'
-        transitive = true
-        changing = false
-    }
-
     // my own preference stuff
     api('com.github.markusressel:KutePreferences:v1.0.1') {
         exclude module: 'app'
