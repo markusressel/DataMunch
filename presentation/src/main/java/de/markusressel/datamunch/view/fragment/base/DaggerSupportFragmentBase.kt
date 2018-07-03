@@ -67,7 +67,8 @@ abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFr
     @Inject
     protected lateinit var iconHandler: IconHandler
 
-    val freeNasWebApiClient = FreeNasWebApiClient()
+    @Inject
+    protected lateinit var freeNasWebApiClient: FreeNasWebApiClient
 
     /**
      * The layout resource for this Activity
