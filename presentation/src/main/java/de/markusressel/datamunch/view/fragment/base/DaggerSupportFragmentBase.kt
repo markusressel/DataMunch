@@ -88,10 +88,14 @@ abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFr
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        // "frittenbude.markusressel.de"
         freeNasWebApiClient
-                .setHostname("frittenbude.markusressel.de")
+                .setHostname(preferencesHolder.connectionUriPreference.persistedValue)
+
+        // "frittenbudeapi"
         freeNasWebApiClient
-                .setApiResource("frittenbudeapi")
+                .setApiResource(preferencesHolder.connectionApiResourcePreference.persistedValue)
         freeNasWebApiClient
                 .setBasicAuthConfig(BasicAuthConfig(
                         username = connectionManager.getMainSSHConnection().username,

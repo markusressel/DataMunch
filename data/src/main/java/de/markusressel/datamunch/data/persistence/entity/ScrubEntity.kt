@@ -18,6 +18,8 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.freenasrestapiclient.library.storage.scrub.ScrubModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -30,7 +32,15 @@ data class ScrubEntity(@Id var entityId: Long, val id: Long, val scrub_threshold
                        val scrub_dayweek: String, val scrub_enabled: Boolean,
                        val scrub_minute: String, val scrub_hour: String, val scrub_month: String,
                        val scrub_daymonth: String, val scrub_description: String,
-                       val scrub_volume: String)
+                       val scrub_volume: String) : IdentifiableListItem, SearchableListItem {
+
+    override fun getItemId(): Long = id
+
+    override fun getSearchableContent(): List<Any> {
+        return listOf(scrub_volume, scrub_description)
+    }
+
+}
 
 fun ScrubModel.asEntity(entityId: Long = 0): ScrubEntity {
     return ScrubEntity(entityId, this.id, this.scrub_threshold, this.scrub_dayweek,

@@ -25,6 +25,8 @@ import android.support.annotation.CallSuper
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
+import android.support.v7.util.DiffUtil
+import android.support.v7.widget.SearchView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
 import android.widget.Toast
@@ -32,11 +34,14 @@ import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
 import com.github.nitrico.lastadapter.LastAdapter
+import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import com.jakewharton.rxbinding2.view.RxView
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.LastUpdateFromSourcePersistenceManager
 import de.markusressel.datamunch.data.persistence.SortOptionPersistenceManager
@@ -44,6 +49,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.event.SortOptionSelectionDialogDismissedEvent
 import de.markusressel.datamunch.view.component.LoadingComponent
 import de.markusressel.datamunch.view.component.OptionsMenuComponent
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -61,7 +67,7 @@ import javax.inject.Inject
 /**
  * Created by Markus on 29.01.2018.
  */
-abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSupportFragmentBase() {
+abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListItem> : DaggerSupportFragmentBase() {
 
     override val layoutRes: Int
         get() = R.layout.fragment_recyclerview
@@ -78,6 +84,8 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
 
     @Inject
     lateinit var lastUpdatedManager: LastUpdateFromSourcePersistenceManager
+
+    internal var currentSearchFilter: String by savedInstanceState("")
 
     private val persistenceLoaderId = loaderIdCounter
             .getAndIncrement()
@@ -103,6 +111,23 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
                 hostFragment = this,
                 optionsMenuRes = R.menu.options_menu_list,
                 onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
+                    val searchMenuItem = menu?.findItem(R.id.search)
+                    searchMenuItem?.icon = iconHandler.getOptionsMenuIcon(
+                            MaterialDesignIconic.Icon.gmi_search)
+
+                    val searchView = searchMenuItem?.actionView as SearchView?
+                    searchView?.let {
+                        RxSearchView.queryTextChanges(it).skipInitialValue()
+                                .bindUntilEvent(this, Lifecycle.Event.ON_DESTROY)
+                                .debounce(300, TimeUnit.MILLISECONDS)
+                                .observeOn(AndroidSchedulers.mainThread()).subscribeBy(onNext = {
+                                    currentSearchFilter = it.toString()
+                                    updateListFromPersistence()
+                                }, onError = {
+                                    Timber.e(it) { "Error filtering list" }
+                                })
+                    }
+
                     // set refresh icon
                     val refreshIcon = iconHandler
                             .getOptionsMenuIcon(
@@ -127,6 +152,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
                                             .isVisible = false
                                 }
                             }
+
 
                 }, onOptionsMenuItemClicked = {
             when {
@@ -202,7 +228,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
                 .observe<SortOptionSelectionDialogDismissedEvent>()
                 .subscribe {
                     // reload list with current sort options
-                    fillListFromPersistence()
+                    updateListFromPersistence()
                 }
                 .registerInBus(this)
     }
@@ -219,10 +245,10 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
         } else {
             Timber
                     .d { "Persisted list data is probably still valid, just loading from persistence" }
-            fillListFromPersistence()
+            updateListFromPersistence()
         }
 
-        fillListFromPersistence()
+        updateListFromPersistence()
     }
 
     private fun setupFabs() {
@@ -338,45 +364,40 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
     /**
      * Loads the data using {@link loadListDataFromPersistence()}
      */
-    private fun fillListFromPersistence() {
+    private fun updateListFromPersistence() {
         loadingComponent
                 .showLoading()
 
-        Single
-                .fromCallable {
-                    var listData = loadListDataFromPersistence()
-
-                    // sort list data according to current selection
-                    listData = sortByCurrentOptions(listData)
-
-                    listData
+        Observable.fromIterable(loadListDataFromPersistence()).filter {
+            if (it is SearchableListItem) {
+                return@filter it.getSearchableContent().any {
+                    it.toString().contains(currentSearchFilter, true)
                 }
-                .subscribeOn(Schedulers.io())
+            } else {
+                it.toString().contains(currentSearchFilter, true)
+            }
+        }.toList().map { sortByCurrentOptions(it) }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .bindUntilEvent(this, Lifecycle.Event.ON_STOP)
-                .subscribeBy(onSuccess = {
-                    listValues
-                            .clear()
+                .bindUntilEvent(this, Lifecycle.Event.ON_STOP).subscribeBy(onSuccess = {
+                    val diffCallback = DiffCallback(listValues, it)
+                    val diffResult = DiffUtil.calculateDiff(diffCallback)
 
-                    if (it.isEmpty()) {
+                    listValues.clear()
+                    listValues.addAll(it)
+
+                    if (listValues.isEmpty()) {
                         showEmpty()
                     } else {
                         hideEmpty()
-                        listValues
-                                .addAll(it)
                     }
-                    loadingComponent
-                            .showContent()
+                    loadingComponent.showContent()
 
-                    recyclerViewAdapter
-                            .notifyDataSetChanged()
+                    diffResult.dispatchUpdatesTo(recyclerViewAdapter)
                 }, onError = {
                     if (it is CancellationException) {
-                        Timber
-                                .d { "reload from persistence cancelled" }
+                        Timber.d { "reload from persistence cancelled" }
                     } else {
-                        loadingComponent
-                                .showError(it)
+                        loadingComponent.showError(it)
                     }
                 })
     }
@@ -475,7 +496,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : Any> : DaggerSuppo
                             .subscribeBy(onSuccess = {
                                 persistListData(it)
                                 updateLastUpdatedFromSource()
-                                fillListFromPersistence()
+                                updateListFromPersistence()
                             }, onError = {
                                 if (it is CancellationException) {
                                     Timber

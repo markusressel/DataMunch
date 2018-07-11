@@ -44,6 +44,7 @@
     <string name="comment">Comment</string>
 
     <string name="refresh">Refresh</string>
+    <string name="search">Search</string>
     <string name="sort_order">Sort order</string>
     <string name="no_items_found">No items</string>
     <string name="unknown_error">Unknown Error</string>

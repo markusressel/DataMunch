@@ -48,109 +48,116 @@ class KutePreferencesHolder @Inject constructor(
 
     val securityCategory by lazy {
         KuteCategory(key = R.string.category_security_key,
-                     icon = iconHelper.getPreferenceIcon(MaterialDesignIconic.Icon.gmi_lock),
-                     title = context.getString(R.string.category_security_title),
-                     description = context.getString(R.string.category_security_description),
-                     children = listOf(
-                             useAppLockPreference
-                     )
+                icon = iconHelper.getPreferenceIcon(MaterialDesignIconic.Icon.gmi_lock),
+                title = context.getString(R.string.category_security_title),
+                description = context.getString(R.string.category_security_description),
+                children = listOf(
+                        useAppLockPreference
+                )
         )
     }
 
     val useAppLockPreference by lazy {
         KuteTogglePreference(key = R.string.lock_pattern_key,
-                             icon = iconHelper.getPreferenceIcon(
-                                     MaterialDesignIconic.Icon.gmi_smartphone_lock),
-                             title = context.getString(R.string.use_pattern_lock_title),
-                             defaultValue = false,
-                             dataProvider = dataProviderHolder.dataProvider
+                icon = iconHelper.getPreferenceIcon(
+                        MaterialDesignIconic.Icon.gmi_smartphone_lock),
+                title = context.getString(R.string.use_pattern_lock_title),
+                defaultValue = false,
+                dataProvider = dataProviderHolder.dataProvider
         )
     }
 
     val connectionCategory by lazy {
         KuteCategory(key = R.string.category_connection_key,
-                     icon = iconHelper.getPreferenceIcon(
-                             MaterialDesignIconic.Icon.gmi_wifi),
-                     title = context.getString(R.string.category_connection_title),
-                     description = context.getString(R.string.category_connection_description),
-                     children = listOf(
-                             connectionUriPreference,
-                             KuteDivider(
-                                     key = R.string.divider_ssh_key,
-                                     title = context.getString(R.string.divider_ssh_title)
-                             ),
-                             sshUserPreference,
-                             sshPasswordPreference,
-                             KuteDivider(
-                                     key = R.string.divider_proxy_key,
-                                     title = context.getString(R.string.divider_proxy_title)
-                             ),
-                             sshProxyHostPreference,
-                             sshProxyPortPreference,
-                             sshProxyUserPreference,
-                             sshProxyPasswordPreference
-                     )
+                icon = iconHelper.getPreferenceIcon(
+                        MaterialDesignIconic.Icon.gmi_wifi),
+                title = context.getString(R.string.category_connection_title),
+                description = context.getString(R.string.category_connection_description),
+                children = listOf(
+                        connectionUriPreference,
+                        connectionApiResourcePreference,
+                        KuteDivider(
+                                key = R.string.divider_ssh_key,
+                                title = context.getString(R.string.divider_ssh_title)
+                        ),
+                        sshUserPreference,
+                        sshPasswordPreference,
+                        KuteDivider(
+                                key = R.string.divider_proxy_key,
+                                title = context.getString(R.string.divider_proxy_title)
+                        ),
+                        sshProxyHostPreference,
+                        sshProxyPortPreference,
+                        sshProxyUserPreference,
+                        sshProxyPasswordPreference
+                )
         )
     }
 
     val connectionUriPreference by lazy {
         KuteTextPreference(key = R.string.connection_host_key,
-                           icon = iconHelper.getPreferenceIcon(
-                                   MaterialDesignIconic.Icon.gmi_battery),
-                           title = context.getString(R.string.connection_host_title),
-                           defaultValue = "",
-                           dataProvider = dataProviderHolder.dataProvider)
+                title = context.getString(R.string.connection_host_title),
+                defaultValue = "",
+                dataProvider = dataProviderHolder.dataProvider)
+
+    }
+
+    val connectionApiResourcePreference by lazy {
+        KuteTextPreference(key = R.string.connection_api_resource_key,
+                title = context.getString(R.string.connection_api_resource_title),
+                defaultValue = "api",
+                dataProvider = dataProviderHolder.dataProvider)
 
     }
 
     val sshUserPreference by lazy {
         KuteTextPreference(key = R.string.connection_ssh_user_key,
-                           title = context.getString(R.string.connection_ssh_user_title),
-                           defaultValue = "root",
-                           dataProvider = dataProviderHolder.dataProvider)
+                title = context.getString(R.string.connection_ssh_user_title),
+                defaultValue = "root",
+                dataProvider = dataProviderHolder.dataProvider)
 
     }
 
     val sshPasswordPreference by lazy {
         KutePasswordPreference(key = R.string.connection_ssh_password_key,
-                               title = context.getString(R.string.connection_ssh_password_summary),
-                               defaultValue = "",
-                               dataProvider = dataProviderHolder.dataProvider)
+                title = context.getString(R.string.connection_ssh_password_summary),
+                defaultValue = "",
+                dataProvider = dataProviderHolder.dataProvider)
 
     }
 
     val sshProxyHostPreference by lazy {
         KuteTextPreference(key = R.string.connection_ssh_proxy_host_key,
-                           title = context.getString(R.string.connection_ssh_proxy_host_title),
-                           defaultValue = "",
-                           dataProvider = dataProviderHolder.dataProvider)
+                title = context.getString(R.string.connection_ssh_proxy_host_title),
+                defaultValue = "",
+                dataProvider = dataProviderHolder.dataProvider)
 
     }
 
     val sshProxyPortPreference by lazy {
         KuteNumberPreference(key = R.string.connection_ssh_proxy_port_key,
-                             title = context.getString(R.string.connection_ssh_proxy_port_title),
-                             defaultValue = 22,
-                             dataProvider = dataProviderHolder.dataProvider)
+                title = context.getString(R.string.connection_ssh_proxy_port_title),
+                defaultValue = 22,
+                dataProvider = dataProviderHolder.dataProvider)
 
     }
 
     val sshProxyUserPreference by lazy {
         KuteTextPreference(key = R.string.connection_ssh_proxy_user_key,
-                           title = context.getString(R.string.connection_ssh_proxy_user_title),
-                           defaultValue = "",
-                           dataProvider = dataProviderHolder.dataProvider)
+                title = context.getString(R.string.connection_ssh_proxy_user_title),
+                defaultValue = "",
+                dataProvider = dataProviderHolder.dataProvider)
 
     }
 
     val sshProxyPasswordPreference by lazy {
         KutePasswordPreference(key = R.string.connection_ssh_proxy_password_key,
-                               icon = iconHelper.getPreferenceIcon(
-                                       MaterialDesignIconic.Icon.gmi_lock),
-                               title = context.getString(
-                                       R.string.connection_ssh_proxy_password_title),
-                               defaultValue = "",
-                               dataProvider = dataProviderHolder.dataProvider)
+                icon = iconHelper.getPreferenceIcon(
+                        MaterialDesignIconic.Icon.gmi_lock),
+                title = context.getString(
+                        R.string.connection_ssh_proxy_password_title),
+                defaultValue = "",
+                dataProvider = dataProviderHolder.dataProvider)
 
     }
 

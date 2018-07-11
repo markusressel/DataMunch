@@ -19,6 +19,7 @@
 <resources>
 
     <string name="connection_host_key">connection_host</string>
+    <string name="connection_api_resource_key">connection_api_resource_key</string>
 
     <string name="connection_ssh_user_key">connection_ssh_user</string>
     <string name="connection_ssh_password_key">connection_ssh_password_key</string>
