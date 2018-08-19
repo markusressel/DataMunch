@@ -18,6 +18,8 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.freenasrestapiclient.library.services.service.ServiceModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -27,7 +29,15 @@ import io.objectbox.annotation.Id
  */
 @Entity
 data class ServiceEntity(@Id var entityId: Long, val id: Long, val srv_service: String,
-                         val srv_enabled: Boolean)
+                         val srv_enabled: Boolean) : IdentifiableListItem, SearchableListItem {
+
+    override fun getItemId(): Long = id
+
+    override fun getSearchableContent(): List<Any> {
+        return listOf(srv_service)
+    }
+
+}
 
 fun ServiceModel.asEntity(): ServiceEntity {
     return ServiceEntity(0, this.id, this.srv_service, this.srv_enabled)

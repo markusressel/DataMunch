@@ -38,7 +38,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class Navigator @Inject constructor(
-        private val kutePreferencesHolder: KutePreferencesHolder
+        private val preferencesHolder: KutePreferencesHolder
 
 ) {
 
@@ -143,7 +143,7 @@ class Navigator @Inject constructor(
     }
 
     private fun navigateToAbout(activityContext: Context) {
-        val themeVal = kutePreferencesHolder
+        val themeVal = preferencesHolder
                 .themePreference
                 .persistedValue
 

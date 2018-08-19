@@ -18,6 +18,8 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.freenasrestapiclient.library.storage.dataset.DatasetModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -34,7 +36,15 @@ data class DatasetEntity(@Id var entityId: Long, val atime: String, val avail: L
                          val mountpoint: String, val name: String, val pool: String,
                          val quota: Long, val readonly: String, val recordsize: Long,
                          val refer: Long, val refquota: Long, val refreservation: Long,
-                         val reservation: Long, val used: Long)
+                         val reservation: Long, val used: Long) : IdentifiableListItem, SearchableListItem {
+
+    override fun getItemId(): Long = entityId
+
+    override fun getSearchableContent(): List<Any> {
+        return listOf(name)
+    }
+
+}
 
 fun DatasetModel.asEntity(): DatasetEntity {
     return DatasetEntity(0, this.atime, this.avail, this.comments, this.compression, this.dedup,

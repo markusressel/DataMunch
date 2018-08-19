@@ -18,6 +18,7 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.datamunch.data.IdentifiableListItem
 import de.markusressel.freenasrestapiclient.library.sharing.nfs.NfsShareModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -34,7 +35,11 @@ data class NfsShareEntity(@Id var entityId: Long, val id: Long, val nfs_alldirs:
         // val nfs_paths: List<String>?,
                           val nfs_quiet: Boolean, val nfs_ro: Boolean
         // , val nfs_security: List<String>?
-)
+) : IdentifiableListItem {
+
+    override fun getItemId(): Long = id
+
+}
 
 fun NfsShareModel.asEntity(): NfsShareEntity {
     return NfsShareEntity(0, this.id, this.nfs_alldirs, this.nfs_comment, this.nfs_hosts,

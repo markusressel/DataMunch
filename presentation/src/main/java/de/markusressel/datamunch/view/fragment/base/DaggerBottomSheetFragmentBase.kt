@@ -30,13 +30,15 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
+import de.markusressel.datamunch.R
+import de.markusressel.datamunch.data.preferences.PreferenceDataProviderHolder
 import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import de.markusressel.datamunch.view.IconHandler
 import de.markusressel.datamunch.view.ThemeHelper
 import javax.inject.Inject
 
 abstract class DaggerBottomSheetFragmentBase : BottomSheetDialogFragment(),
-    HasSupportFragmentInjector {
+        HasSupportFragmentInjector {
 
     @Inject
     lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
@@ -45,16 +47,20 @@ abstract class DaggerBottomSheetFragmentBase : BottomSheetDialogFragment(),
     lateinit var themeHelper: ThemeHelper
 
     @Inject
-    lateinit var kutePreferencesHolder: KutePreferencesHolder
+    protected lateinit var iconHandler: IconHandler
+
+    @Inject
+    lateinit var preferencesDataProviderHolder: PreferenceDataProviderHolder
+
+    @Inject
+    lateinit var preferencesHolder: KutePreferencesHolder
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection
                 .inject(this)
 
         themeHelper
-                .applyTheme(this, kutePreferencesHolder
-                        .themePreference
-                        .persistedValue)
+                .applyTheme(this, preferencesDataProviderHolder.dataProvider.getValueUnsafe(R.string.theme_key, getString(R.string.theme_dark_value)))
 
         super
                 .onAttach(context)
@@ -63,12 +69,6 @@ abstract class DaggerBottomSheetFragmentBase : BottomSheetDialogFragment(),
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {
         return childFragmentInjector
     }
-
-    @Inject
-    protected lateinit var preferencesHolder: KutePreferencesHolder
-
-    @Inject
-    protected lateinit var iconHandler: IconHandler
 
     /**
      * The layout resource for this Activity

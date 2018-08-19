@@ -33,6 +33,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasFragmentInjector
 import dagger.android.support.HasSupportFragmentInjector
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.data.preferences.PreferenceDataProviderHolder
 import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import de.markusressel.datamunch.view.IconHandler
@@ -57,10 +58,10 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
     protected lateinit var navigator: Navigator
 
     @Inject
-    protected lateinit var preferencesHolder: KutePreferencesHolder
+    lateinit var preferencesDataProviderHolder: PreferenceDataProviderHolder
 
     @Inject
-    protected lateinit var kutePreferencesHolder: KutePreferencesHolder
+    protected lateinit var preferencesHolder: KutePreferencesHolder
 
     @Inject
     protected lateinit var themeHelper: ThemeHelper
@@ -151,7 +152,7 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
     }
 
     fun initLocale() {
-        val localeValue = kutePreferencesHolder
+        val localeValue = preferencesHolder
                 .languagePreference
                 .persistedValue
 
@@ -180,9 +181,7 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
     }
 
     private fun initTheme() {
-        val theme = kutePreferencesHolder
-                .themePreference
-                .persistedValue
+        val theme = preferencesDataProviderHolder.dataProvider.getValueUnsafe(R.string.theme_key, getString(R.string.theme_dark_value))
 
         if (style == DIALOG) {
             themeHelper

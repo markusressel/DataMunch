@@ -18,6 +18,7 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.datamunch.data.IdentifiableListItem
 import de.markusressel.freenasrestapiclient.library.jails.jail.JailModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -36,7 +37,11 @@ data class JailEntity(@Id var entityId: Long, val id: Long, val jail_alias_bridg
                       val jail_ipv4: String?, val jail_ipv4_netmask: String?,
                       val jail_ipv6: String?, val jail_ipv6_prefix: String?, val jail_mac: String?,
                       val jail_nat: Boolean, val jail_status: String?, val jail_type: String?,
-                      val jail_vnet: Boolean)
+                      val jail_vnet: Boolean) : IdentifiableListItem {
+
+    override fun getItemId(): Long = id
+
+}
 
 fun JailModel.asEntity(entityId: Long = 0): JailEntity {
     return JailEntity(entityId, this.id, this.jail_alias_bridge_ipv4, this.jail_alias_bridge_ipv6,

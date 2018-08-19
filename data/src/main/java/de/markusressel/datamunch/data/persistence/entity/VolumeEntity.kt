@@ -18,6 +18,8 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.freenasrestapiclient.library.storage.volume.VolumeModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -31,7 +33,13 @@ data class VolumeEntity(@Id var entityId: Long, val id: Long, val status: String
                         val vol_guid: Long, val used: String, val name: String,
                         val used_pct: String, val used_si: String?, val vol_encryptkey: String?,
                         val vol_name: String?, val decrypted: Boolean, val avail_si: String?,
-                        val mountpoint: String, val vol_encrypt: Long, val total_si: String?) {
+                        val mountpoint: String, val vol_encrypt: Long, val total_si: String?) : IdentifiableListItem, SearchableListItem {
+
+    override fun getItemId(): Long = id
+
+    override fun getSearchableContent(): List<Any> {
+        return listOf(name, status)
+    }
 
     //    lateinit var parent: ToOne<VolumeEntity>
     //
@@ -53,9 +61,9 @@ private fun createEntityRecursive(children: List<VolumeModel>?): List<VolumeEnti
 
     fun convertToEntity(model: VolumeModel): VolumeEntity {
         return VolumeEntity(0, model.id, model.status, model.vol_guid, model.used, model.name,
-                            model.used_pct, model.used_si, model.vol_encryptkey, model.vol_name,
-                            model.is_decrypted, model.avail_si, model.mountpoint, model.vol_encrypt,
-                            model.total_si)
+                model.used_pct, model.used_si, model.vol_encryptkey, model.vol_name,
+                model.is_decrypted, model.avail_si, model.mountpoint, model.vol_encrypt,
+                model.total_si)
     }
 
     if (children == null) {

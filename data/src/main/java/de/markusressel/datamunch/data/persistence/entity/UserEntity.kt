@@ -18,6 +18,8 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.freenasrestapiclient.library.account.user.UserModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -33,14 +35,22 @@ data class UserEntity(@Id var entityId: Long, val id: Long,
                       val bsdusr_locked: Boolean, val bsdusr_password_disabled: Boolean,
                       val bsdusr_shell: String, val bsdusr_smbhash: String, val bsdusr_uid: Long,
                       val bsdusr_sshpubkey: String, val bsdusr_unixhash: String,
-                      val bsdusr_username: String, val bsdusr_sudo: Boolean)
+                      val bsdusr_username: String, val bsdusr_sudo: Boolean) : IdentifiableListItem, SearchableListItem {
+
+    override fun getItemId(): Long = id
+
+    override fun getSearchableContent(): List<Any> {
+        return listOf(id, bsdusr_username)
+    }
+
+}
 
 fun UserModel.asEntity(): UserEntity {
     return UserEntity(0, this.id,
             //                      this.bsdusr_attributes,
-                      this.bsdusr_builtin, this.bsdusr_email, this.bsdusr_full_name,
-                      this.bsdusr_group, this.bsdusr_home, this.bsdusr_locked,
-                      this.bsdusr_password_disabled, this.bsdusr_shell, this.bsdusr_smbhash,
-                      this.bsdusr_uid, this.bsdusr_sshpubkey, this.bsdusr_unixhash,
-                      this.bsdusr_username, this.bsdusr_sudo)
+            this.bsdusr_builtin, this.bsdusr_email, this.bsdusr_full_name,
+            this.bsdusr_group, this.bsdusr_home, this.bsdusr_locked,
+            this.bsdusr_password_disabled, this.bsdusr_shell, this.bsdusr_smbhash,
+            this.bsdusr_uid, this.bsdusr_sshpubkey, this.bsdusr_unixhash,
+            this.bsdusr_username, this.bsdusr_sudo)
 }

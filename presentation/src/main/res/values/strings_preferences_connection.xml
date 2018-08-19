@@ -27,6 +27,9 @@
     <string name="connection_host_title">Host</string>
     <string name="connection_host_summary">Host address of the server</string>
 
+    <string name="connection_api_resource_title">API Resource</string>
+    <string name="connection_api_resource_summary">Web resource that exposes the api</string>
+
     <string name="connection_ssh_user_summary">User</string>
     <string name="connection_ssh_user_title">User</string>
 

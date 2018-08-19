@@ -26,11 +26,12 @@ import de.markusressel.datamunch.application.App
 import de.markusressel.datamunch.dagger.module.BaseBindingsModule
 import de.markusressel.datamunch.dagger.module.PersistenceBindingsModule
 import de.markusressel.datamunch.dagger.module.PreferencesBindingsModule
+import de.markusressel.datamunch.dagger.module.RestBindingsModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(
-        modules = [(AppModule::class), (BaseBindingsModule::class), (PreferencesBindingsModule::class), (PersistenceBindingsModule::class), (AndroidInjectionModule::class), (AndroidSupportInjectionModule::class)])
+        modules = [(AppModule::class), (BaseBindingsModule::class), (RestBindingsModule::class), (PreferencesBindingsModule::class), (PersistenceBindingsModule::class), (AndroidInjectionModule::class), (AndroidSupportInjectionModule::class)])
 interface AppComponent : AndroidInjector<App> {
 
     @Component.Builder

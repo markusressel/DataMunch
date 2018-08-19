@@ -38,6 +38,7 @@
     <string name="comment">Kommentar</string>
 
     <string name="refresh">Aktualisieren</string>
+    <string name="search">Suchen</string>
     <string name="no_items_found">Keine Einträge</string>
     <string name="unknown_error">Unbekannter Fehler</string>
 

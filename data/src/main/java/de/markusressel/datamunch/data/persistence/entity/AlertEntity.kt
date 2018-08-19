@@ -18,6 +18,8 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.freenasrestapiclient.library.system.alert.AlertModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -27,7 +29,15 @@ import io.objectbox.annotation.Id
  */
 @Entity
 data class AlertEntity(@Id var entityId: Long, val id: String, val level: String,
-                       val message: String, val dismissed: Boolean)
+                       val message: String, val dismissed: Boolean) : IdentifiableListItem, SearchableListItem {
+
+    override fun getItemId(): Long = entityId
+
+    override fun getSearchableContent(): List<Any> {
+        return listOf(level, message)
+    }
+
+}
 
 fun AlertModel.asEntity(): AlertEntity {
     return AlertEntity(0, this.id, this.level, this.message, this.dismissed)

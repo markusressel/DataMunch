@@ -18,6 +18,8 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.freenasrestapiclient.library.storage.task.TaskModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -30,11 +32,19 @@ data class TaskEntity(@Id var entityId: Long, val id: Long, val task_ret_count: 
                       val task_repeat_unit: String, val task_enabled: Boolean,
                       val task_recursive: Boolean, val task_end: String, val task_interval: Long,
                       val task_byweekday: String, val task_begin: String,
-                      val task_filesystem: String, val task_ret_unit: String)
+                      val task_filesystem: String, val task_ret_unit: String) : IdentifiableListItem, SearchableListItem {
+
+    override fun getItemId(): Long = id
+
+    override fun getSearchableContent(): List<Any> {
+        return listOf(task_filesystem)
+    }
+
+}
 
 fun TaskModel.asEntity(entityId: Long = 0): TaskEntity {
     return TaskEntity(entityId, this.id, this.task_ret_count, this.task_repeat_unit,
-                      this.task_enabled, this.task_recursive, this.task_end, this.task_interval,
-                      this.task_byweekday, this.task_begin, this.task_filesystem,
-                      this.task_ret_unit)
+            this.task_enabled, this.task_recursive, this.task_end, this.task_interval,
+            this.task_byweekday, this.task_begin, this.task_filesystem,
+            this.task_ret_unit)
 }

@@ -18,6 +18,8 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.freenasrestapiclient.library.tasks.smart.SMARTTaskModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -30,11 +32,19 @@ data class SMARTTaskEntity(@Id var entityId: Long, val id: Long, val smarttest_d
                            val smarttest_daymonth: String,
         //                           val smarttest_disks: Array<String>,
                            val smarttest_month: String, val smarttest_type: String,
-                           val smarttest_hour: String, val smarttest_desc: String)
+                           val smarttest_hour: String, val smarttest_desc: String) : IdentifiableListItem, SearchableListItem {
+
+    override fun getItemId(): Long = id
+
+    override fun getSearchableContent(): List<Any> {
+        return listOf(smarttest_desc, smarttest_type)
+    }
+
+}
 
 fun SMARTTaskModel.asEntity(entityId: Long = 0): SMARTTaskEntity {
     return SMARTTaskEntity(entityId, this.id, this.smarttest_dayweek, this.smarttest_daymonth,
             //                           this.smarttest_disks,
-                           this.smarttest_month, this.smarttest_type, this.smarttest_hour,
-                           this.smarttest_desc)
+            this.smarttest_month, this.smarttest_type, this.smarttest_hour,
+            this.smarttest_desc)
 }
