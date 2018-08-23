@@ -214,10 +214,6 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                 .layoutManager = layoutManager
 
         setupFabs()
-
-        frittenbudeServerManager
-                .setSSHConnectionConfig(connectionManager.getSSHProxy(),
-                                        connectionManager.getMainSSHConnection())
     }
 
     override fun onStart() {

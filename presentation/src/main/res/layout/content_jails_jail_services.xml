@@ -37,8 +37,8 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/servicesText"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/servicesRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

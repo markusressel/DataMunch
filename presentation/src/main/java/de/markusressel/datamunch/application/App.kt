@@ -23,7 +23,9 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import de.markusressel.datamunch.BuildConfig
 import de.markusressel.datamunch.dagger.DaggerAppComponent
+import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.preferences.KutePreferencesHolder
+import de.markusressel.datamunch.ssh.ConnectionManager
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -34,6 +36,12 @@ class App : ExceptionHandlerApplicationBase() {
 
     @Inject
     protected lateinit var preferenceHolder: KutePreferencesHolder
+
+    @Inject
+    protected lateinit var connectionManager: ConnectionManager
+
+    @Inject
+    lateinit var frittenbudeServerManager: FreeBSDServerManager
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerAppComponent
@@ -60,6 +68,10 @@ class App : ExceptionHandlerApplicationBase() {
 
         plantTimberTrees()
         initMemoryLeakDetection()
+
+        frittenbudeServerManager
+                .setSSHConnectionConfig(connectionManager.getSSHProxy(),
+                                        connectionManager.getMainSSHConnection())
     }
 
     private fun initMemoryLeakDetection() {

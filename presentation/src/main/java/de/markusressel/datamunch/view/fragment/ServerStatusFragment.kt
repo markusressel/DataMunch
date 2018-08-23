@@ -28,6 +28,7 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
+import de.markusressel.datamunch.data.openwrt.OpenWRTServerManager
 import de.markusressel.datamunch.view.component.LoadingComponent
 import de.markusressel.datamunch.view.component.OptionsMenuComponent
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
@@ -51,7 +52,7 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
     @Inject
-    lateinit var openWrtServerManager: de.markusressel.datamunch.data.openwrt.OpenWRTServerManager
+    lateinit var openWrtServerManager: OpenWRTServerManager
 
     override val layoutRes: Int
         get() = R.layout.fragment_server_status
@@ -113,10 +114,6 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
                 .onViewCreated(view, savedInstanceState)
-
-        frittenbudeServerManager
-                .setSSHConnectionConfig(connectionManager.getSSHProxy(),
-                                        connectionManager.getMainSSHConnection())
 
         openWrtServerManager
                 .setSSHConnectionConfig(connectionManager.getSSHProxy())

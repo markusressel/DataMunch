@@ -18,27 +18,4 @@
 
 package de.markusressel.datamunch.view.fragment.jail.jail
 
-import android.os.Bundle
-import android.view.View
-import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
-import javax.inject.Inject
-
-
-/**
- * Created by Markus on 18.02.2018.
- */
-class JailShellContentFragment : JailContentFragmentBase() {
-
-    override val layoutRes: Int
-        get() = R.layout.content_jails_jail_shell
-
-    @Inject
-    lateinit var frittenbudeServerManager: FreeBSDServerManager
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super
-                .onViewCreated(view, savedInstanceState)
-    }
-
-}
+data class JailService(val name: String)

@@ -22,6 +22,7 @@ import de.markusressel.datamunch.data.ServerManager
 import de.markusressel.datamunch.data.VirtualMachine
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
 import de.markusressel.datamunch.data.ssh.SSHConnectionConfig
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -99,9 +100,15 @@ class FreeBSDServerManager @Inject constructor() : ServerManager() {
         return emptyList()
     }
 
-    fun executeInJail(jailName: String, vararg commands: String): List<String> {
+    /**
+     * Executes a sequence of commands inside the specified jail
+     *
+     * @param jailName Name of the jail
+     * @param commands commands to execute
+     * @return list of command results
+     */
+    fun executeInJail(jailName: String, vararg commands: String): SortedMap<String, String> {
         return runInShell("jexec $jailName /bin/tcsh", *commands)
-                .drop(1)
     }
 
 }

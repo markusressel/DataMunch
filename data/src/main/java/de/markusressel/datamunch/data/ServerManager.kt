@@ -21,8 +21,8 @@ package de.markusressel.datamunch.data
 import de.markusressel.datamunch.data.ssh.ExecuteCommandResult
 import de.markusressel.datamunch.data.ssh.SSHClient
 import de.markusressel.datamunch.data.ssh.SSHConnectionConfig
-import de.markusressel.datamunch.data.ssh.SSHShell
 import java.io.File
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -69,9 +69,16 @@ abstract class ServerManager {
                 .executeCommand(*sshConnectionConfigList, command = command)
     }
 
-    protected fun runInShell(vararg commands: String): List<String> {
+    /**
+     * Executes shell commands
+     *
+     * @param commands commands to execute
+     * @return list of command results
+     */
+    protected fun runInShell(vararg commands: String): SortedMap<String, String> {
         return sshClient
-                .runInShell(*sshConnectionConfigList, commands = commands.asList())
+                .executeInShell(connectionConfig = *sshConnectionConfigList,
+                                commands = commands.asList())
     }
 
     /**
@@ -99,13 +106,6 @@ abstract class ServerManager {
         sshClient
                 .uploadFile(*sshConnectionConfigList, file = file,
                             destinationPath = destinationPath)
-    }
-
-    /**
-     * Get an interactive shell for this server
-     */
-    fun getShell(): SSHShell {
-        return SSHShell(*sshConnectionConfigList, sshClient = sshClient)
     }
 
 }

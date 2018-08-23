@@ -20,11 +20,13 @@ package de.markusressel.datamunch.view.fragment.jail.jail
 
 import android.arch.lifecycle.Lifecycle
 import android.os.Bundle
-import android.view.View
 import com.github.ajalt.timberkt.Timber
+import com.github.nitrico.lastadapter.LastAdapter
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
+import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
+import de.markusressel.datamunch.databinding.ListItemJailServiceBinding
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -43,19 +45,29 @@ class JailServicesContentFragment : JailContentFragmentBase() {
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
 
+    val servicesList: MutableList<JailService> = mutableListOf()
+
+    lateinit var servicesAdapter: LastAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super
                 .onCreate(savedInstanceState)
 
-        frittenbudeServerManager
-                .setSSHConnectionConfig(connectionManager.getSSHProxy(),
-                                        connectionManager.getMainSSHConnection())
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super
-                .onViewCreated(view, savedInstanceState)
-
+        servicesAdapter = LastAdapter(servicesList, BR.item)
+                .map<JailService, ListItemJailServiceBinding>(
+                        R.layout.list_item_jail_service) {
+                    onCreate {
+                        it
+                                .binding
+                                .presenter = this@JailServicesContentFragment
+                    }
+                    onBind { holder ->
+                        val item = holder
+                                .binding
+                                .item
+                    }
+                }
+                .into(servicesRecyclerView)
 
     }
 
@@ -68,31 +80,28 @@ class JailServicesContentFragment : JailContentFragmentBase() {
     private fun updateUi() {
         Single
                 .fromCallable {
-                    frittenbudeServerManager
+                    val result = frittenbudeServerManager
                             .executeInJail(getEntityFromPersistence().jail_host, "service -l")
+                    result[result.lastKey()]!!
+                            .split(Regex.fromLiteral("\r\n"))
+                            .dropLast(1)
                 }
                 .bindUntilEvent(this, Lifecycle.Event.ON_STOP)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(onSuccess = {
-                    val services = it
-                            .last()
-                            .split(Regex.fromLiteral("\r\n"))
-                            .dropLast(1)
-
+                .subscribeBy(onSuccess = { services ->
                     Timber
                             .d {
                                 services
                                         .joinToString(",")
                             }
 
-                    servicesText
-                            .text = services
-                            .sortedBy {
-                                it
-                                        .toLowerCase()
-                            }
-                            .joinToString(separator = "\n")
+                    servicesList
+                            .clear()
+                    servicesList
+                            .addAll(services.map { JailService(name = it) })
+                    servicesAdapter
+                            .notifyDataSetChanged()
                 }, onError = {
                     Timber
                             .e(it)

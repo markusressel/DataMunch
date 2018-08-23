@@ -24,6 +24,7 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStreamWriter
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -46,7 +47,7 @@ class SSHClient @Inject constructor() {
      */
     fun executeCommand(vararg connectionConfig: SSHConnectionConfig,
                        command: String): ExecuteCommandResult {
-        val result: ExecuteCommandResult = runOnSession(*connectionConfig) { session: Session ->
+        val result: ExecuteCommandResult = doInSession(*connectionConfig) { session: Session ->
 
             // connect the channel
             val channel = createExecChannel(session, command)
@@ -68,11 +69,16 @@ class SSHClient @Inject constructor() {
     }
 
     /**
-     * Get a shell
+     * Creates a shell and executes commands sequentially
+     *
+     * @param connectionConfig SSH connection config (multiple for ssh tunneling)
+     * @param commands list of commands to execute
+     * @return a map from "command" -> "result"
      */
-    fun runInShell(vararg connectionConfig: SSHConnectionConfig,
-                   commands: List<String>): List<String> {
-        val results: List<String> = runOnSession(*connectionConfig) { session: Session ->
+    fun executeInShell(vararg connectionConfig: SSHConnectionConfig,
+                       commands: List<String>): SortedMap<String, String> {
+        val results: SortedMap<String, String> = doInSession(
+                *connectionConfig) { session: Session ->
 
             // connect the channel
             val channel = createShellChannel(session)
@@ -83,7 +89,7 @@ class SSHClient @Inject constructor() {
                     .inputStream
             val out = BufferedWriter(OutputStreamWriter(channel.outputStream))
 
-            val results: MutableList<String> = mutableListOf()
+            val results: SortedMap<String, String> = sortedMapOf()
 
             // initial response can be ignored as it's just the "welcome" message and initial prompt
             val initialResponse = readResponse(channel, inputStream)
@@ -106,8 +112,7 @@ class SSHClient @Inject constructor() {
                                 .removePrefix(it)
                                 .trim()
                         // add the result to the return list
-                        results
-                                .add(resultText)
+                        results[it] = resultText
                     }
 
             channel
@@ -119,8 +124,8 @@ class SSHClient @Inject constructor() {
         return results
     }
 
-    private fun <T> runOnSession(vararg sshConnectionConfig: SSHConnectionConfig,
-                                 run: (session: Session) -> T): T {
+    private fun <T> doInSession(vararg sshConnectionConfig: SSHConnectionConfig,
+                                run: (session: Session) -> T): T {
 
         // create session
         val sessions = createAndConnectSession(*sshConnectionConfig)
@@ -138,7 +143,8 @@ class SSHClient @Inject constructor() {
     internal fun createAndConnectSession(
             vararg sshConnectionConfig: SSHConnectionConfig): List<Session> {
         if (sshConnectionConfig.isEmpty()) {
-            throw IllegalArgumentException("There must be at least one ssh connection configuration!")
+            throw IllegalArgumentException(
+                    "There must be at least one ssh connection configuration!")
         }
 
         val sessions: MutableList<Session> = ArrayList()
@@ -256,6 +262,9 @@ class SSHClient @Inject constructor() {
         }
     }
 
+    /**
+     * Creates a channel for executing single commands
+     */
     private fun createExecChannel(session: Session, command: String): ChannelExec {
         // open channel to work with
         val channel = session.openChannel(TYPE_EXEC) as ChannelExec
@@ -271,10 +280,16 @@ class SSHClient @Inject constructor() {
         return channel
     }
 
-    internal fun createShellChannel(session: Session): Channel {
+    /**
+     * Creates a channel for an interactive shell
+     */
+    private fun createShellChannel(session: Session): Channel {
         return session.openChannel(TYPE_SHELL) as Channel
     }
 
+    /**
+     * Creates a channel for SFTP transactions
+     */
     private fun createSFTPChannel(session: Session): ChannelSftp {
         return session.openChannel(TYPE_SFTP) as ChannelSftp
     }
@@ -292,7 +307,7 @@ class SSHClient @Inject constructor() {
      */
     fun uploadFile(vararg sshConnectionConfig: SSHConnectionConfig, file: File,
                    destinationPath: String) {
-        runOnSession(*sshConnectionConfig) { session: Session ->
+        doInSession(*sshConnectionConfig) { session: Session ->
             val channel = createSFTPChannel(session)
             channel
                     .connect()
