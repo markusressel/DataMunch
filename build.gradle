@@ -14,10 +14,10 @@ buildscript {
         buildToolsVersion = "27.0.3"
 
         supportLibVersion = "27.1.1"
-        constraintLayoutVersion = "1.1.0"
+        constraintLayoutVersion = "1.1.2"
 
         // Android Architecture Components
-        aacNavigationVersion = "1.0.0-alpha01"
+        aacNavigationVersion = "1.0.0-alpha05"
         aacAndroidKtxVersion = "0.3"
 
         dagger2Version = "2.11"
