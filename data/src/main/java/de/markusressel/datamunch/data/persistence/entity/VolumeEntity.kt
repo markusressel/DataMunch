@@ -30,7 +30,8 @@ import io.objectbox.relation.ToMany
  * Created by Markus on 30.01.2018.
  */
 @Entity
-data class VolumeEntity(@Id var entityId: Long = 0, val id: Long = 0, val status: String = "",
+data class VolumeEntity(@Id var entityId: Long = 0, val id: Long = 0, val isRoot: Boolean = false,
+                        val status: String = "",
                         val vol_guid: Long = 0, val used: String = "", val name: String = "",
                         val used_pct: String = "", val used_si: String? = null,
                         val vol_encryptkey: String? = null,
@@ -50,8 +51,9 @@ data class VolumeEntity(@Id var entityId: Long = 0, val id: Long = 0, val status
 
 }
 
-fun VolumeModel.asEntity(): VolumeEntity {
-    val volumeEntity = VolumeEntity(0, this.id, this.status, this.vol_guid, this.used, this.name,
+fun VolumeModel.asEntity(isRoot: Boolean): VolumeEntity {
+    val volumeEntity = VolumeEntity(0, this.id, isRoot, this.status, this.vol_guid, this.used,
+                                    this.name,
                                     this.used_pct, this.used_si, this.vol_encryptkey, this.vol_name,
                                     this.is_decrypted, this.avail_si, this.mountpoint,
                                     this.vol_encrypt,
@@ -60,7 +62,7 @@ fun VolumeModel.asEntity(): VolumeEntity {
             .children
             .addAll(this.children?.map {
                 it
-                        .asEntity()
+                        .asEntity(false)
             }
                             ?: emptyList())
 

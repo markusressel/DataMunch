@@ -53,7 +53,6 @@ import de.markusressel.datamunch.view.fragment.sharing.cifs.CifsSharesFragment
 import de.markusressel.datamunch.view.fragment.sharing.nfs.NfsShareDetailActivity
 import de.markusressel.datamunch.view.fragment.sharing.nfs.NfsShareDetailContentFragment
 import de.markusressel.datamunch.view.fragment.sharing.nfs.NfsSharesFragment
-import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
 import de.markusressel.datamunch.view.fragment.storage.dataset.DatasetDetailActivity
 import de.markusressel.datamunch.view.fragment.storage.dataset.DatasetDetailContentFragment
 import de.markusressel.datamunch.view.fragment.storage.dataset.DatasetsFragment
@@ -69,6 +68,7 @@ import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotsFragmen
 import de.markusressel.datamunch.view.fragment.storage.task.TaskDetailActivity
 import de.markusressel.datamunch.view.fragment.storage.task.TaskDetailContentFragment
 import de.markusressel.datamunch.view.fragment.storage.task.TasksFragment
+import de.markusressel.datamunch.view.fragment.storage.volume.VolumesFragment
 import de.markusressel.datamunch.view.fragment.system.MaintenanceFragment
 import de.markusressel.datamunch.view.fragment.system.alert.AlertDetailActivity
 import de.markusressel.datamunch.view.fragment.system.alert.AlertDetailContentFragment
