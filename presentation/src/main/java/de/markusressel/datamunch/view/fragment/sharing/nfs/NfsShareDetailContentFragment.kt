@@ -21,7 +21,7 @@ package de.markusressel.datamunch.view.fragment.sharing.nfs
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.NfsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.NfsShareEntity
+import de.markusressel.datamunch.data.persistence.entity.nfs.NfsShareEntity
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
 import kotlinx.android.synthetic.main.content_sharing_nfs_detail.*
 import javax.inject.Inject
@@ -55,6 +55,39 @@ class NfsShareDetailContentFragment : DetailContentFragmentBase<NfsShareEntity>(
         nameTextView
                 .text = entity
                 .nfs_network
+
+        hostsTextView
+                .text = entity
+                .nfs_hosts
+        commentTextView
+                .text = entity
+                .nfs_comment
+        mapAllGroupTextView
+                .text = entity
+                .nfs_mapall_group
+        mapAllUserTextView
+                .text = entity
+                .nfs_mapall_user
+        mapRootGroupTextView
+                .text = entity
+                .nfs_maproot_group
+        mapRootUserTextView
+                .text = entity
+                .nfs_maproot_user
+        quietCheckbox
+                .isChecked = entity
+                .nfs_quiet
+        roCheckbox
+                .isChecked = entity
+                .nfs_ro
+        securityTextView
+                .text = entity
+                .nfs_security
+                .joinToString { "\n" }
+        pathsTextView
+                .text = entity
+                .nfs_paths
+                .joinToString { "\n" }
 
     }
 

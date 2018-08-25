@@ -22,7 +22,7 @@
 
         <variable
             name="item"
-            type="de.markusressel.datamunch.data.persistence.entity.DatasetEntity" />
+            type="de.markusressel.datamunch.data.persistence.entity.dataset.DatasetEntity" />
 
         <variable
             name="presenter"

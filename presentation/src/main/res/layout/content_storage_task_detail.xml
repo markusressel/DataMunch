@@ -39,6 +39,7 @@
                 <CheckBox
                     android:id="@+id/enabledCheckBox"
                     style="@style/sub_header_content_textview"
+                    android:enabled="false"
                     android:text="@string/enabled" />
 
                 <TextView
@@ -52,6 +53,7 @@
                 <CheckBox
                     android:id="@+id/recursiveCheckBox"
                     style="@style/sub_header_content_textview"
+                    android:enabled="false"
                     android:text="@string/recursive" />
 
                 <TextView

@@ -55,6 +55,42 @@ class CifsShareDetailContentFragment : DetailContentFragmentBase<CifsShareEntity
         nameTextView
                 .text = entity
                 .cifs_name
+        commentTextView
+                .text = entity
+                .cifs_comment
+        browsableCheckBox
+                .isChecked = entity
+                .cifs_browsable
+        defaultPermissionsCheckBox
+                .isChecked = entity
+                .cifs_default_permissions
+        guestOkCheckBox
+                .isChecked = entity
+                .cifs_guestok
+        homeCheckBox
+                .isChecked = entity
+                .cifs_home
+        allowedHostsTextView
+                .text = entity
+                .cifs_hostsallow
+        deniedHostsTextView
+                .text = entity
+                .cifs_hostsdeny
+        auxSmbConfTextView
+                .text = entity
+                .cifs_auxsmbconf
+        pathTextView
+                .text = entity
+                .cifs_path
+        recycleBinCheckBox
+                .isChecked = entity
+                .cifs_recyclebin
+        showHiddenFilesCheckBox
+                .isChecked = entity
+                .cifs_showhiddenfiles
+        roCheckBox
+                .isChecked = entity
+                .cifs_ro
 
     }
 

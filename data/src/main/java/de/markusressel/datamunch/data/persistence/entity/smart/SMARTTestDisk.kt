@@ -16,17 +16,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.data.persistence
+package de.markusressel.datamunch.data.persistence.entity.smart
 
-import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.smart.SMARTTaskEntity
-import javax.inject.Inject
-import javax.inject.Singleton
+import io.objectbox.annotation.Entity
+import io.objectbox.annotation.Id
+import io.objectbox.relation.ToOne
 
-/**
- * Created by Markus on 30.01.2018.
- */
-@Singleton
-class SMARTTaskPersistenceManager @Inject constructor() :
-    PersistenceManagerBase<SMARTTaskEntity>(
-            SMARTTaskEntity::class)
+@Entity
+data class SMARTTestDisk(@Id var entityId: Long = 0, val name: String = "") {
+
+    lateinit var parentTask: ToOne<SMARTTaskEntity>
+
+}

@@ -19,7 +19,7 @@
 package de.markusressel.datamunch.data.persistence
 
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.NfsShareEntity
+import de.markusressel.datamunch.data.persistence.entity.nfs.NfsShareEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,4 +28,5 @@ import javax.inject.Singleton
  */
 @Singleton
 class NfsSharePersistenceManager @Inject constructor() :
-    PersistenceManagerBase<NfsShareEntity>(NfsShareEntity::class)
+    PersistenceManagerBase<NfsShareEntity>(
+            NfsShareEntity::class)

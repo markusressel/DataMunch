@@ -21,7 +21,7 @@ package de.markusressel.datamunch.view.fragment.storage.dataset
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.DatasetPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.DatasetEntity
+import de.markusressel.datamunch.data.persistence.entity.dataset.DatasetEntity
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import javax.inject.Inject

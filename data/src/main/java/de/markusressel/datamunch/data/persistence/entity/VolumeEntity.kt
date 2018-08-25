@@ -23,17 +23,22 @@ import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.freenasrestapiclient.library.storage.volume.VolumeModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
+import io.objectbox.relation.ToMany
 
 
 /**
  * Created by Markus on 30.01.2018.
  */
 @Entity
-data class VolumeEntity(@Id var entityId: Long, val id: Long, val status: String,
-                        val vol_guid: Long, val used: String, val name: String,
-                        val used_pct: String, val used_si: String?, val vol_encryptkey: String?,
-                        val vol_name: String?, val decrypted: Boolean, val avail_si: String?,
-                        val mountpoint: String, val vol_encrypt: Long, val total_si: String?) : IdentifiableListItem, SearchableListItem {
+data class VolumeEntity(@Id var entityId: Long = 0, val id: Long = 0, val status: String = "",
+                        val vol_guid: Long = 0, val used: String = "", val name: String = "",
+                        val used_pct: String = "", val used_si: String? = null,
+                        val vol_encryptkey: String? = null,
+                        val vol_name: String? = null, val decrypted: Boolean = false,
+                        val avail_si: String? = null,
+                        val mountpoint: String = "", val vol_encrypt: Long = 0,
+                        val total_si: String? = null) :
+    IdentifiableListItem, SearchableListItem {
 
     override fun getItemId(): Long = id
 
@@ -41,45 +46,23 @@ data class VolumeEntity(@Id var entityId: Long, val id: Long, val status: String
         return listOf(name, status)
     }
 
-    //    lateinit var parent: ToOne<VolumeEntity>
-    //
-    //    @Backlink
-    //    lateinit var children: ToMany<VolumeEntity>
-
-    var childEntities: List<VolumeEntity> = emptyList()
+    lateinit var children: ToMany<VolumeEntity>
 
 }
 
 fun VolumeModel.asEntity(): VolumeEntity {
-    val childEntities: List<VolumeEntity> = createEntityRecursive(listOf(this))
-    return childEntities
-            .first()
-}
+    val volumeEntity = VolumeEntity(0, this.id, this.status, this.vol_guid, this.used, this.name,
+                                    this.used_pct, this.used_si, this.vol_encryptkey, this.vol_name,
+                                    this.is_decrypted, this.avail_si, this.mountpoint,
+                                    this.vol_encrypt,
+                                    this.total_si)
+    volumeEntity
+            .children
+            .addAll(this.children?.map {
+                it
+                        .asEntity()
+            }
+                            ?: emptyList())
 
-
-private fun createEntityRecursive(children: List<VolumeModel>?): List<VolumeEntity> {
-
-    fun convertToEntity(model: VolumeModel): VolumeEntity {
-        return VolumeEntity(0, model.id, model.status, model.vol_guid, model.used, model.name,
-                model.used_pct, model.used_si, model.vol_encryptkey, model.vol_name,
-                model.is_decrypted, model.avail_si, model.mountpoint, model.vol_encrypt,
-                model.total_si)
-    }
-
-    if (children == null) {
-        return emptyList()
-    }
-
-    val entities: MutableList<VolumeEntity> = mutableListOf()
-
-    for (child in children) {
-        val entity = convertToEntity(child)
-        entity
-                .childEntities = createEntityRecursive(child.children)
-
-        entities
-                .add(entity)
-    }
-
-    return entities
+    return volumeEntity
 }

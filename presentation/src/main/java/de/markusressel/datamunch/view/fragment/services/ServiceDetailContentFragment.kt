@@ -52,12 +52,13 @@ class ServiceDetailContentFragment : DetailContentFragmentBase<ServiceEntity>() 
         idTextView
                 .text = "${entity.id}"
 
-        sourceTextView
+        nameTextView
                 .text = entity
                 .srv_service
 
-        destinationTextView
-                .text = "Enabled: ${entity.srv_enabled}"
+        enabledCheckBox
+                .isChecked = entity
+                .srv_enabled
     }
 
 }

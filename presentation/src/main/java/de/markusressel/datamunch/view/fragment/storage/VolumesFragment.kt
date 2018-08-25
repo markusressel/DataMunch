@@ -97,7 +97,7 @@ class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
 
     private fun openDetailView(volume: VolumeEntity) {
         volume
-                .childEntities
+                .children
                 .toObservable()
                 .subscribeBy(onNext = {
                     Toast

@@ -19,7 +19,7 @@
 package de.markusressel.datamunch.data.persistence
 
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.DatasetEntity
+import de.markusressel.datamunch.data.persistence.entity.dataset.DatasetEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,4 +28,5 @@ import javax.inject.Singleton
  */
 @Singleton
 class DatasetPersistenceManager @Inject constructor() :
-    PersistenceManagerBase<DatasetEntity>(DatasetEntity::class)
+    PersistenceManagerBase<DatasetEntity>(
+            DatasetEntity::class)

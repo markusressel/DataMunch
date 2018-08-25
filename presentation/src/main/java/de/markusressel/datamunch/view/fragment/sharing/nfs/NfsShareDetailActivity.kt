@@ -21,7 +21,7 @@ package de.markusressel.datamunch.view.fragment.sharing.nfs
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.NfsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.NfsShareEntity
+import de.markusressel.datamunch.data.persistence.entity.nfs.NfsShareEntity
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import javax.inject.Inject

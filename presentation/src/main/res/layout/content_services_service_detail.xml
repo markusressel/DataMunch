@@ -54,16 +54,14 @@
                         android:text="@string/source" />
 
                     <TextView
-                        android:id="@+id/sourceTextView"
+                        android:id="@+id/nameTextView"
                         style="@style/sub_header_content_textview" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/destination" />
-
-                    <TextView
-                        android:id="@+id/destinationTextView"
-                        style="@style/sub_header_content_textview" />
+                    <CheckBox
+                        android:id="@+id/enabledCheckBox"
+                        style="@style/sub_header_content_textview"
+                        android:enabled="false"
+                        android:text="@string/enabled" />
 
                 </LinearLayout>
 

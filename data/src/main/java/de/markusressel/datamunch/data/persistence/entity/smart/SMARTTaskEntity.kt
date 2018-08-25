@@ -16,23 +16,25 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.data.persistence.entity
+package de.markusressel.datamunch.data.persistence.entity.smart
 
 import de.markusressel.datamunch.data.IdentifiableListItem
 import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.freenasrestapiclient.library.tasks.smart.SMARTTaskModel
+import io.objectbox.annotation.Backlink
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
+import io.objectbox.relation.ToMany
 
 /**
  * Created by Markus on 30.01.2018.
  */
 @Entity
-data class SMARTTaskEntity(@Id var entityId: Long, val id: Long, val smarttest_dayweek: String,
-                           val smarttest_daymonth: String,
-        //                           val smarttest_disks: Array<String>,
-                           val smarttest_month: String, val smarttest_type: String,
-                           val smarttest_hour: String, val smarttest_desc: String) : IdentifiableListItem, SearchableListItem {
+data class SMARTTaskEntity(@Id var entityId: Long = 0, val id: Long = 0,
+                           val smarttest_dayweek: String = "", val smarttest_daymonth: String = "",
+                           val smarttest_month: String = "", val smarttest_type: String = "",
+                           val smarttest_hour: String = "", val smarttest_desc: String = "") :
+    IdentifiableListItem, SearchableListItem {
 
     override fun getItemId(): Long = id
 
@@ -40,11 +42,22 @@ data class SMARTTaskEntity(@Id var entityId: Long, val id: Long, val smarttest_d
         return listOf(smarttest_desc, smarttest_type)
     }
 
+    @Backlink
+    lateinit var smarttest_disks: ToMany<SMARTTestDisk>
+
 }
 
 fun SMARTTaskModel.asEntity(entityId: Long = 0): SMARTTaskEntity {
-    return SMARTTaskEntity(entityId, this.id, this.smarttest_dayweek, this.smarttest_daymonth,
-            //                           this.smarttest_disks,
-            this.smarttest_month, this.smarttest_type, this.smarttest_hour,
-            this.smarttest_desc)
+    val entity = SMARTTaskEntity(entityId, this.id, this.smarttest_dayweek, this.smarttest_daymonth,
+                                 this.smarttest_month, this.smarttest_type, this.smarttest_hour,
+                                 this.smarttest_desc)
+
+    entity
+            .smarttest_disks
+            .addAll(this.smarttest_disks
+                            .map {
+                                SMARTTestDisk(0, it)
+                            }.toList())
+
+    return entity
 }
