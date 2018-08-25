@@ -29,10 +29,10 @@ class MainPreferenceFragment : LifecyclePreferenceFragmentBase() {
 
     override fun initPreferenceTree(): KutePreferencesTree {
         return KutePreferencesTree(
-                preferenceHolder.securityCategory,
                 preferenceHolder.connectionCategory,
-                preferenceHolder.themePreference,
-                preferenceHolder.languagePreference
+                preferenceHolder.securityCategory,
+                preferenceHolder.theme,
+                preferenceHolder.language
         )
     }
 

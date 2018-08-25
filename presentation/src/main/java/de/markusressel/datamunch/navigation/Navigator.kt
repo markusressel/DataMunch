@@ -144,7 +144,7 @@ class Navigator @Inject constructor(
 
     private fun navigateToAbout(activityContext: Context) {
         val themeVal = preferencesHolder
-                .themePreference
+                .theme
                 .persistedValue
 
         val aboutLibTheme: Libs.ActivityStyle

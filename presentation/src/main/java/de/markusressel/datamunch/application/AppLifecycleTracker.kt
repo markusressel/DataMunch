@@ -65,7 +65,7 @@ class AppLifecycleTracker(val preferencesHolder: KutePreferencesHolder) :
 
     private fun onAppBackground() {
         val useLock = preferencesHolder
-                .useAppLockPreference
+                .useAppLock
                 .persistedValue
         if (useLock) {
             LockComponent

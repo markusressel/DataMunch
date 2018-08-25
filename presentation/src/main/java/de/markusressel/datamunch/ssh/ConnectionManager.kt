@@ -56,10 +56,10 @@ class ConnectionManager @Inject constructor() {
      */
     fun getSSHProxy(): SSHConnectionConfig {
         return SSHConnectionConfig(
-                host = preferencesHolder.sshProxyHostPreference.persistedValue,
-                port = preferencesHolder.sshProxyPortPreference.persistedValue.toInt(),
-                username = preferencesHolder.sshProxyUserPreference.persistedValue,
-                password = preferencesHolder.sshProxyPasswordPreference.persistedValue)
+                host = preferencesHolder.sshProxyHost.persistedValue,
+                port = preferencesHolder.sshProxyPort.persistedValue.toInt(),
+                username = preferencesHolder.sshProxyUser.persistedValue,
+                password = preferencesHolder.sshProxyPassword.persistedValue)
     }
 
     /**
@@ -70,7 +70,7 @@ class ConnectionManager @Inject constructor() {
                 .getActive()
 
         if (host == null) {
-            host = HostEntity(0, preferencesHolder.connectionUriPreference.persistedValue)
+            host = HostEntity(0, preferencesHolder.sshHost.persistedValue)
         }
 
         var auth = authenticationPersistenceManager
@@ -80,8 +80,8 @@ class ConnectionManager @Inject constructor() {
 
         if (auth == null) {
             auth = AuthenticationEntity(0,
-                                        username = preferencesHolder.sshUserPreference.persistedValue,
-                                        password = preferencesHolder.sshPasswordPreference.persistedValue)
+                                        username = preferencesHolder.sshUser.persistedValue,
+                                        password = preferencesHolder.sshPassword.persistedValue)
         }
 
         return createSSHConnectionConfig(host = host, auth = auth)

@@ -48,120 +48,133 @@ class KutePreferencesHolder @Inject constructor(
 
     val securityCategory by lazy {
         KuteCategory(key = R.string.category_security_key,
-                icon = iconHelper.getPreferenceIcon(MaterialDesignIconic.Icon.gmi_lock),
-                title = context.getString(R.string.category_security_title),
-                description = context.getString(R.string.category_security_description),
-                children = listOf(
-                        useAppLockPreference
-                )
+                     icon = iconHelper.getPreferenceIcon(MaterialDesignIconic.Icon.gmi_lock),
+                     title = context.getString(R.string.category_security_title),
+                     description = context.getString(R.string.category_security_description),
+                     children = listOf(
+                             useAppLock
+                     )
         )
     }
 
-    val useAppLockPreference by lazy {
+    val useAppLock by lazy {
         KuteTogglePreference(key = R.string.lock_pattern_key,
-                icon = iconHelper.getPreferenceIcon(
-                        MaterialDesignIconic.Icon.gmi_smartphone_lock),
-                title = context.getString(R.string.use_pattern_lock_title),
-                defaultValue = false,
-                dataProvider = dataProviderHolder.dataProvider
+                             icon = iconHelper.getPreferenceIcon(
+                                     MaterialDesignIconic.Icon.gmi_smartphone_lock),
+                             title = context.getString(R.string.use_pattern_lock_title),
+                             defaultValue = false,
+                             dataProvider = dataProviderHolder.dataProvider
         )
     }
 
     val connectionCategory by lazy {
         KuteCategory(key = R.string.category_connection_key,
-                icon = iconHelper.getPreferenceIcon(
-                        MaterialDesignIconic.Icon.gmi_wifi),
-                title = context.getString(R.string.category_connection_title),
-                description = context.getString(R.string.category_connection_description),
-                children = listOf(
-                        connectionUriPreference,
-                        connectionApiResourcePreference,
-                        KuteDivider(
-                                key = R.string.divider_ssh_key,
-                                title = context.getString(R.string.divider_ssh_title)
-                        ),
-                        sshUserPreference,
-                        sshPasswordPreference,
-                        KuteDivider(
-                                key = R.string.divider_proxy_key,
-                                title = context.getString(R.string.divider_proxy_title)
-                        ),
-                        sshProxyHostPreference,
-                        sshProxyPortPreference,
-                        sshProxyUserPreference,
-                        sshProxyPasswordPreference
-                )
+                     icon = iconHelper.getPreferenceIcon(
+                             MaterialDesignIconic.Icon.gmi_wifi),
+                     title = context.getString(R.string.category_connection_title),
+                     description = context.getString(R.string.category_connection_description),
+                     children = listOf(
+                             KuteDivider(
+                                     key = R.string.divider_rest_key,
+                                     title = context.getString(R.string.divider_rest_title)
+                             ),
+                             restHost,
+                             connectionApiResource,
+                             KuteDivider(
+                                     key = R.string.divider_ssh_key,
+                                     title = context.getString(R.string.divider_ssh_title)
+                             ),
+                             sshHost,
+                             sshUser,
+                             sshPassword,
+                             KuteDivider(
+                                     key = R.string.divider_proxy_key,
+                                     title = context.getString(R.string.divider_proxy_title)
+                             ),
+                             sshProxyHost,
+                             sshProxyPort,
+                             sshProxyUser,
+                             sshProxyPassword
+                     )
         )
     }
 
-    val connectionUriPreference by lazy {
-        KuteTextPreference(key = R.string.connection_host_key,
-                title = context.getString(R.string.connection_host_title),
-                defaultValue = "",
-                dataProvider = dataProviderHolder.dataProvider)
+    val restHost by lazy {
+        KuteTextPreference(key = R.string.connection_rest_host_key,
+                           title = context.getString(R.string.connection_host_title),
+                           defaultValue = "",
+                           dataProvider = dataProviderHolder.dataProvider)
 
     }
 
-    val connectionApiResourcePreference by lazy {
+    val sshHost by lazy {
+        KuteTextPreference(key = R.string.connection_ssh_host_key,
+                           title = context.getString(R.string.connection_host_title),
+                           defaultValue = "",
+                           dataProvider = dataProviderHolder.dataProvider)
+
+    }
+
+    val connectionApiResource by lazy {
         KuteTextPreference(key = R.string.connection_api_resource_key,
-                title = context.getString(R.string.connection_api_resource_title),
-                defaultValue = "api",
-                dataProvider = dataProviderHolder.dataProvider)
+                           title = context.getString(R.string.connection_api_resource_title),
+                           defaultValue = "api",
+                           dataProvider = dataProviderHolder.dataProvider)
 
     }
 
-    val sshUserPreference by lazy {
+    val sshUser by lazy {
         KuteTextPreference(key = R.string.connection_ssh_user_key,
-                title = context.getString(R.string.connection_ssh_user_title),
-                defaultValue = "root",
-                dataProvider = dataProviderHolder.dataProvider)
+                           title = context.getString(R.string.connection_ssh_user_title),
+                           defaultValue = "root",
+                           dataProvider = dataProviderHolder.dataProvider)
 
     }
 
-    val sshPasswordPreference by lazy {
+    val sshPassword by lazy {
         KutePasswordPreference(key = R.string.connection_ssh_password_key,
-                title = context.getString(R.string.connection_ssh_password_summary),
-                defaultValue = "",
-                dataProvider = dataProviderHolder.dataProvider)
+                               title = context.getString(R.string.connection_ssh_password_summary),
+                               defaultValue = "",
+                               dataProvider = dataProviderHolder.dataProvider)
 
     }
 
-    val sshProxyHostPreference by lazy {
+    val sshProxyHost by lazy {
         KuteTextPreference(key = R.string.connection_ssh_proxy_host_key,
-                title = context.getString(R.string.connection_ssh_proxy_host_title),
-                defaultValue = "",
-                dataProvider = dataProviderHolder.dataProvider)
+                           title = context.getString(R.string.connection_ssh_proxy_host_title),
+                           defaultValue = "",
+                           dataProvider = dataProviderHolder.dataProvider)
 
     }
 
-    val sshProxyPortPreference by lazy {
+    val sshProxyPort by lazy {
         KuteNumberPreference(key = R.string.connection_ssh_proxy_port_key,
-                title = context.getString(R.string.connection_ssh_proxy_port_title),
-                defaultValue = 22,
-                dataProvider = dataProviderHolder.dataProvider)
+                             title = context.getString(R.string.connection_ssh_proxy_port_title),
+                             defaultValue = 22,
+                             dataProvider = dataProviderHolder.dataProvider)
 
     }
 
-    val sshProxyUserPreference by lazy {
+    val sshProxyUser by lazy {
         KuteTextPreference(key = R.string.connection_ssh_proxy_user_key,
-                title = context.getString(R.string.connection_ssh_proxy_user_title),
-                defaultValue = "",
-                dataProvider = dataProviderHolder.dataProvider)
+                           title = context.getString(R.string.connection_ssh_proxy_user_title),
+                           defaultValue = "",
+                           dataProvider = dataProviderHolder.dataProvider)
 
     }
 
-    val sshProxyPasswordPreference by lazy {
+    val sshProxyPassword by lazy {
         KutePasswordPreference(key = R.string.connection_ssh_proxy_password_key,
-                icon = iconHelper.getPreferenceIcon(
-                        MaterialDesignIconic.Icon.gmi_lock),
-                title = context.getString(
-                        R.string.connection_ssh_proxy_password_title),
-                defaultValue = "",
-                dataProvider = dataProviderHolder.dataProvider)
+                               icon = iconHelper.getPreferenceIcon(
+                                       MaterialDesignIconic.Icon.gmi_lock),
+                               title = context.getString(
+                                       R.string.connection_ssh_proxy_password_title),
+                               defaultValue = "",
+                               dataProvider = dataProviderHolder.dataProvider)
 
     }
 
-    val themePreference by lazy {
+    val theme by lazy {
         KuteSingleSelectPreference(
                 context = context,
                 key = R.string.theme_key,
@@ -180,7 +193,7 @@ class KutePreferencesHolder @Inject constructor(
         )
     }
 
-    val languagePreference by lazy {
+    val language by lazy {
         KuteSingleSelectPreference(
                 context = context,
                 key = R.string.locale_key,

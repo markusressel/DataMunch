@@ -85,7 +85,7 @@ class LockComponent(
 
     private fun isLockEnabled(): Boolean {
         val useLock = preferencesHolder()
-                .useAppLockPreference
+                .useAppLock
                 .persistedValue
 
         // TODO:
