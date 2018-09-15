@@ -16,24 +16,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.preferences
+package de.markusressel.datamunch.data.persistence.entity.nfs
 
-import de.markusressel.datamunch.preferences.KutePreferencesHolder
-import de.markusressel.kutepreferences.library.preference.KutePreferencesTree
-import javax.inject.Inject
+import io.objectbox.annotation.Entity
+import io.objectbox.annotation.Id
+import io.objectbox.relation.ToOne
 
-class MainPreferenceFragment : LifecyclePreferenceFragmentBase() {
+@Entity
+data class NfsSecurity(@Id var entityId: Long = 0, val value: String = "") {
 
-    @Inject
-    lateinit var preferenceHolder: KutePreferencesHolder
-
-    override fun initPreferenceTree(): KutePreferencesTree {
-        return KutePreferencesTree(
-                preferenceHolder.connectionCategory,
-                preferenceHolder.securityCategory,
-                preferenceHolder.theme,
-                preferenceHolder.language
-        )
-    }
+    lateinit var nfsEntity: ToOne<NfsShareEntity>
 
 }

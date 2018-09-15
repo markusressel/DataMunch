@@ -52,6 +52,89 @@
                     android:id="@+id/nameTextView"
                     style="@style/sub_header_content_textview" />
 
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/hosts" />
+
+                <TextView
+                    android:id="@+id/hostsTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/comment" />
+
+                <TextView
+                    android:id="@+id/commentTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/mapAllGroup" />
+
+                <TextView
+                    android:id="@+id/mapAllGroupTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/mapAllUser" />
+
+                <TextView
+                    android:id="@+id/mapAllUserTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/mapRootGroup" />
+
+                <TextView
+                    android:id="@+id/mapRootGroupTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/mapRootUser" />
+
+                <TextView
+                    android:id="@+id/mapRootUserTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/quiet" />
+
+                <CheckBox
+                    android:id="@+id/quietCheckbox"
+                    style="@style/sub_header_content_textview"
+                    android:enabled="false" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/ro" />
+
+                <CheckBox
+                    android:id="@+id/roCheckbox"
+                    style="@style/sub_header_content_textview"
+                    android:enabled="false" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/security" />
+
+                <TextView
+                    android:id="@+id/securityTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/paths" />
+
+                <TextView
+                    android:id="@+id/pathsTextView"
+                    style="@style/sub_header_content_textview" />
+
+
             </LinearLayout>
 
         </android.support.v7.widget.CardView>

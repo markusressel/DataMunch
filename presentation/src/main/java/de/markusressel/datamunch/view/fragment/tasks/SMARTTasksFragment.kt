@@ -24,8 +24,8 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.SMARTTaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
-import de.markusressel.datamunch.data.persistence.entity.SMARTTaskEntity
-import de.markusressel.datamunch.data.persistence.entity.asEntity
+import de.markusressel.datamunch.data.persistence.entity.smart.SMARTTaskEntity
+import de.markusressel.datamunch.data.persistence.entity.smart.asEntity
 import de.markusressel.datamunch.databinding.ListItemSmartTaskBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase

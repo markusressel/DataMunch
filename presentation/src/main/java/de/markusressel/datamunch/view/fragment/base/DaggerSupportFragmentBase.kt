@@ -89,10 +89,10 @@ abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         freeNasWebApiClient
-                .setHostname(preferencesHolder.connectionUriPreference.persistedValue)
+                .setHostname(preferencesHolder.restHost.persistedValue)
 
         freeNasWebApiClient
-                .setApiResource(preferencesHolder.connectionApiResourcePreference.persistedValue)
+                .setApiResource(preferencesHolder.connectionApiResource.persistedValue)
         freeNasWebApiClient
                 .setBasicAuthConfig(BasicAuthConfig(
                         username = connectionManager.getMainSSHConnection().username,

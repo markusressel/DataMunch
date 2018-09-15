@@ -59,7 +59,7 @@
 
                     <TextView
                         style="@style/sub_header"
-                        android:text="@string/destination" />
+                        android:text="@string/day_of_the_month" />
 
                     <TextView
                         android:id="@+id/daymonthTextView"
@@ -67,7 +67,7 @@
 
                     <TextView
                         style="@style/sub_header"
-                        android:text="@string/destination" />
+                        android:text="@string/day_of_the_week" />
 
                     <TextView
                         android:id="@+id/dayweekTextView"
@@ -75,25 +75,36 @@
 
                     <TextView
                         style="@style/sub_header"
-                        android:text="@string/destination" />
+                        android:text="@string/hour" />
 
                     <TextView
                         android:id="@+id/hourTextView"
                         style="@style/sub_header_content_textview" />
+
                     <TextView
                         style="@style/sub_header"
-                        android:text="@string/destination" />
+                        android:text="@string/month" />
 
                     <TextView
                         android:id="@+id/monthTextView"
                         style="@style/sub_header_content_textview" />
+
                     <TextView
                         style="@style/sub_header"
-                        android:text="@string/dismissed" />
+                        android:text="@string/type" />
 
                     <TextView
                         android:id="@+id/typeTextView"
                         style="@style/sub_header_content_textview" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/disks" />
+
+                    <TextView
+                        android:id="@+id/disksTextView"
+                        style="@style/sub_header_content_textview" />
+
 
                 </LinearLayout>
 

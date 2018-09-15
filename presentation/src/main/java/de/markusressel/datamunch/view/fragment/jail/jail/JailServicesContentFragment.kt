@@ -20,6 +20,7 @@ package de.markusressel.datamunch.view.fragment.jail.jail
 
 import android.arch.lifecycle.Lifecycle
 import android.os.Bundle
+import android.view.View
 import com.github.ajalt.timberkt.Timber
 import com.github.nitrico.lastadapter.LastAdapter
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
@@ -49,9 +50,9 @@ class JailServicesContentFragment : JailContentFragmentBase() {
 
     lateinit var servicesAdapter: LastAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
-                .onCreate(savedInstanceState)
+                .onViewCreated(view, savedInstanceState)
 
         servicesAdapter = LastAdapter(servicesList, BR.item)
                 .map<JailService, ListItemJailServiceBinding>(
@@ -68,7 +69,6 @@ class JailServicesContentFragment : JailContentFragmentBase() {
                     }
                 }
                 .into(servicesRecyclerView)
-
     }
 
     override fun onResume() {

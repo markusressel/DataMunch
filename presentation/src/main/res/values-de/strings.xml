@@ -72,6 +72,11 @@
     <string name="type">Typ</string>
     <string name="dismissed">Verworfen</string>
 
+    <string name="day_of_the_week">Tag der Woche</string>
+    <string name="day_of_the_month">Tag des Monats</string>
+    <string name="month">Monat</string>
+    <string name="hour">Stunde</string>
+
     <string name="recursive">Rekursiv</string>
 
     <string name="no_title">Kein Titel</string>

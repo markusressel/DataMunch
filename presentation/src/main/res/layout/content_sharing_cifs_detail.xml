@@ -52,6 +52,84 @@
                     android:id="@+id/nameTextView"
                     style="@style/sub_header_content_textview" />
 
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/comment" />
+
+                <TextView
+                    android:id="@+id/commentTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <CheckBox
+                    android:id="@+id/browsableCheckBox"
+                    style="@style/sub_header_content_textview"
+                    android:text="@string/browsable" />
+
+                <CheckBox
+                    android:id="@+id/defaultPermissionsCheckBox"
+                    style="@style/sub_header_content_textview"
+                    android:text="@string/defaultPermissions" />
+
+                <CheckBox
+                    android:id="@+id/guestOkCheckBox"
+                    style="@style/sub_header_content_textview"
+                    android:text="@string/guestOk" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/home" />
+
+                <CheckBox
+                    android:id="@+id/homeCheckBox"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/allowedHosts" />
+
+                <TextView
+                    android:id="@+id/allowedHostsTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/deniedHosts" />
+
+                <TextView
+                    android:id="@+id/deniedHostsTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/auxSmbConf" />
+
+                <TextView
+                    android:id="@+id/auxSmbConfTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <TextView
+                    style="@style/sub_header"
+                    android:text="@string/path" />
+
+                <TextView
+                    android:id="@+id/pathTextView"
+                    style="@style/sub_header_content_textview" />
+
+                <CheckBox
+                    android:id="@+id/recycleBinCheckBox"
+                    style="@style/sub_header_content_textview"
+                    android:text="@string/recycleBin" />
+
+                <CheckBox
+                    android:id="@+id/showHiddenFilesCheckBox"
+                    style="@style/sub_header_content_textview"
+                    android:text="@string/showHiddenFiles" />
+
+                <CheckBox
+                    android:id="@+id/roCheckBox"
+                    style="@style/sub_header_content_textview"
+                    android:text="@string/ro" />
+
             </LinearLayout>
 
         </android.support.v7.widget.CardView>

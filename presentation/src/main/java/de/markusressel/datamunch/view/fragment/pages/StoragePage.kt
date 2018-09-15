@@ -21,12 +21,12 @@ package de.markusressel.datamunch.view.fragment.pages
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabNavigationFragment
-import de.markusressel.datamunch.view.fragment.storage.VolumesFragment
 import de.markusressel.datamunch.view.fragment.storage.dataset.DatasetsFragment
 import de.markusressel.datamunch.view.fragment.storage.disk.DisksFragment
 import de.markusressel.datamunch.view.fragment.storage.scrubs.ScrubsFragment
 import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotsFragment
 import de.markusressel.datamunch.view.fragment.storage.task.TasksFragment
+import de.markusressel.datamunch.view.fragment.storage.volume.VolumesFragment
 
 
 class StoragePage : TabNavigationFragment() {

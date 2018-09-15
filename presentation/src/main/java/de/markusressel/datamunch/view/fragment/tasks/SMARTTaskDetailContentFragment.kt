@@ -21,7 +21,7 @@ package de.markusressel.datamunch.view.fragment.tasks
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.SMARTTaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.SMARTTaskEntity
+import de.markusressel.datamunch.data.persistence.entity.smart.SMARTTaskEntity
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
 import kotlinx.android.synthetic.main.content_tasks_smart_detail.*
 import javax.inject.Inject
@@ -70,6 +70,13 @@ class SMARTTaskDetailContentFragment : DetailContentFragmentBase<SMARTTaskEntity
         typeTextView
                 .text = entity
                 .smarttest_type
+        disksTextView
+                .text = entity
+                .smarttest_disks
+                .joinToString(",\n") {
+                    it
+                            .name
+                }
     }
 
 }
