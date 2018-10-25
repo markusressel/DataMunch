@@ -19,7 +19,7 @@
 package de.markusressel.datamunch.data.preferences
 
 import android.content.Context
-import de.markusressel.kutepreferences.library.persistence.DefaultKutePreferenceDataProvider
+import de.markusressel.kutepreferences.core.persistence.DefaultKutePreferenceDataProvider
 import javax.inject.Singleton
 
 @Singleton
