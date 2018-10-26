@@ -31,7 +31,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         setProperty("archivesBaseName", "DataMunch_v${versionName}_(${versionCode})")
 
@@ -144,8 +144,7 @@ dependencies {
     implementation 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
 
     // Material Dialogs
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
+    implementation 'com.afollestad.material-dialogs:core:2.0.0-beta4'
 
     // Swipe Button
     implementation 'com.ncorti:slidetoact:0.2.0'
