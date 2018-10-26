@@ -18,28 +18,27 @@
 
 package de.markusressel.datamunch.view.fragment.base
 
-import android.arch.lifecycle.Lifecycle
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.CallSuper
-import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.content.ContextCompat
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.SearchView
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
 import android.widget.Toast
+import androidx.annotation.CallSuper
+import androidx.appcompat.widget.SearchView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
-import com.github.nitrico.lastadapter.LastAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import com.jakewharton.rxbinding2.view.RxView
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
-import de.markusressel.datamunch.R
+import com.trello.rxlifecycle2.kotlin.bindUntilEvent
 import de.markusressel.datamunch.data.IdentifiableListItem
 import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
@@ -52,8 +51,6 @@ import de.markusressel.datamunch.view.component.OptionsMenuComponent
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.rxkotlin.toObservable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_list.*

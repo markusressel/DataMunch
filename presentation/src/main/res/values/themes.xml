@@ -167,8 +167,7 @@
         <item name="android:textColorSecondary">@color/textColorSecondaryInverse</item>
         <item name="android:textColorPrimaryInverse">@color/textColorPrimary</item>
         <item name="android:textColorSecondaryInverse">@color/textColorSecondary</item>
-        <item name="textColorError">@color/md_red_A700</item>
-
+        <!--<item name="textColorError">@color/md_red_A700</item>-->
     </style>
 
     <style name="AppDialogThemeDark" parent="Theme.AppCompat.Dialog">
@@ -195,8 +194,7 @@
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
         <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse</item>
         <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse</item>
-        <item name="textColorError">@color/md_red_A700</item>
-
+        <!--<item name="textColorError">@color/md_red_A700</item>-->
     </style>
 
     <!-- Bottom Sheet Dialogs -->

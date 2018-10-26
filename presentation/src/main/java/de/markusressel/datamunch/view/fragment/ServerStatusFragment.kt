@@ -18,15 +18,13 @@
 
 package de.markusressel.datamunch.view.fragment
 
-import android.arch.lifecycle.Lifecycle
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.CallSuper
 import android.view.*
+import androidx.lifecycle.Lifecycle
 import com.github.ajalt.timberkt.Timber
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
-import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.openwrt.OpenWRTServerManager
 import de.markusressel.datamunch.view.component.LoadingComponent

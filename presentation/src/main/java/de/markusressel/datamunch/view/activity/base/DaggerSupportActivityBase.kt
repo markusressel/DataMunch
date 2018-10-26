@@ -19,12 +19,11 @@
 package de.markusressel.datamunch.view.activity.base
 
 import android.os.Bundle
-import android.support.annotation.CallSuper
-import android.support.annotation.IntDef
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
 import android.view.Window
 import android.view.WindowManager
+import androidx.annotation.CallSuper
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.Fragment
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import dagger.android.AndroidInjection
@@ -32,7 +31,6 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasFragmentInjector
 import dagger.android.support.HasSupportFragmentInjector
-import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceDataProviderHolder
 import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.preferences.KutePreferencesHolder

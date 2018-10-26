@@ -20,7 +20,7 @@ package de.markusressel.datamunch.navigation
 
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 /**
  * Created by Markus on 08.01.2018.

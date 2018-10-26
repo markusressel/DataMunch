@@ -18,8 +18,9 @@
 
 package de.markusressel.datamunch.butterknife;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Base class for a RecyclerView.ViewHolder backed by ButterKnife

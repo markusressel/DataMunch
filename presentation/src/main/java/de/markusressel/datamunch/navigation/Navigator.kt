@@ -19,15 +19,14 @@
 package de.markusressel.datamunch.navigation
 
 import android.content.Context
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mikepenz.aboutlibraries.util.Colors
 import com.mikepenz.materialdrawer.Drawer
-import de.markusressel.datamunch.R
 import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import java.util.*
 import javax.inject.Inject

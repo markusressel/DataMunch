@@ -20,9 +20,9 @@ package de.markusressel.datamunch.view.activity.base
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.widget.DrawerLayout
 import android.view.View
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
@@ -36,7 +36,6 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IProfile
-import de.markusressel.datamunch.R
 import de.markusressel.datamunch.event.LocaleChangedEvent
 import de.markusressel.datamunch.event.LockEvent
 import de.markusressel.datamunch.event.ThemeChangedEvent

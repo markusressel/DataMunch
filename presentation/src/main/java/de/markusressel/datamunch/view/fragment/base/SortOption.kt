@@ -18,8 +18,7 @@
 
 package de.markusressel.datamunch.view.fragment.base
 
-import android.support.annotation.StringRes
-import de.markusressel.datamunch.R
+import androidx.annotation.StringRes
 import de.markusressel.datamunch.data.persistence.entity.*
 import de.markusressel.datamunch.data.persistence.entity.dataset.DatasetEntity
 import de.markusressel.datamunch.data.persistence.entity.nfs.NfsShareEntity

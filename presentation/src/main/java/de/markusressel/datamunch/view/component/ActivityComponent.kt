@@ -18,8 +18,8 @@
 
 package de.markusressel.datamunch.view.component
 
-import android.arch.lifecycle.LifecycleOwner
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.android.ActivityEvent
 

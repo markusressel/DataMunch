@@ -19,12 +19,12 @@
 package de.markusressel.datamunch.view.fragment.base
 
 import android.content.Context
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
-import de.markusressel.kutepreferences.library.view.KutePreferencesMainFragment
+import de.markusressel.kutepreferences.core.view.KutePreferencesMainFragment
 import javax.inject.Inject
 
 

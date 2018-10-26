@@ -18,7 +18,7 @@
 
 package de.markusressel.datamunch.view.fragment.base
 
-import android.support.annotation.ColorRes
+import androidx.annotation.ColorRes
 import com.mikepenz.iconics.typeface.IIcon
 
 /**

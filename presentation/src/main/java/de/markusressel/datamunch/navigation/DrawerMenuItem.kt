@@ -20,8 +20,8 @@ package de.markusressel.datamunch.navigation
 
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
-import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import de.markusressel.datamunch.view.IconHandler

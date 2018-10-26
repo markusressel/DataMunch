@@ -19,7 +19,7 @@
 package de.markusressel.datamunch.view.fragment.preferences
 
 import de.markusressel.datamunch.preferences.KutePreferencesHolder
-import de.markusressel.kutepreferences.library.preference.KutePreferencesTree
+import de.markusressel.kutepreferences.core.preference.KutePreferencesTree
 import javax.inject.Inject
 
 class MainPreferenceFragment : LifecyclePreferenceFragmentBase() {

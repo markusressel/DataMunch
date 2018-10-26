@@ -18,7 +18,7 @@
 
 package de.markusressel.datamunch.data.persistence
 
-import android.support.annotation.CheckResult
+import androidx.annotation.CheckResult
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.LastUpdateFromSourceEntity
 import de.markusressel.datamunch.data.persistence.entity.LastUpdateFromSourceEntity_

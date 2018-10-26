@@ -18,15 +18,15 @@
 
 package de.markusressel.datamunch.view.component
 
-import android.arch.lifecycle.Lifecycle
-import android.support.annotation.MenuRes
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.annotation.MenuRes
+import androidx.lifecycle.Lifecycle
 import com.trello.rxlifecycle2.android.FragmentEvent
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
+import com.trello.rxlifecycle2.kotlin.bindUntilEvent
 import de.markusressel.datamunch.view.fragment.base.LifecycleFragmentBase
-import io.reactivex.rxkotlin.subscribeBy
 
 /**
  * Created by Markus on 15.02.2018.

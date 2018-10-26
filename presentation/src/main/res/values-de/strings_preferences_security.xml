@@ -19,7 +19,7 @@
 <resources>
 
     <string name="use_pattern_lock_title">Lockscreen</string>
-    <string name="use_pattern_lock_summary">Sperrt die App mit einem Muster</string>
+    <string name="use_pattern_lock_description">Sperrt die App mit einem Muster</string>
 
     <string name="change_lock_pattern_title">Pattern ändern</string>
     <string name="change_lock_pattern_summary">Setze ein neues Lockscreen Muster</string>

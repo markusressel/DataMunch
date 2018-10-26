@@ -20,15 +20,14 @@ package de.markusressel.datamunch.view.fragment.system
 
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.StringRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.jakewharton.rxbinding2.view.RxView
 import com.ncorti.slidetoact.SlideToActView
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
-import de.markusressel.datamunch.R
 import de.markusressel.datamunch.view.component.LoadingComponent
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import io.reactivex.Single
