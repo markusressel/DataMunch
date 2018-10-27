@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.sharing.cifs
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemCifsShareBindingModel_
 import de.markusressel.datamunch.data.persistence.CifsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.CifsShareEntity
@@ -39,7 +41,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
-
     @Inject
     lateinit var persistenceManager: CifsSharePersistenceManager
 
@@ -48,6 +49,20 @@ class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<CifsShareEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<CifsShareEntity>> {
+        return object : TypedEpoxyController<List<CifsShareEntity>>() {
+            override fun buildModels(data: List<CifsShareEntity>) {
+                data.forEach {
+                    ListItemCifsShareBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<CifsShareModel>> {
         return freeNasWebApiClient

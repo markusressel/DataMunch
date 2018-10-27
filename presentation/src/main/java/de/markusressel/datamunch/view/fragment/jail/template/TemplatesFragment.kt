@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.jail.template
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemTemplateBindingModel_
 import de.markusressel.datamunch.data.persistence.TemplatePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -39,7 +41,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
-
     @Inject
     lateinit var persistenceManager: TemplatePersistenceManager
 
@@ -48,6 +49,20 @@ class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<TemplateEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<TemplateEntity>> {
+        return object : TypedEpoxyController<List<TemplateEntity>>() {
+            override fun buildModels(data: List<TemplateEntity>) {
+                data.forEach {
+                    ListItemTemplateBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<TemplateModel>> {
         return freeNasWebApiClient

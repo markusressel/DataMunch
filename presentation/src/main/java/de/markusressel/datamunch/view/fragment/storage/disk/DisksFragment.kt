@@ -18,6 +18,8 @@
 
 package de.markusressel.datamunch.view.fragment.storage.disk
 
+import com.airbnb.epoxy.TypedEpoxyController
+import de.markusressel.datamunch.ListItemDiskBindingModel_
 import de.markusressel.datamunch.data.persistence.DiskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.DiskEntity
@@ -37,7 +39,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
-
     @Inject
     lateinit var persistenceManager: DiskPersistenceManager
 
@@ -46,6 +47,20 @@ class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<DiskEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<DiskEntity>> {
+        return object : TypedEpoxyController<List<DiskEntity>>() {
+            override fun buildModels(data: List<DiskEntity>) {
+                data.forEach {
+                    ListItemDiskBindingModel_()
+                            .id(it.entityId)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<DiskModel>> {
         return freeNasWebApiClient

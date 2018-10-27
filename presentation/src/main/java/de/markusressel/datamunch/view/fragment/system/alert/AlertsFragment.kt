@@ -18,6 +18,8 @@
 
 package de.markusressel.datamunch.view.fragment.system.alert
 
+import com.airbnb.epoxy.TypedEpoxyController
+import de.markusressel.datamunch.ListItemAlertBindingModel_
 import de.markusressel.datamunch.data.persistence.AlertPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.AlertEntity
@@ -37,7 +39,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
-
     @Inject
     lateinit var persistenceManager: AlertPersistenceManager
 
@@ -46,6 +47,20 @@ class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<AlertEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<AlertEntity>> {
+        return object : TypedEpoxyController<List<AlertEntity>>() {
+            override fun buildModels(data: List<AlertEntity>) {
+                data.forEach {
+                    ListItemAlertBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<AlertModel>> {
         return freeNasWebApiClient

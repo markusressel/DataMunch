@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.system.update
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemUpdateBindingModel_
 import de.markusressel.datamunch.data.persistence.UpdatePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -41,7 +43,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
-
     @Inject
     lateinit var persistenceManager: UpdatePersistenceManager
 
@@ -49,6 +50,21 @@ class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
         get() = EntityTypeId.Update.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<UpdateEntity> = persistenceManager
+
+    override fun createEpoxyController(): TypedEpoxyController<List<UpdateEntity>> {
+        return object : TypedEpoxyController<List<UpdateEntity>>() {
+            override fun buildModels(data: List<UpdateEntity>) {
+                data.forEach {
+                    ListItemUpdateBindingModel_()
+                            .id(it.entityId)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                //                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<UpdateModel>> {
         return freeNasWebApiClient

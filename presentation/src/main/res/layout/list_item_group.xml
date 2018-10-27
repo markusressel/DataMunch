@@ -25,8 +25,9 @@
             type="de.markusressel.datamunch.data.persistence.entity.GroupEntity" />
 
         <variable
-            name="presenter"
-            type="de.markusressel.datamunch.view.fragment.account.group.GroupsFragment" />
+            name="onclick"
+            type="android.view.View.OnClickListener" />
+
     </data>
 
     <LinearLayout

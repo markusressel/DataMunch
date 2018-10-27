@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.account.user
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemUserBindingModel_
 import de.markusressel.datamunch.data.persistence.UserPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -48,6 +50,21 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<UserEntity>> {
+        return object : TypedEpoxyController<List<UserEntity>>() {
+            override fun buildModels(data: List<UserEntity>) {
+                data.forEach {
+                    ListItemUserBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }
+                            .addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<UserModel>> {
         return freeNasWebApiClient
@@ -65,9 +82,9 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddDialog()
-                                    }))
+                onClick = {
+                    openAddDialog()
+                }))
     }
 
     private fun openAddDialog() {

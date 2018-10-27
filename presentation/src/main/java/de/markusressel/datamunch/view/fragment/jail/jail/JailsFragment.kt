@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.jail.jail
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemJailBindingModel_
 import de.markusressel.datamunch.data.persistence.JailPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -39,7 +41,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
-
     @Inject
     lateinit var persistenceManager: JailPersistenceManager
 
@@ -47,6 +48,21 @@ class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
         get() = EntityTypeId.Jail.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<JailEntity> = persistenceManager
+
+    override fun createEpoxyController(): TypedEpoxyController<List<JailEntity>> {
+        return object : TypedEpoxyController<List<JailEntity>>() {
+            override fun buildModels(data: List<JailEntity>) {
+                data.forEach {
+                    ListItemJailBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
 
     override fun loadListDataFromSource(): Single<List<JailModel>> {
@@ -65,9 +81,9 @@ class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddDialog()
-                                    }))
+                onClick = {
+                    openAddDialog()
+                }))
     }
 
     private fun openAddDialog() {

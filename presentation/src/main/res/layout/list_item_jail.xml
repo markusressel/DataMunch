@@ -25,8 +25,9 @@
             type="de.markusressel.datamunch.data.persistence.entity.JailEntity" />
 
         <variable
-            name="presenter"
-            type="de.markusressel.datamunch.view.fragment.jail.jail.JailsFragment" />
+            name="onclick"
+            type="android.view.View.OnClickListener" />
+
     </data>
 
     <LinearLayout

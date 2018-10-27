@@ -19,7 +19,9 @@
 package de.markusressel.datamunch.view.fragment.storage.volume
 
 import android.widget.Toast
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemVolumeBindingModel_
 import de.markusressel.datamunch.data.persistence.VolumePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -43,7 +45,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
-
     @Inject
     lateinit var persistenceManager: VolumePersistenceManager
 
@@ -52,6 +53,20 @@ class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<VolumeEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<VolumeEntity>> {
+        return object : TypedEpoxyController<List<VolumeEntity>>() {
+            override fun buildModels(data: List<VolumeEntity>) {
+                data.forEach {
+                    ListItemVolumeBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<VolumeModel>> {
         return freeNasWebApiClient

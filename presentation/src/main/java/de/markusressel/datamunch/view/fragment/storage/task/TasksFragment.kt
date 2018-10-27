@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.storage.task
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemTaskBindingModel_
 import de.markusressel.datamunch.data.persistence.TaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -39,7 +41,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class TasksFragment : ListFragmentBase<TaskModel, TaskEntity>() {
-
     @Inject
     lateinit var persistenceManager: TaskPersistenceManager
 
@@ -48,6 +49,20 @@ class TasksFragment : ListFragmentBase<TaskModel, TaskEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<TaskEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<TaskEntity>> {
+        return object : TypedEpoxyController<List<TaskEntity>>() {
+            override fun buildModels(data: List<TaskEntity>) {
+                data.forEach {
+                    ListItemTaskBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<TaskModel>> {
         return freeNasWebApiClient

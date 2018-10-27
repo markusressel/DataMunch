@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.sharing.nfs
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemNfsShareBindingModel_
 import de.markusressel.datamunch.data.persistence.NfsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -39,7 +41,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
-
     @Inject
     lateinit var persistenceManager: NfsSharePersistenceManager
 
@@ -48,6 +49,20 @@ class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<NfsShareEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<NfsShareEntity>> {
+        return object : TypedEpoxyController<List<NfsShareEntity>>() {
+            override fun buildModels(data: List<NfsShareEntity>) {
+                data.forEach {
+                    ListItemNfsShareBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<NfsShareModel>> {
         return freeNasWebApiClient

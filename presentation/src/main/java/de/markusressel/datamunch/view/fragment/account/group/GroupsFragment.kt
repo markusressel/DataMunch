@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.account.group
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemGroupBindingModel_
 import de.markusressel.datamunch.data.persistence.GroupPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -39,7 +41,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
-
     @Inject
     lateinit var persistenceManager: GroupPersistenceManager
 
@@ -53,6 +54,21 @@ class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
                 .getGroups()
     }
 
+    override fun createEpoxyController(): TypedEpoxyController<List<GroupEntity>> {
+        return object : TypedEpoxyController<List<GroupEntity>>() {
+            override fun buildModels(data: List<GroupEntity>) {
+                data.forEach {
+                    ListItemGroupBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
+
     override fun mapToEntity(it: GroupModel): GroupEntity {
         return it
                 .asEntity()
@@ -64,9 +80,9 @@ class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddDialog()
-                                    }))
+                onClick = {
+                    openAddDialog()
+                }))
     }
 
     private fun openAddDialog() {

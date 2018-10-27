@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.jail.mountpoint
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemMountpointBindingModel_
 import de.markusressel.datamunch.data.persistence.MountpointPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -39,7 +41,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>() {
-
     @Inject
     lateinit var persistenceManager: MountpointPersistenceManager
 
@@ -48,6 +49,20 @@ class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>(
 
     override fun getPersistenceHandler(): PersistenceManagerBase<MountpointEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<MountpointEntity>> {
+        return object : TypedEpoxyController<List<MountpointEntity>>() {
+            override fun buildModels(data: List<MountpointEntity>) {
+                data.forEach {
+                    ListItemMountpointBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<MountpointModel>> {
         return freeNasWebApiClient

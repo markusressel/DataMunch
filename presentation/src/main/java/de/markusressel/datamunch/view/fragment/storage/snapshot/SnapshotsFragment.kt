@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.storage.snapshot
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemSnapshotBindingModel_
 import de.markusressel.datamunch.data.persistence.SnapshotPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -39,7 +41,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
-
     @Inject
     lateinit var persistenceManager: SnapshotPersistenceManager
 
@@ -48,6 +49,20 @@ class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<SnapshotEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<SnapshotEntity>> {
+        return object : TypedEpoxyController<List<SnapshotEntity>>() {
+            override fun buildModels(data: List<SnapshotEntity>) {
+                data.forEach {
+                    ListItemSnapshotBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<SnapshotModel>> {
         return freeNasWebApiClient

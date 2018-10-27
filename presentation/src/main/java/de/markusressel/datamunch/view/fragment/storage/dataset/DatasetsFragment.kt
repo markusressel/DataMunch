@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.storage.dataset
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemDatasetBindingModel_
 import de.markusressel.datamunch.data.persistence.DatasetPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -39,7 +41,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
-
     @Inject
     lateinit var persistenceManager: DatasetPersistenceManager
 
@@ -48,6 +49,20 @@ class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<DatasetEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<DatasetEntity>> {
+        return object : TypedEpoxyController<List<DatasetEntity>>() {
+            override fun buildModels(data: List<DatasetEntity>) {
+                data.forEach {
+                    ListItemDatasetBindingModel_()
+                            .id(it.entityId)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<DatasetModel>> {
         return freeNasWebApiClient
@@ -65,9 +80,9 @@ class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddDialog()
-                                    }))
+                onClick = {
+                    openAddDialog()
+                }))
     }
 
     private fun openAddDialog() {
@@ -79,7 +94,7 @@ class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
                 ?.let {
                     val intent = DetailActivityBase
                             .newInstanceIntent(DatasetDetailActivity::class.java, it,
-                                               dataset.entityId)
+                                    dataset.entityId)
                     startActivity(intent)
                 }
     }

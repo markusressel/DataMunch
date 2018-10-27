@@ -18,6 +18,8 @@
 
 package de.markusressel.datamunch.view.fragment.tasks
 
+import com.airbnb.epoxy.TypedEpoxyController
+import de.markusressel.datamunch.ListItemSmartTaskBindingModel_
 import de.markusressel.datamunch.data.persistence.SMARTTaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -37,7 +39,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class SMARTTasksFragment : ListFragmentBase<SMARTTaskModel, SMARTTaskEntity>() {
-
     @Inject
     lateinit var persistenceManager: SMARTTaskPersistenceManager
 
@@ -45,6 +46,21 @@ class SMARTTasksFragment : ListFragmentBase<SMARTTaskModel, SMARTTaskEntity>() {
         get() = EntityTypeId.SMARTTask.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<SMARTTaskEntity> = persistenceManager
+
+    override fun createEpoxyController(): TypedEpoxyController<List<SMARTTaskEntity>> {
+        return object : TypedEpoxyController<List<SMARTTaskEntity>>() {
+            override fun buildModels(data: List<SMARTTaskEntity>) {
+                data.forEach {
+                    ListItemSmartTaskBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<SMARTTaskModel>> {
         return freeNasWebApiClient

@@ -29,7 +29,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.airbnb.epoxy.EpoxyController
+import com.airbnb.epoxy.TypedEpoxyController
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
@@ -73,8 +73,10 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
         get() = R.layout.fragment_recyclerview
 
     protected open val fabConfig: FabConfig = FabConfig(left = mutableListOf(),
-                                                        right = mutableListOf())
+            right = mutableListOf())
     private val fabButtonViews = mutableListOf<FloatingActionButton>()
+
+    val epoxyController by lazy { createEpoxyController() }
 
     protected val listValues: MutableList<EntityType> = ArrayList()
 
@@ -202,8 +204,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
         super
                 .onViewCreated(view, savedInstanceState)
 
-
-        recyclerView.setControllerAndBuildModels(createEpoxyController())
+        recyclerView.setController(epoxyController)
 
         val layoutManager = StaggeredGridLayoutManager(
                 resources.getInteger(R.integer.list_column_count),
@@ -214,12 +215,11 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
         setupFabs()
     }
 
-    open fun createEpoxyController(): EpoxyController {
-        return object : EpoxyController() {
-            override fun buildModels() {
-            }
-        }
-    }
+    /**
+     * Create the epoxy controller here.
+     * The epoxy controller defines what information is displayed.
+     */
+    abstract fun createEpoxyController(): TypedEpoxyController<List<EntityType>>
 
     override fun onStart() {
         super
@@ -293,8 +293,8 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
         }
 
         val fabView: FloatingActionButton = inflater.inflate(layout,
-                                                             recyclerView.parent as ViewGroup,
-                                                             false) as FloatingActionButton
+                recyclerView.parent as ViewGroup,
+                false) as FloatingActionButton
 
         // icon
         fabView
@@ -321,7 +321,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                 .subscribe {
                     Toast
                             .makeText(context as Context, "Fab '${fab.description}' clicked",
-                                      Toast.LENGTH_LONG)
+                                    Toast.LENGTH_LONG)
                             .show()
 
                     // execute defined action if it exists
@@ -338,7 +338,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                 .subscribe {
                     Toast
                             .makeText(context as Context, "Fab '${fab.description}' long clicked",
-                                      Toast.LENGTH_LONG)
+                                    Toast.LENGTH_LONG)
                             .show()
 
                     // execute defined action if it exists
@@ -387,6 +387,9 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                         hideEmpty()
                     }
                     loadingComponent.showContent()
+
+                    // TODO: Diffing can be handled automatically by epoxy, so this method should become a lot simpler
+                    epoxyController.setData(it)
 
 //                    diffResult.dispatchUpdatesTo(recyclerViewAdapter)
                 }, onError = {

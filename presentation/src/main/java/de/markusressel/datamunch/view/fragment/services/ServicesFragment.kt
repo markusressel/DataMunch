@@ -18,6 +18,8 @@
 
 package de.markusressel.datamunch.view.fragment.services
 
+import com.airbnb.epoxy.TypedEpoxyController
+import de.markusressel.datamunch.ListItemServiceBindingModel_
 import de.markusressel.datamunch.data.persistence.ServicePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -37,7 +39,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
-
     @Inject
     lateinit var persistenceManager: ServicePersistenceManager
 
@@ -46,6 +47,20 @@ class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<ServiceEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<ServiceEntity>> {
+        return object : TypedEpoxyController<List<ServiceEntity>>() {
+            override fun buildModels(data: List<ServiceEntity>) {
+                data.forEach {
+                    ListItemServiceBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<ServiceModel>> {
         return freeNasWebApiClient

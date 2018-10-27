@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.sharing.afp
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemAfpShareBindingModel_
 import de.markusressel.datamunch.data.persistence.AfpSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.AfpShareEntity
@@ -47,6 +49,20 @@ class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<AfpShareEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<AfpShareEntity>> {
+        return object : TypedEpoxyController<List<AfpShareEntity>>() {
+            override fun buildModels(data: List<AfpShareEntity>) {
+                data.forEach {
+                    ListItemAfpShareBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<AfpShareModel>> {
         return freeNasWebApiClient

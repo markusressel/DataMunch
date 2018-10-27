@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.storage.scrubs
 
+import com.airbnb.epoxy.TypedEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemScrubBindingModel_
 import de.markusressel.datamunch.data.persistence.ScrubPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -39,7 +41,6 @@ import javax.inject.Inject
  * Created by Markus on 07.01.2018.
  */
 class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
-
     @Inject
     lateinit var persistenceManager: ScrubPersistenceManager
 
@@ -48,6 +49,20 @@ class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<ScrubEntity> = persistenceManager
 
+    override fun createEpoxyController(): TypedEpoxyController<List<ScrubEntity>> {
+        return object : TypedEpoxyController<List<ScrubEntity>>() {
+            override fun buildModels(data: List<ScrubEntity>) {
+                data.forEach {
+                    ListItemScrubBindingModel_()
+                            .id(it.id)
+                            .item(it)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }.addTo(this)
+                }
+            }
+        }
+    }
 
     override fun loadListDataFromSource(): Single<List<ScrubModel>> {
         return freeNasWebApiClient

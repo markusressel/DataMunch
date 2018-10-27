@@ -19,9 +19,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="item"
             type="de.markusressel.datamunch.data.persistence.entity.UpdateEntity" />
+
+        <variable
+            name="onclick"
+            type="android.view.View.OnClickListener" />
+
     </data>
 
     <LinearLayout

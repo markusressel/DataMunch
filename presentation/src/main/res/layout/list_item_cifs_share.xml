@@ -25,8 +25,9 @@
             type="de.markusressel.datamunch.data.persistence.entity.CifsShareEntity" />
 
         <variable
-            name="presenter"
-            type="de.markusressel.datamunch.view.fragment.sharing.cifs.CifsSharesFragment" />
+            name="onclick"
+            type="android.view.View.OnClickListener" />
+
     </data>
 
     <LinearLayout
