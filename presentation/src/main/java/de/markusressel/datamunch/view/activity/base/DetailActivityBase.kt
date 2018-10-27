@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.eightbitlab.rxbus.Bus
 import com.github.florent37.materialviewpager.header.HeaderDesign
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.extensions.random
 import de.markusressel.datamunch.view.component.LockComponent

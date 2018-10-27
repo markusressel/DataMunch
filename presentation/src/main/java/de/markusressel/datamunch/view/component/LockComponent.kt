@@ -18,10 +18,10 @@
 
 package de.markusressel.datamunch.view.component
 
-import android.arch.lifecycle.Lifecycle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.lifecycle.Lifecycle
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber

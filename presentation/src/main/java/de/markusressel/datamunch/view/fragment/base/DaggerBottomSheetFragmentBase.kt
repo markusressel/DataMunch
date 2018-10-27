@@ -30,6 +30,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceDataProviderHolder
 import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import de.markusressel.datamunch.view.IconHandler

@@ -77,13 +77,13 @@ dependencies {
     // preferences
     def kutePreferencesVersion = "v1.3.1"
     // choose the ones you need
-    implementation("com.github.markusressel.KutePreferences:boolean:${kutePreferencesVersion}")
+    api("com.github.markusressel.KutePreferences:boolean:${kutePreferencesVersion}")
     api("com.github.markusressel.KutePreferences:core:${kutePreferencesVersion}")
-    implementation("com.github.markusressel.KutePreferences:color:${kutePreferencesVersion}")
-    implementation("com.github.markusressel.KutePreferences:date:${kutePreferencesVersion}")
-    implementation("com.github.markusressel.KutePreferences:number:${kutePreferencesVersion}")
-    implementation("com.github.markusressel.KutePreferences:selection:${kutePreferencesVersion}")
-    implementation("com.github.markusressel.KutePreferences:text:${kutePreferencesVersion}")
+    api("com.github.markusressel.KutePreferences:color:${kutePreferencesVersion}")
+    api("com.github.markusressel.KutePreferences:date:${kutePreferencesVersion}")
+    api("com.github.markusressel.KutePreferences:number:${kutePreferencesVersion}")
+    api("com.github.markusressel.KutePreferences:selection:${kutePreferencesVersion}")
+    api("com.github.markusressel.KutePreferences:text:${kutePreferencesVersion}")
 
 
     // JSch (SSH client)

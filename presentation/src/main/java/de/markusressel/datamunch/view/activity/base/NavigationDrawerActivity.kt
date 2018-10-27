@@ -36,6 +36,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IProfile
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.event.LocaleChangedEvent
 import de.markusressel.datamunch.event.LockEvent
 import de.markusressel.datamunch.event.ThemeChangedEvent

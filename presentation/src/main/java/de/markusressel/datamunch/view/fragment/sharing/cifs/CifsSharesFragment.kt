@@ -18,23 +18,18 @@
 
 package de.markusressel.datamunch.view.fragment.sharing.cifs
 
-import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
-import de.markusressel.datamunch.BR
-import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.CifsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.CifsShareEntity
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemCifsShareBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.sharing.cifs.CifsShareModel
 import io.reactivex.Single
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
 
@@ -53,20 +48,6 @@ class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<CifsShareEntity> = persistenceManager
 
-    override fun createAdapter(): LastAdapter {
-        return LastAdapter(listValues, BR.item)
-                .map<CifsShareEntity, ListItemCifsShareBinding>(R.layout.list_item_cifs_share) {
-                    onCreate {
-                        it
-                                .binding
-                                .setVariable(BR.presenter, this@CifsSharesFragment)
-                    }
-                    onClick {
-                        openDetailView(listValues[it.adapterPosition])
-                    }
-                }
-                .into(recyclerView)
-    }
 
     override fun loadListDataFromSource(): Single<List<CifsShareModel>> {
         return freeNasWebApiClient

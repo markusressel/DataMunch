@@ -21,6 +21,7 @@ package de.markusressel.datamunch.view.fragment.preferences
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.CallSuper
 import androidx.annotation.CheckResult
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.LifecycleTransformer

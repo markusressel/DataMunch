@@ -18,23 +18,18 @@
 
 package de.markusressel.datamunch.view.fragment.storage.dataset
 
-import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
-import de.markusressel.datamunch.BR
-import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.DatasetPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.dataset.DatasetEntity
 import de.markusressel.datamunch.data.persistence.entity.dataset.asEntity
-import de.markusressel.datamunch.databinding.ListItemDatasetBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.storage.dataset.DatasetModel
 import io.reactivex.Single
-import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
 
 
@@ -53,20 +48,6 @@ class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<DatasetEntity> = persistenceManager
 
-    override fun createAdapter(): LastAdapter {
-        return LastAdapter(listValues, BR.item)
-                .map<DatasetEntity, ListItemDatasetBinding>(R.layout.list_item_dataset) {
-                    onCreate {
-                        it
-                                .binding
-                                .presenter = this@DatasetsFragment
-                    }
-                    onClick {
-                        openDetailView(listValues[it.adapterPosition])
-                    }
-                }
-                .into(recyclerView)
-    }
 
     override fun loadListDataFromSource(): Single<List<DatasetModel>> {
         return freeNasWebApiClient

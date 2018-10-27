@@ -37,7 +37,7 @@ android {
 
         multiDexEnabled true
 
-        // Required for LastAdapter
+        // Required for LastAdapter / Epoxy
         dataBinding.enabled true
     }
     buildTypes {
@@ -134,8 +134,9 @@ dependencies {
     }
 
     // Epoxy - Recyclerview for dummies
-    implementation 'com.airbnb.android:epoxy:2.19.0'
-    kapt 'com.airbnb.android:epoxy-processor:2.19.0'
+    implementation "com.airbnb.android:epoxy:$epoxyVersion"
+    implementation "com.airbnb.android:epoxy-databinding:$epoxyVersion"
+    kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
 
     // Bottom Navigation
     implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'

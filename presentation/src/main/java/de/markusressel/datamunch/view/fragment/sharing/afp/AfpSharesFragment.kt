@@ -18,23 +18,18 @@
 
 package de.markusressel.datamunch.view.fragment.sharing.afp
 
-import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
-import de.markusressel.datamunch.BR
-import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.AfpSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.AfpShareEntity
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemAfpShareBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.sharing.afp.AfpShareModel
 import io.reactivex.Single
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
 
@@ -52,20 +47,6 @@ class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<AfpShareEntity> = persistenceManager
 
-    override fun createAdapter(): LastAdapter {
-        return LastAdapter(listValues, BR.item)
-                .map<AfpShareEntity, ListItemAfpShareBinding>(R.layout.list_item_afp_share) {
-                    onCreate {
-                        it
-                                .binding
-                                .setVariable(BR.presenter, this@AfpSharesFragment)
-                    }
-                    onClick {
-                        openDetailView(listValues[it.adapterPosition])
-                    }
-                }
-                .into(recyclerView)
-    }
 
     override fun loadListDataFromSource(): Single<List<AfpShareModel>> {
         return freeNasWebApiClient

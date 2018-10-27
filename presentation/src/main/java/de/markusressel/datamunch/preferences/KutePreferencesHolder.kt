@@ -26,13 +26,13 @@ import de.markusressel.datamunch.data.preferences.PreferenceDataProviderHolder
 import de.markusressel.datamunch.event.LocaleChangedEvent
 import de.markusressel.datamunch.event.ThemeChangedEvent
 import de.markusressel.datamunch.view.IconHandler
-import de.markusressel.kutepreferences.library.preference.category.KuteCategory
-import de.markusressel.kutepreferences.library.preference.category.KuteDivider
-import de.markusressel.kutepreferences.library.preference.number.KuteNumberPreference
-import de.markusressel.kutepreferences.library.preference.select.KuteSingleSelectPreference
-import de.markusressel.kutepreferences.library.preference.text.KutePasswordPreference
-import de.markusressel.kutepreferences.library.preference.text.KuteTextPreference
-import de.markusressel.kutepreferences.library.preference.toggle.KuteTogglePreference
+import de.markusressel.kutepreferences.core.preference.category.KuteCategory
+import de.markusressel.kutepreferences.core.preference.category.KuteDivider
+import de.markusressel.kutepreferences.preference.boolean.KuteBooleanPreference
+import de.markusressel.kutepreferences.preference.number.KuteNumberPreference
+import de.markusressel.kutepreferences.preference.selection.single.KuteSingleSelectStringPreference
+import de.markusressel.kutepreferences.preference.text.KutePasswordPreference
+import de.markusressel.kutepreferences.preference.text.KuteTextPreference
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -58,7 +58,7 @@ class KutePreferencesHolder @Inject constructor(
     }
 
     val useAppLock by lazy {
-        KuteTogglePreference(key = R.string.lock_pattern_key,
+        KuteBooleanPreference(key = R.string.lock_pattern_key,
                              icon = iconHelper.getPreferenceIcon(
                                      MaterialDesignIconic.Icon.gmi_smartphone_lock),
                              title = context.getString(R.string.use_pattern_lock_title),
@@ -175,7 +175,7 @@ class KutePreferencesHolder @Inject constructor(
     }
 
     val theme by lazy {
-        KuteSingleSelectPreference(
+        KuteSingleSelectStringPreference(
                 context = context,
                 key = R.string.theme_key,
                 icon = iconHelper.getPreferenceIcon(MaterialDesignIconic.Icon.gmi_colorize),
@@ -194,7 +194,7 @@ class KutePreferencesHolder @Inject constructor(
     }
 
     val language by lazy {
-        KuteSingleSelectPreference(
+        KuteSingleSelectStringPreference(
                 context = context,
                 key = R.string.locale_key,
                 icon = iconHelper.getPreferenceIcon(

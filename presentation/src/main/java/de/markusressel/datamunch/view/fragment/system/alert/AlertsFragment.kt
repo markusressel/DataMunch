@@ -18,21 +18,16 @@
 
 package de.markusressel.datamunch.view.fragment.system.alert
 
-import com.github.nitrico.lastadapter.LastAdapter
-import de.markusressel.datamunch.BR
-import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.AlertPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.AlertEntity
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemAlertBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.system.alert.AlertModel
 import io.reactivex.Single
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
 
@@ -51,20 +46,6 @@ class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<AlertEntity> = persistenceManager
 
-    override fun createAdapter(): LastAdapter {
-        return LastAdapter(listValues, BR.item)
-                .map<AlertEntity, ListItemAlertBinding>(R.layout.list_item_alert) {
-                    onCreate {
-                        it
-                                .binding
-                                .setVariable(BR.presenter, this@AlertsFragment)
-                    }
-                    onClick {
-                        openDetailView(listValues[it.adapterPosition])
-                    }
-                }
-                .into(recyclerView)
-    }
 
     override fun loadListDataFromSource(): Single<List<AlertModel>> {
         return freeNasWebApiClient
@@ -78,8 +59,8 @@ class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
 
     override fun getAllSortCriteria(): List<SortOption<AlertEntity>> {
         return listOf(SortOption.ALERT_ENTITY_DISMISSED,
-                      SortOption.ALERT_ENTITY_LEVEL,
-                      SortOption.ALERT_ENTITY_MESSAGE
+                SortOption.ALERT_ENTITY_LEVEL,
+                SortOption.ALERT_ENTITY_MESSAGE
         )
     }
 

@@ -18,23 +18,18 @@
 
 package de.markusressel.datamunch.view.fragment.account.group
 
-import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
-import de.markusressel.datamunch.BR
-import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.GroupPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.GroupEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemGroupBinding
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.account.group.GroupModel
 import io.reactivex.Single
-import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
 
 
@@ -52,21 +47,6 @@ class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
         get() = EntityTypeId.Group.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<GroupEntity> = persistenceManager
-
-    override fun createAdapter(): LastAdapter {
-        return LastAdapter(listValues, BR.item)
-                .map<GroupEntity, ListItemGroupBinding>(R.layout.list_item_group) {
-                    onCreate {
-                        it
-                                .binding
-                                .presenter = this@GroupsFragment
-                    }
-                    onClick {
-                        openDetailView(listValues[it.adapterPosition])
-                    }
-                }
-                .into(recyclerView)
-    }
 
     override fun loadListDataFromSource(): Single<List<GroupModel>> {
         return freeNasWebApiClient

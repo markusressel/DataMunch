@@ -33,6 +33,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.github.ajalt.timberkt.Timber
 import com.jakewharton.rxbinding2.view.RxView
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.extensions.prettyPrint
 import de.markusressel.datamunch.view.fragment.base.LifecycleFragmentBase
 
@@ -205,12 +206,12 @@ class LoadingComponent(
                     }
                             ?: message
 
-                    MaterialDialog
-                            .Builder(context as Context)
-                            .title(R.string.error)
-                            .content(contentText)
-                            .positiveText(android.R.string.ok)
-                            .show()
+                    MaterialDialog(context as Context)
+                            .show {
+                                title(R.string.error)
+                                message(text = contentText)
+                                positiveButton(res = android.R.string.ok)
+                            }
                 }
 
         setViewVisibility(errorLayout, View.VISIBLE)

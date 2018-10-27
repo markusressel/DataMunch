@@ -28,6 +28,8 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.annotation.CallSuper
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import com.andrognito.patternlockview.PatternLockView
 import com.andrognito.patternlockview.utils.PatternLockUtils
 import com.andrognito.patternlockview.utils.PatternLockUtils.patternToSha1
@@ -39,6 +41,7 @@ import com.eightbitlab.rxbus.Bus
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.event.LockEvent
 import de.markusressel.datamunch.view.component.LoadingComponent
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase

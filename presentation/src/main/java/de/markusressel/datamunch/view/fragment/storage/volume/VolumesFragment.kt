@@ -19,17 +19,13 @@
 package de.markusressel.datamunch.view.fragment.storage.volume
 
 import android.widget.Toast
-import com.github.nitrico.lastadapter.LastAdapter
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
-import de.markusressel.datamunch.BR
-import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.VolumePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.VolumeEntity
 import de.markusressel.datamunch.data.persistence.entity.VolumeEntity_
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.databinding.ListItemVolumeBinding
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
@@ -38,7 +34,6 @@ import io.objectbox.kotlin.query
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable
-import kotlinx.android.synthetic.main.fragment_jails.*
 import javax.inject.Inject
 
 
@@ -57,20 +52,6 @@ class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<VolumeEntity> = persistenceManager
 
-    override fun createAdapter(): LastAdapter {
-        return LastAdapter(listValues, BR.item)
-                .map<VolumeEntity, ListItemVolumeBinding>(R.layout.list_item_volume) {
-                    onCreate {
-                        it
-                                .binding
-                                .presenter = this@VolumesFragment
-                    }
-                    onClick {
-                        openDetailView(listValues[it.adapterPosition])
-                    }
-                }
-                .into(recyclerView)
-    }
 
     override fun loadListDataFromSource(): Single<List<VolumeModel>> {
         return freeNasWebApiClient

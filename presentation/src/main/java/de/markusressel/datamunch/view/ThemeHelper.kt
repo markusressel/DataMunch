@@ -27,6 +27,7 @@ import androidx.annotation.StyleRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import de.markusressel.datamunch.R
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -27,6 +27,7 @@ import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mikepenz.aboutlibraries.util.Colors
 import com.mikepenz.materialdrawer.Drawer
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import java.util.*
 import javax.inject.Inject

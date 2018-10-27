@@ -27,6 +27,7 @@ import androidx.viewpager.widget.ViewPager
 import com.gigamole.navigationtabstrip.NavigationTabStrip
 import com.github.ajalt.timberkt.Timber
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import de.markusressel.datamunch.R
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable

@@ -25,9 +25,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.jakewharton.rxbinding2.view.RxView
 import com.ncorti.slidetoact.SlideToActView
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.view.component.LoadingComponent
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import io.reactivex.Single
@@ -102,12 +104,12 @@ class MaintenanceFragment : DaggerSupportFragmentBase() {
         val dialogContentView = inflater
                 .inflate(R.layout.dialog_danger_zone_warning_single_action, null)
 
-        val dialog = MaterialDialog
-                .Builder(context as Context)
-                .customView(dialogContentView, false)
-                .title(R.string.warning)
-                .neutralText(R.string.abort)
-                .show()
+        val dialog = MaterialDialog(context as Context)
+                .show {
+                    title(R.string.warning)
+                    customView(view = dialogContentView, scrollable = false)
+                    neutralButton(res = R.string.abort)
+                }
 
         val button: SlideToActView = dialogContentView
                 .findViewById(R.id.swipeButton)

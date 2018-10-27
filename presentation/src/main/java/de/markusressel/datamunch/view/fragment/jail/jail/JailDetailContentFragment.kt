@@ -18,10 +18,10 @@
 
 package de.markusressel.datamunch.view.fragment.jail.jail
 
-import android.arch.lifecycle.Lifecycle
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Lifecycle
 import com.jakewharton.rxbinding2.view.RxView
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent

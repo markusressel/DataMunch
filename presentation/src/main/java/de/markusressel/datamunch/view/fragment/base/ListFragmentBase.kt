@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.airbnb.epoxy.EpoxyController
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
@@ -38,7 +39,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
-import com.trello.rxlifecycle2.kotlin.bindUntilEvent
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.IdentifiableListItem
 import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
@@ -51,6 +52,8 @@ import de.markusressel.datamunch.view.component.OptionsMenuComponent
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.rxkotlin.toObservable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_list.*
@@ -74,7 +77,6 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
     private val fabButtonViews = mutableListOf<FloatingActionButton>()
 
     protected val listValues: MutableList<EntityType> = ArrayList()
-    private lateinit var recyclerViewAdapter: LastAdapter
 
     @Inject
     lateinit var frittenbudeServerManager: FreeBSDServerManager
@@ -200,10 +202,9 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
         super
                 .onViewCreated(view, savedInstanceState)
 
-        recyclerViewAdapter = createAdapter()
 
-        recyclerView
-                .adapter = recyclerViewAdapter
+        recyclerView.setControllerAndBuildModels(createEpoxyController())
+
         val layoutManager = StaggeredGridLayoutManager(
                 resources.getInteger(R.integer.list_column_count),
                 StaggeredGridLayoutManager.VERTICAL)
@@ -211,6 +212,13 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                 .layoutManager = layoutManager
 
         setupFabs()
+    }
+
+    open fun createEpoxyController(): EpoxyController {
+        return object : EpoxyController() {
+            override fun buildModels() {
+            }
+        }
     }
 
     override fun onStart() {
@@ -350,11 +358,6 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
     }
 
     /**
-     * Create the adapter used for the recyclerview
-     */
-    abstract fun createAdapter(): LastAdapter
-
-    /**
      * Loads the data using {@link loadListDataFromPersistence()}
      */
     private fun updateListFromPersistence() {
@@ -385,7 +388,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                     }
                     loadingComponent.showContent()
 
-                    diffResult.dispatchUpdatesTo(recyclerViewAdapter)
+//                    diffResult.dispatchUpdatesTo(recyclerViewAdapter)
                 }, onError = {
                     if (it is CancellationException) {
                         Timber.d { "reload from persistence cancelled" }

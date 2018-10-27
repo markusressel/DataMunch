@@ -18,21 +18,17 @@
 
 package de.markusressel.datamunch.view.fragment.jail.jail
 
-import android.arch.lifecycle.Lifecycle
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Lifecycle
 import com.github.ajalt.timberkt.Timber
-import com.github.nitrico.lastadapter.LastAdapter
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
-import de.markusressel.datamunch.BR
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
-import de.markusressel.datamunch.databinding.ListItemJailServiceBinding
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.content_jails_jail_services.*
 import javax.inject.Inject
 
 /**
@@ -48,27 +44,10 @@ class JailServicesContentFragment : JailContentFragmentBase() {
 
     val servicesList: MutableList<JailService> = mutableListOf()
 
-    lateinit var servicesAdapter: LastAdapter
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
                 .onViewCreated(view, savedInstanceState)
 
-        servicesAdapter = LastAdapter(servicesList, BR.item)
-                .map<JailService, ListItemJailServiceBinding>(
-                        R.layout.list_item_jail_service) {
-                    onCreate {
-                        it
-                                .binding
-                                .presenter = this@JailServicesContentFragment
-                    }
-                    onBind { holder ->
-                        val item = holder
-                                .binding
-                                .item
-                    }
-                }
-                .into(servicesRecyclerView)
     }
 
     override fun onResume() {
@@ -100,8 +79,6 @@ class JailServicesContentFragment : JailContentFragmentBase() {
                             .clear()
                     servicesList
                             .addAll(services.map { JailService(name = it) })
-                    servicesAdapter
-                            .notifyDataSetChanged()
                 }, onError = {
                     Timber
                             .e(it)
