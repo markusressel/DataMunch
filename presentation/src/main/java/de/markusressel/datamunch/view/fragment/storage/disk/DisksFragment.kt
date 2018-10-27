@@ -25,6 +25,7 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.DiskEntity
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.asEntity
+import de.markusressel.datamunch.listItemDisk
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
@@ -51,12 +52,13 @@ class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
         return object : TypedEpoxyController<List<DiskEntity>>() {
             override fun buildModels(data: List<DiskEntity>) {
                 data.forEach {
-                    ListItemDiskBindingModel_()
-                            .id(it.entityId)
-                            .item(it)
-                            .onclick { model, parentView, clickedView, position ->
-                                openDetailView(model.item())
-                            }.addTo(this)
+                    listItemDisk {
+                        id(it.entityId)
+                        item(it)
+                        onclick { model, parentView, clickedView, position ->
+                            openDetailView(model.item())
+                        }
+                    }
                 }
             }
         }
