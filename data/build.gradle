@@ -75,9 +75,9 @@ dependencies {
     api "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}"
 
     // preferences
-    def kutePreferencesVersion = "v1.3.1"
+    def kutePreferencesVersion = "v1.4.0"
     // choose the ones you need
-    api("com.github.markusressel.KutePreferences:boolean:${kutePreferencesVersion}")
+    api("com.github.markusressel.KutePreferences:bool:${kutePreferencesVersion}")
     api("com.github.markusressel.KutePreferences:core:${kutePreferencesVersion}")
     api("com.github.markusressel.KutePreferences:color:${kutePreferencesVersion}")
     api("com.github.markusressel.KutePreferences:date:${kutePreferencesVersion}")

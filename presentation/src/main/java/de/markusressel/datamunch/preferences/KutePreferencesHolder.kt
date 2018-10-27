@@ -28,7 +28,7 @@ import de.markusressel.datamunch.event.ThemeChangedEvent
 import de.markusressel.datamunch.view.IconHandler
 import de.markusressel.kutepreferences.core.preference.category.KuteCategory
 import de.markusressel.kutepreferences.core.preference.category.KuteDivider
-import de.markusressel.kutepreferences.preference.boolean.KuteBooleanPreference
+import de.markusressel.kutepreferences.preference.bool.KuteBooleanPreference
 import de.markusressel.kutepreferences.preference.number.KuteNumberPreference
 import de.markusressel.kutepreferences.preference.selection.single.KuteSingleSelectStringPreference
 import de.markusressel.kutepreferences.preference.text.KutePasswordPreference
