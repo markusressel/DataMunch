@@ -27,12 +27,12 @@ import de.markusressel.datamunch.event.LocaleChangedEvent
 import de.markusressel.datamunch.event.ThemeChangedEvent
 import de.markusressel.datamunch.view.IconHandler
 import de.markusressel.kutepreferences.core.preference.category.KuteCategory
-import de.markusressel.kutepreferences.core.preference.category.KuteDivider
+import de.markusressel.kutepreferences.core.preference.section.KuteSection
 import de.markusressel.kutepreferences.preference.bool.KuteBooleanPreference
 import de.markusressel.kutepreferences.preference.number.KuteNumberPreference
 import de.markusressel.kutepreferences.preference.selection.single.KuteSingleSelectStringPreference
-import de.markusressel.kutepreferences.preference.text.KutePasswordPreference
 import de.markusressel.kutepreferences.preference.text.KuteTextPreference
+import de.markusressel.kutepreferences.preference.text.password.KutePasswordPreference
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -74,27 +74,35 @@ class KutePreferencesHolder @Inject constructor(
                      title = context.getString(R.string.category_connection_title),
                      description = context.getString(R.string.category_connection_description),
                      children = listOf(
-                             KuteDivider(
+                             KuteSection(
                                      key = R.string.divider_rest_key,
-                                     title = context.getString(R.string.divider_rest_title)
+                                     title = context.getString(R.string.divider_rest_title),
+                                     children = listOf(
+                                             restHost,
+                                             connectionApiResource
+                                     )
                              ),
-                             restHost,
-                             connectionApiResource,
-                             KuteDivider(
+
+                             KuteSection(
                                      key = R.string.divider_ssh_key,
-                                     title = context.getString(R.string.divider_ssh_title)
+                                     title = context.getString(R.string.divider_ssh_title),
+                                     children = listOf(
+                                             sshHost,
+                                             sshUser,
+                                             sshPassword
+                                     )
                              ),
-                             sshHost,
-                             sshUser,
-                             sshPassword,
-                             KuteDivider(
+
+                             KuteSection(
                                      key = R.string.divider_proxy_key,
-                                     title = context.getString(R.string.divider_proxy_title)
-                             ),
-                             sshProxyHost,
-                             sshProxyPort,
-                             sshProxyUser,
-                             sshProxyPassword
+                                     title = context.getString(R.string.divider_proxy_title),
+                                     children = listOf(
+                                             sshProxyHost,
+                                             sshProxyPort,
+                                             sshProxyUser,
+                                             sshProxyPassword
+                                     )
+                             )
                      )
         )
     }

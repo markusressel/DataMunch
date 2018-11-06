@@ -27,7 +27,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.airbnb.epoxy.TypedEpoxyController
 import com.eightbitlab.rxbus.Bus
@@ -375,8 +374,8 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
         }.toList().map { sortByCurrentOptions(it) }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .bindUntilEvent(this, Lifecycle.Event.ON_STOP).subscribeBy(onSuccess = {
-                    val diffCallback = DiffCallback(listValues, it)
-                    val diffResult = DiffUtil.calculateDiff(diffCallback)
+                    //                    val diffCallback = DiffCallback(listValues, it)
+//                    val diffResult = DiffUtil.calculateDiff(diffCallback)
 
                     listValues.clear()
                     listValues.addAll(it)

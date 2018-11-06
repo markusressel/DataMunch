@@ -19,7 +19,7 @@
 package de.markusressel.datamunch.view.fragment.preferences
 
 import de.markusressel.datamunch.preferences.KutePreferencesHolder
-import de.markusressel.kutepreferences.core.preference.KutePreferencesTree
+import de.markusressel.kutepreferences.core.KutePreferenceListItem
 import javax.inject.Inject
 
 class MainPreferenceFragment : LifecyclePreferenceFragmentBase() {
@@ -27,8 +27,8 @@ class MainPreferenceFragment : LifecyclePreferenceFragmentBase() {
     @Inject
     lateinit var preferenceHolder: KutePreferencesHolder
 
-    override fun initPreferenceTree(): KutePreferencesTree {
-        return KutePreferencesTree(
+    override fun initPreferenceTree(): Array<KutePreferenceListItem> {
+        return arrayOf(
                 preferenceHolder.connectionCategory,
                 preferenceHolder.securityCategory,
                 preferenceHolder.theme,

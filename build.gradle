@@ -18,13 +18,15 @@ buildscript {
         // Android Architecture Components
         aacNavigationVersion = "1.0.0-alpha06"
 
+        javaxAnnotationVersion = "10.0-b28"
         dagger2Version = "2.16"
         aboutlibrariesVersion = "6.2.0"
         materialdrawerVersion = "6.1.1"
         iconicsVersion = "3.1.0"
 
         rxKotlinVersion = "2.2.0"
-        javaxAnnotationVersion = "10.0-b28"
+        rxBindingVersion = "2.1.1"
+        rxLifecycleVersion = "2.2.1"
 
         timberKtVersion = "1.5.1"
 
@@ -36,9 +38,6 @@ buildscript {
         objectboxVersion = "2.2.0"
 
         fuelVersion = "1.16.0"
-
-        rxBindingVersion = "2.1.1"
-        rxLifecycleVersion = "2.2.1"
     }
 
     repositories {
