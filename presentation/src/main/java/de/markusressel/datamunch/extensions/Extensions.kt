@@ -21,12 +21,6 @@ package de.markusressel.datamunch.extensions
 import android.content.Context
 import android.os.AsyncTask
 import de.markusressel.datamunch.R
-import java.util.*
-
-/**
- * Created by Markus on 15.02.2018.
- */
-fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) + start
 
 /**
  * Returns true if the current device is considered a tablet
@@ -43,10 +37,4 @@ fun Any.doAsync(handler: () -> Unit) {
             return null
         }
     }.execute()
-}
-
-fun Throwable.prettyPrint(): String {
-    val message = "${this.message}:\n" + "${this.stackTrace.joinToString(separator = "\n")}}"
-
-    return message
 }

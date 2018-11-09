@@ -33,8 +33,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.github.ajalt.timberkt.Timber
 import com.jakewharton.rxbinding2.view.RxView
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import de.markusressel.commons.logging.prettyPrint
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.extensions.prettyPrint
 import de.markusressel.datamunch.view.fragment.base.LifecycleFragmentBase
 
 /**

@@ -21,8 +21,8 @@ package de.markusressel.datamunch.view.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import de.markusressel.commons.logging.prettyPrint
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.extensions.prettyPrint
 import de.markusressel.datamunch.view.activity.base.DaggerSupportActivityBase
 import kotlinx.android.synthetic.main.dialog_unknown_error.*
 import timber.log.Timber

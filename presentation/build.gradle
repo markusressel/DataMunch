@@ -75,6 +75,9 @@ dependencies {
 
     compileOnly "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}"
 
+    implementation("com.github.markusressel.commons:random:master-SNAPSHOT")
+    implementation("com.github.markusressel.commons:logging:master-SNAPSHOT")
+
     // Dagger 2
     implementation "com.google.dagger:dagger:${rootProject.ext.dagger2Version}"
     kapt "com.google.dagger:dagger-compiler:${rootProject.ext.dagger2Version}"
