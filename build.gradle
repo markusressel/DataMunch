@@ -33,7 +33,7 @@ buildscript {
         gsonVersion = "2.8.5"
         kotsonVersion = "2.5.0"
 
-        epoxyVersion = "3.0.0-rc1"
+        epoxyVersion = "3.0.0"
 
         objectboxVersion = "2.2.0"
 
