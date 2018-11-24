@@ -18,9 +18,11 @@
 
 package de.markusressel.datamunch.view.fragment.jail.jail
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.ListItemJailBindingModel_
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.data.persistence.JailPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -36,8 +38,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
@@ -49,21 +49,23 @@ class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<JailEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<JailEntity>> {
-        return object : TypedEpoxyController<List<JailEntity>>() {
-            override fun buildModels(data: List<JailEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<JailEntity> {
+        return object : PagedListEpoxyController<JailEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: JailEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemJailBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
     }
-
 
     override fun loadListDataFromSource(): Single<List<JailModel>> {
         return freeNasWebApiClient

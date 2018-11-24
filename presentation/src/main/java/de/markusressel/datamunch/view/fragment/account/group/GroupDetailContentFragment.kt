@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.account.group
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.GroupPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.GroupEntity
+import de.markusressel.datamunch.databinding.ContentAccountsGroupDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_accounts_group_detail.*
 import javax.inject.Inject
 
 /**
@@ -39,30 +46,26 @@ class GroupDetailContentFragment : DetailContentFragmentBase<GroupEntity>() {
     override val layoutRes: Int
         get() = R.layout.content_accounts_group_detail
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = super.onCreateView(inflater, container, savedInstanceState)
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
+        val binding: ContentAccountsGroupDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel: GroupViewModel = ViewModelProviders.of(this).get(GroupViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<GroupEntity>> {
+            val entity = it.first()
+
+            viewModel.id.value = entity.id
+            viewModel.bsdgrp_builtin.value = entity.bsdgrp_builtin
+            viewModel.bsdgrp_gid.value = entity.bsdgrp_gid
+            viewModel.bsdgrp_group.value = entity.bsdgrp_group
+            viewModel.bsdgrp_sudo.value = entity.bsdgrp_sudo
+        })
+
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
+
+        return binding.root
     }
-
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
-
-        idTextView
-                .text = "${entity.bsdgrp_gid}"
-
-        groupTextView
-                .text = entity
-                .bsdgrp_group
-
-        builtInCheckBox
-                .isChecked = entity
-                .bsdgrp_builtin
-
-        sudoCheckBox
-                .isChecked = entity
-                .bsdgrp_sudo
-    }
-
 }

@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.services
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemServiceBindingModel_
 import de.markusressel.datamunch.data.persistence.ServicePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -34,8 +36,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
@@ -47,16 +47,19 @@ class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<ServiceEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<ServiceEntity>> {
-        return object : TypedEpoxyController<List<ServiceEntity>>() {
-            override fun buildModels(data: List<ServiceEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<ServiceEntity> {
+        return object : PagedListEpoxyController<ServiceEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: ServiceEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemServiceBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
@@ -81,7 +84,7 @@ class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
                 ?.let {
                     val intent = DetailActivityBase
                             .newInstanceIntent(ServiceDetailActivity::class.java, it,
-                                               service.entityId)
+                                    service.entityId)
                     startActivity(intent)
                 }
     }

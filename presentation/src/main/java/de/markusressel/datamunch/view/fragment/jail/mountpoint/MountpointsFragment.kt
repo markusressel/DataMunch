@@ -18,8 +18,10 @@
 
 package de.markusressel.datamunch.view.fragment.jail.mountpoint
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemMountpointBindingModel_
 import de.markusressel.datamunch.data.persistence.MountpointPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -36,8 +38,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>() {
@@ -49,16 +49,19 @@ class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>(
 
     override fun getPersistenceHandler(): PersistenceManagerBase<MountpointEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<MountpointEntity>> {
-        return object : TypedEpoxyController<List<MountpointEntity>>() {
-            override fun buildModels(data: List<MountpointEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<MountpointEntity> {
+        return object : PagedListEpoxyController<MountpointEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: MountpointEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemMountpointBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
@@ -80,9 +83,9 @@ class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>(
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddView()
-                                    }))
+                onClick = {
+                    openAddView()
+                }))
     }
 
     private fun openAddView() {
@@ -93,7 +96,7 @@ class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>(
                 ?.let {
                     val intent = DetailActivityBase
                             .newInstanceIntent(MountpointDetailActivity::class.java, it,
-                                               mountpoint.entityId)
+                                    mountpoint.entityId)
                     startActivity(intent)
                 }
     }

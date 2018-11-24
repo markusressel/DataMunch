@@ -18,14 +18,15 @@
 
 package de.markusressel.datamunch.view.fragment.storage.disk
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import de.markusressel.datamunch.ListItemDiskBindingModel_
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.data.persistence.DiskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.DiskEntity
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.listItemDisk
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
@@ -35,8 +36,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
@@ -48,17 +47,18 @@ class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<DiskEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<DiskEntity>> {
-        return object : TypedEpoxyController<List<DiskEntity>>() {
-            override fun buildModels(data: List<DiskEntity>) {
-                data.forEach {
-                    listItemDisk {
-                        id(it.entityId)
-                        item(it)
-                        onclick { model, parentView, clickedView, position ->
-                            openDetailView(model.item())
-                        }
-                    }
+    override fun createEpoxyController(): PagedListEpoxyController<DiskEntity> {
+        return object : PagedListEpoxyController<DiskEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: DiskEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
+                    ListItemDiskBindingModel_().id(item.entityId)
+                            .item(item)
+                            .onclick { model, parentView, clickedView, position ->
+                                openDetailView(model.item())
+                            }
                 }
             }
         }

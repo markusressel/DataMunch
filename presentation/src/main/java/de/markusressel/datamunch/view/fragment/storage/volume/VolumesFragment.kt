@@ -19,8 +19,10 @@
 package de.markusressel.datamunch.view.fragment.storage.volume
 
 import android.widget.Toast
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemVolumeBindingModel_
 import de.markusressel.datamunch.data.persistence.VolumePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -40,8 +42,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
@@ -53,16 +53,19 @@ class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<VolumeEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<VolumeEntity>> {
-        return object : TypedEpoxyController<List<VolumeEntity>>() {
-            override fun buildModels(data: List<VolumeEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<VolumeEntity> {
+        return object : PagedListEpoxyController<VolumeEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: VolumeEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemVolumeBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
@@ -94,9 +97,9 @@ class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddDialog()
-                                    }))
+                onClick = {
+                    openAddDialog()
+                }))
     }
 
     private fun openAddDialog() {

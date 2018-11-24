@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.plugins
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemPluginBindingModel_
 import de.markusressel.datamunch.data.persistence.PluginPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -34,8 +36,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
@@ -47,16 +47,19 @@ class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<PluginEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<PluginEntity>> {
-        return object : TypedEpoxyController<List<PluginEntity>>() {
-            override fun buildModels(data: List<PluginEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<PluginEntity> {
+        return object : PagedListEpoxyController<PluginEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: PluginEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemPluginBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
@@ -81,7 +84,7 @@ class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
                 ?.let {
                     val intent = DetailActivityBase
                             .newInstanceIntent(PluginDetailActivity::class.java, it,
-                                               plugin.entityId)
+                                    plugin.entityId)
                     startActivity(intent)
                 }
     }

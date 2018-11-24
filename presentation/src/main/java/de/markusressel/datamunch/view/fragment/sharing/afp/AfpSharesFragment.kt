@@ -18,9 +18,11 @@
 
 package de.markusressel.datamunch.view.fragment.sharing.afp
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.ListItemAfpShareBindingModel_
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.data.persistence.AfpSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.AfpShareEntity
@@ -36,8 +38,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
@@ -49,16 +49,19 @@ class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<AfpShareEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<AfpShareEntity>> {
-        return object : TypedEpoxyController<List<AfpShareEntity>>() {
-            override fun buildModels(data: List<AfpShareEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<AfpShareEntity> {
+        return object : PagedListEpoxyController<AfpShareEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: AfpShareEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemAfpShareBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
@@ -80,9 +83,9 @@ class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddView()
-                                    }))
+                onClick = {
+                    openAddView()
+                }))
     }
 
     private fun openAddView() {
@@ -93,7 +96,7 @@ class AfpSharesFragment : ListFragmentBase<AfpShareModel, AfpShareEntity>() {
                 ?.let {
                     val intent = DetailActivityBase
                             .newInstanceIntent(AfpShareDetailActivity::class.java, it,
-                                               share.entityId)
+                                    share.entityId)
                     startActivity(intent)
                 }
     }

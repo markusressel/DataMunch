@@ -28,7 +28,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
@@ -218,7 +218,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
      * Create the epoxy controller here.
      * The epoxy controller defines what information is displayed.
      */
-    abstract fun createEpoxyController(): TypedEpoxyController<List<EntityType>>
+    abstract fun createEpoxyController(): PagedListEpoxyController<EntityType>
 
     override fun onStart() {
         super
@@ -387,8 +387,8 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                     }
                     loadingComponent.showContent()
 
-                    // TODO: Diffing can be handled automatically by epoxy, so this method should become a lot simpler
-                    epoxyController.setData(it)
+                    // TODO: this code will become obsolete when all lists are migrated to Paging library
+//                    epoxyController.submitList(it)
 
 //                    diffResult.dispatchUpdatesTo(recyclerViewAdapter)
                 }, onError = {

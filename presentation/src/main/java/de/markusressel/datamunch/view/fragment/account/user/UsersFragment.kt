@@ -18,8 +18,16 @@
 
 package de.markusressel.datamunch.view.fragment.account.user
 
-import com.airbnb.epoxy.TypedEpoxyController
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemUserBindingModel_
 import de.markusressel.datamunch.data.persistence.UserPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -36,8 +44,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
@@ -50,17 +56,28 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<UserEntity>> {
-        return object : TypedEpoxyController<List<UserEntity>>() {
-            override fun buildModels(data: List<UserEntity>) {
-                data.forEach {
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val viewModel = ViewModelProviders.of(this).get(UserEntityListViewModel::class.java)
+        viewModel.getListLiveData(getPersistenceHandler()).observe(this, Observer {
+            epoxyController.submitList(it)
+        })
+
+        return super.createViewDataBinding(inflater, container, savedInstanceState)
+    }
+
+    override fun createEpoxyController(): PagedListEpoxyController<UserEntity> {
+        return object : PagedListEpoxyController<UserEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: UserEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemUserBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
                             }
-                            .addTo(this)
                 }
             }
         }

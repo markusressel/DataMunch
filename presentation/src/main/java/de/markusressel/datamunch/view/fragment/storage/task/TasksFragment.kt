@@ -18,8 +18,10 @@
 
 package de.markusressel.datamunch.view.fragment.storage.task
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemTaskBindingModel_
 import de.markusressel.datamunch.data.persistence.TaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -36,8 +38,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class TasksFragment : ListFragmentBase<TaskModel, TaskEntity>() {
@@ -49,16 +49,19 @@ class TasksFragment : ListFragmentBase<TaskModel, TaskEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<TaskEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<TaskEntity>> {
-        return object : TypedEpoxyController<List<TaskEntity>>() {
-            override fun buildModels(data: List<TaskEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<TaskEntity> {
+        return object : PagedListEpoxyController<TaskEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: TaskEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemTaskBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
@@ -80,9 +83,9 @@ class TasksFragment : ListFragmentBase<TaskModel, TaskEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddDialog()
-                                    }))
+                onClick = {
+                    openAddDialog()
+                }))
     }
 
     private fun openAddDialog() {

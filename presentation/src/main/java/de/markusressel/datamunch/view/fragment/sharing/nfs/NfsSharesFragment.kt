@@ -18,8 +18,10 @@
 
 package de.markusressel.datamunch.view.fragment.sharing.nfs
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemNfsShareBindingModel_
 import de.markusressel.datamunch.data.persistence.NfsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -36,8 +38,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
@@ -49,16 +49,19 @@ class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<NfsShareEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<NfsShareEntity>> {
-        return object : TypedEpoxyController<List<NfsShareEntity>>() {
-            override fun buildModels(data: List<NfsShareEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<NfsShareEntity> {
+        return object : PagedListEpoxyController<NfsShareEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: NfsShareEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemNfsShareBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
@@ -80,9 +83,9 @@ class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddDialog()
-                                    }))
+                onClick = {
+                    openAddDialog()
+                }))
     }
 
     private fun openAddDialog() {
@@ -94,7 +97,7 @@ class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
                 ?.let {
                     val intent = DetailActivityBase
                             .newInstanceIntent(NfsShareDetailActivity::class.java, it,
-                                               share.entityId)
+                                    share.entityId)
                     startActivity(intent)
                 }
     }

@@ -95,6 +95,9 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
     implementation "androidx.cardview:cardview:1.0.0"
 
+    // Android Architecture Components
+    implementation "android.arch.lifecycle:extensions:2.0.0"
+
     // RxPermissions
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
@@ -139,6 +142,7 @@ dependencies {
     // Epoxy - Recyclerview for dummies
     implementation "com.airbnb.android:epoxy:$epoxyVersion"
     implementation "com.airbnb.android:epoxy-databinding:$epoxyVersion"
+    implementation "com.airbnb.android:epoxy-paging:$epoxyVersion"
     kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
 
     // Bottom Navigation

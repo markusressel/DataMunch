@@ -30,6 +30,17 @@ import kotlinx.android.synthetic.main.content_accounts_user_detail.*
  */
 abstract class DetailContentFragmentBase<EntityType : Any> : DaggerSupportFragmentBase() {
 
+    val entityId: Long by lazy {
+        val args = arguments
+                ?: throw IllegalStateException("Arguments must not be null!")
+
+        if (args.containsKey(DetailActivityBase.KEY_ENTITY_ID)) {
+            args.getLong(DetailActivityBase.KEY_ENTITY_ID)
+        } else {
+            throw IllegalStateException("No entity id specified!")
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
                 .onViewCreated(view, savedInstanceState)
@@ -47,18 +58,6 @@ abstract class DetailContentFragmentBase<EntityType : Any> : DaggerSupportFragme
      * Get the entity to edit from persistence
      */
     protected fun getEntityFromPersistence(): EntityType {
-        val args = arguments
-                ?: throw IllegalStateException("Arguments must not be null!")
-
-        if (args.containsKey(DetailActivityBase.KEY_ENTITY_ID)) {
-
-        } else {
-
-        }
-
-        val entityId: Long = args
-                .getLong(DetailActivityBase.KEY_ENTITY_ID)
-
         return getPersistenceHandler()
                 .standardOperation()
                 .get(entityId)

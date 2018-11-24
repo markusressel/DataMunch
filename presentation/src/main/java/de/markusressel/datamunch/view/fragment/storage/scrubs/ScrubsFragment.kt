@@ -18,8 +18,10 @@
 
 package de.markusressel.datamunch.view.fragment.storage.scrubs
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemScrubBindingModel_
 import de.markusressel.datamunch.data.persistence.ScrubPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -36,8 +38,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
@@ -49,16 +49,19 @@ class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<ScrubEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<ScrubEntity>> {
-        return object : TypedEpoxyController<List<ScrubEntity>>() {
-            override fun buildModels(data: List<ScrubEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<ScrubEntity> {
+        return object : PagedListEpoxyController<ScrubEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: ScrubEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemScrubBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
@@ -80,9 +83,9 @@ class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddDialog()
-                                    }))
+                onClick = {
+                    openAddDialog()
+                }))
     }
 
     private fun openAddDialog() {

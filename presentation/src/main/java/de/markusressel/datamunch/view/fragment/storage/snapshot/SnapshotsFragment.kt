@@ -18,8 +18,10 @@
 
 package de.markusressel.datamunch.view.fragment.storage.snapshot
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemSnapshotBindingModel_
 import de.markusressel.datamunch.data.persistence.SnapshotPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -36,8 +38,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
@@ -49,16 +49,19 @@ class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<SnapshotEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<SnapshotEntity>> {
-        return object : TypedEpoxyController<List<SnapshotEntity>>() {
-            override fun buildModels(data: List<SnapshotEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<SnapshotEntity> {
+        return object : PagedListEpoxyController<SnapshotEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: SnapshotEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemSnapshotBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
@@ -80,9 +83,9 @@ class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddDialog()
-                                    }))
+                onClick = {
+                    openAddDialog()
+                }))
     }
 
     private fun openAddDialog() {
@@ -94,7 +97,7 @@ class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
                 ?.let {
                     val intent = DetailActivityBase
                             .newInstanceIntent(SnapshotDetailActivity::class.java, it,
-                                               volume.entityId)
+                                    volume.entityId)
                     startActivity(intent)
                 }
     }

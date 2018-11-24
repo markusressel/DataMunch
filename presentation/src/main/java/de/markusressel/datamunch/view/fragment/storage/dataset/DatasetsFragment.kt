@@ -18,9 +18,11 @@
 
 package de.markusressel.datamunch.view.fragment.storage.dataset
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.ListItemDatasetBindingModel_
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.data.persistence.DatasetPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
@@ -49,16 +51,19 @@ class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<DatasetEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<DatasetEntity>> {
-        return object : TypedEpoxyController<List<DatasetEntity>>() {
-            override fun buildModels(data: List<DatasetEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<DatasetEntity> {
+        return object : PagedListEpoxyController<DatasetEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: DatasetEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemDatasetBindingModel_()
-                            .id(it.entityId)
-                            .item(it)
+                            .id(item.entityId)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }

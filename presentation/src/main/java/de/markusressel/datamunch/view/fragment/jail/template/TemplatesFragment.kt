@@ -18,8 +18,10 @@
 
 package de.markusressel.datamunch.view.fragment.jail.template
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemTemplateBindingModel_
 import de.markusressel.datamunch.data.persistence.TemplatePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -36,8 +38,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
@@ -49,16 +49,19 @@ class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<TemplateEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<TemplateEntity>> {
-        return object : TypedEpoxyController<List<TemplateEntity>>() {
-            override fun buildModels(data: List<TemplateEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<TemplateEntity> {
+        return object : PagedListEpoxyController<TemplateEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: TemplateEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemTemplateBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
@@ -80,9 +83,9 @@ class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddView()
-                                    }))
+                onClick = {
+                    openAddView()
+                }))
     }
 
     private fun openDetailView(template: TemplateEntity) {
@@ -90,7 +93,7 @@ class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
                 ?.let {
                     val intent = DetailActivityBase
                             .newInstanceIntent(TemplateDetailActivity::class.java, it,
-                                               template.entityId)
+                                    template.entityId)
                     startActivity(intent)
                 }
     }

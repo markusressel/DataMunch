@@ -18,8 +18,10 @@
 
 package de.markusressel.datamunch.view.fragment.system.update
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemUpdateBindingModel_
 import de.markusressel.datamunch.data.persistence.UpdatePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -38,8 +40,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
@@ -51,16 +51,19 @@ class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<UpdateEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<UpdateEntity>> {
-        return object : TypedEpoxyController<List<UpdateEntity>>() {
-            override fun buildModels(data: List<UpdateEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<UpdateEntity> {
+        return object : PagedListEpoxyController<UpdateEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: UpdateEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemUpdateBindingModel_()
-                            .id(it.entityId)
-                            .item(it)
+                            .id(item.entityId)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 //                                openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
@@ -82,7 +85,7 @@ class UpdatesFragment : ListFragmentBase<UpdateModel, UpdateEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Apply Updates",
-                                    icon = MaterialDesignIconic.Icon.gmi_check, onClick = {
+                icon = MaterialDesignIconic.Icon.gmi_check, onClick = {
             applyPendingUpdates()
         }))
     }

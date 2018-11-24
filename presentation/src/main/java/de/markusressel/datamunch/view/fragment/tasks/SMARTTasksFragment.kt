@@ -18,7 +18,9 @@
 
 package de.markusressel.datamunch.view.fragment.tasks
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemSmartTaskBindingModel_
 import de.markusressel.datamunch.data.persistence.SMARTTaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
@@ -34,8 +36,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class SMARTTasksFragment : ListFragmentBase<SMARTTaskModel, SMARTTaskEntity>() {
@@ -47,16 +47,19 @@ class SMARTTasksFragment : ListFragmentBase<SMARTTaskModel, SMARTTaskEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<SMARTTaskEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<SMARTTaskEntity>> {
-        return object : TypedEpoxyController<List<SMARTTaskEntity>>() {
-            override fun buildModels(data: List<SMARTTaskEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<SMARTTaskEntity> {
+        return object : PagedListEpoxyController<SMARTTaskEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: SMARTTaskEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemSmartTaskBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }

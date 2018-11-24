@@ -5,6 +5,7 @@
         R.layout.list_item_nfs_share,
         R.layout.list_item_dataset,
         R.layout.list_item_disk,
+        R.layout.list_item_loading,
         R.layout.list_item_group,
         R.layout.list_item_jail,
         R.layout.list_item_jail_service,

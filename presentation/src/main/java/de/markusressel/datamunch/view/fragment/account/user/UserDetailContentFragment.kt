@@ -19,13 +19,19 @@
 package de.markusressel.datamunch.view.fragment.account.user
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.UserPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.UserEntity
+import de.markusressel.datamunch.databinding.ContentAccountsUserDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.content_accounts_user_detail.*
@@ -43,6 +49,39 @@ class UserDetailContentFragment : DetailContentFragmentBase<UserEntity>() {
 
     override val layoutRes: Int
         get() = R.layout.content_accounts_user_detail
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = super.onCreateView(inflater, container, savedInstanceState)
+
+        val binding: ContentAccountsUserDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel: UserViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<UserEntity>> {
+            val entity = it.first()
+
+            viewModel.id.value = entity.id
+            viewModel.bsdusr_builtin.value = entity.bsdusr_builtin
+            viewModel.bsdusr_email.value = entity.bsdusr_email
+            viewModel.bsdusr_full_name.value = entity.bsdusr_full_name
+            viewModel.bsdusr_group.value = entity.bsdusr_group
+            viewModel.bsdusr_home.value = entity.bsdusr_home
+            viewModel.bsdusr_locked.value = entity.bsdusr_locked
+            viewModel.bsdusr_password_disabled.value = entity.bsdusr_password_disabled
+            viewModel.bsdusr_shell.value = entity.bsdusr_shell
+            viewModel.bsdusr_smbhash.value = entity.bsdusr_smbhash
+            viewModel.bsdusr_uid.value = entity.bsdusr_uid
+            viewModel.bsdusr_sshpubkey.value = entity.bsdusr_sshpubkey
+            viewModel.bsdusr_unixhash.value = entity.bsdusr_unixhash
+            viewModel.bsdusr_username.value = entity.bsdusr_username
+            viewModel.bsdusr_sudo.value = entity.bsdusr_sudo
+        })
+
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
+
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
@@ -84,53 +123,6 @@ class UserDetailContentFragment : DetailContentFragmentBase<UserEntity>() {
 
                     storeModifiedEntity(entityCopy)
                 })
-    }
-
-
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
-    }
-
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
-
-        userIdTextView
-                .text = "${entity.bsdusr_uid}"
-
-        groupIdTextView
-                .text = "${entity.bsdusr_group}"
-
-        usernameTextView
-                .text = entity
-                .bsdusr_username
-
-        fullNameEditText
-                .setText(entity.bsdusr_full_name)
-
-        passwordEditText
-                .setText("")
-
-        emailEditText
-                .setText(entity.bsdusr_email)
-
-
-        homeDirectoryTextView
-                .text = entity
-                .bsdusr_home
-
-        shellEditText
-                .setText(entity.bsdusr_shell)
-
-
-        lockedCheckBox
-                .isChecked = entity
-                .bsdusr_locked
-
-        sudoCheckBox
-                .isChecked = entity
-                .bsdusr_sudo
     }
 
 }

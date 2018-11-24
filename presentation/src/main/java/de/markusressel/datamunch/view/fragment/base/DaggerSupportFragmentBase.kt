@@ -24,6 +24,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -78,14 +79,25 @@ abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFr
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val newContainer = inflater.inflate(layoutRes, container, false) as ViewGroup
 
-        val alternative = super
-                .onCreateView(inflater, newContainer, savedInstanceState)
+        val viewModel = createViewDataBinding(inflater, container, savedInstanceState)
+        return if (viewModel != null) {
+            viewModel.root
+        } else {
+            val newContainer = inflater.inflate(layoutRes, container, false) as ViewGroup
 
-        return alternative
-                ?: newContainer
+            val alternative = super
+                    .onCreateView(inflater, newContainer, savedInstanceState)
+
+            alternative
+                    ?: newContainer
+        }
     }
+
+    /**
+     * Optionally create and setup your ViewDataBinding and ViewModel in this method
+     */
+    open fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         freeNasWebApiClient

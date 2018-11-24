@@ -18,9 +18,11 @@
 
 package de.markusressel.datamunch.view.fragment.sharing.cifs
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.ListItemCifsShareBindingModel_
+import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.data.persistence.CifsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.CifsShareEntity
@@ -36,8 +38,6 @@ import javax.inject.Inject
 
 
 /**
- * Server Status fragment
- *
  * Created by Markus on 07.01.2018.
  */
 class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
@@ -49,16 +49,19 @@ class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
 
     override fun getPersistenceHandler(): PersistenceManagerBase<CifsShareEntity> = persistenceManager
 
-    override fun createEpoxyController(): TypedEpoxyController<List<CifsShareEntity>> {
-        return object : TypedEpoxyController<List<CifsShareEntity>>() {
-            override fun buildModels(data: List<CifsShareEntity>) {
-                data.forEach {
+    override fun createEpoxyController(): PagedListEpoxyController<CifsShareEntity> {
+        return object : PagedListEpoxyController<CifsShareEntity>() {
+            override fun buildItemModel(currentPosition: Int, item: CifsShareEntity?): EpoxyModel<*> {
+                return if (item == null) {
+                    ListItemLoadingBindingModel_()
+                            .id(-currentPosition)
+                } else {
                     ListItemCifsShareBindingModel_()
-                            .id(it.id)
-                            .item(it)
+                            .id(item.id)
+                            .item(item)
                             .onclick { model, parentView, clickedView, position ->
                                 openDetailView(model.item())
-                            }.addTo(this)
+                            }
                 }
             }
         }
@@ -80,9 +83,9 @@ class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
 
     override fun getRightFabs(): List<FabConfig.Fab> {
         return listOf(FabConfig.Fab(description = "Add", icon = MaterialDesignIconic.Icon.gmi_plus,
-                                    onClick = {
-                                        openAddView()
-                                    }))
+                onClick = {
+                    openAddView()
+                }))
     }
 
     private fun openAddView() {
@@ -93,7 +96,7 @@ class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
                 ?.let {
                     val intent = DetailActivityBase
                             .newInstanceIntent(CifsShareDetailActivity::class.java, it,
-                                               share.entityId)
+                                    share.entityId)
                     startActivity(intent)
                 }
     }
