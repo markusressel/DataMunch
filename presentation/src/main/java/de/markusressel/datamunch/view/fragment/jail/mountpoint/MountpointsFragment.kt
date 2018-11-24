@@ -69,7 +69,7 @@ class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>(
 
     override fun loadListDataFromSource(): Single<List<MountpointModel>> {
         return freeNasWebApiClient
-                .getMountpoints()
+                .getMountpoints(1000)
     }
 
     override fun mapToEntity(it: MountpointModel): MountpointEntity {

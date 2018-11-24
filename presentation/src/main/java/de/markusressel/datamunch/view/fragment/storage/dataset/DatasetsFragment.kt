@@ -71,7 +71,7 @@ class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
 
     override fun loadListDataFromSource(): Single<List<DatasetModel>> {
         return freeNasWebApiClient
-                .getDatasets()
+                .getDatasets(1000)
     }
 
     override fun mapToEntity(it: DatasetModel): DatasetEntity {

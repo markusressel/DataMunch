@@ -57,7 +57,7 @@ class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
 
     override fun loadListDataFromSource(): Single<List<GroupModel>> {
         return freeNasWebApiClient
-                .getGroups(limit = 100)
+                .getGroups(limit = 1000)
     }
 
     override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {

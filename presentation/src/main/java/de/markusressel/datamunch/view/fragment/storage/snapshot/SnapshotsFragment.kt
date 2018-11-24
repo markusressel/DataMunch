@@ -69,7 +69,7 @@ class SnapshotsFragment : ListFragmentBase<SnapshotModel, SnapshotEntity>() {
 
     override fun loadListDataFromSource(): Single<List<SnapshotModel>> {
         return freeNasWebApiClient
-                .getSnapshots(limit = 1000)
+                .getSnapshots(limit = 10000)
     }
 
     override fun mapToEntity(it: SnapshotModel): SnapshotEntity {

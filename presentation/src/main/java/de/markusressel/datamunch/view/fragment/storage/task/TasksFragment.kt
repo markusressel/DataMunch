@@ -69,7 +69,7 @@ class TasksFragment : ListFragmentBase<TaskModel, TaskEntity>() {
 
     override fun loadListDataFromSource(): Single<List<TaskModel>> {
         return freeNasWebApiClient
-                .getTasks()
+                .getTasks(10000)
     }
 
     override fun mapToEntity(it: TaskModel): TaskEntity {

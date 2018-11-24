@@ -69,7 +69,7 @@ class JailsFragment : ListFragmentBase<JailModel, JailEntity>() {
 
     override fun loadListDataFromSource(): Single<List<JailModel>> {
         return freeNasWebApiClient
-                .getJails()
+                .getJails(1000)
     }
 
     override fun mapToEntity(it: JailModel): JailEntity {

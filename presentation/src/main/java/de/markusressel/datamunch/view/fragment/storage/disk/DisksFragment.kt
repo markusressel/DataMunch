@@ -66,7 +66,7 @@ class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
 
     override fun loadListDataFromSource(): Single<List<DiskModel>> {
         return freeNasWebApiClient
-                .getDisks()
+                .getDisks(1000)
     }
 
     override fun mapToEntity(it: DiskModel): DiskEntity {

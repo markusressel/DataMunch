@@ -84,8 +84,11 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
     }
 
     override fun loadListDataFromSource(): Single<List<UserModel>> {
+        // TODO: convert all those "loadListDataFromSource" methods into
+        // TODO: LiveData DataSources, since the backend does support paging
+        // TODO: this will also "remove" the default limit of 20 (will be the page size instead)
         return freeNasWebApiClient
-                .getUsers()
+                .getUsers(1000)
     }
 
     override fun mapToEntity(it: UserModel): UserEntity {

@@ -67,7 +67,7 @@ class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
 
     override fun loadListDataFromSource(): Single<List<ServiceModel>> {
         return freeNasWebApiClient
-                .getServices()
+                .getServices(1000)
     }
 
     override fun mapToEntity(it: ServiceModel): ServiceEntity {

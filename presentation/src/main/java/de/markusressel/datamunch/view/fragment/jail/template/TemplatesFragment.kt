@@ -69,7 +69,7 @@ class TemplatesFragment : ListFragmentBase<TemplateModel, TemplateEntity>() {
 
     override fun loadListDataFromSource(): Single<List<TemplateModel>> {
         return freeNasWebApiClient
-                .getTemplates()
+                .getTemplates(1000)
     }
 
     override fun mapToEntity(it: TemplateModel): TemplateEntity {

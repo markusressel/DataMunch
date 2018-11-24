@@ -69,7 +69,7 @@ class ScrubsFragment : ListFragmentBase<ScrubModel, ScrubEntity>() {
 
     override fun loadListDataFromSource(): Single<List<ScrubModel>> {
         return freeNasWebApiClient
-                .getScrubs()
+                .getScrubs(10000)
     }
 
     override fun mapToEntity(it: ScrubModel): ScrubEntity {

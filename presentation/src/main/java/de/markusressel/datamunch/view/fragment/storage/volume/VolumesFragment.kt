@@ -73,7 +73,7 @@ class VolumesFragment : ListFragmentBase<VolumeModel, VolumeEntity>() {
 
     override fun loadListDataFromSource(): Single<List<VolumeModel>> {
         return freeNasWebApiClient
-                .getVolumes()
+                .getVolumes(10000)
     }
 
     override fun loadListDataFromPersistence(): List<VolumeEntity> {
