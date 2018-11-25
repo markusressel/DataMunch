@@ -18,6 +18,12 @@
 
 package de.markusressel.datamunch.view.fragment.storage.dataset
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
@@ -50,6 +56,15 @@ class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
         get() = EntityTypeId.Dataset.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<DatasetEntity> = persistenceManager
+
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val viewModel = ViewModelProviders.of(this).get(DatasetListViewModel::class.java)
+        viewModel.getListLiveData(getPersistenceHandler()).observe(this, Observer {
+            epoxyController.submitList(it)
+        })
+
+        return super.createViewDataBinding(inflater, container, savedInstanceState)
+    }
 
     override fun createEpoxyController(): PagedListEpoxyController<DatasetEntity> {
         return object : PagedListEpoxyController<DatasetEntity>() {

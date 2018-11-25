@@ -19,9 +19,15 @@
 package de.markusressel.datamunch.view.fragment.jail.jail
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.view.RxView
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
@@ -31,6 +37,7 @@ import de.markusressel.datamunch.data.persistence.entity.JailEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.data.persistence.entity.isRunning
 import de.markusressel.datamunch.data.persistence.entity.isStopped
+import de.markusressel.datamunch.databinding.ContentJailsJailDetailBinding
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -44,6 +51,28 @@ class JailDetailContentFragment : JailContentFragmentBase() {
 
     override val layoutRes: Int
         get() = R.layout.content_jails_jail_detail
+
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentJailsJailDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(JailViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<JailEntity>> {
+            val entity = it.first()
+
+            viewModel.id.value = entity.id
+
+            viewModel.jail_host.value = entity.jail_host
+            viewModel.jail_status.value = entity.jail_status
+            viewModel.jail_ipv4.value = entity.jail_ipv4
+            viewModel.jail_mac.value = entity.jail_mac
+        })
+
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
+
+        return binding
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
@@ -91,25 +120,6 @@ class JailDetailContentFragment : JailContentFragmentBase() {
             startStopButton
                     .setImageDrawable(iconHandler.getFabIcon(MaterialDesignIconic.Icon.gmi_play))
         }
-
-        idTextView
-                .text = "${entity.id}"
-
-        nameTextView
-                .text = entity
-                .jail_host
-
-        statusTextView
-                .text = entity
-                .jail_status
-
-        ipv4TextView
-                .text = entity
-                .jail_ipv4
-
-        macTextView
-                .text = entity
-                .jail_mac
     }
 
     private fun startJail(jail: JailEntity) {

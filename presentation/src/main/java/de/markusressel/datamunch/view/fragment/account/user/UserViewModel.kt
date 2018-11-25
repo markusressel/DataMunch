@@ -11,12 +11,6 @@ import io.objectbox.query.Query
 
 class UserViewModel : EntityViewModel<UserEntity>() {
 
-    override fun createDbQuery(persistenceManager: PersistenceManagerBase<UserEntity>, entityId: Long): Query<UserEntity> {
-        return persistenceManager.standardOperation().query {
-            equal(UserEntity_.entityId, entityId)
-        }
-    }
-
     val id = MutableLiveData<Long>()
     // val bsdusr_attributes: Map<String, String>,
     val bsdusr_builtin = MutableLiveData<Boolean>()
@@ -33,5 +27,11 @@ class UserViewModel : EntityViewModel<UserEntity>() {
     val bsdusr_unixhash = MutableLiveData<String>()
     val bsdusr_username = MutableLiveData<String>()
     val bsdusr_sudo = MutableLiveData<Boolean>()
+
+    override fun createDbQuery(persistenceManager: PersistenceManagerBase<UserEntity>, entityId: Long): Query<UserEntity> {
+        return persistenceManager.standardOperation().query {
+            equal(UserEntity_.entityId, entityId)
+        }
+    }
 
 }

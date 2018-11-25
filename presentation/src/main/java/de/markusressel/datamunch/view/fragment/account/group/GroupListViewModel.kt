@@ -6,7 +6,7 @@ import de.markusressel.datamunch.view.viewmodel.EntityListViewModel
 import io.objectbox.kotlin.query
 import io.objectbox.query.Query
 
-class GroupEntityListViewModel : EntityListViewModel<GroupEntity>() {
+class GroupListViewModel : EntityListViewModel<GroupEntity>() {
     override fun createDbQuery(persistenceManager: PersistenceManagerBase<GroupEntity>): Query<GroupEntity> {
         return persistenceManager.standardOperation().query {}
     }

@@ -61,7 +61,7 @@ class GroupsFragment : ListFragmentBase<GroupModel, GroupEntity>() {
     }
 
     override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
-        val viewModel = ViewModelProviders.of(this).get(GroupEntityListViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this).get(GroupListViewModel::class.java)
         viewModel.getListLiveData(getPersistenceHandler()).observe(this, Observer {
             epoxyController.submitList(it)
         })

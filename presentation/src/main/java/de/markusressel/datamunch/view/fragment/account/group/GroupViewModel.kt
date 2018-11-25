@@ -11,16 +11,16 @@ import io.objectbox.query.Query
 
 class GroupViewModel : EntityViewModel<GroupEntity>() {
 
-    override fun createDbQuery(persistenceManager: PersistenceManagerBase<GroupEntity>, entityId: Long): Query<GroupEntity> {
-        return persistenceManager.standardOperation().query {
-            equal(GroupEntity_.entityId, entityId)
-        }
-    }
-
     val id = MutableLiveData<Long>()
     val bsdgrp_builtin = MutableLiveData<Boolean>()
     val bsdgrp_gid = MutableLiveData<Long>()
     val bsdgrp_group = MutableLiveData<String>()
     val bsdgrp_sudo = MutableLiveData<Boolean>()
+
+    override fun createDbQuery(persistenceManager: PersistenceManagerBase<GroupEntity>, entityId: Long): Query<GroupEntity> {
+        return persistenceManager.standardOperation().query {
+            equal(GroupEntity_.entityId, entityId)
+        }
+    }
 
 }

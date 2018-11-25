@@ -6,7 +6,7 @@ import de.markusressel.datamunch.view.viewmodel.EntityListViewModel
 import io.objectbox.kotlin.query
 import io.objectbox.query.Query
 
-class UserEntityListViewModel : EntityListViewModel<UserEntity>() {
+class UserListViewModel : EntityListViewModel<UserEntity>() {
     override fun createDbQuery(persistenceManager: PersistenceManagerBase<UserEntity>): Query<UserEntity> {
         return persistenceManager.standardOperation().query {}
     }

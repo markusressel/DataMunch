@@ -18,6 +18,12 @@
 
 package de.markusressel.datamunch.view.fragment.tasks
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import de.markusressel.datamunch.ListItemLoadingBindingModel_
@@ -46,6 +52,15 @@ class SMARTTasksFragment : ListFragmentBase<SMARTTaskModel, SMARTTaskEntity>() {
         get() = EntityTypeId.SMARTTask.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<SMARTTaskEntity> = persistenceManager
+
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val viewModel = ViewModelProviders.of(this).get(SMARTTaskListViewModel::class.java)
+        viewModel.getListLiveData(getPersistenceHandler()).observe(this, Observer {
+            epoxyController.submitList(it)
+        })
+
+        return super.createViewDataBinding(inflater, container, savedInstanceState)
+    }
 
     override fun createEpoxyController(): PagedListEpoxyController<SMARTTaskEntity> {
         return object : PagedListEpoxyController<SMARTTaskEntity>() {

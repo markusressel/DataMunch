@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.widget.RxTextView
@@ -50,11 +51,9 @@ class UserDetailContentFragment : DetailContentFragmentBase<UserEntity>() {
     override val layoutRes: Int
         get() = R.layout.content_accounts_user_detail
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
         val binding: ContentAccountsUserDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
-        val viewModel: UserViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<UserEntity>> {
             val entity = it.first()
 
@@ -80,7 +79,7 @@ class UserDetailContentFragment : DetailContentFragmentBase<UserEntity>() {
             it.viewModel = viewModel
         }
 
-        return binding.root
+        return binding
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

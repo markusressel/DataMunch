@@ -57,7 +57,7 @@ class UsersFragment : ListFragmentBase<UserModel, UserEntity>() {
     override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> = persistenceManager
 
     override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
-        val viewModel = ViewModelProviders.of(this).get(UserEntityListViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this).get(UserListViewModel::class.java)
         viewModel.getListLiveData(getPersistenceHandler()).observe(this, Observer {
             epoxyController.submitList(it)
         })

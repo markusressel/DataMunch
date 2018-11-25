@@ -18,6 +18,12 @@
 
 package de.markusressel.datamunch.view.fragment.services
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import de.markusressel.datamunch.ListItemLoadingBindingModel_
@@ -46,6 +52,15 @@ class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
         get() = EntityTypeId.Service.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<ServiceEntity> = persistenceManager
+
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val viewModel = ViewModelProviders.of(this).get(ServiceListViewModel::class.java)
+        viewModel.getListLiveData(getPersistenceHandler()).observe(this, Observer {
+            epoxyController.submitList(it)
+        })
+
+        return super.createViewDataBinding(inflater, container, savedInstanceState)
+    }
 
     override fun createEpoxyController(): PagedListEpoxyController<ServiceEntity> {
         return object : PagedListEpoxyController<ServiceEntity>() {

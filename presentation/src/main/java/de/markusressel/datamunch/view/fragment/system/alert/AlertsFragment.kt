@@ -18,6 +18,12 @@
 
 package de.markusressel.datamunch.view.fragment.system.alert
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import de.markusressel.datamunch.ListItemAlertBindingModel_
@@ -46,6 +52,15 @@ class AlertsFragment : ListFragmentBase<AlertModel, AlertEntity>() {
         get() = EntityTypeId.Alert.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<AlertEntity> = persistenceManager
+
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val viewModel = ViewModelProviders.of(this).get(AlertListViewModel::class.java)
+        viewModel.getListLiveData(getPersistenceHandler()).observe(this, Observer {
+            epoxyController.submitList(it)
+        })
+
+        return super.createViewDataBinding(inflater, container, savedInstanceState)
+    }
 
     override fun createEpoxyController(): PagedListEpoxyController<AlertEntity> {
         return object : PagedListEpoxyController<AlertEntity>() {

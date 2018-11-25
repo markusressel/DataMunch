@@ -18,6 +18,12 @@
 
 package de.markusressel.datamunch.view.fragment.jail.mountpoint
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
@@ -48,6 +54,15 @@ class MountpointsFragment : ListFragmentBase<MountpointModel, MountpointEntity>(
         get() = EntityTypeId.Jail.id
 
     override fun getPersistenceHandler(): PersistenceManagerBase<MountpointEntity> = persistenceManager
+
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val viewModel = ViewModelProviders.of(this).get(MountpointListViewModel::class.java)
+        viewModel.getListLiveData(getPersistenceHandler()).observe(this, Observer {
+            epoxyController.submitList(it)
+        })
+
+        return super.createViewDataBinding(inflater, container, savedInstanceState)
+    }
 
     override fun createEpoxyController(): PagedListEpoxyController<MountpointEntity> {
         return object : PagedListEpoxyController<MountpointEntity>() {

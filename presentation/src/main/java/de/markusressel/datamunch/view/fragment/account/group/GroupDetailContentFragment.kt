@@ -20,9 +20,9 @@ package de.markusressel.datamunch.view.fragment.account.group
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
@@ -46,11 +46,9 @@ class GroupDetailContentFragment : DetailContentFragmentBase<GroupEntity>() {
     override val layoutRes: Int
         get() = R.layout.content_accounts_group_detail
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
         val binding: ContentAccountsGroupDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
-        val viewModel: GroupViewModel = ViewModelProviders.of(this).get(GroupViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this).get(GroupViewModel::class.java)
         viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<GroupEntity>> {
             val entity = it.first()
 
@@ -66,6 +64,7 @@ class GroupDetailContentFragment : DetailContentFragmentBase<GroupEntity>() {
             it.viewModel = viewModel
         }
 
-        return binding.root
+        return binding
     }
+
 }
