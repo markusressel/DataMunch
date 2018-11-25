@@ -27,48 +27,70 @@ import de.markusressel.datamunch.R
  */
 object DrawerItemHolder {
 
-    val Status = DrawerMenuItem(title = R.string.menu_item_status,
-                                icon = MaterialDesignIconic.Icon.gmi_home, selectable = true,
-                                navigationPage = NavigationPageHolder.Status)
+    val Status = DrawerMenuItem(id = R.id.statusPage,
+            title = R.string.menu_item_status,
+            icon = MaterialDesignIconic.Icon.gmi_home,
+            selectable = true)
 
-    val Accounts = DrawerMenuItem(title = R.string.menu_item_accounts,
-                                  icon = MaterialDesignIconic.Icon.gmi_account, selectable = true,
-                                  navigationPage = NavigationPageHolder.Accounts)
+    val Accounts = DrawerMenuItem(
+            id = R.id.accountPage,
+            title = R.string.menu_item_accounts,
+            icon = MaterialDesignIconic.Icon.gmi_account,
+            selectable = true)
 
-    val Services = DrawerMenuItem(title = R.string.menu_item_services,
-                                  drawableRes = R.drawable.cube_outline, selectable = true,
-                                  navigationPage = NavigationPageHolder.Services)
+    val Services = DrawerMenuItem(
+            id = R.id.servicesPage,
+            title = R.string.menu_item_services,
+            drawableRes = R.drawable.cube_outline,
+            selectable = true)
 
-    val Sharing = DrawerMenuItem(title = R.string.menu_item_sharing,
-                                 icon = MaterialDesignIconic.Icon.gmi_folder_shared,
-                                 selectable = true, navigationPage = NavigationPageHolder.Sharing)
+    val Sharing = DrawerMenuItem(
+            id = R.id.sharingPage,
+            title = R.string.menu_item_sharing,
+            icon = MaterialDesignIconic.Icon.gmi_folder_shared,
+            selectable = true)
 
-    val Storage = DrawerMenuItem(title = R.string.menu_item_storage,
-                                 icon = MaterialDesignIconic.Icon.gmi_storage, selectable = true,
-                                 navigationPage = NavigationPageHolder.Storage)
+    val Storage = DrawerMenuItem(
+            id = R.id.storagePage,
+            title = R.string.menu_item_storage,
+            icon = MaterialDesignIconic.Icon.gmi_storage,
+            selectable = true)
 
-    val Jails = DrawerMenuItem(title = R.string.menu_item_jails, drawableRes = R.drawable.ic_jail,
-                               selectable = true, navigationPage = NavigationPageHolder.Jails)
+    val Jails = DrawerMenuItem(
+            id = R.id.jailPage,
+            title = R.string.menu_item_jails,
+            drawableRes = R.drawable.ic_jail,
+            selectable = true)
 
-    val Plugins = DrawerMenuItem(title = R.string.menu_item_plugins,
-                                 icon = MaterialDesignIconic.Icon.gmi_puzzle_piece,
-                                 selectable = true, navigationPage = NavigationPageHolder.Plugins)
+    val Plugins = DrawerMenuItem(
+            id = R.id.pluginPage,
+            title = R.string.menu_item_plugins,
+            icon = MaterialDesignIconic.Icon.gmi_puzzle_piece,
+            selectable = true)
 
-    val System = DrawerMenuItem(title = R.string.menu_item_system,
-                                icon = MaterialDesignIconic.Icon.gmi_settings, selectable = true,
-                                navigationPage = NavigationPageHolder.System)
+    val System = DrawerMenuItem(
+            id = R.id.systemPage,
+            title = R.string.menu_item_system,
+            icon = MaterialDesignIconic.Icon.gmi_settings,
+            selectable = true)
 
-    val Tasks = DrawerMenuItem(title = R.string.menu_item_tasks,
-                               icon = MaterialDesignIconic.Icon.gmi_assignment_check,
-                               selectable = true, navigationPage = NavigationPageHolder.Tasks)
+    val Tasks = DrawerMenuItem(
+            id = R.id.tasksPage,
+            title = R.string.menu_item_tasks,
+            icon = MaterialDesignIconic.Icon.gmi_assignment_check,
+            selectable = true)
 
-    val Settings = DrawerMenuItem(title = R.string.menu_item_settings,
-                                  icon = MaterialDesignIconic.Icon.gmi_settings, selectable = false,
-                                  navigationPage = NavigationPageHolder.Settings)
+    val Settings = DrawerMenuItem(
+            id = R.id.preferencesPage,
+            title = R.string.menu_item_settings,
+            icon = MaterialDesignIconic.Icon.gmi_settings,
+            selectable = false)
 
-    val About = DrawerMenuItem(title = R.string.menu_item_about,
-                               icon = MaterialDesignIconic.Icon.gmi_info, selectable = false,
-                               navigationPage = NavigationPageHolder.About)
+    val About = DrawerMenuItem(
+            id = R.id.aboutPage,
+            title = R.string.menu_item_about,
+            icon = MaterialDesignIconic.Icon.gmi_info,
+            selectable = false)
 
     fun fromId(drawerItemIdentifier: Long): DrawerMenuItem? {
         return when (drawerItemIdentifier) {

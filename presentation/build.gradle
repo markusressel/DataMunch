@@ -98,6 +98,9 @@ dependencies {
     // Android Architecture Components
     implementation "android.arch.lifecycle:extensions:2.0.0"
 
+    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha07"
+    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha07"
+
     // RxPermissions
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 

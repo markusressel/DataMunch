@@ -18,11 +18,12 @@
 
 package de.markusressel.datamunch.view.activity.base
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.github.ajalt.timberkt.Timber
@@ -56,7 +57,6 @@ import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.view.component.LockComponent
 import de.markusressel.datamunch.view.component.LockComponent.Companion.isScreenLocked
-import de.markusressel.datamunch.view.fragment.preferences.MainPreferenceFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
@@ -73,6 +73,8 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
     private val lockComponent: LockComponent = LockComponent({ this }, { preferencesHolder })
 
+    protected val navController by lazy { Navigation.findNavController(this, R.id.navHostFragment) }
+
     override fun setContentView(view: View?) {
         val contentView = lockComponent
                 .setContentView(view)
@@ -87,10 +89,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                 .onDestroy()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super
-                .onCreate(savedInstanceState)
-
+    override fun onContentViewInflated(savedInstanceState: Bundle?) {
         navigator
                 .activity = this
 
@@ -134,10 +133,10 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         navigator
                 .drawer = navigationDrawer
 
-        if (savedInstanceState == null) {
-            navigator
-                    .initDrawer()
-        }
+        val appBarConfiguration = AppBarConfiguration(
+                navGraph = navController.graph,
+                drawerLayout = navigator.drawer.drawerLayout)
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     override fun onStart() {
@@ -168,11 +167,13 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
     }
 
     private fun restartActivity() {
-        navigator
-                .startActivity(this, Navigator.NavigationPages.Main,
-                               Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        navigator
-                .navigateTo(DrawerItemHolder.Settings)
+        // TODO: replace this with navController stuff
+//        navigator
+//                .startActivity(this, Navigator.NavigationPages.Main,
+//                        Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+//
+//        navigator
+//                .navigateTo(DrawerItemHolder.Settings)
     }
 
     override fun onResume() {
@@ -227,7 +228,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                         "mail@markusressel.de").withIcon(R.mipmap.ic_launcher))
 
         profiles
-                .add(ProfileDrawerItem().withName("Iris Haderer").withEmail("").withIcon(
+                .add(ProfileDrawerItem().withName("Max Mustermann").withEmail("").withIcon(
                         R.mipmap.ic_launcher))
 
         return profiles
@@ -238,12 +239,20 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
         val clickListener = Drawer
                 .OnDrawerItemClickListener { _, _, drawerItem ->
+                    val drawerMenuItem = DrawerItemHolder
+                            .fromId(drawerItem.identifier)
 
-                    if (drawerItem.identifier == navigator.currentState.drawerMenuItem.identifier) {
-                        Timber
-                                .d { "Closing navigationDrawer because the clicked item (${drawerItem.identifier}) is the currently active page" }
+                    drawerMenuItem?.let {
+                        navController.navigate(it.id)
+
+                        // TODO: update appBar title
+
+                        if (drawerItem.isSelectable) {
+                            // set new title
+                            setTitle(drawerMenuItem.title)
+                        }
+
                         if (!isTablet()) {
-
                             navigator
                                     .drawer
                                     .closeDrawer()
@@ -251,40 +260,13 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                         return@OnDrawerItemClickListener true
                     }
 
-                    val drawerMenuItem = DrawerItemHolder
-                            .fromId(drawerItem.identifier)
-
-                    drawerMenuItem
-                            ?.navigationPage
-                            ?.let {
-                                if (it.fragment != null) {
-                                    navigator
-                                            .navigateTo(drawerMenuItem)
-                                } else {
-                                    navigator
-                                            .startActivity(this, it)
-                                }
-
-                                if (drawerItem.isSelectable) {
-                                    // set new title
-                                    setTitle(drawerMenuItem.title)
-                                }
-
-                                if (!isTablet()) {
-                                    navigator
-                                            .drawer
-                                            .closeDrawer()
-                                }
-                                return@OnDrawerItemClickListener true
-                            }
-
                     false
                 }
 
 
 
         listOf(Status, Accounts, Storage, Sharing, Services, Plugins, Jails,
-               Navigator.DrawerItems.System, Tasks)
+                Navigator.DrawerItems.System, Tasks)
                 .forEach {
                     menuItemList
                             .add(createPrimaryMenuItem(it, clickListener))
@@ -332,22 +314,16 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         }
 
         // special case for preferences
-        val preferenceFragment: Fragment? = supportFragmentManager
-                .findFragmentByTag(navigator.currentState.drawerMenuItem.navigationPage.tag)
-        if (preferenceFragment is MainPreferenceFragment && preferenceFragment.isVisible) {
-            if (preferenceFragment.onBackPressed()) {
-                return
-            }
-        }
+        // TODO: find a way to pass onBackPressed to PreferenceFragment
+//        val preferenceFragment: Fragment? = supportFragmentManager
+//                .findFragmentByTag(navigator.currentState.drawerMenuItem.navigationPage.tag)
+//        if (preferenceFragment is MainPreferenceFragment && preferenceFragment.isVisible) {
+//            if (preferenceFragment.onBackPressed()) {
+//                return
+//            }
+//        }
 
-        val previousPage = navigator
-                .navigateBack()
-        if (previousPage != null) {
-            navigator
-                    .drawer
-                    .setSelection(previousPage.drawerMenuItem.identifier, false)
-            return
-        }
+        // TODO: update drawer selection accordingly
 
         super
                 .onBackPressed()

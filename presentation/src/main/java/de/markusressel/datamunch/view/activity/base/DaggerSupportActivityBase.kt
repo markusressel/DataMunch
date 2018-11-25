@@ -118,9 +118,10 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
         setContentView(contentView)
 
         setSupportActionBar(toolbar)
-
         supportActionBar
                 ?.setDisplayHomeAsUpEnabled(true)
+
+        onContentViewInflated(savedInstanceState)
 
         Bus
                 .observe<LockComponent.SetStatusBarStateEvent>()
@@ -132,6 +133,9 @@ abstract class DaggerSupportActivityBase : LifecycleActivityBase(), HasFragmentI
                     }
                 }
                 .registerInBus(this)
+    }
+
+    open fun onContentViewInflated(savedInstanceState: Bundle?) {
     }
 
     /**

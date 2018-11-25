@@ -193,14 +193,14 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val parent = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
-        return loadingComponent
-                .onCreateView(inflater, parent, savedInstanceState)
+        return loadingComponent.onCreateView(inflater, parent, savedInstanceState)
     }
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super
-                .onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
+
+        loadingComponent.showContent(false)
 
         recyclerView.setController(epoxyController)
 
