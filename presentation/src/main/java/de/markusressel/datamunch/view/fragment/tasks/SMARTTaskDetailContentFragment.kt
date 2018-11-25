@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.tasks
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.SMARTTaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.smart.SMARTTaskEntity
+import de.markusressel.datamunch.databinding.ContentTasksSmartDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_tasks_smart_detail.*
 import javax.inject.Inject
 
 /**
@@ -40,43 +47,29 @@ class SMARTTaskDetailContentFragment : DetailContentFragmentBase<SMARTTaskEntity
         get() = R.layout.content_tasks_smart_detail
 
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
-    }
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentTasksSmartDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(SMARTTaskViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<SMARTTaskEntity>> {
+            val entity = it.first()
 
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
+            viewModel.id.value = entity.entityId
 
-        idTextView
-                .text = "${entity.id}"
+            viewModel.smarttest_dayweek.value = entity.smarttest_dayweek
+            viewModel.smarttest_daymonth.value = entity.smarttest_daymonth
+            viewModel.smarttest_month.value = entity.smarttest_month
+            viewModel.smarttest_type.value = entity.smarttest_type
+            viewModel.smarttest_hour.value = entity.smarttest_hour
+            viewModel.smarttest_desc.value = entity.smarttest_desc
+            viewModel.smarttest_disks.value = entity.smarttest_disks.joinToString(separator = ",") { it.name }
+        })
 
-        descriptionTextView
-                .text = entity
-                .smarttest_desc
-        daymonthTextView
-                .text = entity
-                .smarttest_daymonth
-        dayweekTextView
-                .text = entity
-                .smarttest_dayweek
-        hourTextView
-                .text = entity
-                .smarttest_hour
-        monthTextView
-                .text = entity
-                .smarttest_month
-        typeTextView
-                .text = entity
-                .smarttest_type
-        disksTextView
-                .text = entity
-                .smarttest_disks
-                .joinToString(",\n") {
-                    it
-                            .name
-                }
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
+
+        return binding
     }
 
 }

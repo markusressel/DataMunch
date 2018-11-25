@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.system.alert
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.AlertPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.AlertEntity
+import de.markusressel.datamunch.databinding.ContentSystemAlertDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_storage_alert_detail.*
 import javax.inject.Inject
 
 /**
@@ -37,35 +44,26 @@ class AlertDetailContentFragment : DetailContentFragmentBase<AlertEntity>() {
     override fun getPersistenceHandler(): PersistenceManagerBase<AlertEntity> = persistenceManager
 
     override val layoutRes: Int
-        get() = R.layout.content_storage_alert_detail
+        get() = R.layout.content_system_alert_detail
 
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentSystemAlertDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(AlertViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<AlertEntity>> {
+            val entity = it.first()
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
-    }
+            viewModel.id.value = entity.id
+            viewModel.level.value = entity.level
+            viewModel.message.value = entity.message
+            viewModel.dismissed.value = entity.dismissed
+        })
 
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
 
-        idTextView
-                .text = entity
-                .id
-
-        levelTextView
-                .text = entity
-                .level
-
-        messageTextView
-                .text = entity
-                .message
-
-        dismissedTextView
-                .text = entity
-                .dismissed
-                .toString()
-
+        return binding
     }
 
 }

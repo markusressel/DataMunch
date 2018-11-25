@@ -16,106 +16,118 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <LinearLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.markusressel.datamunch.view.fragment.storage.task.TaskViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/material_view_pager_placeholder" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
+            <include layout="@layout/material_view_pager_placeholder" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+            <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
 
-                <CheckBox
-                    android:id="@+id/enabledCheckBox"
-                    style="@style/sub_header_content_textview"
-                    android:enabled="false"
-                    android:text="@string/enabled" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/name" />
+                    <CheckBox
+                        style="@style/sub_header_content_textview"
+                        android:checked="@{viewModel.task_enabled}"
+                        android:enabled="false"
+                        android:text="@string/enabled" />
 
-                <TextView
-                    android:id="@+id/nameTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/name" />
 
-                <CheckBox
-                    android:id="@+id/recursiveCheckBox"
-                    style="@style/sub_header_content_textview"
-                    android:enabled="false"
-                    android:text="@string/recursive" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.task_ret_unit}" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/interval" />
+                    <CheckBox
+                        style="@style/sub_header_content_textview"
+                        android:checked="@{viewModel.task_recursive}"
+                        android:enabled="false"
+                        android:text="@string/recursive" />
 
-                <TextView
-                    android:id="@+id/intervalTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/interval" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/retCount" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{String.valueOf(viewModel.task_interval)}" />
 
-                <TextView
-                    android:id="@+id/retCountTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/retCount" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/repeat_unit" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{String.valueOf(viewModel.task_ret_count)}" />
 
-                <TextView
-                    android:id="@+id/repeatUnitTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/repeat_unit" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/begin" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.task_repeat_unit}" />
 
-                <TextView
-                    android:id="@+id/beginTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/begin" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/end" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.task_begin}" />
 
-                <TextView
-                    android:id="@+id/endTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/end" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/by_weekday" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.task_end}" />
 
-                <TextView
-                    android:id="@+id/byWeekDayTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/by_weekday" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/filesystem" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.task_byweekday}" />
 
-                <TextView
-                    android:id="@+id/filesystemTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/filesystem" />
 
-            </LinearLayout>
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.task_filesystem}" />
 
-        </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
-    </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-</androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

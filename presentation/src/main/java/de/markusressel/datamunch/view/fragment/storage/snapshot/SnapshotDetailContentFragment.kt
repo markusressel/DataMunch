@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.storage.snapshot
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.SnapshotPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.SnapshotEntity
+import de.markusressel.datamunch.databinding.ContentStorageSnapshotDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_storage_snapshot_detail.*
 import javax.inject.Inject
 
 /**
@@ -39,44 +46,30 @@ class SnapshotDetailContentFragment : DetailContentFragmentBase<SnapshotEntity>(
     override val layoutRes: Int
         get() = R.layout.content_storage_snapshot_detail
 
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentStorageSnapshotDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(SnapshotViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<SnapshotEntity>> {
+            val entity = it.first()
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
-    }
+//            viewModel.id.value = entity.entityId
 
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
+            viewModel.id.value = entity.id
+            viewModel.filesystem.value = entity.filesystem
+            viewModel.fullname.value = entity.fullname
+            viewModel.mostrecent.value = entity.mostrecent
+            viewModel.name.value = entity.name
+            viewModel.parent_type.value = entity.parent_type
+            viewModel.refer.value = entity.refer
+            viewModel.used.value = entity.used
+        })
 
-        idTextView
-                .text = entity
-                .id
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
 
-        nameTextView
-                .text = entity
-                .name
-
-        fullNameTextView
-                .text = entity
-                .fullname
-
-        filesystemTextView
-                .text = entity
-                .filesystem
-
-        parentTypeTextView
-                .text = entity
-                .parent_type
-
-        referTextView
-                .text = entity
-                .refer
-
-        usedTextView
-                .text = entity
-                .used
-
+        return binding
     }
 
 }

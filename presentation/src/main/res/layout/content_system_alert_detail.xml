@@ -23,7 +23,7 @@
 
         <variable
             name="viewModel"
-            type="de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotViewModel" />
+            type="de.markusressel.datamunch.view.fragment.system.alert.AlertViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -56,51 +56,29 @@
 
                     <TextView
                         style="@style/sub_header"
-                        android:text="@string/name" />
+                        android:text="@string/level" />
 
                     <TextView
                         style="@style/sub_header_content_textview"
-                        android:text="@{viewModel.name}" />
+                        android:text="@{viewModel.level}" />
 
                     <TextView
                         style="@style/sub_header"
-                        android:text="@string/full_name" />
+                        android:text="@string/message" />
 
                     <TextView
                         style="@style/sub_header_content_textview"
-                        android:text="@{viewModel.fullname}" />
+                        android:text="@{viewModel.message}" />
 
                     <TextView
                         style="@style/sub_header"
-                        android:text="@string/filesystem" />
+                        android:text="@string/dismissed" />
 
-                    <TextView
-                        style="@style/sub_header_content_textview"
-                        android:text="@{viewModel.filesystem}" />
-
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/parentType" />
-
-                    <TextView
-                        style="@style/sub_header_content_textview"
-                        android:text="@{viewModel.parent_type}" />
-
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/refer" />
-
-                    <TextView
-                        style="@style/sub_header_content_textview"
-                        android:text="@{viewModel.refer}" />
-
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/used" />
-
-                    <TextView
-                        style="@style/sub_header_content_textview"
-                        android:text="@{viewModel.used}" />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="@{viewModel.dismissed}"
+                        android:text="@string/dismissed" />
 
                 </LinearLayout>
 

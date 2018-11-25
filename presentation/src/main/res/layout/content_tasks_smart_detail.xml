@@ -16,102 +16,114 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <FrameLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.markusressel.datamunch.view.fragment.tasks.SMARTTaskViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/detail_content_margin_top">
+            android:layout_height="wrap_content">
 
-            <include layout="@layout/material_view_pager_placeholder" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/detail_content_margin_top">
 
-            <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
+                <include layout="@layout/material_view_pager_placeholder" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/id" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-                    <TextView
-                        android:id="@+id/idTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/id" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/description" />
+                        <TextView
+                            style="@style/sub_header_content_textview"
+                            android:text="@{String.valueOf(viewModel.id)}" />
 
-                    <TextView
-                        android:id="@+id/descriptionTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/description" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/day_of_the_month" />
+                        <TextView
+                            style="@style/sub_header_content_textview"
+                            android:text="@{viewModel.smarttest_desc}" />
 
-                    <TextView
-                        android:id="@+id/daymonthTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/day_of_the_month" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/day_of_the_week" />
+                        <TextView
+                            style="@style/sub_header_content_textview"
+                            android:text="@{viewModel.smarttest_daymonth}" />
 
-                    <TextView
-                        android:id="@+id/dayweekTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/day_of_the_week" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/hour" />
+                        <TextView
+                            style="@style/sub_header_content_textview"
+                            android:text="@{viewModel.smarttest_dayweek}" />
 
-                    <TextView
-                        android:id="@+id/hourTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/hour" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/month" />
+                        <TextView
+                            style="@style/sub_header_content_textview"
+                            android:text="@{viewModel.smarttest_hour}" />
 
-                    <TextView
-                        android:id="@+id/monthTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/month" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/type" />
+                        <TextView
+                            style="@style/sub_header_content_textview"
+                            android:text="@{viewModel.smarttest_month}" />
 
-                    <TextView
-                        android:id="@+id/typeTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/type" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/disks" />
+                        <TextView
+                            style="@style/sub_header_content_textview"
+                            android:text="@{viewModel.smarttest_type}" />
 
-                    <TextView
-                        android:id="@+id/disksTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/disks" />
+
+                        <TextView
+                            android:id="@+id/disksTextView"
+                            style="@style/sub_header_content_textview" />
 
 
-                </LinearLayout>
+                    </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </FrameLayout>
+        </FrameLayout>
 
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>
