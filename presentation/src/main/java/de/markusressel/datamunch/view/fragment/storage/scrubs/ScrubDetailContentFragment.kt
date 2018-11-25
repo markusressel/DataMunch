@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.storage.scrubs
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.ScrubPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.ScrubEntity
+import de.markusressel.datamunch.databinding.ContentStorageScrubDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_storage_scrub_detail.*
 import javax.inject.Inject
 
 /**
@@ -40,19 +47,31 @@ class ScrubDetailContentFragment : DetailContentFragmentBase<ScrubEntity>() {
         get() = R.layout.content_storage_scrub_detail
 
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
-    }
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentStorageScrubDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(ScrubViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<ScrubEntity>> {
+            val entity = it.first()
 
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
+            viewModel.id.value = entity.entityId
 
-        idTextView
-                .text = entity
-                .scrub_description
+            viewModel.scrub_threshold.value = entity.scrub_threshold
+            viewModel.scrub_dayweek.value = entity.scrub_dayweek
+            viewModel.scrub_enabled.value = entity.scrub_enabled
+            viewModel.scrub_minute.value = entity.scrub_minute
+            viewModel.scrub_hour.value = entity.scrub_hour
+            viewModel.scrub_month.value = entity.scrub_month
+            viewModel.scrub_daymonth.value = entity.scrub_daymonth
+            viewModel.scrub_description.value = entity.scrub_description
+            viewModel.scrub_volume.value = entity.scrub_volume
+        })
 
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
+
+        return binding
     }
 
 }

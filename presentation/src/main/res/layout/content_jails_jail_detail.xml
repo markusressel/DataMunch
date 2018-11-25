@@ -56,7 +56,6 @@
                             android:text="@string/id" />
 
                         <TextView
-                            android:id="@+id/idTextView"
                             style="@style/sub_header_content_textview"
                             android:text="@{String.valueOf(viewModel.id)}" />
 
@@ -65,7 +64,6 @@
                             android:text="@string/name" />
 
                         <TextView
-                            android:id="@+id/nameTextView"
                             style="@style/sub_header_content_textview"
                             android:text="@{viewModel.jail_host}" />
 
@@ -74,7 +72,6 @@
                             android:text="@string/status" />
 
                         <TextView
-                            android:id="@+id/statusTextView"
                             style="@style/sub_header_content_textview"
                             android:text="@{viewModel.jail_status}" />
 
@@ -83,7 +80,6 @@
                             android:text="@string/ipv4" />
 
                         <TextView
-                            android:id="@+id/ipv4TextView"
                             style="@style/sub_header_content_textview"
                             android:text="@{viewModel.jail_ipv4}" />
 
@@ -92,7 +88,6 @@
                             android:text="@string/mac" />
 
                         <TextView
-                            android:id="@+id/macTextView"
                             style="@style/sub_header_content_textview"
                             android:text="@{viewModel.jail_mac}" />
 

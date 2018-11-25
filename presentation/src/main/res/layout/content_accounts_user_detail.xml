@@ -50,7 +50,6 @@
                         android:text="@string/user_id" />
 
                     <TextView
-                        android:id="@+id/userIdTextView"
                         style="@style/sub_header_content_textview"
                         android:text="@{String.valueOf(viewModel.id)}" />
 
@@ -59,7 +58,6 @@
                         android:text="@string/group_id" />
 
                     <TextView
-                        android:id="@+id/groupIdTextView"
                         style="@style/sub_header_content_textview"
                         android:text="@{String.valueOf(viewModel.bsdusr_group)}" />
 
@@ -68,7 +66,6 @@
                         android:text="@string/username" />
 
                     <TextView
-                        android:id="@+id/usernameTextView"
                         style="@style/sub_header_content_textview"
                         android:text="@{viewModel.bsdusr_username}" />
 
@@ -115,7 +112,6 @@
                         android:text="@string/home_directory" />
 
                     <TextView
-                        android:id="@+id/homeDirectoryTextView"
                         style="@style/sub_header_content_textview"
                         android:text="@{viewModel.bsdusr_home}" />
 
@@ -132,14 +128,12 @@
                         android:text="@{viewModel.bsdusr_shell}" />
 
                     <CheckBox
-                        android:id="@+id/lockedCheckBox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="@{viewModel.bsdusr_locked}"
                         android:text="@string/locked" />
 
                     <CheckBox
-                        android:id="@+id/sudoCheckBox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="@{viewModel.bsdusr_sudo}"

@@ -16,38 +16,60 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <LinearLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.markusressel.datamunch.view.fragment.storage.scrubs.ScrubViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/material_view_pager_placeholder" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
+            <include layout="@layout/material_view_pager_placeholder" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+            <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/id" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/idTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/id" />
 
-            </LinearLayout>
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{String.valueOf(viewModel.id)}" />
 
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/description" />
 
-    </LinearLayout>
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.scrub_description}" />
 
-</androidx.core.widget.NestedScrollView>
+                    <!-- TODO: show all info -->
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

@@ -56,7 +56,6 @@
                             android:text="@string/id" />
 
                         <TextView
-                            android:id="@+id/idTextView"
                             style="@style/sub_header_content_textview"
                             android:text="@{String.valueOf(viewModel.id)}" />
 
@@ -65,7 +64,6 @@
                             android:text="@string/source" />
 
                         <TextView
-                            android:id="@+id/sourceTextView"
                             style="@style/sub_header_content_textview"
                             android:text="@{viewModel.source}" />
 
@@ -74,7 +72,6 @@
                             android:text="@string/destination" />
 
                         <TextView
-                            android:id="@+id/destinationTextView"
                             style="@style/sub_header_content_textview"
                             android:text="@{viewModel.destination}" />
 

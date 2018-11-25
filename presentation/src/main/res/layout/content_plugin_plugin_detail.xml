@@ -50,16 +50,13 @@
                         style="@style/sub_header"
                         android:text="@string/id" />
 
-                    <TextView
-                        android:id="@+id/idTextView"
-                        style="@style/sub_header_content_textview" />
+                    <TextView style="@style/sub_header_content_textview" />
 
                     <TextView
                         style="@style/sub_header"
                         android:text="@string/name" />
 
                     <TextView
-                        android:id="@+id/nameTextView"
                         style="@style/sub_header_content_textview"
                         android:text="@{viewModel.plugin_name}" />
 

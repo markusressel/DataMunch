@@ -30,6 +30,7 @@
     <string name="parentType">Parent type</string>
     <string name="refer">Refer</string>
     <string name="used">Used</string>
+    <string name="available">Available</string>
 
 
     <string name="acoustic_level">Acoustic Level</string>
@@ -45,6 +46,9 @@
     <string name="size">Size</string>
 
     <string name="compression">Compression</string>
+    <string name="deduplication">Deduplication</string>
+    <string name="quota">Quota</string>
+    <string name="record_size">Record Size</string>
     <string name="mountpoint">Mountpont</string>
     <string name="pool">Pool</string>
     <string name="comments">Comments</string>

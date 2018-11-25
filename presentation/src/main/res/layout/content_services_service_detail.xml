@@ -56,7 +56,6 @@
                             android:text="@string/id" />
 
                         <TextView
-                            android:id="@+id/idTextView"
                             style="@style/sub_header_content_textview"
                             android:text="@{String.valueOf(viewModel.id)}" />
 
@@ -65,12 +64,10 @@
                             android:text="@string/source" />
 
                         <TextView
-                            android:id="@+id/nameTextView"
                             style="@style/sub_header_content_textview"
                             android:text="@{viewModel.srv_service}" />
 
                         <CheckBox
-                            android:id="@+id/enabledCheckBox"
                             style="@style/sub_header_content_textview"
                             android:checked="@{viewModel.srv_enabled}"
                             android:enabled="false"

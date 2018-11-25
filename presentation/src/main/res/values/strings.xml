@@ -98,7 +98,7 @@
     <string name="mapRootGroup">Map Root Group</string>
     <string name="mapRootUser">Map Root User</string>
     <string name="quiet">Quiet</string>
-    <string name="ro">Read Only</string>
+    <string name="read_only">Read Only</string>
     <string name="security">Security</string>
     <string name="paths">Paths</string>
 

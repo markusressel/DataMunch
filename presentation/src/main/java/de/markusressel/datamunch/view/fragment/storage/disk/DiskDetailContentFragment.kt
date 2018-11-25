@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.storage.disk
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.DiskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.DiskEntity
+import de.markusressel.datamunch.databinding.ContentStorageDiskDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_storage_disk_detail.*
 import javax.inject.Inject
 
 /**
@@ -39,69 +46,36 @@ class DiskDetailContentFragment : DetailContentFragmentBase<DiskEntity>() {
     override val layoutRes: Int
         get() = R.layout.content_storage_disk_detail
 
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentStorageDiskDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(DiskViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<DiskEntity>> {
+            val entity = it.first()
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
-    }
+            viewModel.id.value = entity.entityId
 
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
+            viewModel.disk_acousticlevel.value = entity.disk_acousticlevel
+            viewModel.disk_advpowermgmt.value = entity.disk_advpowermgmt
+            viewModel.disk_serial.value = entity.disk_serial
+            viewModel.disk_size.value = entity.disk_size
+            viewModel.disk_multipath_name.value = entity.disk_multipath_name
+            viewModel.disk_identifier.value = entity.disk_identifier
+            viewModel.disk_togglesmart.value = entity.disk_togglesmart
+            viewModel.disk_hddstandby.value = entity.disk_hddstandby
+            viewModel.disk_transfermode.value = entity.disk_transfermode
+            viewModel.disk_multipath_member.value = entity.disk_multipath_member
+            viewModel.disk_description.value = entity.disk_description
+            viewModel.disk_smartoptions.value = entity.disk_smartoptions
+            viewModel.disk_expiretime.value = entity.disk_expiretime
+            viewModel.disk_name.value = entity.disk_name
+        })
 
-        idTextView
-                .text = entity
-                .disk_identifier
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
 
-        nameTextView
-                .text = entity
-                .disk_name
-
-        descriptionTextView
-                .text = entity
-                .disk_description
-
-        acousticLevelTextView
-                .text = entity
-                .disk_acousticlevel
-
-        advPowermgmtTextView
-                .text = entity
-                .disk_advpowermgmt
-
-        hddStandbyTextView
-                .text = entity
-                .disk_hddstandby
-
-        multipathMemberTextView
-                .text = entity
-                .disk_multipath_member
-
-        multipathNameTextView
-                .text = entity
-                .disk_multipath_name
-
-        serialTextView
-                .text = entity
-                .disk_serial
-
-        smartoptionsTextView
-                .text = entity
-                .disk_smartoptions
-
-        toggleSmartTextView
-                .text = "${entity.disk_togglesmart}"
-
-        transfermodeTextView
-                .text = entity
-                .disk_transfermode
-
-        expiretimeTextView
-                .text = "${entity.disk_expiretime}"
-
-        sizeTextView
-                .text = "${entity.disk_size}"
-
+        return binding
     }
 
 }

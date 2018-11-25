@@ -16,143 +16,157 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <LinearLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.markusressel.datamunch.view.fragment.storage.disk.DiskViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/material_view_pager_placeholder" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
+            <include layout="@layout/material_view_pager_placeholder" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+            <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/id" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/idTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/id" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/name" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{String.valueOf(viewModel.disk_identifier)}" />
 
-                <TextView
-                    android:id="@+id/nameTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/name" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/description" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.disk_name}" />
 
-                <TextView
-                    android:id="@+id/descriptionTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/description" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/acoustic_level" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.disk_description}" />
 
-                <TextView
-                    android:id="@+id/acousticLevelTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/acoustic_level" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/advanced_powermanagement" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.disk_acousticlevel}" />
 
-                <TextView
-                    android:id="@+id/advPowermgmtTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/advanced_powermanagement" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/hdd_standby" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.disk_advpowermgmt}" />
 
-                <TextView
-                    android:id="@+id/hddStandbyTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/hdd_standby" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/multipath_member" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.disk_hddstandby}" />
 
-                <TextView
-                    android:id="@+id/multipathMemberTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/multipath_member" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/multipath_name" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.disk_multipath_member}" />
 
-                <TextView
-                    android:id="@+id/multipathNameTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/multipath_name" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/serial" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.disk_multipath_name}" />
 
-                <TextView
-                    android:id="@+id/serialTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/serial" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/smart_options" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.disk_serial}" />
 
-                <TextView
-                    android:id="@+id/smartoptionsTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/smart_options" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/toggle_smart" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.disk_smartoptions}" />
 
-                <TextView
-                    android:id="@+id/toggleSmartTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/toggle_smart" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/transfer_mode" />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="@{viewModel.disk_togglesmart}"
+                        android:text="@string/toggle_smart" />
 
-                <TextView
-                    android:id="@+id/transfermodeTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/transfer_mode" />
+
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.disk_transfermode}" />
 
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/expire_time" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/expire_time" />
 
-                <TextView
-                    android:id="@+id/expiretimeTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{String.valueOf(viewModel.disk_expiretime)}" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/size" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/size" />
 
-                <TextView
-                    android:id="@+id/sizeTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{String.valueOf(viewModel.disk_size)}" />
 
-            </LinearLayout>
+                </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-    </LinearLayout>
+        </LinearLayout>
 
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>
