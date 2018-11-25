@@ -16,129 +16,152 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <LinearLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.markusressel.datamunch.view.fragment.sharing.nfs.NfsShareViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/material_view_pager_placeholder" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
+            <include layout="@layout/material_view_pager_placeholder" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+            <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/id" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/idTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/id" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/name" />
+                    <TextView
+                        android:id="@+id/idTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{String.valueOf(viewModel.id)}" />
 
-                <TextView
-                    android:id="@+id/nameTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/name" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/hosts" />
+                    <TextView
+                        android:id="@+id/nameTextView"
+                        style="@style/sub_header_content_textview" />
 
-                <TextView
-                    android:id="@+id/hostsTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/hosts" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/comment" />
+                    <TextView
+                        android:id="@+id/hostsTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{String.valueOf(viewModel.nfs_hosts)}" />
 
-                <TextView
-                    android:id="@+id/commentTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/comment" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/mapAllGroup" />
+                    <TextView
+                        android:id="@+id/commentTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.nfs_comment}" />
 
-                <TextView
-                    android:id="@+id/mapAllGroupTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/mapAllGroup" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/mapAllUser" />
+                    <TextView
+                        android:id="@+id/mapAllGroupTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.nfs_mapall_group}" />
 
-                <TextView
-                    android:id="@+id/mapAllUserTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/mapAllUser" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/mapRootGroup" />
+                    <TextView
+                        android:id="@+id/mapAllUserTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.nfs_mapall_user}" />
 
-                <TextView
-                    android:id="@+id/mapRootGroupTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/mapRootGroup" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/mapRootUser" />
+                    <TextView
+                        android:id="@+id/mapRootGroupTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.nfs_maproot_group}" />
 
-                <TextView
-                    android:id="@+id/mapRootUserTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/mapRootUser" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/quiet" />
+                    <TextView
+                        android:id="@+id/mapRootUserTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.nfs_maproot_user}" />
 
-                <CheckBox
-                    android:id="@+id/quietCheckbox"
-                    style="@style/sub_header_content_textview"
-                    android:enabled="false" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/quiet" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/ro" />
+                    <CheckBox
+                        android:id="@+id/quietCheckbox"
+                        style="@style/sub_header_content_textview"
+                        android:checked="@{viewModel.nfs_quiet}"
+                        android:enabled="false" />
 
-                <CheckBox
-                    android:id="@+id/roCheckbox"
-                    style="@style/sub_header_content_textview"
-                    android:enabled="false" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/ro" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/security" />
+                    <CheckBox
+                        android:id="@+id/roCheckbox"
+                        style="@style/sub_header_content_textview"
+                        android:checked="@{viewModel.nfs_ro}"
+                        android:enabled="false" />
 
-                <TextView
-                    android:id="@+id/securityTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/security" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/paths" />
+                    <TextView
+                        android:id="@+id/securityTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{String.valueOf(viewModel.nfs_security)}" />
 
-                <TextView
-                    android:id="@+id/pathsTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/paths" />
+
+                    <TextView
+                        android:id="@+id/pathsTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{String.valueOf(viewModel.nfs_paths)}" />
 
 
-            </LinearLayout>
+                </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-    </LinearLayout>
+        </LinearLayout>
 
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

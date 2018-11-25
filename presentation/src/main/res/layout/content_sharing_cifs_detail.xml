@@ -16,124 +16,150 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <LinearLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.markusressel.datamunch.view.fragment.sharing.cifs.CifsShareViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/material_view_pager_placeholder" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
+            <include layout="@layout/material_view_pager_placeholder" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+            <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/id" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/idTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/id" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/name" />
+                    <TextView
+                        android:id="@+id/idTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{String.valueOf(viewModel.id)}" />
 
-                <TextView
-                    android:id="@+id/nameTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/name" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/comment" />
+                    <TextView
+                        android:id="@+id/nameTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.cifs_name}" />
 
-                <TextView
-                    android:id="@+id/commentTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/comment" />
 
-                <CheckBox
-                    android:id="@+id/browsableCheckBox"
-                    style="@style/sub_header_content_textview"
-                    android:text="@string/browsable" />
+                    <TextView
+                        android:id="@+id/commentTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.cifs_comment}" />
 
-                <CheckBox
-                    android:id="@+id/defaultPermissionsCheckBox"
-                    style="@style/sub_header_content_textview"
-                    android:text="@string/defaultPermissions" />
+                    <CheckBox
+                        android:id="@+id/browsableCheckBox"
+                        style="@style/sub_header_content_textview"
+                        android:checked="@{viewModel.cifs_browsable}"
+                        android:text="@string/browsable" />
 
-                <CheckBox
-                    android:id="@+id/guestOkCheckBox"
-                    style="@style/sub_header_content_textview"
-                    android:text="@string/guestOk" />
+                    <CheckBox
+                        android:id="@+id/defaultPermissionsCheckBox"
+                        style="@style/sub_header_content_textview"
+                        android:checked="@{viewModel.cifs_default_permissions}"
+                        android:text="@string/defaultPermissions" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/home" />
+                    <CheckBox
+                        android:id="@+id/guestOkCheckBox"
+                        style="@style/sub_header_content_textview"
+                        android:checked="@{viewModel.cifs_guestok}"
+                        android:text="@string/guestOk" />
 
-                <CheckBox
-                    android:id="@+id/homeCheckBox"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/home" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/allowedHosts" />
+                    <CheckBox
+                        android:id="@+id/homeCheckBox"
+                        style="@style/sub_header_content_textview"
+                        android:checked="@{viewModel.cifs_home}" />
 
-                <TextView
-                    android:id="@+id/allowedHostsTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/allowedHosts" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/deniedHosts" />
+                    <TextView
+                        android:id="@+id/allowedHostsTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.cifs_hostsallow}" />
 
-                <TextView
-                    android:id="@+id/deniedHostsTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/deniedHosts" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/auxSmbConf" />
+                    <TextView
+                        android:id="@+id/deniedHostsTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.cifs_hostsdeny}" />
 
-                <TextView
-                    android:id="@+id/auxSmbConfTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/auxSmbConf" />
 
-                <TextView
-                    style="@style/sub_header"
-                    android:text="@string/path" />
+                    <TextView
+                        android:id="@+id/auxSmbConfTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.cifs_auxsmbconf}" />
 
-                <TextView
-                    android:id="@+id/pathTextView"
-                    style="@style/sub_header_content_textview" />
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/path" />
 
-                <CheckBox
-                    android:id="@+id/recycleBinCheckBox"
-                    style="@style/sub_header_content_textview"
-                    android:text="@string/recycleBin" />
+                    <TextView
+                        android:id="@+id/pathTextView"
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.cifs_path}" />
 
-                <CheckBox
-                    android:id="@+id/showHiddenFilesCheckBox"
-                    style="@style/sub_header_content_textview"
-                    android:text="@string/showHiddenFiles" />
+                    <CheckBox
+                        android:id="@+id/recycleBinCheckBox"
+                        style="@style/sub_header_content_textview"
+                        android:checked="@{viewModel.cifs_recyclebin}"
+                        android:text="@string/recycleBin" />
 
-                <CheckBox
-                    android:id="@+id/roCheckBox"
-                    style="@style/sub_header_content_textview"
-                    android:text="@string/ro" />
+                    <CheckBox
+                        android:id="@+id/showHiddenFilesCheckBox"
+                        style="@style/sub_header_content_textview"
+                        android:checked="@{viewModel.cifs_showhiddenfiles}"
+                        android:text="@string/showHiddenFiles" />
 
-            </LinearLayout>
+                    <CheckBox
+                        android:id="@+id/roCheckBox"
+                        style="@style/sub_header_content_textview"
+                        android:checked="@{viewModel.cifs_ro}"
+                        android:text="@string/ro" />
 
-        </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
-    </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-</androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

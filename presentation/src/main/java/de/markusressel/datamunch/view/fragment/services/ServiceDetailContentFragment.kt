@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.services
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.ServicePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.ServiceEntity
+import de.markusressel.datamunch.databinding.ContentServicesServiceDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_services_service_detail.*
 import javax.inject.Inject
 
 /**
@@ -39,26 +46,23 @@ class ServiceDetailContentFragment : DetailContentFragmentBase<ServiceEntity>() 
     override val layoutRes: Int
         get() = R.layout.content_services_service_detail
 
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentServicesServiceDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<ServiceEntity>> {
+            val entity = it.first()
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
-    }
+            viewModel.id.value = entity.id
+            viewModel.srv_service.value = entity.srv_service
+            viewModel.srv_enabled.value = entity.srv_enabled
+        })
 
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
 
-        idTextView
-                .text = "${entity.id}"
-
-        nameTextView
-                .text = entity
-                .srv_service
-
-        enabledCheckBox
-                .isChecked = entity
-                .srv_enabled
+        return binding
     }
 
 }

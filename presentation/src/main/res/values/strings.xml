@@ -93,14 +93,14 @@
     <string name="hour">Hour</string>
 
     <string name="hosts">Hosts</string>
-    <string name="mapAllGroup">mapAllGroup</string>
-    <string name="mapAllUser">mapAllUser</string>
-    <string name="mapRootGroup">mapRootGroup</string>
-    <string name="mapRootUser">mapRootUser</string>
-    <string name="quiet">quiet</string>
-    <string name="ro">ro</string>
-    <string name="security">security</string>
-    <string name="paths">paths</string>
+    <string name="mapAllGroup">Map All Group</string>
+    <string name="mapAllUser">Map All User</string>
+    <string name="mapRootGroup">Map Root Group</string>
+    <string name="mapRootUser">Map Root User</string>
+    <string name="quiet">Quiet</string>
+    <string name="ro">Read Only</string>
+    <string name="security">Security</string>
+    <string name="paths">Paths</string>
 
     <string name="browsable">Browsable</string>
     <string name="defaultPermissions">Default Permissions</string>
@@ -108,7 +108,7 @@
     <string name="home">Home</string>
     <string name="allowedHosts">Allowed Hosts</string>
     <string name="deniedHosts">Denied Hosts</string>
-    <string name="auxSmbConf">auxSmbConf</string>
+    <string name="auxSmbConf">Aux Smb Conf</string>
     <string name="recycleBin">Recycle bin</string>
     <string name="showHiddenFiles">Show hidden files</string>
 

@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.sharing.cifs
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.CifsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.CifsShareEntity
+import de.markusressel.datamunch.databinding.ContentSharingCifsDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_sharing_cifs_detail.*
 import javax.inject.Inject
 
 /**
@@ -39,59 +46,34 @@ class CifsShareDetailContentFragment : DetailContentFragmentBase<CifsShareEntity
     override val layoutRes: Int
         get() = R.layout.content_sharing_cifs_detail
 
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentSharingCifsDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(CifsShareViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<CifsShareEntity>> {
+            val entity = it.first()
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
-    }
+            viewModel.id.value = entity.id
+            viewModel.cifs_name.value = entity.cifs_name
+            viewModel.cifs_comment.value = entity.cifs_comment
+            viewModel.cifs_browsable.value = entity.cifs_browsable
+            viewModel.cifs_default_permissions.value = entity.cifs_default_permissions
+            viewModel.cifs_guestok.value = entity.cifs_guestok
+            viewModel.cifs_home.value = entity.cifs_home
+            viewModel.cifs_hostsallow.value = entity.cifs_hostsallow
+            viewModel.cifs_hostsdeny.value = entity.cifs_hostsdeny
+            viewModel.cifs_auxsmbconf.value = entity.cifs_auxsmbconf
+            viewModel.cifs_path.value = entity.cifs_path
+            viewModel.cifs_recyclebin.value = entity.cifs_recyclebin
+            viewModel.cifs_showhiddenfiles.value = entity.cifs_showhiddenfiles
+            viewModel.cifs_ro.value = entity.cifs_ro
+        })
 
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
 
-        idTextView
-                .text = "${entity.id}"
-
-        nameTextView
-                .text = entity
-                .cifs_name
-        commentTextView
-                .text = entity
-                .cifs_comment
-        browsableCheckBox
-                .isChecked = entity
-                .cifs_browsable
-        defaultPermissionsCheckBox
-                .isChecked = entity
-                .cifs_default_permissions
-        guestOkCheckBox
-                .isChecked = entity
-                .cifs_guestok
-        homeCheckBox
-                .isChecked = entity
-                .cifs_home
-        allowedHostsTextView
-                .text = entity
-                .cifs_hostsallow
-        deniedHostsTextView
-                .text = entity
-                .cifs_hostsdeny
-        auxSmbConfTextView
-                .text = entity
-                .cifs_auxsmbconf
-        pathTextView
-                .text = entity
-                .cifs_path
-        recycleBinCheckBox
-                .isChecked = entity
-                .cifs_recyclebin
-        showHiddenFilesCheckBox
-                .isChecked = entity
-                .cifs_showhiddenfiles
-        roCheckBox
-                .isChecked = entity
-                .cifs_ro
-
+        return binding
     }
 
 }

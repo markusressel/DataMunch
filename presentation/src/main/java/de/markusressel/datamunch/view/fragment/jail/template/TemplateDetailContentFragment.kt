@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.jail.template
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.TemplatePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.TemplateEntity
+import de.markusressel.datamunch.databinding.ContentJailsTemplateDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_jails_template_detail.*
 import javax.inject.Inject
 
 /**
@@ -39,37 +46,26 @@ class TemplateDetailContentFragment : DetailContentFragmentBase<TemplateEntity>(
     override val layoutRes: Int
         get() = R.layout.content_jails_template_detail
 
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentJailsTemplateDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(TemplateViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<TemplateEntity>> {
+            val entity = it.first()
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
-    }
+            viewModel.id.value = entity.id
+            viewModel.jt_name.value = entity.jt_name
+            viewModel.jt_os.value = entity.jt_os
+            viewModel.jt_instances.value = entity.jt_instances
+            viewModel.jt_arch.value = entity.jt_arch
+            viewModel.jt_url.value = entity.jt_url
+        })
 
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
 
-        idTextView
-                .text = "${entity.id}"
-
-        nameTextView
-                .text = entity
-                .jt_name
-
-        osTextView
-                .text = entity
-                .jt_os
-
-        instancesTextView
-                .text = "${entity.jt_instances}"
-
-        archTextView
-                .text = entity
-                .jt_arch
-
-        urlTextView
-                .text = entity
-                .jt_url
+        return binding
     }
 
 }

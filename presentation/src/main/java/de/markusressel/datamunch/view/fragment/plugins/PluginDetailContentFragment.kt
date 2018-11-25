@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.plugins
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.PluginPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.PluginEntity
+import de.markusressel.datamunch.databinding.ContentPluginPluginDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_storage_disk_detail.*
 import javax.inject.Inject
 
 /**
@@ -39,22 +46,24 @@ class PluginDetailContentFragment : DetailContentFragmentBase<PluginEntity>() {
     override val layoutRes: Int
         get() = R.layout.content_plugin_plugin_detail
 
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentPluginPluginDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(PluginViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<PluginEntity>> {
+            val entity = it.first()
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
-    }
+            viewModel.id.value = entity.id
+            viewModel.plugin_name.value = entity.plugin_name
 
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
+            // TODO: add other plugin details
+        })
 
-        idTextView
-                .text = "${entity.id}"
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
 
-        nameTextView
-                .text = entity
-                .plugin_name
+        return binding
     }
 
 }

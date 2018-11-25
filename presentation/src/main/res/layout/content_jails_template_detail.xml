@@ -16,85 +16,103 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <FrameLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.markusressel.datamunch.view.fragment.jail.template.TemplateViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/detail_content_margin_top">
+            android:layout_height="wrap_content">
 
-            <include layout="@layout/material_view_pager_placeholder" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/detail_content_margin_top">
 
-            <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
+                <include layout="@layout/material_view_pager_placeholder" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                <androidx.cardview.widget.CardView style="@style/detail_content_cardview">
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/id" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-                    <TextView
-                        android:id="@+id/idTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/id" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/name" />
+                        <TextView
+                            android:id="@+id/idTextView"
+                            style="@style/sub_header_content_textview"
+                            android:text="@{String.valueOf(viewModel.id)}" />
 
-                    <TextView
-                        android:id="@+id/nameTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/name" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/operating_system" />
+                        <TextView
+                            android:id="@+id/nameTextView"
+                            style="@style/sub_header_content_textview"
+                            android:text="@{viewModel.jt_name}" />
 
-                    <TextView
-                        android:id="@+id/osTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/operating_system" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/instances" />
+                        <TextView
+                            android:id="@+id/osTextView"
+                            style="@style/sub_header_content_textview"
+                            android:text="@{viewModel.jt_os}" />
 
-                    <TextView
-                        android:id="@+id/instancesTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/instances" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/arch" />
+                        <TextView
+                            android:id="@+id/instancesTextView"
+                            style="@style/sub_header_content_textview"
+                            android:text="@{String.valueOf(viewModel.jt_instances)}" />
 
-                    <TextView
-                        android:id="@+id/archTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/arch" />
 
-                    <TextView
-                        style="@style/sub_header"
-                        android:text="@string/url" />
+                        <TextView
+                            android:id="@+id/archTextView"
+                            style="@style/sub_header_content_textview"
+                            android:text="@{viewModel.jt_arch}" />
 
-                    <TextView
-                        android:id="@+id/urlTextView"
-                        style="@style/sub_header_content_textview" />
+                        <TextView
+                            style="@style/sub_header"
+                            android:text="@string/url" />
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/urlTextView"
+                            style="@style/sub_header_content_textview"
+                            android:text="@{viewModel.jt_url}" />
 
-            </androidx.cardview.widget.CardView>
+                    </LinearLayout>
 
-        </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-    </FrameLayout>
+            </LinearLayout>
 
-</androidx.core.widget.NestedScrollView>
+        </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

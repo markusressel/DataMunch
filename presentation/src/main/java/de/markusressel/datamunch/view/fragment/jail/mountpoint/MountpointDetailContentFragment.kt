@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.jail.mountpoint
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.MountpointPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.MountpointEntity
+import de.markusressel.datamunch.databinding.ContentJailsMountpointDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_jails_mountpoint_detail.*
 import javax.inject.Inject
 
 /**
@@ -39,26 +46,23 @@ class MountpointDetailContentFragment : DetailContentFragmentBase<MountpointEnti
     override val layoutRes: Int
         get() = R.layout.content_jails_mountpoint_detail
 
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentJailsMountpointDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(MountpointViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<MountpointEntity>> {
+            val entity = it.first()
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
-    }
+            viewModel.id.value = entity.id
+            viewModel.source.value = entity.source
+            viewModel.destination.value = entity.destination
+        })
 
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
 
-        idTextView
-                .text = "${entity.id}"
-
-        sourceTextView
-                .text = entity
-                .source
-
-        destinationTextView
-                .text = entity
-                .destination
+        return binding
     }
 
 }

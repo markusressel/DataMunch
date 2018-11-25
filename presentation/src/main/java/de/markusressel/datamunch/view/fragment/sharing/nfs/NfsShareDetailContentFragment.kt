@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.sharing.nfs
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.NfsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.nfs.NfsShareEntity
+import de.markusressel.datamunch.databinding.ContentSharingNfsDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_sharing_nfs_detail.*
 import javax.inject.Inject
 
 /**
@@ -39,56 +46,34 @@ class NfsShareDetailContentFragment : DetailContentFragmentBase<NfsShareEntity>(
     override val layoutRes: Int
         get() = R.layout.content_sharing_nfs_detail
 
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentSharingNfsDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(NfsShareViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<NfsShareEntity>> {
+            val entity = it.first()
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
-    }
+            viewModel.id.value = entity.id
 
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
+            viewModel.nfs_network.value = entity.nfs_network
+            viewModel.nfs_hosts.value = entity.nfs_hosts
+            viewModel.nfs_comment.value = entity.nfs_comment
+            viewModel.nfs_mapall_group.value = entity.nfs_mapall_group
+            viewModel.nfs_mapall_user.value = entity.nfs_mapall_user
+            viewModel.nfs_maproot_group.value = entity.nfs_maproot_group
+            viewModel.nfs_maproot_user.value = entity.nfs_maproot_user
+            viewModel.nfs_quiet.value = entity.nfs_quiet
+            viewModel.nfs_ro.value = entity.nfs_ro
+            // TODO: bind sub entities somehow
+//            viewModel.nfs_security.value = entity.nfs_security
+//            viewModel.nfs_paths.value = entity.nfs_paths
+        })
 
-        idTextView
-                .text = "${entity.id}"
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
 
-        nameTextView
-                .text = entity
-                .nfs_network
-
-        hostsTextView
-                .text = entity
-                .nfs_hosts
-        commentTextView
-                .text = entity
-                .nfs_comment
-        mapAllGroupTextView
-                .text = entity
-                .nfs_mapall_group
-        mapAllUserTextView
-                .text = entity
-                .nfs_mapall_user
-        mapRootGroupTextView
-                .text = entity
-                .nfs_maproot_group
-        mapRootUserTextView
-                .text = entity
-                .nfs_maproot_user
-        quietCheckbox
-                .isChecked = entity
-                .nfs_quiet
-        roCheckbox
-                .isChecked = entity
-                .nfs_ro
-        securityTextView
-                .text = entity
-                .nfs_security
-                .joinToString { "\n" }
-        pathsTextView
-                .text = entity
-                .nfs_paths
-                .joinToString { "\n" }
-
+        return binding
     }
 
 }

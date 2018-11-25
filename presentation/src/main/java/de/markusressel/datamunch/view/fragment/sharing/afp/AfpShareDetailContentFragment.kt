@@ -18,12 +18,19 @@
 
 package de.markusressel.datamunch.view.fragment.sharing.afp
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.AfpSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.AfpShareEntity
+import de.markusressel.datamunch.databinding.ContentSharingAfpDetailBinding
 import de.markusressel.datamunch.view.fragment.base.DetailContentFragmentBase
-import kotlinx.android.synthetic.main.content_sharing_afp_detail.*
 import javax.inject.Inject
 
 /**
@@ -39,23 +46,25 @@ class AfpShareDetailContentFragment : DetailContentFragmentBase<AfpShareEntity>(
     override val layoutRes: Int
         get() = R.layout.content_sharing_afp_detail
 
+    override fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? {
+        val binding: ContentSharingAfpDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
+        val viewModel = ViewModelProviders.of(this).get(AfpShareViewModel::class.java)
+        viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<AfpShareEntity>> {
+            val entity = it.first()
 
-    override fun onResume() {
-        super
-                .onResume()
-        updateUiFromEntity()
+            viewModel.id.value = entity.id
+            viewModel.afp_name.value = entity.afp_name
+
+            // TODO: add missing details
+        })
+
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.viewModel = viewModel
+        }
+
+        return binding
     }
 
-    private fun updateUiFromEntity() {
-        val entity = getEntityFromPersistence()
-
-        idTextView
-                .text = "${entity.id}"
-
-        nameTextView
-                .text = entity
-                .afp_name
-
-    }
 
 }
