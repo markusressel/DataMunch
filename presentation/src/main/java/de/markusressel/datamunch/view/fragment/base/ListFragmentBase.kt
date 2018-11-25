@@ -40,7 +40,6 @@ import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.IdentifiableListItem
-import de.markusressel.datamunch.data.SearchableListItem
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.LastUpdateFromSourcePersistenceManager
 import de.markusressel.datamunch.data.persistence.SortOptionPersistenceManager
@@ -48,7 +47,6 @@ import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.event.SortOptionSelectionDialogDismissedEvent
 import de.markusressel.datamunch.view.component.LoadingComponent
 import de.markusressel.datamunch.view.component.OptionsMenuComponent
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -122,7 +120,8 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                                 .debounce(300, TimeUnit.MILLISECONDS)
                                 .observeOn(AndroidSchedulers.mainThread()).subscribeBy(onNext = {
                                     currentSearchFilter = it.toString()
-                                    updateListFromPersistence()
+                                    // TODO: this should be reactive
+//                                    updateSearchFilter(currentSearchFilter)
                                 }, onError = {
                                     Timber.e(it) { "Error filtering list" }
                                 })
@@ -228,7 +227,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                 .observe<SortOptionSelectionDialogDismissedEvent>()
                 .subscribe {
                     // reload list with current sort options
-                    updateListFromPersistence()
+                    // TODO: SortOptions have to be reactive
                 }
                 .registerInBus(this)
     }
@@ -242,13 +241,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
             Timber
                     .d { "Persisted list data is old, refreshing from source" }
             //            reloadDataFromSource()
-        } else {
-            Timber
-                    .d { "Persisted list data is probably still valid, just loading from persistence" }
-            updateListFromPersistence()
         }
-
-        updateListFromPersistence()
     }
 
     private fun setupFabs() {
@@ -357,50 +350,6 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
     }
 
     /**
-     * Loads the data using {@link loadListDataFromPersistence()}
-     */
-    private fun updateListFromPersistence() {
-        loadingComponent
-                .showLoading()
-
-        Observable.fromIterable(loadListDataFromPersistence()).filter {
-            if (it is SearchableListItem) {
-                return@filter it.getSearchableContent().any {
-                    it.toString().contains(currentSearchFilter, true)
-                }
-            } else {
-                it.toString().contains(currentSearchFilter, true)
-            }
-        }.toList().map { sortByCurrentOptions(it) }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .bindUntilEvent(this, Lifecycle.Event.ON_STOP).subscribeBy(onSuccess = {
-                    //                    val diffCallback = DiffCallback(listValues, it)
-//                    val diffResult = DiffUtil.calculateDiff(diffCallback)
-
-                    listValues.clear()
-                    listValues.addAll(it)
-
-                    if (listValues.isEmpty()) {
-                        showEmpty()
-                    } else {
-                        hideEmpty()
-                    }
-                    loadingComponent.showContent()
-
-                    // TODO: this code will become obsolete when all lists are migrated to Paging library
-//                    epoxyController.submitList(it)
-
-//                    diffResult.dispatchUpdatesTo(recyclerViewAdapter)
-                }, onError = {
-                    if (it is CancellationException) {
-                        Timber.d { "reload from persistence cancelled" }
-                    } else {
-                        loadingComponent.showError(it)
-                    }
-                })
-    }
-
-    /**
      * Sorts a list by the currently selected SortOptions
      */
     private fun sortByCurrentOptions(listData: List<EntityType>): List<EntityType> {
@@ -494,7 +443,6 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                             .subscribeBy(onSuccess = {
                                 persistListData(it)
                                 updateLastUpdatedFromSource()
-                                updateListFromPersistence()
                             }, onError = {
                                 if (it is CancellationException) {
                                     Timber

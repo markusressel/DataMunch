@@ -52,8 +52,6 @@ class SnapshotDetailContentFragment : DetailContentFragmentBase<SnapshotEntity>(
         viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<SnapshotEntity>> {
             val entity = it.first()
 
-//            viewModel.id.value = entity.entityId
-
             viewModel.id.value = entity.id
             viewModel.filesystem.value = entity.filesystem
             viewModel.fullname.value = entity.fullname

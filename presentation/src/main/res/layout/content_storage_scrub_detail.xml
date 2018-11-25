@@ -46,6 +46,12 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="@{viewModel.scrub_enabled}"
+                        android:text="@string/enabled" />
+
                     <TextView
                         style="@style/sub_header"
                         android:text="@string/id" />
@@ -61,6 +67,62 @@
                     <TextView
                         style="@style/sub_header_content_textview"
                         android:text="@{viewModel.scrub_description}" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/volume" />
+
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.scrub_volume}" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/threshold" />
+
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{String.valueOf(viewModel.scrub_threshold)}" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/day_of_the_week" />
+
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.scrub_dayweek}" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/day_of_the_month" />
+
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.scrub_daymonth}" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/month" />
+
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.scrub_month}" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/hour" />
+
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.scrub_hour}" />
+
+                    <TextView
+                        style="@style/sub_header"
+                        android:text="@string/minute" />
+
+                    <TextView
+                        style="@style/sub_header_content_textview"
+                        android:text="@{viewModel.scrub_minute}" />
 
                     <!-- TODO: show all info -->
 

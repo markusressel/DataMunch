@@ -55,15 +55,15 @@ class ScrubDetailContentFragment : DetailContentFragmentBase<ScrubEntity>() {
 
             viewModel.id.value = entity.entityId
 
+            viewModel.scrub_description.value = entity.scrub_description
+            viewModel.scrub_volume.value = entity.scrub_volume
             viewModel.scrub_threshold.value = entity.scrub_threshold
             viewModel.scrub_dayweek.value = entity.scrub_dayweek
+            viewModel.scrub_daymonth.value = entity.scrub_daymonth
             viewModel.scrub_enabled.value = entity.scrub_enabled
             viewModel.scrub_minute.value = entity.scrub_minute
             viewModel.scrub_hour.value = entity.scrub_hour
             viewModel.scrub_month.value = entity.scrub_month
-            viewModel.scrub_daymonth.value = entity.scrub_daymonth
-            viewModel.scrub_description.value = entity.scrub_description
-            viewModel.scrub_volume.value = entity.scrub_volume
         })
 
         binding.let {

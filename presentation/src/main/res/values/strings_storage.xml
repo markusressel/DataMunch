@@ -31,6 +31,7 @@
     <string name="refer">Refer</string>
     <string name="used">Used</string>
     <string name="available">Available</string>
+    <string name="threshold">Threshold</string>
 
 
     <string name="acoustic_level">Acoustic Level</string>

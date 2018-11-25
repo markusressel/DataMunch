@@ -91,6 +91,7 @@
     <string name="day_of_the_month">Day of the Month</string>
     <string name="month">Month</string>
     <string name="hour">Hour</string>
+    <string name="minute">Minute</string>
 
     <string name="hosts">Hosts</string>
     <string name="mapAllGroup">Map All Group</string>

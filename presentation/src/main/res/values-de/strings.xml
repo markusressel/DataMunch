@@ -76,6 +76,7 @@
     <string name="day_of_the_month">Tag des Monats</string>
     <string name="month">Monat</string>
     <string name="hour">Stunde</string>
+    <string name="minute">Minute</string>
 
     <string name="recursive">Rekursiv</string>
 
