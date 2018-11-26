@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_services"
+    app:startDestination="@id/servicesPage">
+
+    <fragment
+        android:id="@+id/servicesPage"
+        android:name="de.markusressel.datamunch.view.fragment.services.ServicesFragment"
+        android:label="@string/menu_item_services"
+        tools:layout="@layout/fragment_services">
+
+        <action
+            android:id="@+id/action_servicesPage_to_serviceDetailPage"
+            app:destination="@id/serviceDetailPage" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/serviceDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.services.ServiceDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+</navigation>

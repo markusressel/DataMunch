@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment.storage.scrubs
+package de.markusressel.datamunch.view.fragment.storage.scrub
 
 import androidx.lifecycle.MutableLiveData
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase

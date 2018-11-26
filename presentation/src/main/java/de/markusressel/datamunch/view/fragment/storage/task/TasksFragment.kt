@@ -29,12 +29,13 @@ import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemTaskBindingModel_
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.TaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.TaskEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
@@ -108,12 +109,10 @@ class TasksFragment : ListFragmentBase<TaskModel, TaskEntity>() {
     }
 
     private fun openDetailView(task: TaskEntity) {
-        context
-                ?.let {
-                    val intent = DetailActivityBase
-                            .newInstanceIntent(TaskDetailActivity::class.java, it, task.entityId)
-                    startActivity(intent)
-                }
+        navController.navigate(
+                R.id.action_storagePage_to_taskDetailPage,
+                DetailFragmentBase.createEntityBundle(task.entityId)
+        )
     }
 
 }

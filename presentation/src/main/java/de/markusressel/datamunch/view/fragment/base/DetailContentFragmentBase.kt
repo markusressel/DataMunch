@@ -22,7 +22,7 @@ import android.os.Bundle
 import android.view.View
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import kotlinx.android.synthetic.main.content_accounts_user_detail.*
 
 /**
@@ -34,8 +34,8 @@ abstract class DetailContentFragmentBase<EntityType : Any> : DaggerSupportFragme
         val args = arguments
                 ?: throw IllegalStateException("Arguments must not be null!")
 
-        if (args.containsKey(DetailActivityBase.KEY_ENTITY_ID)) {
-            args.getLong(DetailActivityBase.KEY_ENTITY_ID)
+        if (args.containsKey(DetailFragmentBase.KEY_ENTITY_ID)) {
+            args.getLong(DetailFragmentBase.KEY_ENTITY_ID)
         } else {
             throw IllegalStateException("No entity id specified!")
         }

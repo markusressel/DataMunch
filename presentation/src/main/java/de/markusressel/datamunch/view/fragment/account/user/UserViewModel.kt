@@ -29,6 +29,13 @@ class UserViewModel : EntityViewModel<UserEntity>() {
     val bsdusr_sudo = MutableLiveData<Boolean>()
 
     override fun createDbQuery(persistenceManager: PersistenceManagerBase<UserEntity>, entityId: Long): Query<UserEntity> {
+        // TODO: this will crash when the user reloads all data
+        // as entity IDs are not reused, but the ViewModel is.
+        // To improve this the bsdusr_uid attribute should be used
+        // but even then the user might get deleted... so there has to be
+        // a way to deal with this gracefully.
+        // This graceful handling should be done in UserDetailContentFragment
+
         return persistenceManager.standardOperation().query {
             equal(UserEntity_.entityId, entityId)
         }

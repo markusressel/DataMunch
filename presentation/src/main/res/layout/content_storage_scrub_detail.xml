@@ -23,7 +23,7 @@
 
         <variable
             name="viewModel"
-            type="de.markusressel.datamunch.view.fragment.storage.scrubs.ScrubViewModel" />
+            type="de.markusressel.datamunch.view.fragment.storage.scrub.ScrubViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

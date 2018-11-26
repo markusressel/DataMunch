@@ -29,12 +29,13 @@ import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemNfsShareBindingModel_
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.NfsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.nfs.NfsShareEntity
 import de.markusressel.datamunch.data.persistence.entity.nfs.asEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
@@ -108,13 +109,10 @@ class NfsSharesFragment : ListFragmentBase<NfsShareModel, NfsShareEntity>() {
     }
 
     private fun openDetailView(share: NfsShareEntity) {
-        context
-                ?.let {
-                    val intent = DetailActivityBase
-                            .newInstanceIntent(NfsShareDetailActivity::class.java, it,
-                                    share.entityId)
-                    startActivity(intent)
-                }
+        navController.navigate(
+                R.id.action_sharingPage_to_nfsShareDetailPage,
+                DetailFragmentBase.createEntityBundle(share.entityId)
+        )
     }
 
 }

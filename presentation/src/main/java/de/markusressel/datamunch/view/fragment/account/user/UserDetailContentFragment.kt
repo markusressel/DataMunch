@@ -55,6 +55,13 @@ class UserDetailContentFragment : DetailContentFragmentBase<UserEntity>() {
         val binding: ContentAccountsUserDetailBinding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
         val viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         viewModel.getEntityLiveData(getPersistenceHandler(), entityId).observe(this, Observer<List<UserEntity>> {
+
+            // TODO: this will crash when the user reloads all data
+            // as entity IDs are not reused, but the ViewModel is.
+            // To improve this the bsdusr_uid attribute should be used
+            // but even then the user might get deleted...
+            // so just using "first" here is not sufficient.
+
             val entity = it.first()
 
             viewModel.id.value = entity.id

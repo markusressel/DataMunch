@@ -90,7 +90,7 @@ class JailDetailContentFragment : JailContentFragmentBase() {
                         else -> restartJail(entity)
                     }
 
-                    (activity as JailDetailActivity)
+                    (activity as JailDetailFragment)
                 })
 
         RxView

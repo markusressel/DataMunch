@@ -25,6 +25,7 @@
     <application
         android:name=".application.App"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -36,22 +37,11 @@
             android:theme="@style/SplashThemeDark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".view.fragment.account.user.UserDetailActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".view.fragment.account.group.GroupDetailActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".view.fragment.jail.jail.JailDetailActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".view.fragment.storage.disk.DiskDetailActivity" />
-        <activity android:name=".view.fragment.storage.snapshot.SnapshotDetailActivity" />
 
         <activity
             android:name=".view.activity.UnknownErrorDialog"
@@ -63,19 +53,6 @@
             android:windowSoftInputMode="adjustPan">
             <!-- Intents are sent explicitly to this class, no need to specify an intent filter -->
         </activity>
-        <activity android:name=".view.fragment.storage.scrubs.ScrubDetailActivity" />
-        <activity android:name=".view.fragment.storage.task.TaskDetailActivity" />
-        <activity android:name=".view.fragment.system.alert.AlertDetailActivity" />
-        <activity android:name=".view.fragment.sharing.afp.AfpShareDetailActivity" />
-        <activity android:name=".view.fragment.sharing.cifs.CifsShareDetailActivity" />
-        <activity android:name=".view.fragment.sharing.nfs.NfsShareDetailActivity" />
-        <activity android:name=".view.fragment.plugins.PluginDetailActivity" />
-        <activity android:name=".view.fragment.jail.mountpoint.MountpointDetailActivity" />
-        <activity android:name=".view.fragment.jail.template.TemplateDetailActivity" />
-        <activity android:name=".view.fragment.storage.dataset.DatasetDetailActivity" />
-        <activity android:name=".view.fragment.services.ServiceDetailActivity" />
-        <activity android:name=".view.fragment.tasks.SMARTTaskDetailActivity" />
-
 
     </application>
 

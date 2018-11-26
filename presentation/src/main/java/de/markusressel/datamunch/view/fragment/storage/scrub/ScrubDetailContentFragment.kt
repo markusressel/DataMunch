@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.storage.scrubs
+package de.markusressel.datamunch.view.fragment.storage.scrub
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -29,12 +29,13 @@ import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.ListItemDatasetBindingModel_
 import de.markusressel.datamunch.ListItemLoadingBindingModel_
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.DatasetPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.dataset.DatasetEntity
 import de.markusressel.datamunch.data.persistence.entity.dataset.asEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
@@ -110,13 +111,10 @@ class DatasetsFragment : ListFragmentBase<DatasetModel, DatasetEntity>() {
     }
 
     private fun openDetailView(dataset: DatasetEntity) {
-        context
-                ?.let {
-                    val intent = DetailActivityBase
-                            .newInstanceIntent(DatasetDetailActivity::class.java, it,
-                                    dataset.entityId)
-                    startActivity(intent)
-                }
+        navController.navigate(
+                R.id.action_storagePage_to_datasetDetailPage,
+                DetailFragmentBase.createEntityBundle(dataset.entityId)
+        )
     }
 
 }

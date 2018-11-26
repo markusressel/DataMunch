@@ -28,12 +28,13 @@ import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemServiceBindingModel_
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.ServicePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.ServiceEntity
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.services.service.ServiceModel
@@ -95,13 +96,10 @@ class ServicesFragment : ListFragmentBase<ServiceModel, ServiceEntity>() {
     }
 
     private fun openDetailView(service: ServiceEntity) {
-        context
-                ?.let {
-                    val intent = DetailActivityBase
-                            .newInstanceIntent(ServiceDetailActivity::class.java, it,
-                                    service.entityId)
-                    startActivity(intent)
-                }
+        navController.navigate(
+                R.id.action_servicesPage_to_serviceDetailPage,
+                DetailFragmentBase.createEntityBundle(service.entityId)
+        )
     }
 
 }

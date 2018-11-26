@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.system.alert
+package de.markusressel.datamunch.view.fragment.storage.scrub
 
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.AlertPersistenceManager
+import de.markusressel.datamunch.data.persistence.ScrubPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.AlertEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.data.persistence.entity.ScrubEntity
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
@@ -30,18 +30,18 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.02.2018.
  */
-class AlertDetailActivity : DetailActivityBase<AlertEntity>() {
+class ScrubDetailFragment : DetailFragmentBase<ScrubEntity>() {
 
     @Inject
-    lateinit var persistenceHandler: AlertPersistenceManager
+    lateinit var persistenceHandler: ScrubPersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<AlertEntity> = persistenceHandler
+    override fun getPersistenceHandler(): PersistenceManagerBase<ScrubEntity> = persistenceHandler
 
     override val headerTextString: String
-        get() = getEntity().id
+        get() = getEntity().scrub_volume
 
     override val tabItems: List<TabPageConstructor>
-        get() = listOf(R.string.details to ::AlertDetailContentFragment)
+        get() = listOf(R.string.details to ::ScrubDetailContentFragment)
 
 
 }

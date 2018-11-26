@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.plugins
+package de.markusressel.datamunch.view.fragment.sharing.cifs
 
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.PluginPersistenceManager
+import de.markusressel.datamunch.data.persistence.CifsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.PluginEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.data.persistence.entity.CifsShareEntity
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
@@ -30,18 +30,18 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.02.2018.
  */
-class PluginDetailActivity : DetailActivityBase<PluginEntity>() {
+class CifsShareDetailFragment : DetailFragmentBase<CifsShareEntity>() {
 
     @Inject
-    lateinit var persistenceHandler: PluginPersistenceManager
+    lateinit var persistenceHandler: CifsSharePersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<PluginEntity> = persistenceHandler
+    override fun getPersistenceHandler(): PersistenceManagerBase<CifsShareEntity> = persistenceHandler
 
     override val headerTextString: String
-        get() = getEntity().plugin_name
+        get() = getEntity().cifs_name
 
     override val tabItems: List<TabPageConstructor>
-        get() = listOf(R.string.details to ::PluginDetailContentFragment)
+        get() = listOf(R.string.details to ::CifsShareDetailContentFragment)
 
 
 }

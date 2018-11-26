@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.tasks
+package de.markusressel.datamunch.view.fragment.sharing.nfs
 
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.SMARTTaskPersistenceManager
+import de.markusressel.datamunch.data.persistence.NfsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.smart.SMARTTaskEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.data.persistence.entity.nfs.NfsShareEntity
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
@@ -30,18 +30,18 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.02.2018.
  */
-class SMARTTaskDetailActivity : DetailActivityBase<SMARTTaskEntity>() {
+class NfsShareDetailFragment : DetailFragmentBase<NfsShareEntity>() {
 
     @Inject
-    lateinit var persistenceHandler: SMARTTaskPersistenceManager
+    lateinit var persistenceHandler: NfsSharePersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<SMARTTaskEntity> = persistenceHandler
+    override fun getPersistenceHandler(): PersistenceManagerBase<NfsShareEntity> = persistenceHandler
 
     override val headerTextString: String
-        get() = "${getEntity().id}"
+        get() = getEntity().nfs_network
 
     override val tabItems: List<TabPageConstructor>
-        get() = listOf(R.string.details to ::SMARTTaskDetailContentFragment)
+        get() = listOf(R.string.details to ::NfsShareDetailContentFragment)
 
 
 }

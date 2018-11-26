@@ -29,12 +29,13 @@ import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.ListItemCifsShareBindingModel_
 import de.markusressel.datamunch.ListItemLoadingBindingModel_
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.CifsSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.CifsShareEntity
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
@@ -107,13 +108,10 @@ class CifsSharesFragment : ListFragmentBase<CifsShareModel, CifsShareEntity>() {
     }
 
     private fun openDetailView(share: CifsShareEntity) {
-        context
-                ?.let {
-                    val intent = DetailActivityBase
-                            .newInstanceIntent(CifsShareDetailActivity::class.java, it,
-                                    share.entityId)
-                    startActivity(intent)
-                }
+        navController.navigate(
+                R.id.action_sharingPage_to_cifsShareDetailPage,
+                DetailFragmentBase.createEntityBundle(share.entityId)
+        )
     }
 
 }

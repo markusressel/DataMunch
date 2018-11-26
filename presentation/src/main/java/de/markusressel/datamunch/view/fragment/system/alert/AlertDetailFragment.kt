@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.jail.jail
+package de.markusressel.datamunch.view.fragment.system.alert
 
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.JailPersistenceManager
+import de.markusressel.datamunch.data.persistence.AlertPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.JailEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.data.persistence.entity.AlertEntity
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
@@ -30,19 +30,18 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.02.2018.
  */
-class JailDetailActivity : DetailActivityBase<JailEntity>() {
+class AlertDetailFragment : DetailFragmentBase<AlertEntity>() {
 
     @Inject
-    lateinit var persistenceHandler: JailPersistenceManager
+    lateinit var persistenceHandler: AlertPersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<JailEntity> = persistenceHandler
+    override fun getPersistenceHandler(): PersistenceManagerBase<AlertEntity> = persistenceHandler
 
     override val headerTextString: String
-        get() = getEntity().jail_host
+        get() = getEntity().id
 
     override val tabItems: List<TabPageConstructor>
-        get() = listOf(R.string.details to ::JailDetailContentFragment,
-                       R.string.services to ::JailServicesContentFragment,
-                       R.string.shell to ::JailShellContentFragment)
+        get() = listOf(R.string.details to ::AlertDetailContentFragment)
+
 
 }

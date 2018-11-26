@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_tasks"
+    app:startDestination="@id/tasksPage">
+
+    <fragment
+        android:id="@+id/tasksPage"
+        android:name="de.markusressel.datamunch.view.fragment.pages.TasksPage"
+        android:label="@string/menu_item_tasks"
+        tools:layout="@layout/fragment_tab_navigation">
+
+        <action
+            android:id="@+id/action_tasksPage_to_smartTaskDetailPage"
+            app:destination="@id/smartTaskDetailPage" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/smartTaskDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.tasks.SMARTTaskDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+</navigation>

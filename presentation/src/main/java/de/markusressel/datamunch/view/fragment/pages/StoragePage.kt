@@ -23,7 +23,7 @@ import de.markusressel.datamunch.view.fragment.base.TabNavigationFragment
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import de.markusressel.datamunch.view.fragment.storage.dataset.DatasetsFragment
 import de.markusressel.datamunch.view.fragment.storage.disk.DisksFragment
-import de.markusressel.datamunch.view.fragment.storage.scrubs.ScrubsFragment
+import de.markusressel.datamunch.view.fragment.storage.scrub.ScrubsFragment
 import de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotsFragment
 import de.markusressel.datamunch.view.fragment.storage.task.TasksFragment
 import de.markusressel.datamunch.view.fragment.storage.volume.VolumesFragment

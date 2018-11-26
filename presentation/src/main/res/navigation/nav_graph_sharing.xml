@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_sharing"
+    app:startDestination="@id/sharingPage">
+
+    <fragment
+        android:id="@+id/sharingPage"
+        android:name="de.markusressel.datamunch.view.fragment.pages.SharingPage"
+        android:label="@string/menu_item_sharing"
+        tools:layout="@layout/fragment_tab_navigation">
+
+        <action
+            android:id="@+id/action_sharingPage_to_afpShareDetailPage"
+            app:destination="@id/afpShareDetailPage" />
+        <action
+            android:id="@+id/action_sharingPage_to_cifsShareDetailPage"
+            app:destination="@id/cifsShareDetailPage" />
+        <action
+            android:id="@+id/action_sharingPage_to_nfsShareDetailPage"
+            app:destination="@id/nfsShareDetailPage" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/afpShareDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.sharing.afp.AfpShareDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+    <fragment
+        android:id="@+id/cifsShareDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.sharing.cifs.CifsShareDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+    <fragment
+        android:id="@+id/nfsShareDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.sharing.nfs.NfsShareDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+</navigation>

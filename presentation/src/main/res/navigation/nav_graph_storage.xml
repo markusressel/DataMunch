@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_storage"
+    app:startDestination="@id/storagePage">
+
+    <fragment
+        android:id="@+id/storagePage"
+        android:name="de.markusressel.datamunch.view.fragment.pages.StoragePage"
+        android:label="@string/menu_item_storage"
+        tools:layout="@layout/fragment_tab_navigation">
+
+        <action
+            android:id="@+id/action_storagePage_to_datasetDetailPage"
+            app:destination="@id/datasetDetailPage" />
+
+        <action
+            android:id="@+id/action_storagePage_to_diskDetailPage"
+            app:destination="@id/diskDetailPage" />
+
+        <action
+            android:id="@+id/action_storagePage_to_scrubDetailPage"
+            app:destination="@id/scrubDetailPage" />
+
+        <action
+            android:id="@+id/action_storagePage_to_snapshotDetailPage"
+            app:destination="@id/snapshotDetailPage" />
+
+        <action
+            android:id="@+id/action_storagePage_to_taskDetailPage"
+            app:destination="@id/taskDetailPage" />
+
+        <!--<action-->
+        <!--android:id="@+id/action_storagePage_to_volumeDetailPage"-->
+        <!--app:destination="@id/userDetailPage" />-->
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/datasetDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.storage.dataset.DatasetDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+    <fragment
+        android:id="@+id/diskDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.storage.disk.DiskDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+    <fragment
+        android:id="@+id/scrubDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.storage.scrub.ScrubDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+    <fragment
+        android:id="@+id/snapshotDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.storage.snapshot.SnapshotDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+    <fragment
+        android:id="@+id/taskDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.storage.task.TaskDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+    <!--<fragment-->
+    <!--android:id="@+id/volumeDetailPage"-->
+    <!--android:name="de.markusressel.datamunch.view.fragment.storage.volume.VolumeDetailFragment"-->
+    <!--android:label="@string/details"-->
+    <!--tools:layout="@layout/fragment_item_detail" />-->
+
+</navigation>

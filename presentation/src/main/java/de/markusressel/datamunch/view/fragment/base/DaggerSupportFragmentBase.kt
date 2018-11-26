@@ -26,10 +26,12 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import de.markusressel.datamunch.ssh.ConnectionManager
 import de.markusressel.datamunch.view.IconHandler
@@ -58,6 +60,8 @@ abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFr
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {
         return childFragmentInjector
     }
+
+    protected val navController by lazy { Navigation.findNavController(activity!!, R.id.navHostFragment) }
 
     @Inject
     protected lateinit var connectionManager: ConnectionManager

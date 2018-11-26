@@ -18,44 +18,31 @@
 
 package de.markusressel.datamunch.view.activity.base
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.MenuItem
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.eightbitlab.rxbus.Bus
 import com.github.florent37.materialviewpager.header.HeaderDesign
 import de.markusressel.commons.random.random
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.view.component.LockComponent
+import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
-import kotlinx.android.synthetic.main.activity_item_detail.*
+import kotlinx.android.synthetic.main.fragment_item_detail.*
 import kotlinx.android.synthetic.main.item_detail__header_logo.*
 
 
 /**
  * Created by Markus on 15.02.2018.
  */
-abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase() {
-
-    override val style: Int
-        get() {
-            return if (resources.getBoolean(R.bool.is_tablet)) {
-                DIALOG
-            } else {
-                DEFAULT
-            }
-        }
+abstract class DetailFragmentBase<EntityType : Any> : DaggerSupportFragmentBase() {
 
     override val layoutRes: Int
-        get() = R.layout.activity_item_detail
+        get() = R.layout.fragment_item_detail
 
     protected abstract val headerTextString: String
 
@@ -66,26 +53,8 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
 
     private var currentEntityState: StateHolder<EntityType>? by savedInstanceState()
 
-    private val lockComponent: LockComponent = LockComponent({ this }, { preferencesHolder })
-
-    override fun setContentView(view: View?) {
-        val contentView = lockComponent
-                .setContentView(view)
-        super
-                .setContentView(contentView)
-    }
-
-    override fun onDestroy() {
-        lockComponent
-                .onDestroy()
-        super
-                .onDestroy()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super
-                .onCreate(savedInstanceState)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setToolbar()
         setAdapter()
         setHeader()
@@ -125,33 +94,27 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
 
                                 // instantiate this header
                                 HeaderDesign
-                                        .fromColorResAndDrawable(config.colorRes,
-                                                                 getDrawable(config.drawableRes))
+                                        .fromColorResAndDrawable(config.colorRes, context!!.getDrawable(config.drawableRes))
                             }
                 }
     }
 
     private fun setToolbar() {
-        val toolbar = materialViewPager
-                .toolbar
-        if (toolbar != null) {
-            setSupportActionBar(toolbar)
+        materialViewPager
+                .toolbar?.let {
 
-            val actionBar = supportActionBar!!
-            actionBar
-                    .setDisplayHomeAsUpEnabled(true)
+            it.visibility = View.GONE
 
-            //            actionBar
-            //                    .setDisplayShowHomeEnabled(true)
-
-            // activity title comes from library
-            actionBar
-                    .setDisplayShowTitleEnabled(false)
-
-            actionBar
-                    .setDisplayUseLogoEnabled(false)
-            actionBar
-                    .setHomeButtonEnabled(true)
+//            it.setDisplayHomeAsUpEnabled(true)
+//
+//            //            actionBar
+//            //                    .setDisplayShowHomeEnabled(true)
+//
+//            // activity title comes from library
+//            it.setDisplayShowTitleEnabled(false)
+//
+//            it.setDisplayUseLogoEnabled(false)
+//            it.setHomeButtonEnabled(true)
         }
     }
 
@@ -159,7 +122,7 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
         val viewPager = materialViewPager
                 .viewPager
         viewPager
-                .adapter = object : FragmentStatePagerAdapter(supportFragmentManager) {
+                .adapter = object : FragmentStatePagerAdapter(activity!!.supportFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 return tabItems[position]
                         .second()
@@ -223,8 +186,7 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
     }
 
     private fun getEntityId(): Long {
-        return intent
-                .getLongExtra(KEY_ENTITY_ID, ENTITY_ID_MISSING_VALUE)
+        return arguments!!.getLong(KEY_ENTITY_ID, ENTITY_ID_MISSING_VALUE)
     }
 
     /**
@@ -253,49 +215,16 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
      */
     protected abstract fun getPersistenceHandler(): PersistenceManagerBase<EntityType>
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (super.onOptionsItemSelected(item)) {
-            return true
-        }
-
-        return when (item?.itemId) {
-            android.R.id.home -> {
-                // TODO: Show dialog if unsaved changes still exist
-                finish()
-                true
-            }
-            else -> {
-                false
-            }
-        }
-    }
-
-    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        event
-                ?.let {
-                    Bus
-                            .send(event)
-                }
-
-        return super
-                .dispatchKeyEvent(event)
-    }
-
     companion object {
 
         const val KEY_ENTITY_ID = "entity_id"
         const val ENTITY_ID_MISSING_VALUE = -1L
-        fun <T : Class<*>> newInstanceIntent(clazz: T, context: Context, entityId: Long?): Intent {
-            val intent = Intent(context, clazz)
-            entityId
-                    ?.let {
-                        intent
-                                .apply {
-                                    putExtra(KEY_ENTITY_ID, entityId)
-                                }
-                    }
 
-            return intent
+        /**
+         * Create a bundle for a fragment implementation of this class
+         */
+        fun createEntityBundle(entityId: Long): Bundle {
+            return bundleOf(DetailFragmentBase.KEY_ENTITY_ID to entityId)
         }
 
         private val HEADER_CONFIGS = listOf(

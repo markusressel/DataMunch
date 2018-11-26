@@ -1,4 +1,4 @@
-package de.markusressel.datamunch.view.fragment.storage.scrubs
+package de.markusressel.datamunch.view.fragment.storage.scrub
 
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.ScrubEntity

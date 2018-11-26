@@ -28,53 +28,21 @@
         android:label="@string/menu_item_status"
         tools:layout="@layout/fragment_server_status" />
 
-    <fragment
-        android:id="@+id/accountPage"
-        android:name="de.markusressel.datamunch.view.fragment.pages.AccountPage"
-        android:label="@string/menu_item_accounts"
-        tools:layout="@layout/fragment_tab_navigation" />
+    <include app:graph="@navigation/nav_graph_account" />
 
-    <fragment
-        android:id="@+id/storagePage"
-        android:name="de.markusressel.datamunch.view.fragment.pages.StoragePage"
-        android:label="@string/menu_item_storage"
-        tools:layout="@layout/fragment_tab_navigation" />
+    <include app:graph="@navigation/nav_graph_jail" />
 
-    <fragment
-        android:id="@+id/sharingPage"
-        android:name="de.markusressel.datamunch.view.fragment.pages.SharingPage"
-        android:label="@string/menu_item_sharing"
-        tools:layout="@layout/fragment_tab_navigation" />
+    <include app:graph="@navigation/nav_graph_plugins" />
 
-    <fragment
-        android:id="@+id/servicesPage"
-        android:name="de.markusressel.datamunch.view.fragment.services.ServicesFragment"
-        android:label="@string/menu_item_services"
-        tools:layout="@layout/fragment_services" />
+    <include app:graph="@navigation/nav_graph_storage" />
 
-    <fragment
-        android:id="@+id/pluginPage"
-        android:name="de.markusressel.datamunch.view.fragment.pages.PluginPage"
-        android:label="@string/menu_item_plugins"
-        tools:layout="@layout/fragment_tab_navigation" />
+    <include app:graph="@navigation/nav_graph_sharing" />
 
-    <fragment
-        android:id="@+id/jailPage"
-        android:name="de.markusressel.datamunch.view.fragment.pages.JailPage"
-        android:label="@string/menu_item_jails"
-        tools:layout="@layout/fragment_tab_navigation" />
+    <include app:graph="@navigation/nav_graph_services" />
 
-    <fragment
-        android:id="@+id/systemPage"
-        android:name="de.markusressel.datamunch.view.fragment.pages.SystemPage"
-        android:label="@string/menu_item_system"
-        tools:layout="@layout/fragment_tab_navigation" />
+    <include app:graph="@navigation/nav_graph_system" />
 
-    <fragment
-        android:id="@+id/tasksPage"
-        android:name="de.markusressel.datamunch.view.fragment.pages.TasksPage"
-        android:label="@string/menu_item_tasks"
-        tools:layout="@layout/fragment_tab_navigation" />
+    <include app:graph="@navigation/nav_graph_tasks" />
 
     <fragment
         android:id="@+id/preferencesPage"

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_jail"
+    app:startDestination="@id/jailPage">
+
+    <fragment
+        android:id="@+id/jailPage"
+        android:name="de.markusressel.datamunch.view.fragment.pages.JailPage"
+        android:label="@string/menu_item_jails"
+        tools:layout="@layout/fragment_tab_navigation">
+
+        <action
+            android:id="@+id/action_jailPage_to_jailDetailPage"
+            app:destination="@id/jailDetailPage" />
+
+        <action
+            android:id="@+id/action_jailPage_to_mountpointDetailPage"
+            app:destination="@id/mountpointDetailPage" />
+
+        <action
+            android:id="@+id/action_jailPage_to_templateDetailPage"
+            app:destination="@id/templateDetailPage" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/jailDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.jail.jail.JailDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+    <fragment
+        android:id="@+id/mountpointDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.jail.mountpoint.MountpointDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+    <fragment
+        android:id="@+id/templateDetailPage"
+        android:name="de.markusressel.datamunch.view.fragment.jail.template.TemplateDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_item_detail" />
+
+</navigation>

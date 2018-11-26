@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.account.group
+package de.markusressel.datamunch.view.fragment.account.user
 
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.GroupPersistenceManager
+import de.markusressel.datamunch.data.persistence.UserPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.GroupEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.data.persistence.entity.UserEntity
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
@@ -30,18 +30,26 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.02.2018.
  */
-class GroupDetailActivity : DetailActivityBase<GroupEntity>() {
+class UserDetailFragment : DetailFragmentBase<UserEntity>() {
 
     @Inject
-    lateinit var persistenceHandler: GroupPersistenceManager
+    lateinit var persistenceHandler: UserPersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<GroupEntity> = persistenceHandler
+    override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> = persistenceHandler
 
     override val headerTextString: String
-        get() = getEntity().bsdgrp_group
+        get() {
+            val entity = getEntity()
+            if (!entity.bsdusr_builtin && entity.bsdusr_full_name.isNotEmpty()) {
+                return entity
+                        .bsdusr_full_name
+            }
+
+            return "${getString(R.string.user)}: ${entity.bsdusr_username}"
+        }
 
     override val tabItems: List<TabPageConstructor>
-        get() = listOf(R.string.details to ::GroupDetailContentFragment)
+        get() = listOf(R.string.details to ::UserDetailContentFragment)
 
 
 }

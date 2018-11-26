@@ -28,12 +28,13 @@ import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import de.markusressel.datamunch.ListItemDiskBindingModel_
 import de.markusressel.datamunch.ListItemLoadingBindingModel_
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.DiskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.DiskEntity
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.asEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.storage.disk.DiskModel
@@ -94,12 +95,10 @@ class DisksFragment : ListFragmentBase<DiskModel, DiskEntity>() {
     }
 
     private fun openDetailView(disk: DiskEntity) {
-        context
-                ?.let {
-                    val intent = DetailActivityBase
-                            .newInstanceIntent(DiskDetailActivity::class.java, it, disk.entityId)
-                    startActivity(intent)
-                }
+        navController.navigate(
+                R.id.action_storagePage_to_diskDetailPage,
+                DetailFragmentBase.createEntityBundle(disk.entityId)
+        )
     }
 
 }

@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.account.user
+package de.markusressel.datamunch.view.fragment.jail.template
 
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.UserPersistenceManager
+import de.markusressel.datamunch.data.persistence.TemplatePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.UserEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.data.persistence.entity.TemplateEntity
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
@@ -30,26 +30,18 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.02.2018.
  */
-class UserDetailActivity : DetailActivityBase<UserEntity>() {
+class TemplateDetailFragment : DetailFragmentBase<TemplateEntity>() {
 
     @Inject
-    lateinit var persistenceHandler: UserPersistenceManager
+    lateinit var persistenceHandler: TemplatePersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<UserEntity> = persistenceHandler
+    override fun getPersistenceHandler(): PersistenceManagerBase<TemplateEntity> = persistenceHandler
 
     override val headerTextString: String
-        get() {
-            val entity = getEntity()
-            if (!entity.bsdusr_builtin && entity.bsdusr_full_name.isNotEmpty()) {
-                return entity
-                        .bsdusr_full_name
-            }
-
-            return "${getString(R.string.user)}: ${entity.bsdusr_username}"
-        }
+        get() = "${getEntity().id}"
 
     override val tabItems: List<TabPageConstructor>
-        get() = listOf(R.string.details to ::UserDetailContentFragment)
+        get() = listOf(R.string.details to ::TemplateDetailContentFragment)
 
 
 }

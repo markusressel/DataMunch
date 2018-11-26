@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.sharing.cifs
+package de.markusressel.datamunch.view.fragment.jail.jail
 
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.CifsSharePersistenceManager
+import de.markusressel.datamunch.data.persistence.JailPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.CifsShareEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.data.persistence.entity.JailEntity
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
@@ -30,18 +30,19 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.02.2018.
  */
-class CifsShareDetailActivity : DetailActivityBase<CifsShareEntity>() {
+class JailDetailFragment : DetailFragmentBase<JailEntity>() {
 
     @Inject
-    lateinit var persistenceHandler: CifsSharePersistenceManager
+    lateinit var persistenceHandler: JailPersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<CifsShareEntity> = persistenceHandler
+    override fun getPersistenceHandler(): PersistenceManagerBase<JailEntity> = persistenceHandler
 
     override val headerTextString: String
-        get() = getEntity().cifs_name
+        get() = getEntity().jail_host
 
     override val tabItems: List<TabPageConstructor>
-        get() = listOf(R.string.details to ::CifsShareDetailContentFragment)
-
+        get() = listOf(R.string.details to ::JailDetailContentFragment,
+                       R.string.services to ::JailServicesContentFragment,
+                       R.string.shell to ::JailShellContentFragment)
 
 }

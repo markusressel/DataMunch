@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.jail.template
+package de.markusressel.datamunch.view.fragment.sharing.afp
 
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.TemplatePersistenceManager
+import de.markusressel.datamunch.data.persistence.AfpSharePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.TemplateEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.data.persistence.entity.AfpShareEntity
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
@@ -30,18 +30,17 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.02.2018.
  */
-class TemplateDetailActivity : DetailActivityBase<TemplateEntity>() {
+class AfpShareDetailFragment : DetailFragmentBase<AfpShareEntity>() {
 
     @Inject
-    lateinit var persistenceHandler: TemplatePersistenceManager
+    lateinit var persistenceHandler: AfpSharePersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<TemplateEntity> = persistenceHandler
+    override fun getPersistenceHandler(): PersistenceManagerBase<AfpShareEntity> = persistenceHandler
 
     override val headerTextString: String
-        get() = "${getEntity().id}"
+        get() = getEntity().afp_name
 
     override val tabItems: List<TabPageConstructor>
-        get() = listOf(R.string.details to ::TemplateDetailContentFragment)
-
+        get() = listOf(R.string.details to ::AfpShareDetailContentFragment)
 
 }

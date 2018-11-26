@@ -28,12 +28,13 @@ import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import de.markusressel.datamunch.ListItemLoadingBindingModel_
 import de.markusressel.datamunch.ListItemSmartTaskBindingModel_
+import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.SMARTTaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.EntityTypeId
 import de.markusressel.datamunch.data.persistence.entity.smart.SMARTTaskEntity
 import de.markusressel.datamunch.data.persistence.entity.smart.asEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
 import de.markusressel.freenasrestapiclient.library.tasks.smart.SMARTTaskModel
@@ -96,13 +97,10 @@ class SMARTTasksFragment : ListFragmentBase<SMARTTaskModel, SMARTTaskEntity>() {
     }
 
     private fun openDetailView(smartTask: SMARTTaskEntity) {
-        context
-                ?.let {
-                    val intent = DetailActivityBase
-                            .newInstanceIntent(SMARTTaskDetailActivity::class.java, it,
-                                    smartTask.entityId)
-                    startActivity(intent)
-                }
+        navController.navigate(
+                R.id.action_tasksPage_to_smartTaskDetailPage,
+                DetailFragmentBase.createEntityBundle(smartTask.entityId)
+        )
     }
 
 }

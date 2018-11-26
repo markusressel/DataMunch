@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.storage.dataset
+package de.markusressel.datamunch.view.fragment.storage.disk
 
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.DatasetPersistenceManager
+import de.markusressel.datamunch.data.persistence.DiskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.dataset.DatasetEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.data.persistence.entity.DiskEntity
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
@@ -30,18 +30,18 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.02.2018.
  */
-class DatasetDetailActivity : DetailActivityBase<DatasetEntity>() {
+class DiskDetailFragment : DetailFragmentBase<DiskEntity>() {
 
     @Inject
-    lateinit var persistenceHandler: DatasetPersistenceManager
+    lateinit var persistenceHandler: DiskPersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<DatasetEntity> = persistenceHandler
+    override fun getPersistenceHandler(): PersistenceManagerBase<DiskEntity> = persistenceHandler
 
     override val headerTextString: String
-        get() = getEntity().name
+        get() = getEntity().disk_name
 
     override val tabItems: List<TabPageConstructor>
-        get() = listOf(R.string.details to ::DatasetDetailContentFragment)
+        get() = listOf(R.string.details to ::DiskDetailContentFragment)
 
 
 }

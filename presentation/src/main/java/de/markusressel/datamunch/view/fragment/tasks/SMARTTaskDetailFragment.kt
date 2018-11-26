@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.storage.scrubs
+package de.markusressel.datamunch.view.fragment.tasks
 
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.ScrubPersistenceManager
+import de.markusressel.datamunch.data.persistence.SMARTTaskPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.ScrubEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.data.persistence.entity.smart.SMARTTaskEntity
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
@@ -30,18 +30,18 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.02.2018.
  */
-class ScrubDetailActivity : DetailActivityBase<ScrubEntity>() {
+class SMARTTaskDetailFragment : DetailFragmentBase<SMARTTaskEntity>() {
 
     @Inject
-    lateinit var persistenceHandler: ScrubPersistenceManager
+    lateinit var persistenceHandler: SMARTTaskPersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<ScrubEntity> = persistenceHandler
+    override fun getPersistenceHandler(): PersistenceManagerBase<SMARTTaskEntity> = persistenceHandler
 
     override val headerTextString: String
-        get() = getEntity().scrub_volume
+        get() = "${getEntity().id}"
 
     override val tabItems: List<TabPageConstructor>
-        get() = listOf(R.string.details to ::ScrubDetailContentFragment)
+        get() = listOf(R.string.details to ::SMARTTaskDetailContentFragment)
 
 
 }

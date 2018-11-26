@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.sharing.nfs
+package de.markusressel.datamunch.view.fragment.account.group
 
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.NfsSharePersistenceManager
+import de.markusressel.datamunch.data.persistence.GroupPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.nfs.NfsShareEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.data.persistence.entity.GroupEntity
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
@@ -30,18 +30,18 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.02.2018.
  */
-class NfsShareDetailActivity : DetailActivityBase<NfsShareEntity>() {
+class GroupDetailFragment : DetailFragmentBase<GroupEntity>() {
 
     @Inject
-    lateinit var persistenceHandler: NfsSharePersistenceManager
+    lateinit var persistenceHandler: GroupPersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<NfsShareEntity> = persistenceHandler
+    override fun getPersistenceHandler(): PersistenceManagerBase<GroupEntity> = persistenceHandler
 
     override val headerTextString: String
-        get() = getEntity().nfs_network
+        get() = getEntity().bsdgrp_group
 
     override val tabItems: List<TabPageConstructor>
-        get() = listOf(R.string.details to ::NfsShareDetailContentFragment)
+        get() = listOf(R.string.details to ::GroupDetailContentFragment)
 
 
 }

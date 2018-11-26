@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.markusressel.datamunch.view.fragment.jail.mountpoint
+package de.markusressel.datamunch.view.fragment.plugins
 
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.persistence.MountpointPersistenceManager
+import de.markusressel.datamunch.data.persistence.PluginPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
-import de.markusressel.datamunch.data.persistence.entity.MountpointEntity
-import de.markusressel.datamunch.view.activity.base.DetailActivityBase
+import de.markusressel.datamunch.data.persistence.entity.PluginEntity
+import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
@@ -30,18 +30,18 @@ import javax.inject.Inject
 /**
  * Created by Markus on 15.02.2018.
  */
-class MountpointDetailActivity : DetailActivityBase<MountpointEntity>() {
+class PluginDetailFragment : DetailFragmentBase<PluginEntity>() {
 
     @Inject
-    lateinit var persistenceHandler: MountpointPersistenceManager
+    lateinit var persistenceHandler: PluginPersistenceManager
 
-    override fun getPersistenceHandler(): PersistenceManagerBase<MountpointEntity> = persistenceHandler
+    override fun getPersistenceHandler(): PersistenceManagerBase<PluginEntity> = persistenceHandler
 
     override val headerTextString: String
-        get() = "${getEntity().id}"
+        get() = getEntity().plugin_name
 
     override val tabItems: List<TabPageConstructor>
-        get() = listOf(R.string.details to ::MountpointDetailContentFragment)
+        get() = listOf(R.string.details to ::PluginDetailContentFragment)
 
 
 }
