@@ -81,8 +81,9 @@
         android:name="de.markusressel.datamunch.view.fragment.preferences.MainPreferenceFragment"
         android:label="@string/menu_item_settings" />
 
-    <activity
+    <fragment
         android:id="@+id/aboutPage"
+        android:name="de.markusressel.datamunch.view.fragment.pages.AboutPage"
         android:label="@string/menu_item_about" />
 
 </navigation>

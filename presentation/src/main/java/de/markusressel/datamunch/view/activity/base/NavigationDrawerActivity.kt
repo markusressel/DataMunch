@@ -44,17 +44,8 @@ import de.markusressel.datamunch.event.ThemeChangedEvent
 import de.markusressel.datamunch.extensions.isTablet
 import de.markusressel.datamunch.navigation.DrawerItemHolder
 import de.markusressel.datamunch.navigation.DrawerItemHolder.About
-import de.markusressel.datamunch.navigation.DrawerItemHolder.Accounts
-import de.markusressel.datamunch.navigation.DrawerItemHolder.Jails
-import de.markusressel.datamunch.navigation.DrawerItemHolder.Plugins
-import de.markusressel.datamunch.navigation.DrawerItemHolder.Services
 import de.markusressel.datamunch.navigation.DrawerItemHolder.Settings
-import de.markusressel.datamunch.navigation.DrawerItemHolder.Sharing
-import de.markusressel.datamunch.navigation.DrawerItemHolder.Status
-import de.markusressel.datamunch.navigation.DrawerItemHolder.Storage
-import de.markusressel.datamunch.navigation.DrawerItemHolder.Tasks
 import de.markusressel.datamunch.navigation.DrawerMenuItem
-import de.markusressel.datamunch.navigation.Navigator
 import de.markusressel.datamunch.view.component.LockComponent
 import de.markusressel.datamunch.view.component.LockComponent.Companion.isScreenLocked
 import kotlinx.android.synthetic.main.activity_main.*
@@ -74,6 +65,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
     private val lockComponent: LockComponent = LockComponent({ this }, { preferencesHolder })
 
     protected val navController by lazy { Navigation.findNavController(this, R.id.navHostFragment) }
+    protected lateinit var navigationDrawer: Drawer
 
     override fun setContentView(view: View?) {
         val contentView = lockComponent
@@ -90,9 +82,6 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
     }
 
     override fun onContentViewInflated(savedInstanceState: Bundle?) {
-        navigator
-                .activity = this
-
         val menuItemList = initDrawerMenuItems()
         val accountHeader = initAccountHeader()
 
@@ -104,7 +93,6 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                 .withToolbar(toolbar)
                 .withSavedInstance(savedInstanceState)
 
-        val navigationDrawer: Drawer
         if (isTablet()) {
             navigationDrawer = builder
                     .buildView()
@@ -130,12 +118,11 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                     .build()
         }
 
-        navigator
-                .drawer = navigationDrawer
+        navigationDrawer
 
         val appBarConfiguration = AppBarConfiguration(
                 navGraph = navController.graph,
-                drawerLayout = navigator.drawer.drawerLayout)
+                drawerLayout = navigationDrawer.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
@@ -194,10 +181,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
             false -> DrawerLayout.LOCK_MODE_UNLOCKED
         }
 
-        navigator
-                .drawer
-                .drawerLayout
-                .setDrawerLockMode(drawerLockMode)
+        navigationDrawer.drawerLayout.setDrawerLockMode(drawerLockMode)
     }
 
     private fun initAccountHeader(): AccountHeader {
@@ -240,12 +224,10 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
         val clickListener = Drawer
                 .OnDrawerItemClickListener { _, _, drawerItem ->
                     val drawerMenuItem = DrawerItemHolder
-                            .fromId(drawerItem.identifier)
+                            .fromId(drawerItem.identifier.toInt())
 
                     drawerMenuItem?.let {
                         navController.navigate(it.id)
-
-                        // TODO: update appBar title
 
                         if (drawerItem.isSelectable) {
                             // set new title
@@ -253,9 +235,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                         }
 
                         if (!isTablet()) {
-                            navigator
-                                    .drawer
-                                    .closeDrawer()
+                            navigationDrawer.closeDrawer()
                         }
                         return@OnDrawerItemClickListener true
                     }
@@ -265,8 +245,15 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
 
 
 
-        listOf(Status, Accounts, Storage, Sharing, Services, Plugins, Jails,
-                Navigator.DrawerItems.System, Tasks)
+        listOf(DrawerItemHolder.Status,
+                DrawerItemHolder.Accounts,
+                DrawerItemHolder.Storage,
+                DrawerItemHolder.Sharing,
+                DrawerItemHolder.Services,
+                DrawerItemHolder.Plugins,
+                DrawerItemHolder.Jails,
+                DrawerItemHolder.System,
+                DrawerItemHolder.Tasks)
                 .forEach {
                     menuItemList
                             .add(createPrimaryMenuItem(it, clickListener))
@@ -288,7 +275,7 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                                       clickListener: Drawer.OnDrawerItemClickListener): PrimaryDrawerItem {
         return PrimaryDrawerItem()
                 .withName(menuItem.title)
-                .withIdentifier(menuItem.identifier)
+                .withIdentifier(menuItem.id.toLong())
                 .withIcon(menuItem.getIcon(iconHandler))
                 .withSelectable(menuItem.selectable)
                 .withOnDrawerItemClickListener(clickListener)
@@ -298,18 +285,15 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                                         clickListener: Drawer.OnDrawerItemClickListener): SecondaryDrawerItem {
         return SecondaryDrawerItem()
                 .withName(menuItem.title)
-                .withIdentifier(menuItem.identifier)
+                .withIdentifier(menuItem.id.toLong())
                 .withIcon(menuItem.getIcon(iconHandler))
                 .withSelectable(menuItem.selectable)
                 .withOnDrawerItemClickListener(clickListener)
     }
 
     override fun onBackPressed() {
-        if (navigator
-                        .drawer.isDrawerOpen) {
-            navigator
-                    .drawer
-                    .closeDrawer()
+        if (navigationDrawer.isDrawerOpen) {
+            navigationDrawer.closeDrawer()
             return
         }
 

@@ -443,6 +443,8 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                             .subscribeBy(onSuccess = {
                                 persistListData(it)
                                 updateLastUpdatedFromSource()
+                                loadingComponent
+                                        .showContent()
                             }, onError = {
                                 if (it is CancellationException) {
                                     Timber

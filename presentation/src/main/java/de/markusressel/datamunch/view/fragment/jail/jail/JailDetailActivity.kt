@@ -23,7 +23,7 @@ import de.markusressel.datamunch.data.persistence.JailPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.JailEntity
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
-import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
+import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
 
@@ -40,7 +40,7 @@ class JailDetailActivity : DetailActivityBase<JailEntity>() {
     override val headerTextString: String
         get() = getEntity().jail_host
 
-    override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
+    override val tabItems: List<TabPageConstructor>
         get() = listOf(R.string.details to ::JailDetailContentFragment,
                        R.string.services to ::JailServicesContentFragment,
                        R.string.shell to ::JailShellContentFragment)

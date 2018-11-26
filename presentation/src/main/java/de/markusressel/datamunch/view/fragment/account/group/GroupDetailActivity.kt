@@ -23,7 +23,7 @@ import de.markusressel.datamunch.data.persistence.GroupPersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.GroupEntity
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
-import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
+import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
 
@@ -40,7 +40,7 @@ class GroupDetailActivity : DetailActivityBase<GroupEntity>() {
     override val headerTextString: String
         get() = getEntity().bsdgrp_group
 
-    override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
+    override val tabItems: List<TabPageConstructor>
         get() = listOf(R.string.details to ::GroupDetailContentFragment)
 
 

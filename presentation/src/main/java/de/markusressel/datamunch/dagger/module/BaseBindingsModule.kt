@@ -172,6 +172,9 @@ abstract class BaseBindingsModule {
     internal abstract fun SystemPage(): SystemPage
 
     @ContributesAndroidInjector
+    internal abstract fun AboutPage(): AboutPage
+
+    @ContributesAndroidInjector
     internal abstract fun UserDetailActivity(): UserDetailActivity
 
     @ContributesAndroidInjector

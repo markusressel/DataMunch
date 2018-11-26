@@ -92,19 +92,19 @@ object DrawerItemHolder {
             icon = MaterialDesignIconic.Icon.gmi_info,
             selectable = false)
 
-    fun fromId(drawerItemIdentifier: Long): DrawerMenuItem? {
+    fun fromId(drawerItemIdentifier: Int): DrawerMenuItem? {
         return when (drawerItemIdentifier) {
-            Status.identifier -> Status
-            Accounts.identifier -> Accounts
-            Services.identifier -> Services
-            Sharing.identifier -> Sharing
-            Storage.identifier -> Storage
-            Jails.identifier -> Jails
-            Plugins.identifier -> Plugins
-            System.identifier -> System
-            Tasks.identifier -> Tasks
-            Settings.identifier -> Settings
-            About.identifier -> About
+            Status.id -> Status
+            Accounts.id -> Accounts
+            Services.id -> Services
+            Sharing.id -> Sharing
+            Storage.id -> Storage
+            Jails.id -> Jails
+            Plugins.id -> Plugins
+            System.id -> System
+            Tasks.id -> Tasks
+            Settings.id -> Settings
+            About.id -> About
             else -> {
                 Timber
                         .w { "Unknown menu item identifier: $drawerItemIdentifier" }

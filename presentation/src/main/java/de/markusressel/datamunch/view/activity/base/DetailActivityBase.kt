@@ -35,7 +35,7 @@ import de.markusressel.commons.random.random
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.view.component.LockComponent
-import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
+import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import kotlinx.android.synthetic.main.activity_item_detail.*
 import kotlinx.android.synthetic.main.item_detail__header_logo.*
 
@@ -59,7 +59,7 @@ abstract class DetailActivityBase<EntityType : Any> : DaggerSupportActivityBase(
 
     protected abstract val headerTextString: String
 
-    abstract val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
+    abstract val tabItems: List<TabPageConstructor>
 
     private val headerMap: MutableMap<Int, HeaderDesign> = mutableMapOf()
     private val usedHeaders: MutableSet<HeaderConfig> = mutableSetOf()

@@ -23,7 +23,7 @@ import de.markusressel.datamunch.data.persistence.ServicePersistenceManager
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.data.persistence.entity.ServiceEntity
 import de.markusressel.datamunch.view.activity.base.DetailActivityBase
-import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
+import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
 import javax.inject.Inject
 
 
@@ -40,7 +40,7 @@ class ServiceDetailActivity : DetailActivityBase<ServiceEntity>() {
     override val headerTextString: String
         get() = "${getEntity().id}"
 
-    override val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
+    override val tabItems: List<TabPageConstructor>
         get() = listOf(R.string.details to ::ServiceDetailContentFragment)
 
 

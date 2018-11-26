@@ -33,6 +33,11 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.rxkotlin.toObservable
 
 /**
+ * The constructor for a page in the adapter
+ */
+typealias TabPageConstructor = Pair<Int, () -> Fragment>
+
+/**
  * Created by Markus on 14.02.2018.
  */
 abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
@@ -46,7 +51,7 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
 
     private var currentPage: Int by savedInstanceState(0)
 
-    abstract val tabItems: List<Pair<Int, () -> DaggerSupportFragmentBase>>
+    abstract val tabItems: List<TabPageConstructor>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super
@@ -54,6 +59,18 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
 
         viewPager = view.findViewById(R.id.viewPager) as ViewPager
         tabNavigation = view.findViewById(R.id.tabBar) as NavigationTabStrip
+
+        if (tabItems.isEmpty()) {
+            throw IllegalStateException("No tabs defined for this TabNavigationFragment!")
+        }
+
+        // Hide TabBar if only a single element is used
+        // this has some performance overhead through as the adapter
+        // is still being created and used so when possible DaggerSupportFragmentBase
+        // should be preferred
+        if (tabItems.size == 1) {
+            tabNavigation.visibility = View.GONE
+        }
 
         setupViewPager()
 
@@ -109,10 +126,7 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
                     // convert from StringRes to String
                     getString(it.first)
                 }.toList().toObservable())
-                .map {
-                    it
-                            .toTypedArray()
-                }
+                .map { it.toTypedArray() }
                 .bindToLifecycle(this)
                 .subscribeBy(onSuccess = {
                     tabNavigation
@@ -127,7 +141,7 @@ abstract class TabNavigationFragment : DaggerSupportFragmentBase() {
 
         tabNavigation
                 .onTabStripSelectedIndexListener = object :
-            NavigationTabStrip.OnTabStripSelectedIndexListener {
+                NavigationTabStrip.OnTabStripSelectedIndexListener {
             override fun onStartTabSelected(title: String?, index: Int) {
                 onTabItemSelected(index, false)
             }
