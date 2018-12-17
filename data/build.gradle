@@ -1,8 +1,4 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'io.objectbox' /*
+/*
  * DataMunch by Markus Ressel
  * Copyright (c) 2018.
  *
@@ -18,7 +14,13 @@ apply plugin: 'io.objectbox' /*
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */ // after applying Android plugin
+ */
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'io.objectbox' // after applying Android plugin
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -66,10 +68,7 @@ dependencies {
     // Kotlin bindings for GSON
     implementation "com.github.salomonbrys.kotson:kotson:${rootProject.ext.kotsonVersion}"
     implementation "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}"
-    implementation "androidx.annotation:annotation:1.0.0"
-
-    // Android Architecture Components
-//    implementation "androidx.core:core-ktx:$aacAndroidKtxVersion"
+    implementation "androidx.annotation:annotation:1.0.1"
 
     // Logging
     api "com.github.ajalt:timberkt:${rootProject.ext.timberKtVersion}"

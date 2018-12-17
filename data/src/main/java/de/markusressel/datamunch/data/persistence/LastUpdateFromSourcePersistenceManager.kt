@@ -30,7 +30,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class LastUpdateFromSourcePersistenceManager @Inject constructor() :
-    PersistenceManagerBase<LastUpdateFromSourceEntity>(LastUpdateFromSourceEntity::class) {
+        PersistenceManagerBase<LastUpdateFromSourceEntity>(LastUpdateFromSourceEntity::class) {
 
     /**
      * Set the "last updated" time for the specified entity type to the current time
@@ -43,8 +43,8 @@ class LastUpdateFromSourcePersistenceManager @Inject constructor() :
 
         val existingEntity: LastUpdateFromSourceEntity? = getEntity(entityModelId)
         val newEntity = when (existingEntity != null) {
-            true -> LastUpdateFromSourceEntity(existingEntity!!.entityId,
-                                               existingEntity.entityModelId, currentTime)
+            true -> LastUpdateFromSourceEntity(existingEntity.entityId,
+                    existingEntity.entityModelId, currentTime)
             false -> LastUpdateFromSourceEntity(0, entityModelId, currentTime)
         }
 
@@ -61,8 +61,7 @@ class LastUpdateFromSourcePersistenceManager @Inject constructor() :
     @CheckResult
     fun getLastUpdated(entityModelId: Long): Long {
         val existingEntity: LastUpdateFromSourceEntity? = getEntity(entityModelId)
-        return existingEntity?.timeInMilliseconds
-                ?: 0
+        return existingEntity?.timeInMilliseconds ?: 0
     }
 
     private fun getEntity(entityModelId: Long): LastUpdateFromSourceEntity? {
@@ -72,6 +71,5 @@ class LastUpdateFromSourcePersistenceManager @Inject constructor() :
                 .build()
                 .findFirst()
     }
-
 
 }
