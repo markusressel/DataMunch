@@ -48,6 +48,7 @@ import de.markusressel.datamunch.navigation.DrawerItemHolder.Settings
 import de.markusressel.datamunch.navigation.DrawerMenuItem
 import de.markusressel.datamunch.view.component.LockComponent
 import de.markusressel.datamunch.view.component.LockComponent.Companion.isScreenLocked
+import de.markusressel.datamunch.view.fragment.preferences.MainPreferenceFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
@@ -297,19 +298,24 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
             return
         }
 
-        // special case for preferences
-        // TODO: find a way to pass onBackPressed to PreferenceFragment
-//        val preferenceFragment: Fragment? = supportFragmentManager
-//                .findFragmentByTag(navigator.currentState.drawerMenuItem.navigationPage.tag)
-//        if (preferenceFragment is MainPreferenceFragment && preferenceFragment.isVisible) {
-//            if (preferenceFragment.onBackPressed()) {
-//                return
-//            }
+        // pass onBack event to fragments
+        val navHost = supportFragmentManager.findFragmentById(R.id.navHostFragment)
+        val currentlyVisibleFragment = navHost?.childFragmentManager?.primaryNavigationFragment
+        when (currentlyVisibleFragment) {
+            is MainPreferenceFragment -> {
+                if (currentlyVisibleFragment.onBackPressed()) {
+                    return
+                }
+            }
+        }
+
+        navController.navigateUp()
+        super.onBackPressed()
+
+        // TODO: update drawer selection on back press
+//        if (previousPage != null) {
+//            navigationDrawer.setSelection(previousPage.drawerMenuItem.identifier, false)
+//            return
 //        }
-
-        // TODO: update drawer selection accordingly
-
-        super
-                .onBackPressed()
     }
 }
