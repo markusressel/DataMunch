@@ -17,8 +17,6 @@
   -->
 
 <resources>
-    <string name="app_name">DataMunch</string>
-
     <string name="menu_item_status">Status</string>
     <string name="menu_item_accounts">Konten</string>
     <string name="menu_item_services">Dienste</string>

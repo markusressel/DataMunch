@@ -19,9 +19,6 @@
 package de.markusressel.datamunch.view.fragment.pages
 
 import androidx.core.content.ContextCompat
-import com.mikepenz.aboutlibraries.Libs
-import com.mikepenz.aboutlibraries.LibsBuilder
-import com.mikepenz.aboutlibraries.util.Colors
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.view.fragment.base.TabNavigationFragment
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
@@ -57,6 +54,10 @@ class AboutPage : TabNavigationFragment() {
                 }
 
                 LibsBuilder()
+                        .withAboutIconShown(true)
+                        .withAboutVersionShown(true)
+                        .withAboutAppName(getString(R.string.app_name))
+                        .withAboutDescription(getString(R.string.app_description))
                         .withActivityStyle(aboutLibTheme)
                         .withActivityColor(
                                 Colors(ContextCompat.getColor(context, R.color.primaryColor),
