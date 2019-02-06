@@ -17,9 +17,9 @@ buildscript {
 
         javaxAnnotationVersion = "10.0-b28"
         dagger2Version = "2.16"
-        aboutlibrariesVersion = "6.2.0"
-        materialdrawerVersion = "6.1.1"
-        iconicsVersion = "3.1.0"
+        aboutlibrariesVersion = "6.2.2"
+        materialdrawerVersion = "6.1.2"
+        iconicsVersion = "3.2.0"
 
         rxKotlinVersion = "2.2.0"
         rxBindingVersion = "2.1.1"
