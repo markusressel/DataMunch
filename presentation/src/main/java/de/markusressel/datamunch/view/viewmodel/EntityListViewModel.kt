@@ -39,7 +39,7 @@ abstract class EntityListViewModel<EntityType : Any> : ViewModel() {
     }
 
     companion object {
-        private val DEFAULT_PAGING_SIZE = 1
+        private const val DEFAULT_PAGING_SIZE = 1
     }
 
 }

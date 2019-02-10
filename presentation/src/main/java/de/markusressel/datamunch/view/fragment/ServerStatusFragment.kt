@@ -24,7 +24,7 @@ import android.view.*
 import androidx.annotation.CallSuper
 import androidx.lifecycle.Lifecycle
 import com.github.ajalt.timberkt.Timber
-import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import com.mikepenz.iconics.typeface.library.materialdesigniconic.MaterialDesignIconic
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
