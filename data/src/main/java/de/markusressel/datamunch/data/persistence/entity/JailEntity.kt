@@ -18,8 +18,8 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
-import de.markusressel.freenasrestapiclient.library.jails.jail.JailModel
+import de.markusressel.datamunch.data.EntityWithId
+import de.markusressel.freenasrestapiclient.api.v1.jails.jail.JailModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -37,7 +37,12 @@ data class JailEntity(@Id var entityId: Long, val id: Long, val jail_alias_bridg
                       val jail_ipv4: String?, val jail_ipv4_netmask: String?,
                       val jail_ipv6: String?, val jail_ipv6_prefix: String?, val jail_mac: String?,
                       val jail_nat: Boolean, val jail_status: String?, val jail_type: String?,
-                      val jail_vnet: Boolean) : IdentifiableListItem {
+                      val jail_vnet: Boolean) : EntityWithId {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = id
 

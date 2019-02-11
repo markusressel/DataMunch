@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import io.objectbox.android.ObjectBoxDataSource
 import io.objectbox.query.Query
@@ -11,7 +12,7 @@ import io.objectbox.query.Query
 /**
  * Base class for implementing a ViewModel for item lists
  */
-abstract class EntityListViewModel<EntityType : Any> : ViewModel() {
+abstract class EntityListViewModel<EntityType : EntityWithId> : ViewModel() {
 
     private var listLiveData: LiveData<PagedList<EntityType>>? = null
 

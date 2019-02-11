@@ -37,7 +37,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
-import de.markusressel.freenasrestapiclient.library.plugins.PluginModel
+import de.markusressel.freenasrestapiclient.api.v1.plugins.PluginModel
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -82,13 +82,11 @@ class PluginsFragment : ListFragmentBase<PluginModel, PluginEntity>() {
     }
 
     override fun loadListDataFromSource(): Single<List<PluginModel>> {
-        return freeNasWebApiClient
-                .getPlugins()
+        return freeNasWebApiClient.getPlugins()
     }
 
     override fun mapToEntity(it: PluginModel): PluginEntity {
-        return it
-                .asEntity()
+        return it.asEntity()
     }
 
     override fun getAllSortCriteria(): List<SortOption<PluginEntity>> {

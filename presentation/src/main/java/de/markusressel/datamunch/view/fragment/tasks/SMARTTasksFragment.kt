@@ -37,7 +37,7 @@ import de.markusressel.datamunch.data.persistence.entity.smart.asEntity
 import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
-import de.markusressel.freenasrestapiclient.library.tasks.smart.SMARTTaskModel
+import de.markusressel.freenasrestapiclient.api.v1.tasks.smart.SMARTTaskModel
 import io.reactivex.Single
 import javax.inject.Inject
 

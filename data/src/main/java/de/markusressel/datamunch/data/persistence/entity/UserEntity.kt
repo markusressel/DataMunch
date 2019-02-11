@@ -18,9 +18,9 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.SearchableListItem
-import de.markusressel.freenasrestapiclient.library.account.user.UserModel
+import de.markusressel.freenasrestapiclient.api.v1.account.user.UserModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -35,7 +35,12 @@ data class UserEntity(@Id var entityId: Long, val id: Long,
                       val bsdusr_locked: Boolean, val bsdusr_password_disabled: Boolean,
                       val bsdusr_shell: String, val bsdusr_smbhash: String, val bsdusr_uid: Long,
                       val bsdusr_sshpubkey: String, val bsdusr_unixhash: String,
-                      val bsdusr_username: String, val bsdusr_sudo: Boolean) : IdentifiableListItem, SearchableListItem {
+                      val bsdusr_username: String, val bsdusr_sudo: Boolean) : EntityWithId, SearchableListItem {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = id
 

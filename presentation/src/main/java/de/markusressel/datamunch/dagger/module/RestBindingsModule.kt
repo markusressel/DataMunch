@@ -20,7 +20,7 @@ package de.markusressel.datamunch.dagger.module
 
 import dagger.Module
 import dagger.Provides
-import de.markusressel.freenasrestapiclient.library.FreeNasWebApiClient
+import de.markusressel.freenasrestapiclient.api.v1.FreeNasRestApiV1Client
 import javax.inject.Singleton
 
 /**
@@ -35,8 +35,8 @@ abstract class RestBindingsModule {
         @Provides
         @Singleton
         @JvmStatic
-        internal fun provideRestClient(): FreeNasWebApiClient {
-            return FreeNasWebApiClient()
+        internal fun provideRestClient(): FreeNasRestApiV1Client {
+            return FreeNasRestApiV1Client()
         }
 
     }

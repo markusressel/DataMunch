@@ -18,9 +18,9 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.SearchableListItem
-import de.markusressel.freenasrestapiclient.library.jails.template.TemplateModel
+import de.markusressel.freenasrestapiclient.api.v1.jails.template.TemplateModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -30,7 +30,12 @@ import io.objectbox.annotation.Id
 @Entity
 data class TemplateEntity(@Id var entityId: Long, val id: Long, val jt_arch: String,
                           val jt_instances: Long, val jt_name: String, val jt_os: String,
-                          val jt_url: String) : IdentifiableListItem, SearchableListItem {
+                          val jt_url: String) : EntityWithId, SearchableListItem {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = id
 

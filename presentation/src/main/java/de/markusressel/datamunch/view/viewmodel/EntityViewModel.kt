@@ -1,6 +1,7 @@
 package de.markusressel.datamunch.view.viewmodel
 
 import androidx.lifecycle.ViewModel
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import io.objectbox.android.ObjectBoxLiveData
 import io.objectbox.query.Query
@@ -8,7 +9,7 @@ import io.objectbox.query.Query
 /**
  * Base class for implementing a ViewModel for single items
  */
-abstract class EntityViewModel<EntityType : Any> : ViewModel() {
+abstract class EntityViewModel<EntityType : EntityWithId> : ViewModel() {
 
     private var entityLiveData: ObjectBoxLiveData<EntityType>? = null
 

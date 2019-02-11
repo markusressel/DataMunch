@@ -18,9 +18,9 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.SearchableListItem
-import de.markusressel.freenasrestapiclient.library.storage.task.TaskModel
+import de.markusressel.freenasrestapiclient.api.v1.storage.task.TaskModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -32,7 +32,12 @@ data class TaskEntity(@Id var entityId: Long, val id: Long, val task_ret_count: 
                       val task_repeat_unit: String, val task_enabled: Boolean,
                       val task_recursive: Boolean, val task_end: String, val task_interval: Long,
                       val task_byweekday: String, val task_begin: String,
-                      val task_filesystem: String, val task_ret_unit: String) : IdentifiableListItem, SearchableListItem {
+                      val task_filesystem: String, val task_ret_unit: String) : EntityWithId, SearchableListItem {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = id
 

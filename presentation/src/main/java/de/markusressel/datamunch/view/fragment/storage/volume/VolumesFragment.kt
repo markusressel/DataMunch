@@ -39,7 +39,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
-import de.markusressel.freenasrestapiclient.library.storage.volume.VolumeModel
+import de.markusressel.freenasrestapiclient.api.v1.storage.volume.VolumeModel
 import io.objectbox.kotlin.query
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy

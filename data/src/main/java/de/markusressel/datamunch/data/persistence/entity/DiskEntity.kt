@@ -18,8 +18,8 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
-import de.markusressel.freenasrestapiclient.library.storage.disk.DiskModel
+import de.markusressel.datamunch.data.EntityWithId
+import de.markusressel.freenasrestapiclient.api.v1.storage.disk.DiskModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -33,7 +33,12 @@ data class DiskEntity(@Id var entityId: Long, val disk_acousticlevel: String,
                       val disk_togglesmart: Boolean, val disk_hddstandby: String,
                       val disk_transfermode: String, val disk_multipath_member: String,
                       val disk_description: String, val disk_smartoptions: String,
-                      val disk_expiretime: Long?, val disk_name: String) : IdentifiableListItem {
+                      val disk_expiretime: Long?, val disk_name: String) : EntityWithId {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = entityId
 

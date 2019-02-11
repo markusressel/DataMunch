@@ -18,6 +18,7 @@
 
 package de.markusressel.datamunch.data.persistence.base
 
+import de.markusressel.datamunch.data.EntityWithId
 import io.objectbox.Box
 import io.objectbox.BoxStore
 import io.objectbox.kotlin.boxFor
@@ -29,25 +30,21 @@ import kotlin.reflect.KClass
  *
  * Created by Markus on 30.01.2018.
  */
-open class PersistenceManagerBase<EntityType : Any>(val entityType: KClass<EntityType>) {
+abstract class PersistenceManagerBase<EntityType : EntityWithId>(val entityType: KClass<EntityType>) {
 
     @Inject
     protected lateinit var boxStore: BoxStore
 
     private val box: Box<EntityType> by lazy {
-        boxStore
-                .boxFor(entityType)
+        boxStore.boxFor(entityType)
     }
 
     /**
      * Get the model id for this entity type (same for all entities of equal class type without dependency on the class name)
      */
     fun getEntityModelId(): Int {
-        val entityClass: Class<EntityType> = entityType
-                .java
-
-        return boxStore
-                .getEntityTypeIdOrThrow(entityClass)
+        val entityClass: Class<EntityType> = entityType.java
+        return boxStore.getEntityTypeIdOrThrow(entityClass)
     }
 
     /**
@@ -61,10 +58,40 @@ open class PersistenceManagerBase<EntityType : Any>(val entityType: KClass<Entit
      * Removes database files entirely
      */
     fun clearData() {
-        boxStore
-                .close()
-        boxStore
-                .deleteAllFiles()
+        boxStore.close()
+        boxStore.deleteAllFiles()
     }
+
+    /**
+     * Inserts missing, updates existing and deletes entities from persistence not present in the given dataset.
+     */
+    fun insertUpdateAndCleanup(data: List<EntityType>) {
+        // TODO: insert/update existing entities
+        val existingItemIdsToEntities = standardOperation().all.map { it.getItemId() to it }.toMap()
+        data.forEach {
+            if (it.getItemId() in existingItemIdsToEntities.keys) {
+                // there is already an existing entity for this which we will overwrite (by using the same entityId)
+                val existingEntity = existingItemIdsToEntities.getValue(it.getItemId())
+                it.setDbEntityId(existingEntity.getDbEntityId())
+                standardOperation().put(it)
+            } else {
+                // this is a new entity, just insert it
+                standardOperation().put(it)
+            }
+        }
+
+        deleteMissing(data)
+    }
+
+    private fun deleteMissing(data: List<EntityType>) {
+        val entityIdsToPreserve = data.map { it.getItemId() }
+        val allEntities = standardOperation().all
+        val partitionedIds = allEntities.partition {
+            it.getItemId() in entityIdsToPreserve
+        }
+
+        standardOperation().removeByKeys(partitionedIds.second.map { it.getDbEntityId() })
+    }
+
 
 }

@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.github.florent37.materialviewpager.header.HeaderDesign
 import de.markusressel.commons.random.random
 import de.markusressel.datamunch.R
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.view.fragment.base.DaggerSupportFragmentBase
 import de.markusressel.datamunch.view.fragment.base.TabPageConstructor
@@ -39,7 +40,7 @@ import kotlinx.android.synthetic.main.item_detail__header_logo.*
 /**
  * Created by Markus on 15.02.2018.
  */
-abstract class DetailFragmentBase<EntityType : Any> : DaggerSupportFragmentBase() {
+abstract class DetailFragmentBase<EntityType : EntityWithId> : DaggerSupportFragmentBase() {
 
     override val layoutRes: Int
         get() = R.layout.fragment_item_detail

@@ -18,6 +18,7 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.datamunch.data.EntityWithId
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -26,4 +27,13 @@ import io.objectbox.annotation.Id
  */
 @Entity
 data class SortOptionEntity(@Id var entityId: Long, val id: Long, val type: Long,
-                            val reversed: Boolean)
+                            val reversed: Boolean) : EntityWithId {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
+
+    override fun getItemId(): Long = id
+
+}

@@ -39,7 +39,7 @@ import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.FabConfig
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
-import de.markusressel.freenasrestapiclient.library.storage.snapshot.SnapshotModel
+import de.markusressel.freenasrestapiclient.api.v1.storage.snapshot.SnapshotModel
 import io.reactivex.Single
 import javax.inject.Inject
 

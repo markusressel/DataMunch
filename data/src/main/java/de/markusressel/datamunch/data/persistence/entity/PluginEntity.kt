@@ -18,9 +18,9 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.SearchableListItem
-import de.markusressel.freenasrestapiclient.library.plugins.PluginModel
+import de.markusressel.freenasrestapiclient.api.v1.plugins.PluginModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -32,7 +32,12 @@ data class PluginEntity(@Id var entityId: Long, val id: Long, val plugin_api_ver
                         val plugin_arch: String, val plugin_enabled: Boolean, val plugin_ip: String,
                         val plugin_jail: String, val plugin_name: String, val plugin_path: String,
                         val plugin_pbiname: String, val plugin_port: Int,
-                        val plugin_version: String) : IdentifiableListItem, SearchableListItem {
+                        val plugin_version: String) : EntityWithId, SearchableListItem {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = id
 

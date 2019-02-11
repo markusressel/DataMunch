@@ -18,9 +18,9 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.SearchableListItem
-import de.markusressel.freenasrestapiclient.library.sharing.afp.AfpShareModel
+import de.markusressel.freenasrestapiclient.api.v1.sharing.afp.AfpShareModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -33,7 +33,12 @@ data class AfpShareEntity(@Id var entityId: Long, val id: Long, val afp_upriv: B
                           val afp_nostat: Boolean, val afp_name: String, val afp_nodev: Boolean,
                           val afp_rw: String, val afp_allow: String, val afp_dperm: String,
                           val afp_ro: String, val afp_sharepw: String, val afp_path: String,
-                          val afp_timemachine: Boolean, val afp_umask: String) : IdentifiableListItem, SearchableListItem {
+                          val afp_timemachine: Boolean, val afp_umask: String) : EntityWithId, SearchableListItem {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = id
 

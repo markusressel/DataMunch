@@ -18,9 +18,9 @@
 
 package de.markusressel.datamunch.data.persistence.entity.smart
 
-import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.SearchableListItem
-import de.markusressel.freenasrestapiclient.library.tasks.smart.SMARTTaskModel
+import de.markusressel.freenasrestapiclient.api.v1.tasks.smart.SMARTTaskModel
 import io.objectbox.annotation.Backlink
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -34,7 +34,12 @@ data class SMARTTaskEntity(@Id var entityId: Long = 0, val id: Long = 0,
                            val smarttest_dayweek: String = "", val smarttest_daymonth: String = "",
                            val smarttest_month: String = "", val smarttest_type: String = "",
                            val smarttest_hour: String = "", val smarttest_desc: String = "") :
-    IdentifiableListItem, SearchableListItem {
+        EntityWithId, SearchableListItem {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = id
 

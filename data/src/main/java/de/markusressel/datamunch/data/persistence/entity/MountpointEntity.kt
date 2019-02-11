@@ -18,8 +18,8 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
-import de.markusressel.freenasrestapiclient.library.jails.mountpoint.MountpointModel
+import de.markusressel.datamunch.data.EntityWithId
+import de.markusressel.freenasrestapiclient.api.v1.jails.mountpoint.MountpointModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -29,7 +29,12 @@ import io.objectbox.annotation.Id
 @Entity
 data class MountpointEntity(@Id var entityId: Long, val id: Long, val destination: String,
                             val jail: String, val mounted: Boolean, val readonly: Boolean,
-                            val source: String) : IdentifiableListItem {
+                            val source: String) : EntityWithId {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = id
 

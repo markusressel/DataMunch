@@ -18,9 +18,9 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.SearchableListItem
-import de.markusressel.freenasrestapiclient.library.sharing.cifs.CifsShareModel
+import de.markusressel.freenasrestapiclient.api.v1.sharing.cifs.CifsShareModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -34,7 +34,12 @@ data class CifsShareEntity(@Id var entityId: Long, val id: Long, val cifs_hostsa
                            val cifs_showhiddenfiles: Boolean, val cifs_hostsdeny: String,
                            val cifs_recyclebin: Boolean, val cifs_auxsmbconf: String,
                            val cifs_comment: String, val cifs_path: String, val cifs_ro: Boolean,
-                           val cifs_guestonly: Boolean, val cifs_browsable: Boolean) : IdentifiableListItem, SearchableListItem {
+                           val cifs_guestonly: Boolean, val cifs_browsable: Boolean) : EntityWithId, SearchableListItem {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = id
 

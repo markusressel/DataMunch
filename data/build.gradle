@@ -91,7 +91,7 @@ dependencies {
     // sshj (SSH client)
     // implementation 'com.hierynomus:sshj:0.23.0'
 
-    api('com.github.markusressel:freenas-rest-api-client:dev-SNAPSHOT') {
+    api('com.github.markusressel.freenas-rest-api-client:api_v1:dev-SNAPSHOT') {
         exclude module: 'app'
         transitive = true
         changing = true

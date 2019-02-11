@@ -18,9 +18,9 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.SearchableListItem
-import de.markusressel.freenasrestapiclient.library.system.update.UpdateModel
+import de.markusressel.freenasrestapiclient.api.v1.system.update.UpdateModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -28,7 +28,12 @@ import io.objectbox.annotation.Id
  * Created by Markus on 30.01.2018.
  */
 @Entity
-data class UpdateEntity(@Id var entityId: Long, val name: String, val operation: String) : IdentifiableListItem, SearchableListItem {
+data class UpdateEntity(@Id var entityId: Long, val name: String, val operation: String) : EntityWithId, SearchableListItem {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = entityId
 

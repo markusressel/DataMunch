@@ -39,7 +39,7 @@ import com.mikepenz.iconics.typeface.library.materialdesigniconic.MaterialDesign
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import de.markusressel.datamunch.R
-import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.freebsd.FreeBSDServerManager
 import de.markusressel.datamunch.data.persistence.LastUpdateFromSourcePersistenceManager
 import de.markusressel.datamunch.data.persistence.SortOptionPersistenceManager
@@ -57,14 +57,13 @@ import kotlinx.android.synthetic.main.layout_empty_list.*
 import java.util.*
 import java.util.concurrent.CancellationException
 import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 
 /**
  * Created by Markus on 29.01.2018.
  */
-abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListItem> : DaggerSupportFragmentBase() {
+abstract class ListFragmentBase<ModelType : Any, EntityType : EntityWithId> : DaggerSupportFragmentBase() {
 
     override val layoutRes: Int
         get() = R.layout.fragment_recyclerview
@@ -84,9 +83,6 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
     lateinit var lastUpdatedManager: LastUpdateFromSourcePersistenceManager
 
     internal var currentSearchFilter: String by savedInstanceState("")
-
-    private val persistenceLoaderId = loaderIdCounter
-            .getAndIncrement()
 
     @Inject
     lateinit var sortOptionPersistenceHandler: SortOptionPersistenceManager
@@ -169,25 +165,21 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
     }
 
     override fun initComponents(context: Context) {
-        super
-                .initComponents(context)
+        super.initComponents(context)
         loadingComponent
         optionsMenuComponent
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        super
-                .onCreateOptionsMenu(menu, inflater)
-        optionsMenuComponent
-                .onCreateOptionsMenu(menu, inflater)
+        super.onCreateOptionsMenu(menu, inflater)
+        optionsMenuComponent.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (super.onOptionsItemSelected(item)) {
             return true
         }
-        return optionsMenuComponent
-                .onOptionsItemSelected(item)
+        return optionsMenuComponent.onOptionsItemSelected(item)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -207,8 +199,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
         val layoutManager = StaggeredGridLayoutManager(
                 resources.getInteger(R.integer.list_column_count),
                 StaggeredGridLayoutManager.VERTICAL)
-        recyclerView
-                .layoutManager = layoutManager
+        recyclerView.layoutManager = layoutManager
 
         setupFabs()
     }
@@ -220,49 +211,35 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
     abstract fun createEpoxyController(): PagedListEpoxyController<EntityType>
 
     override fun onStart() {
-        super
-                .onStart()
+        super.onStart()
 
-        Bus
-                .observe<SortOptionSelectionDialogDismissedEvent>()
-                .subscribe {
-                    // reload list with current sort options
-                    // TODO: SortOptions have to be reactive
-                }
-                .registerInBus(this)
+        Bus.observe<SortOptionSelectionDialogDismissedEvent>().subscribe {
+            // reload list with current sort options
+            // TODO: SortOptions have to be reactive
+        }.registerInBus(this)
     }
 
     override fun onResume() {
-        super
-                .onResume()
+        super.onResume()
 
         if (System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(
                         5) > getLastUpdatedFromSource()) {
-            Timber
-                    .d { "Persisted list data is old, refreshing from source" }
-            //            reloadDataFromSource()
+            Timber.d { "Persisted list data is old, refreshing from source" }
+            // reloadDataFromSource()
         }
     }
 
     private fun setupFabs() {
-        fabConfig
-                .left
-                .addAll(getLeftFabs())
-        fabConfig
-                .right
-                .addAll(getRightFabs())
+        fabConfig.left.addAll(getLeftFabs())
+        fabConfig.right.addAll(getRightFabs())
 
         // setup fabs
-        fabConfig
-                .left
-                .forEach {
-                    addFab(true, it)
-                }
-        fabConfig
-                .right
-                .forEach {
-                    addFab(false, it)
-                }
+        fabConfig.left.forEach {
+            addFab(true, it)
+        }
+        fabConfig.right.forEach {
+            addFab(false, it)
+        }
 
         updateFabVisibility(View.VISIBLE)
     }
@@ -276,8 +253,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
     }
 
     private fun addFab(isLeft: Boolean, fab: FabConfig.Fab) {
-        val inflater = LayoutInflater
-                .from(context)
+        val inflater = LayoutInflater.from(context)
 
         val layout = when (isLeft) {
             true -> R.layout.view_fab_left
@@ -289,22 +265,16 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                 false) as FloatingActionButton
 
         // icon
-        fabView
-                .setImageDrawable(iconHandler.getFabIcon(fab.icon))
+        fabView.setImageDrawable(iconHandler.getFabIcon(fab.icon))
         // fab color
-        fab
-                .color
-                ?.let {
-                    fabView
-                            .backgroundTintList = ContextCompat
-                            .getColorStateList(context as Context, it)
-                }
+        fab.color?.let {
+            fabView.backgroundTintList = ContextCompat.getColorStateList(context as Context, it)
+        }
 
         // behaviour
         val fabBehavior = ScrollAwareFABBehavior()
         val params = fabView.layoutParams as CoordinatorLayout.LayoutParams
-        params
-                .behavior = fabBehavior
+        params.behavior = fabBehavior
 
         // listeners
         RxView
@@ -342,11 +312,9 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                 }
 
 
-        fabButtonViews
-                .add(fabView)
+        fabButtonViews.add(fabView)
         val parent = recyclerView.parent as ViewGroup
-        parent
-                .addView(fabView)
+        parent.addView(fabView)
     }
 
     /**
@@ -367,20 +335,15 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
         }
 
         // extend it with other criteria
-        sortOptions
-                .drop(1)
-                .forEach { criteria ->
-                    comparator = if (criteria.reversed) {
-                        comparator
-                                .thenByDescending(criteria.selector)
-                    } else {
-                        comparator
-                                .thenBy(criteria.selector)
-                    }
-                }
+        sortOptions.drop(1).forEach { criteria ->
+            comparator = if (criteria.reversed) {
+                comparator.thenByDescending(criteria.selector)
+            } else {
+                comparator.thenBy(criteria.selector)
+            }
+        }
 
-        return listData
-                .sortedWith(comparator)
+        return listData.sortedWith(comparator)
     }
 
     /**
@@ -404,11 +367,9 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                 .build()
                 .find()
 
-        val sortOptions = sortOptionEntities
-                .map {
-                    SortOption
-                            .from(it.id)
-                }
+        val sortOptions = sortOptionEntities.map {
+            SortOption.from(it.id)
+        }
 
         return sortOptions as List<SortOption<EntityType>>
     }
@@ -423,8 +384,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
      * Reload list data asEntity it's original source, persist it and display it to the user afterwards
      */
     protected fun reloadDataFromSource() {
-        loadingComponent
-                .showLoading()
+        loadingComponent.showLoading()
 
         loadListDataFromSource()
                 .subscribeOn(Schedulers.io())
@@ -447,20 +407,16 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
                                         .showContent()
                             }, onError = {
                                 if (it is CancellationException) {
-                                    Timber
-                                            .d { "persisting reload from source cancelled" }
+                                    Timber.d { "persisting reload from source cancelled" }
                                 } else {
-                                    loadingComponent
-                                            .showError(it)
+                                    loadingComponent.showError(it)
                                 }
                             })
                 }, onError = {
                     if (it is CancellationException) {
-                        Timber
-                                .d { "reload from source cancelled" }
+                        Timber.d { "reload from source cancelled" }
                     } else {
-                        loadingComponent
-                                .showError(it)
+                        loadingComponent.showError(it)
                     }
                 })
     }
@@ -476,44 +432,27 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
     protected abstract fun getPersistenceHandler(): PersistenceManagerBase<EntityType>
 
     private fun persistListData(data: List<EntityType>) {
-        getPersistenceHandler()
-                .standardOperation()
-                .removeAll()
-        getPersistenceHandler()
-                .standardOperation()
-                .put(data)
+        getPersistenceHandler().insertUpdateAndCleanup(data)
     }
 
     private fun getLastUpdatedFromSource(): Long {
-        val entityModelId = getPersistenceHandler()
-                .getEntityModelId()
-        return lastUpdatedManager
-                .getLastUpdated(entityModelId.toLong())
+        val entityModelId = getPersistenceHandler().getEntityModelId()
+        return lastUpdatedManager.getLastUpdated(entityModelId.toLong())
     }
 
     private fun updateLastUpdatedFromSource() {
-        val entityModelId = getPersistenceHandler()
-                .getEntityModelId()
-        lastUpdatedManager
-                .setUpdatedNow(entityModelId.toLong())
+        val entityModelId = getPersistenceHandler().getEntityModelId()
+        lastUpdatedManager.setUpdatedNow(entityModelId.toLong())
     }
 
     private fun showEmpty() {
-        recyclerView
-                .visibility = View
-                .INVISIBLE
-        layoutEmpty
-                .visibility = View
-                .VISIBLE
+        recyclerView.visibility = View.INVISIBLE
+        layoutEmpty.visibility = View.VISIBLE
     }
 
     private fun hideEmpty() {
-        recyclerView
-                .visibility = View
-                .VISIBLE
-        layoutEmpty
-                .visibility = View
-                .INVISIBLE
+        recyclerView.visibility = View.VISIBLE
+        layoutEmpty.visibility = View.INVISIBLE
     }
 
     /**
@@ -521,9 +460,7 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
      */
     open fun loadListDataFromPersistence(): List<EntityType> {
         val persistenceHandler = getPersistenceHandler()
-        return persistenceHandler
-                .standardOperation()
-                .all
+        return persistenceHandler.standardOperation().all
     }
 
     /**
@@ -533,24 +470,14 @@ abstract class ListFragmentBase<ModelType : Any, EntityType : IdentifiableListIt
 
     private fun updateFabVisibility(visible: Int) {
         if (visible == View.VISIBLE) {
-            fabButtonViews
-                    .forEach {
-                        it
-                                .visibility = View
-                                .VISIBLE
-                    }
+            fabButtonViews.forEach {
+                it.visibility = View.VISIBLE
+            }
         } else {
-            fabButtonViews
-                    .forEach {
-                        it
-                                .visibility = View
-                                .INVISIBLE
-                    }
+            fabButtonViews.forEach {
+                it.visibility = View.INVISIBLE
+            }
         }
-    }
-
-    companion object {
-        private val loaderIdCounter: AtomicInteger = AtomicInteger()
     }
 
 }

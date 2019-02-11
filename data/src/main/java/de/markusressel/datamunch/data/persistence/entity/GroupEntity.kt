@@ -18,8 +18,8 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
-import de.markusressel.freenasrestapiclient.library.account.group.GroupModel
+import de.markusressel.datamunch.data.EntityWithId
+import de.markusressel.freenasrestapiclient.api.v1.account.group.GroupModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -28,7 +28,12 @@ import io.objectbox.annotation.Id
  */
 @Entity
 data class GroupEntity(@Id var entityId: Long, val id: Long, val bsdgrp_builtin: Boolean,
-                       val bsdgrp_gid: Long, val bsdgrp_group: String, val bsdgrp_sudo: Boolean) : IdentifiableListItem {
+                       val bsdgrp_gid: Long, val bsdgrp_group: String, val bsdgrp_sudo: Boolean) : EntityWithId {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = id
 

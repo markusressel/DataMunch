@@ -18,6 +18,7 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
+import de.markusressel.datamunch.data.EntityWithId
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -26,7 +27,16 @@ import io.objectbox.annotation.Id
  */
 @Entity
 data class LastUpdateFromSourceEntity(@Id var entityId: Long, val entityModelId: Long,
-                                      val timeInMilliseconds: Long)
+                                      val timeInMilliseconds: Long) : EntityWithId {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
+
+    override fun getItemId(): Long = entityModelId
+
+}
 
 
 

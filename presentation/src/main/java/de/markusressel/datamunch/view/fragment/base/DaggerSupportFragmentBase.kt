@@ -35,8 +35,8 @@ import de.markusressel.datamunch.R
 import de.markusressel.datamunch.preferences.KutePreferencesHolder
 import de.markusressel.datamunch.ssh.ConnectionManager
 import de.markusressel.datamunch.view.IconHandler
-import de.markusressel.freenasrestapiclient.library.BasicAuthConfig
-import de.markusressel.freenasrestapiclient.library.FreeNasWebApiClient
+import de.markusressel.freenasrestapiclient.api.v1.FreeNasRestApiV1Client
+import de.markusressel.freenasrestapiclient.core.BasicAuthConfig
 import javax.inject.Inject
 
 
@@ -73,7 +73,7 @@ abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFr
     protected lateinit var iconHandler: IconHandler
 
     @Inject
-    protected lateinit var freeNasWebApiClient: FreeNasWebApiClient
+    protected lateinit var freeNasWebApiClient: FreeNasRestApiV1Client
 
     /**
      * The layout resource for this Activity
@@ -89,12 +89,8 @@ abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFr
             viewModel.root
         } else {
             val newContainer = inflater.inflate(layoutRes, container, false) as ViewGroup
-
-            val alternative = super
-                    .onCreateView(inflater, newContainer, savedInstanceState)
-
-            alternative
-                    ?: newContainer
+            val alternative = super.onCreateView(inflater, newContainer, savedInstanceState)
+            alternative ?: newContainer
         }
     }
 
@@ -104,18 +100,13 @@ abstract class DaggerSupportFragmentBase : LifecycleFragmentBase(), HasSupportFr
     open fun createViewDataBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ViewDataBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        freeNasWebApiClient
-                .setHostname(preferencesHolder.restHost.persistedValue)
+        freeNasWebApiClient.setBaseUrl("https://${preferencesHolder.restHost.persistedValue}/${preferencesHolder.connectionApiResource.persistedValue}")
 
-        freeNasWebApiClient
-                .setApiResource(preferencesHolder.connectionApiResource.persistedValue)
-        freeNasWebApiClient
-                .setBasicAuthConfig(BasicAuthConfig(
-                        username = connectionManager.getMainSSHConnection().username,
-                        password = connectionManager.getMainSSHConnection().password))
+        freeNasWebApiClient.setBasicAuthConfig(BasicAuthConfig(
+                username = connectionManager.getMainSSHConnection().username,
+                password = connectionManager.getMainSSHConnection().password))
 
-        super
-                .onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
     }
 
 }

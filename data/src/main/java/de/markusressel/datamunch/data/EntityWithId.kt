@@ -17,7 +17,20 @@
 
 package de.markusressel.datamunch.data
 
-interface IdentifiableListItem {
+/**
+ * Interface for generic access to the id of an entity
+ */
+interface EntityWithId {
+
+    /**
+     * This id is the database entity id
+     */
+    fun getDbEntityId(): Long
+
+    /**
+     * Sets the database entity id
+     */
+    fun setDbEntityId(id: Long)
 
     /**
      * This id (and the class of an item) is used to check if two

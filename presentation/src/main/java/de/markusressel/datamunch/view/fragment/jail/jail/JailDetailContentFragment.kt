@@ -136,9 +136,7 @@ class JailDetailContentFragment : JailContentFragmentBase() {
 
                     reloadJailsFromSource()
                 }, onError = {
-                    Toast
-                            .makeText(activity, "Error! " + it.message, Toast.LENGTH_LONG)
-                            .show()
+                    Toast.makeText(activity, "Error! " + it.message, Toast.LENGTH_LONG).show()
 
                     // TODO: Show error
                     //                    loadingComponent

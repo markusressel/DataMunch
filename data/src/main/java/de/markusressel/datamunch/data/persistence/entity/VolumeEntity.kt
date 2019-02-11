@@ -18,9 +18,9 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.SearchableListItem
-import de.markusressel.freenasrestapiclient.library.storage.volume.VolumeModel
+import de.markusressel.freenasrestapiclient.api.v1.storage.volume.VolumeModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import io.objectbox.relation.ToMany
@@ -39,7 +39,12 @@ data class VolumeEntity(@Id var entityId: Long = 0, val id: Long = 0, val isRoot
                         val avail_si: String? = null,
                         val mountpoint: String = "", val vol_encrypt: Long = 0,
                         val total_si: String? = null) :
-    IdentifiableListItem, SearchableListItem {
+        EntityWithId, SearchableListItem {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = id
 

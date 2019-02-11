@@ -37,7 +37,7 @@ import de.markusressel.datamunch.data.persistence.entity.asEntity
 import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import de.markusressel.datamunch.view.fragment.base.ListFragmentBase
 import de.markusressel.datamunch.view.fragment.base.SortOption
-import de.markusressel.freenasrestapiclient.library.system.alert.AlertModel
+import de.markusressel.freenasrestapiclient.api.v1.system.alert.AlertModel
 import io.reactivex.Single
 import javax.inject.Inject
 

@@ -21,6 +21,7 @@ package de.markusressel.datamunch.view.fragment.base
 import android.os.Bundle
 import android.view.View
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.persistence.base.PersistenceManagerBase
 import de.markusressel.datamunch.view.activity.base.DetailFragmentBase
 import kotlinx.android.synthetic.main.content_accounts_user_detail.*
@@ -28,7 +29,7 @@ import kotlinx.android.synthetic.main.content_accounts_user_detail.*
 /**
  * Created by Markus on 15.02.2018.
  */
-abstract class DetailContentFragmentBase<EntityType : Any> : DaggerSupportFragmentBase() {
+abstract class DetailContentFragmentBase<EntityType : EntityWithId> : DaggerSupportFragmentBase() {
 
     val entityId: Long by lazy {
         val args = arguments

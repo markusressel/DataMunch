@@ -18,12 +18,12 @@
 package de.markusressel.datamunch.view.fragment.base
 
 import androidx.recyclerview.widget.DiffUtil
-import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.EntityWithId
 
 /**
  * Generic callback used to compare list items
  */
-class DiffCallback<T : IdentifiableListItem>(private val oldListItems: List<T>, private val newListItems: List<T>) : DiffUtil.Callback() {
+class DiffCallback<T : EntityWithId>(private val oldListItems: List<T>, private val newListItems: List<T>) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
         return oldListItems.size

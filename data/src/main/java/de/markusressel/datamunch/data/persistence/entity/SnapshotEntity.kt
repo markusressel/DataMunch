@@ -18,9 +18,9 @@
 
 package de.markusressel.datamunch.data.persistence.entity
 
-import de.markusressel.datamunch.data.IdentifiableListItem
+import de.markusressel.datamunch.data.EntityWithId
 import de.markusressel.datamunch.data.SearchableListItem
-import de.markusressel.freenasrestapiclient.library.storage.snapshot.SnapshotModel
+import de.markusressel.freenasrestapiclient.api.v1.storage.snapshot.SnapshotModel
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
@@ -30,7 +30,12 @@ import io.objectbox.annotation.Id
 @Entity
 data class SnapshotEntity(@Id var entityId: Long, val filesystem: String, val fullname: String,
                           val id: String, val mostrecent: Boolean, val name: String,
-                          val parent_type: String, val refer: String, val used: String) : IdentifiableListItem, SearchableListItem {
+                          val parent_type: String, val refer: String, val used: String) : EntityWithId, SearchableListItem {
+
+    override fun getDbEntityId(): Long = entityId
+    override fun setDbEntityId(id: Long) {
+        entityId = id
+    }
 
     override fun getItemId(): Long = entityId
 
