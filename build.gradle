@@ -43,7 +43,7 @@ buildscript {
         maven { url 'http://dl.bintray.com/gigamole/maven/' }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:3.3.0"
+        classpath "com.android.tools.build:gradle:$gradle_plugin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"
     }
