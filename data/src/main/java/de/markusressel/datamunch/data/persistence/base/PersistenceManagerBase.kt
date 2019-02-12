@@ -66,7 +66,6 @@ abstract class PersistenceManagerBase<EntityType : EntityWithId>(val entityType:
      * Inserts missing, updates existing and deletes entities from persistence not present in the given dataset.
      */
     fun insertUpdateAndCleanup(data: List<EntityType>) {
-        // TODO: insert/update existing entities
         val existingItemIdsToEntities = standardOperation().all.map { it.getItemId() to it }.toMap()
         data.forEach {
             if (it.getItemId() in existingItemIdsToEntities.keys) {

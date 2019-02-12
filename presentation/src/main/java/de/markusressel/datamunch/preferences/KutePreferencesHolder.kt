@@ -20,7 +20,7 @@ package de.markusressel.datamunch.preferences
 
 import android.content.Context
 import com.eightbitlab.rxbus.Bus
-import com.mikepenz.iconics.typeface.library.materialdesigniconic.MaterialDesignIconic
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
 import de.markusressel.datamunch.data.preferences.PreferenceDataProviderHolder
 import de.markusressel.datamunch.event.LocaleChangedEvent

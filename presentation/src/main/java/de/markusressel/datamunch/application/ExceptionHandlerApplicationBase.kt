@@ -35,44 +35,35 @@ abstract class ExceptionHandlerApplicationBase : DaggerApplicationBase() {
 
     init {
         // Set up our own UncaughtExceptionHandler to log errors we couldn't even think of
-        Thread
-                .setDefaultUncaughtExceptionHandler { thread, throwable ->
-                    try {
-                        Timber
-                                .e(throwable, "FATAL EXCEPTION")
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            try {
+                Timber.e(throwable, "FATAL EXCEPTION")
 
-                        val timeOfException = Date()
-                                .time
+                val timeOfException = Date().time
 
-                        if (isUIThread()) {
-                            applicationContext
-                                    .startActivity(UnknownErrorDialog.getNewInstanceIntent(
-                                            applicationContext, throwable, timeOfException))
-                        } else {
-                            //handle non UI thread throw uncaught exception
-                            Handler(Looper.getMainLooper())
-                                    .post {
-                                        applicationContext
-                                                .startActivity(
-                                                        UnknownErrorDialog.getNewInstanceIntent(
-                                                                applicationContext, throwable,
-                                                                timeOfException))
-                                    }
-                        }
-                    } catch (e: Exception) {
-                        Timber
-                                .e(e, "Error showing \"Unknown Error\" AlertDialog")
-                    } finally {
-                        System
-                                .exit(2) //Prevents the service/app from freezing
+                if (isUIThread()) {
+                    applicationContext.startActivity(UnknownErrorDialog.getNewInstanceIntent(
+                            applicationContext, throwable, timeOfException))
+                } else {
+                    //handle non UI thread throw uncaught exception
+                    Handler(Looper.getMainLooper()).post {
+                        applicationContext.startActivity(
+                                UnknownErrorDialog.getNewInstanceIntent(
+                                        applicationContext, throwable, timeOfException))
                     }
-
-                    // not possible without killing all app processes, including the UnkownErrorDialog!?
-                    //                if (originalUncaughtExceptionHandler != null) {
-                    // Delegates to Android's error handling
-                    //                    originalUncaughtExceptionHandler.uncaughtException(thread, throwable);
-                    //                }
                 }
+            } catch (e: Exception) {
+                Timber.e(e, "Error showing \"Unknown Error\" AlertDialog")
+            } finally {
+                System.exit(2) //Prevents the service/app from freezing
+            }
+
+            // not possible without killing all app processes, including the UnkownErrorDialog!?
+            //                if (originalUncaughtExceptionHandler != null) {
+            // Delegates to Android's error handling
+            //                    originalUncaughtExceptionHandler.uncaughtException(thread, throwable);
+            //                }
+        }
     }
 
     /**

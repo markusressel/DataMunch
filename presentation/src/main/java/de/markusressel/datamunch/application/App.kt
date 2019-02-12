@@ -80,14 +80,12 @@ class App : ExceptionHandlerApplicationBase() {
             // You should not init your app in this process.
             return
         }
-        LeakCanary
-                .install(this)
+        LeakCanary.install(this)
     }
 
     private fun plantTimberTrees() {
         if (BuildConfig.DEBUG) {
-            Timber
-                    .plant(Timber.DebugTree())
+            Timber.plant(Timber.DebugTree())
         }
     }
 

@@ -33,8 +33,7 @@ import javax.inject.Singleton
 class FreeBSDServerManager @Inject constructor() : ServerManager() {
 
     override fun setSSHConnectionConfig(vararg sshConnectionConfig: SSHConnectionConfig) {
-        super
-                .setSSHConnectionConfig(*sshConnectionConfig)
+        super.setSSHConnectionConfig(*sshConnectionConfig)
     }
 
     /**

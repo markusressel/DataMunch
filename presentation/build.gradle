@@ -138,12 +138,13 @@ dependencies {
     }
 
     // Iconics (use SVG resources)
-    implementation "com.mikepenz:iconics-core:${rootProject.ext.iconicsVersion}@aar"
-    implementation "com.mikepenz:iconics-views:${rootProject.ext.iconicsVersion}@aar"
+    implementation "com.mikepenz:iconics-core:${iconicsVersion}@aar"
+    //this adds all ui view widgets (IconicsButton, IconicsImageView, ...)
+    implementation "com.mikepenz:iconics-views:${iconicsVersion}@aar"
     // Fonts
     implementation 'com.mikepenz:google-material-typeface:3.0.1.1.original@aar'
-    implementation 'com.mikepenz:material-design-iconic-typeface:+@aar'
-    implementation 'com.mikepenz:community-material-typeface:+@aar'
+    implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.5@aar'
+    implementation 'com.mikepenz:community-material-typeface:2.7.94.1@aar'
 
     // AboutLibraries ("About" screen)
     implementation("com.mikepenz:aboutlibraries:$aboutlibrariesVersion@aar") {

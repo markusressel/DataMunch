@@ -19,7 +19,7 @@
 package de.markusressel.datamunch.navigation
 
 import com.github.ajalt.timberkt.Timber
-import com.mikepenz.iconics.typeface.library.materialdesigniconic.MaterialDesignIconic
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import de.markusressel.datamunch.R
 
 /**
