@@ -21,7 +21,7 @@ buildscript {
         materialdrawerVersion = "6.1.2"
         iconicsVersion = "3.2.1"
 
-        rxKotlinVersion = "2.2.0"
+        rxKotlinVersion = "2.3.0"
         rxBindingVersion = "2.1.1"
         rxLifecycleVersion = "2.2.1"
 
@@ -65,8 +65,8 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 //    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 
@@ -83,5 +83,5 @@ compileTestKotlin {
 
 configurations.all() {
     resolutionStrategy.force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    resolutionStrategy.force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    resolutionStrategy.force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }

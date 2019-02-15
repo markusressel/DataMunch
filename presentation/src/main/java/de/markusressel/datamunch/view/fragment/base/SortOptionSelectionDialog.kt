@@ -39,13 +39,10 @@ class SortOptionSelectionDialog : DaggerBottomSheetFragmentBase() {
     lateinit var sortOptionPersistenceHandler: SortOptionPersistenceManager
 
     private val sortOptions: List<SortOption<*>> by lazy {
-        val ortOptionIdArray = arguments
-                ?.getLongArray(KEY_SORT_OPTION_IDS)
-        ortOptionIdArray!!
-                .map {
-                    SortOption
-                            .from(it)
-                }
+        val ortOptionIdArray = arguments?.getLongArray(KEY_SORT_OPTION_IDS)
+        ortOptionIdArray!!.map {
+            SortOption.from(it)
+        }
     }
     private val entityTypeId: Long by lazy {
         arguments?.getLong(KEY_ENTITY_TYPE_ID)!!
@@ -57,10 +54,7 @@ class SortOptionSelectionDialog : DaggerBottomSheetFragmentBase() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
-
-        val containerLayout: LinearLayout = view
-                .findViewById(R.id.sortOptionsContainerLayout)
-
+        val containerLayout: LinearLayout = view.findViewById(R.id.sortOptionsContainerLayout)
         inflateViews(containerLayout, inflater)
 
         return view
@@ -68,48 +62,31 @@ class SortOptionSelectionDialog : DaggerBottomSheetFragmentBase() {
 
     @SuppressLint("InflateParams")
     private fun inflateViews(containerLayout: ViewGroup, inflater: LayoutInflater) {
-        sortOptions
-                .forEach { sortOption ->
-                    val sortOptionLayout = inflater
-                            .inflate(R.layout.item_sort_option, containerLayout, false)
+        sortOptions.forEach { sortOption ->
+            val sortOptionLayout = inflater.inflate(R.layout.item_sort_option, containerLayout, false)
+            val name: CheckBox = sortOptionLayout.findViewById(R.id.sortOptionName)
+            val orderSelector: ImageView = sortOptionLayout.findViewById(R.id.orderSelector)
+            name.text = getString(sortOption.name)
+            name.isChecked = true
 
-                    val name: CheckBox = sortOptionLayout
-                            .findViewById(R.id.sortOptionName)
+            orderSelector.rotation = when (sortOption.reversed) {
+                true -> 180F
+                false -> 0F
+            }
 
-                    val orderSelector: ImageView = sortOptionLayout
-                            .findViewById(R.id.orderSelector)
-                    name
-                            .text = getString(sortOption.name)
-                    name
-                            .isChecked = true
+            orderSelector.setOnClickListener {
+                sortOption.reversed = !sortOption.reversed
+                orderSelector.rotation = orderSelector.rotation + 180 % 360
+            }
 
-                    orderSelector
-                            .rotation = when (sortOption.reversed) {
-                        true -> 180F
-                        false -> 0F
-                    }
-
-                    orderSelector
-                            .setOnClickListener {
-                                sortOption
-                                        .reversed = !sortOption.reversed
-                                orderSelector
-                                        .rotation = orderSelector.rotation + 180 % 360
-                            }
-
-                    containerLayout
-                            .addView(sortOptionLayout)
-                }
+            containerLayout.addView(sortOptionLayout)
+        }
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
-        super
-                .onDismiss(dialog)
-
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
         persistSortOptions()
-
-        Bus
-                .send(SortOptionSelectionDialogDismissedEvent())
+        Bus.send(SortOptionSelectionDialogDismissedEvent())
     }
 
     private fun persistSortOptions() {
@@ -129,12 +106,11 @@ class SortOptionSelectionDialog : DaggerBottomSheetFragmentBase() {
                 }
 
         // save new
-        sortOptions
-                .forEach {
-                    sortOptionPersistenceHandler
-                            .standardOperation()
-                            .put(it.toEntity(entityTypeId))
-                }
+        sortOptions.forEach {
+            sortOptionPersistenceHandler
+                    .standardOperation()
+                    .put(it.toEntity(entityTypeId))
+        }
     }
 
     companion object {
@@ -144,17 +120,12 @@ class SortOptionSelectionDialog : DaggerBottomSheetFragmentBase() {
         fun newInstance(sortOptionIds: List<SortOption<*>>,
                         entityTypeId: Long): SortOptionSelectionDialog {
             val fragment = SortOptionSelectionDialog()
-            val bundle = Bundle()
-            bundle
-                    .putLongArray(KEY_SORT_OPTION_IDS, sortOptionIds.map {
-                        it
-                                .id
-                    }.toLongArray())
-            bundle
-                    .putLong(KEY_ENTITY_TYPE_ID, entityTypeId)
-
-            fragment
-                    .arguments = bundle
+            fragment.arguments = Bundle().apply {
+                putLongArray(KEY_SORT_OPTION_IDS, sortOptionIds.map {
+                    it.id
+                }.toLongArray())
+                putLong(KEY_ENTITY_TYPE_ID, entityTypeId)
+            }
 
             return fragment
         }

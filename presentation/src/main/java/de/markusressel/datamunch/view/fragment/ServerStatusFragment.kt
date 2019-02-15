@@ -61,16 +61,16 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
 
     private val optionsMenuComponent: OptionsMenuComponent by lazy {
         OptionsMenuComponent(this,
-                             optionsMenuRes = R.menu.options_menu_server_status,
-                             onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
-                                 // set refresh icon
-                                 val refreshIcon = iconHandler
-                                         .getOptionsMenuIcon(
-                                                 MaterialDesignIconic.Icon.gmi_refresh)
-                                 menu
-                                         ?.findItem(R.id.refresh)
-                                         ?.icon = refreshIcon
-                             }, onOptionsMenuItemClicked = {
+                optionsMenuRes = R.menu.options_menu_server_status,
+                onCreateOptionsMenu = { menu: Menu?, menuInflater: MenuInflater? ->
+                    // set refresh icon
+                    val refreshIcon = iconHandler
+                            .getOptionsMenuIcon(
+                                    MaterialDesignIconic.Icon.gmi_refresh)
+                    menu
+                            ?.findItem(R.id.refresh)
+                            ?.icon = refreshIcon
+                }, onOptionsMenuItemClicked = {
             when {
                 it.itemId == R.id.refresh -> {
                     reload()
@@ -82,55 +82,45 @@ class ServerStatusFragment : DaggerSupportFragmentBase() {
     }
 
     override fun initComponents(context: Context) {
-        super
-                .initComponents(context)
+        super.initComponents(context)
         loadingComponent
         optionsMenuComponent
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        super
-                .onCreateOptionsMenu(menu, inflater)
-        optionsMenuComponent
-                .onCreateOptionsMenu(menu, inflater)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        optionsMenuComponent.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (super.onOptionsItemSelected(item)) {
             return true
         }
-        return optionsMenuComponent
-                .onOptionsItemSelected(item)
+        return optionsMenuComponent.onOptionsItemSelected(item)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val parent = super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
-        return loadingComponent
-                .onCreateView(inflater, parent, savedInstanceState)
+        return loadingComponent.onCreateView(inflater, parent, savedInstanceState)
     }
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super
-                .onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
 
-        openWrtServerManager
-                .setSSHConnectionConfig(connectionManager.getSSHProxy())
+        openWrtServerManager.setSSHConnectionConfig(connectionManager.getSSHProxy())
 
         reload()
     }
 
     private fun reload() {
-        loadingComponent
-                .showLoading()
+        loadingComponent.showLoading()
 
-        Single
-                .fromCallable {
-                    frittenbudeServerManager
-                            .retrieveHostname()
-                }
-                .bindUntilEvent(this, Lifecycle.Event.ON_STOP)
+        Single.fromCallable {
+            frittenbudeServerManager
+                    .retrieveHostname()
+        }.bindUntilEvent(this, Lifecycle.Event.ON_STOP)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onSuccess = {
