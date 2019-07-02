@@ -119,8 +119,6 @@ abstract class NavigationDrawerActivity : DaggerSupportActivityBase() {
                     .build()
         }
 
-        navigationDrawer
-
         val appBarConfiguration = AppBarConfiguration(
                 navGraph = navController.graph,
                 drawerLayout = navigationDrawer.drawerLayout)
